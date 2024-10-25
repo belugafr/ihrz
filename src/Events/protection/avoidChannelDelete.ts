@@ -87,6 +87,13 @@ export const event: BotEvent = {
                                         permissionOverwrites: chBackup.permissions,
                                         reason: `Restoration after raid by Protect (${relevantLog.executorId})`
                                     });
+                                } else {
+                                    if (existingChannel.parentId !== category.id) {
+                                        await (existingChannel as GuildChannel).setParent(category.id, { lockPermissions: false }).catch(() => { });
+                                    }
+                                    if ((existingChannel as any).position !== chBackup.position) {
+                                        await (existingChannel as GuildChannel).setPosition(chBackup.position).catch(() => { });
+                                    }
                                 }
                             }
                         }
