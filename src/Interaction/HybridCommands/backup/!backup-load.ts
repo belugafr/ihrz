@@ -78,9 +78,7 @@ export default {
 
         backup.fetch(backupID).then(async () => {
             // @ts-ignore
-            backup.load(backupID, interaction.guild).then(() => {
-                backup.remove(backupID);
-            }).catch((err) => {
+            backup.load(backupID, interaction.guild).then(() => false).catch((err) => {
                 client.method.channelSend(interaction, { content: data.backup_error_on_load.replace("${backupID}", backupID) });
                 return;
             });
