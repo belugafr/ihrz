@@ -974,6 +974,7 @@ perm_list_no_command_set: "このサーバーには特定の権限が設定さ�
 # /perm set
 perm_set_deleted: "${user.toString()} の権限は **削除** されました！"
 perm_set_ok: "${user.toString()} の権限は **`${perm}`** に変更されました"
+perm_set_warn_message: "${interaction.member.toString()}、あなたの権限以上または同等の権限を与えることはできません！"
 
 # /perm roles
 perm_roles_created_role: "以下の役割が作成されました：${createdRoles.join('、')}"

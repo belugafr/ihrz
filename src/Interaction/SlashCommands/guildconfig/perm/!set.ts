@@ -53,6 +53,20 @@ export default {
                 content: data.perm_set_deleted.replace("${user.toString()}", user.toString())
             });
         } else {
+            let fetchedPerm = await client.method.permission.checkUserPermissions(
+                interaction.member,
+            );
+
+            if (fetchedPerm <= parseInt(perm) && interaction.guild.ownerId !== interaction.member.id) {
+                await client.method.interactionSend(interaction, {
+                    content: data.perm_set_warn_message.replace(
+                        "${interaction.member.toString()}",
+                        interaction.member.toString(),
+                    ),
+                });
+                return;
+            }
+
             await client.db.set(`${interaction.guildId}.UTILS.USER_PERMS.${user.id}`, parseInt(perm));
 
             await client.method.interactionSend(interaction, {

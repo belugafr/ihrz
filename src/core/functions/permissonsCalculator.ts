@@ -19,7 +19,7 @@
 ・ Copyright © 2020-2024 iHorizon
 */
 
-import { ChatInputCommandInteraction, Message } from "discord.js";
+import { ChatInputCommandInteraction, GuildMember, Message } from "discord.js";
 import { DatabaseStructure } from "../../../types/database_structure";
 import { Command } from "../../../types/command";
 import { Option } from "../../../types/option";
@@ -55,6 +55,13 @@ export async function checkCommandPermission(interaction: ChatInputCommandIntera
     }
 
     return { allowed: false, neededPerm: cmdNeedPerm };
+}
+
+export async function checkUserPermissions(member: GuildMember,): Promise<DatabaseStructure.UtilsPermsData["user_id"] | 0> {
+    let fetch: DatabaseStructure.UtilsPermsData["user_id"] | 0 = (await member.client.db.get(
+        `${member.guild.id}.UTILS.USER_PERMS.${member.user.id}`,
+    )) || 0;
+    return fetch;
 }
 
 export async function sendErrorMessage(interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, neededPerm: number) {

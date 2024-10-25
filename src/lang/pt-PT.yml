@@ -974,6 +974,7 @@ perm_list_no_command_set: "Não há comandos com permissões específicas defini
 # /perm set
 perm_set_deleted: "${user.toString()} teve sua permissão **excluída**!"
 perm_set_ok: "${user.toString()} teve sua permissão alterada para **`${perm}`**"
+perm_set_warn_message: "${interaction.member.toString()}, você não pode conceder permissões iguais ou superiores às suas!"
 
 # /perm roles
 perm_roles_created_role: "Созданы следующие роли: ${createdRoles.join(', ')}"

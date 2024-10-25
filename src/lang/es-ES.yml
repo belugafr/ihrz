@@ -974,6 +974,7 @@ perm_list_no_command_set: "¡No hay comandos con permisos específicos estableci
 # /perm set
 perm_set_deleted: "${user.toString()} ha tenido su permiso **eliminado**!"
 perm_set_ok: "${user.toString()} ha cambiado su permiso a **`${perm}`**"
+perm_set_warn_message: "${interaction.member.toString()}, ¡no puedes otorgar permisos iguales o superiores a los tuyos!"
 
 # /perm roles
 perm_roles_created_role: "Se han creado los siguientes roles: ${createdRoles.join(', ')}"

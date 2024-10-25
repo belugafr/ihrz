@@ -973,6 +973,7 @@ perm_list_no_command_set: "There is not command with specific permission set in 
 # /perm set
 perm_set_deleted: "${user.toString()} have their permission **deleted**!"
 perm_set_ok: "${user.toString()} have their permission changed to **`${perm}`**"
+perm_set_warn_message: "${interaction.member.toString()}, you cannot give permission highter or equals than your!"
 
 # /perm roles
 perm_roles_created_role: "The following roles have been created: ${createdRoles.join(', ')}"

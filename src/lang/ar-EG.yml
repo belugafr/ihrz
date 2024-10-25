@@ -974,6 +974,7 @@ perm_list_no_command_set: "لا توجد أوامر تم تعيين أذونات
 # /perm set
 perm_set_deleted: "${user.toString()} تم **حذف** أذنه!"
 perm_set_ok: "${user.toString()} تم تغيير أذنه إلى **`${perm}`**"
+perm_set_warn_message: "${interaction.member.toString()}، لا يمكنك منح إذن أعلى أو مساوٍ لك!"
 
 # /perm roles
 perm_roles_created_role: "الأدوار اللي اتعملت: ${createdRoles.join(', ')}"

@@ -974,6 +974,7 @@ perm_list_no_command_set: "В этом сервере нет команд с у�
 # /perm set
 perm_set_deleted: "${user.toString()} имеет разрешение **удалено**!"
 perm_set_ok: "${user.toString()} изменил свое разрешение на **`${perm}`**"
+perm_set_warn_message: "${interaction.member.toString()}, вы не можете назначить разрешения выше или равные вашим!"
 
 # /perm roles
 perm_roles_created_role: "Созданы следующие роли: ${createdRoles.join(', ')}"
