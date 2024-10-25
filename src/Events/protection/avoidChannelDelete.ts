@@ -57,7 +57,6 @@ export const event: BotEvent = {
                     restorationInProgress.add(channel.guild.id);
 
                     try {
-                        const lang = await client.func.getLanguageData(channel.guildId) as LanguageData;
                         const backup = protectionCache.data.get(channel.guild.id);
                         if (!backup) return;
 
