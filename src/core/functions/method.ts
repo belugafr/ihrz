@@ -369,6 +369,7 @@ export async function punish(data: any, user: GuildMember | undefined) {
             await role_app.setPermissions(PermissionFlagsBits.ViewChannel);
         }
 
+        user_roles
             .filter(x => !x.managed && x.position < x.guild.members.me?.roles.highest.position! && x.id !== x.guild.roles.everyone.id)
             .forEach(async role => {
                 await user?.roles.remove(role.id, "Protection").catch(() => { })
