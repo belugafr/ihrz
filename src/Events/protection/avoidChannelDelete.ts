@@ -66,38 +66,55 @@ export const event: BotEvent = {
                         const backup = protectionCache.data.get(guildId);
                         if (!backup) return;
 
-                        const currentCategories = channel.guild.channels.cache.filter(ch =>
-                            ch.type === ChannelType.GuildCategory
-                        ) as Map<string, CategoryChannel>;
+                        const categoryMap = new Map<string, CategoryChannel>();
 
                         for (const categoryBackup of backup.categories) {
-                            let category = currentCategories.get(categoryBackup.id);
+                            const existingCategory = channel.guild.channels.cache.get(categoryBackup.id) as CategoryChannel;
 
-                            if (!category) {
-                                category = await channel.guild.channels.create({
-                                    name: categoryBackup.name,
-                                    type: ChannelType.GuildCategory,
-                                    position: categoryBackup.position,
-                                    reason: `Category re-created by Protect (${relevantLog.executorId})`
-                                });
-
-                                await wait(300);
+                            if (existingCategory) {
+                                categoryMap.set(categoryBackup.id, existingCategory);
+                            } else {
+                                try {
+                                    const newCategory = await channel.guild.channels.create({
+                                        name: categoryBackup.name,
+                                        type: ChannelType.GuildCategory,
+                                        position: categoryBackup.position,
+                                        reason: `Category re-created by Protect (${relevantLog.executorId})`
+                                    });
+                                    categoryMap.set(categoryBackup.id, newCategory);
+                                    await wait(300);
+                                } catch {
+                                }
                             }
+                        }
 
-                            for (const chBackup of categoryBackup.channels) {
-                                const existingChannel = channel.guild.channels.cache.get(chBackup.id);
+                        for (const categoryBackup of backup.categories) {
+                            const category = categoryMap.get(categoryBackup.id);
+                            if (!category) continue;
+
+                            for (const channelBackup of categoryBackup.channels) {
+                                const existingChannel = channel.guild.channels.cache.get(channelBackup.id);
 
                                 if (!existingChannel) {
-                                    await channel.guild.channels.create({
-                                        name: chBackup.name,
-                                        type: chBackup.type as any,
-                                        parent: category.id,
-                                        position: chBackup.position,
-                                        permissionOverwrites: chBackup.permissions,
-                                        reason: `Restoration by Protect (${relevantLog.executorId})`
-                                    });
-
-                                    await wait(300);
+                                    try {
+                                        await channel.guild.channels.create({
+                                            name: channelBackup.name,
+                                            type: channelBackup.type as any,
+                                            parent: category.id,
+                                            position: channelBackup.position,
+                                            permissionOverwrites: channelBackup.permissions,
+                                            reason: `Restoration by Protect (${relevantLog.executorId})`
+                                        });
+                                        await wait(300);
+                                    } catch {
+                                    }
+                                } else if (existingChannel.parentId !== category.id) {
+                                    try {
+                                        await (existingChannel as GuildChannel).setParent(category.id, { lockPermissions: false });
+                                        await (existingChannel as GuildChannel).setPosition(channelBackup.position);
+                                        await wait(300);
+                                    } catch {
+                                    }
                                 }
                             }
                         }
