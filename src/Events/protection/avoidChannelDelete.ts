@@ -22,14 +22,16 @@
 import { Client, AuditLogEvent, GuildChannel, ChannelType, CategoryChannel, TextChannel } from 'discord.js';
 import { BotEvent } from '../../../types/event';
 import { protectionCache } from './ready.js';
-import { LanguageData } from '../../../types/languageData';
+import wait from '../../core/functions/wait.js';
 
-let restorationInProgress: Set<string> = new Set();
+const restorationInProgress = new Map<string, Promise<void>>();
 
 export const event: BotEvent = {
     name: "channelDelete",
     run: async (client: Client, channel: GuildChannel) => {
-        let data = await client.db.get(`${channel.guild.id}.PROTECTION`);
+        const guildId = channel.guild.id;
+
+        let data = await client.db.get(`${guildId}.PROTECTION`);
         if (!data) return;
 
         if (data.deletechannel && data.deletechannel.mode === 'allowlist') {
@@ -45,23 +47,28 @@ export const event: BotEvent = {
 
             if (!relevantLog) return;
 
-            let baseData = await client.db.get(`${channel.guild.id}.ALLOWLIST.list.${relevantLog.executorId}`);
+            let baseData = await client.db.get(`${guildId}.ALLOWLIST.list.${relevantLog.executorId}`);
 
             if (!baseData) {
                 let user = channel.guild.members.cache.get(relevantLog.executorId!);
                 if (!user) return;
 
-                await client.method.punish(data, user);
+                client.method.punish(data, user);
 
-                if (!restorationInProgress.has(channel.guild.id)) {
-                    restorationInProgress.add(channel.guild.id);
+                const existingRestoration = restorationInProgress.get(guildId);
+                if (existingRestoration) {
+                    await existingRestoration;
+                    return;
+                }
 
+                const restorationPromise = (async () => {
                     try {
-                        const backup = protectionCache.data.get(channel.guild.id);
+                        const backup = protectionCache.data.get(guildId);
                         if (!backup) return;
 
-                        const currentCategories = channel.guild.channels.cache.filter(ch => ch.type === ChannelType.GuildCategory) as Map<string, CategoryChannel>;
-                        const currentChannels = channel.guild.channels.cache.filter(ch => ch.isTextBased() || ch.isVoiceBased());
+                        const currentCategories = channel.guild.channels.cache.filter(ch =>
+                            ch.type === ChannelType.GuildCategory
+                        ) as Map<string, CategoryChannel>;
 
                         for (const categoryBackup of backup.categories) {
                             let category = currentCategories.get(categoryBackup.id);
@@ -73,34 +80,37 @@ export const event: BotEvent = {
                                     position: categoryBackup.position,
                                     reason: `Category re-created by Protect (${relevantLog.executorId})`
                                 });
+
+                                await wait(300);
                             }
 
                             for (const chBackup of categoryBackup.channels) {
-                                let existingChannel = currentChannels.get(chBackup.id);
+                                const existingChannel = channel.guild.channels.cache.get(chBackup.id);
 
                                 if (!existingChannel) {
-                                    existingChannel = await channel.guild.channels.create({
+                                    await channel.guild.channels.create({
                                         name: chBackup.name,
                                         type: chBackup.type as any,
                                         parent: category.id,
                                         position: chBackup.position,
                                         permissionOverwrites: chBackup.permissions,
-                                        reason: `Restoration after raid by Protect (${relevantLog.executorId})`
+                                        reason: `Restoration by Protect (${relevantLog.executorId})`
                                     });
-                                } else {
-                                    if (existingChannel.parentId !== category.id) {
-                                        await (existingChannel as GuildChannel).setParent(category.id, { lockPermissions: false }).catch(() => { });
-                                    }
-                                    if ((existingChannel as any).position !== chBackup.position) {
-                                        await (existingChannel as GuildChannel).setPosition(chBackup.position).catch(() => { });
-                                    }
+
+                                    await wait(300);
                                 }
                             }
                         }
+
+                    } catch {
                     } finally {
-                        restorationInProgress.delete(channel.guild.id);
+                        restorationInProgress.delete(guildId);
                     }
-                }
+                })();
+
+                restorationInProgress.set(guildId, restorationPromise);
+
+                await restorationPromise;
             }
         }
     },

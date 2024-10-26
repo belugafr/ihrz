@@ -49,6 +49,9 @@ export const event: BotEvent = {
             let baseData = await client.db.get(`${newChannel.guild.id}.ALLOWLIST.list.${relevantLog.executorId}`);
 
             if (!baseData) {
+                let member = newChannel.guild.members.cache.get(relevantLog?.executorId as string);
+                await client.method.punish(data, member);
+
                 const editOptions: GuildChannelEditOptions = {
                     name: oldChannel.name,
                     permissionOverwrites: [...oldChannel.permissionOverwrites.cache.values()],
@@ -69,8 +72,6 @@ export const event: BotEvent = {
                 }
 
                 await newChannel.edit(editOptions);
-                let member = newChannel.guild.members.cache.get(relevantLog?.executorId as string);
-                await client.method.punish(data, member);
             };
         }
     },

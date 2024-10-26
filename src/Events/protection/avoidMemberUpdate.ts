@@ -49,10 +49,10 @@ export const event: BotEvent = {
             let baseData = await client.db.get(`${newMember.guild.id}.ALLOWLIST.list.${relevantLog.executorId}`);
 
             if (!baseData) {
-                await newMember.roles.set(oldMember.roles.cache).catch(() => false);
-
                 let user = newMember.guild.members.cache.get(relevantLog?.executorId as string);
                 await client.method.punish(data, user);
+
+                await newMember.roles.set(oldMember.roles.cache).catch(() => false);
             };
         }
     },

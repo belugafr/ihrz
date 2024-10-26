@@ -58,37 +58,37 @@ export const event: BotEvent = {
             await client.method.punish(data, member);
 
             if (oldGuild.afkChannel !== newGuild.afkChannel) {
-                await newGuild.setAFKChannel(oldGuild.afkChannel);
+                await newGuild.setAFKChannel(oldGuild.afkChannel).catch(() => false);
             }
             if (oldGuild.afkTimeout !== newGuild.afkTimeout) {
-                await newGuild.setAFKTimeout(oldGuild.afkTimeout);
+                await newGuild.setAFKTimeout(oldGuild.afkTimeout).catch(() => false);
             }
             if (oldGuild.banner !== newGuild.banner) {
-                await newGuild.setBanner(oldGuild.banner);
+                await newGuild.setBanner(oldGuild.banner).catch(() => false);
             }
             if (oldGuild.defaultMessageNotifications !== newGuild.defaultMessageNotifications) {
-                await newGuild.setDefaultMessageNotifications(oldGuild.defaultMessageNotifications);
+                await newGuild.setDefaultMessageNotifications(oldGuild.defaultMessageNotifications).catch(() => false);
             }
             if (oldGuild.discoverySplash !== newGuild.discoverySplash) {
-                await newGuild.setDiscoverySplash(oldGuild.discoverySplash);
+                await newGuild.setDiscoverySplash(oldGuild.discoverySplash).catch(() => false);
             }
             if (oldGuild.explicitContentFilter !== newGuild.explicitContentFilter) {
-                await newGuild.setExplicitContentFilter(oldGuild.explicitContentFilter);
+                await newGuild.setExplicitContentFilter(oldGuild.explicitContentFilter).catch(() => false);
             }
             if (oldGuild.icon !== newGuild.icon) {
-                await newGuild.setIcon(oldGuild.icon);
+                await newGuild.setIcon(oldGuild.icon).catch(() => false);
             }
             if (oldGuild.mfaLevel !== newGuild.mfaLevel) {
-                await newGuild.setMFALevel(oldGuild.mfaLevel);
+                await newGuild.setMFALevel(oldGuild.mfaLevel).catch(() => false);
             }
             if (oldGuild.name !== newGuild.name) {
-                await newGuild.setName(oldGuild.name);
+                await newGuild.setName(oldGuild.name).catch(() => false);
             }
             if (oldGuild.preferredLocale !== newGuild.preferredLocale) {
-                await newGuild.setPreferredLocale(oldGuild.preferredLocale);
+                await newGuild.setPreferredLocale(oldGuild.preferredLocale).catch(() => false);
             }
             if (oldGuild.premiumProgressBarEnabled !== newGuild.premiumProgressBarEnabled) {
-                await newGuild.setPremiumProgressBarEnabled(oldGuild.premiumProgressBarEnabled);
+                await newGuild.setPremiumProgressBarEnabled(oldGuild.premiumProgressBarEnabled).catch(() => false);
             }
         }
     },

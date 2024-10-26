@@ -49,10 +49,10 @@ export const event: BotEvent = {
             let baseData = await client.db.get(`${role.guild.id}.ALLOWLIST.list.${relevantLog.executorId}`);
 
             if (!baseData) {
-                role.delete('Protect!');
                 let member = role.guild.members.cache.get(relevantLog?.executorId as string);
-
                 await client.method.punish(data, member);
+
+                role.delete('Protect!');
             };
         }
     },

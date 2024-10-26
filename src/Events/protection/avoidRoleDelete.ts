@@ -49,14 +49,14 @@ export const event: BotEvent = {
             let baseData = await client.db.get(`${role.guild.id}.ALLOWLIST.list.${relevantLog.executorId}`);
 
             if (!baseData) {
+                let member = role.guild.members.cache.get(relevantLog?.executorId as string);
+                await client.method.punish(data, member);
+
                 let newRole = await role.guild.roles.create({
                     ...role, reason: `Role re-create by Protect (${relevantLog.executorId} break the rule!)`,
                 });
 
                 newRole.setPosition(role.rawPosition);
-                let member = role.guild.members.cache.get(relevantLog?.executorId as string);
-
-                await client.method.punish(data, member);
             };
         }
     },
