@@ -29,7 +29,10 @@ import {
     ApplicationCommandType,
     Message,
     ButtonBuilder,
-    ButtonStyle
+    ButtonStyle,
+    ChannelType,
+    Channel,
+    GuildTextBasedChannel
 } from 'discord.js'
 
 import { Command } from '../../../../types/command.js';
@@ -67,6 +70,19 @@ export const command: Command = {
                     value: "remove"
                 }
             ]
+        },
+        {
+            name: 'channel',
+            type: ApplicationCommandOptionType.Channel,
+
+            description: "The channel where is the message",
+            description_localizations: {
+                "fr": "Le salon textuelle où se trouve le message"
+            },
+
+            channel_types: [ChannelType.GuildText],
+
+            required: true
         },
         {
             name: 'messageid',
@@ -125,25 +141,29 @@ export const command: Command = {
 
         if (interaction instanceof ChatInputCommandInteraction) {
             var type = interaction.options.getString("value");
+            var channel = interaction.options.getChannel("channel") as Channel | null;
             var messagei = interaction.options.getString("messageid");
             var reaction = interaction.options.getString("reaction");
             var role = interaction.options.getRole("role");
         } else {
             var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var type = client.method.string(args!, 0);
-            var messagei = client.method.string(args!, 1);
-            var reaction = client.method.string(args!, 2);
-            var role = client.method.role(interaction, args!, 0);
+            var channel = client.method.channel(interaction, args!, 1);
+            var messagei = client.method.string(args!, 2);
+            var reaction = client.method.string(args!, 3);
+            var role = client.method.role(interaction, args!, 4);
         }
 
         let match = reaction?.match(regex);
         reaction = match ? match[1] : reaction;
 
+        console.log(channel)
+
         if (type == "add") {
             if (!role) { return await client.method.interactionSend(interaction, { content: lang.buttonreaction_roles_not_found }); };
             if (!reaction) { return await client.method.interactionSend(interaction, { content: lang.reactionroles_missing_reaction_added }) };
 
-            await interaction.channel.messages.fetch(messagei!)
+            await (channel as GuildTextBasedChannel | null)?.messages.fetch(messagei!)
                 .then(async msg => {
                     if (msg?.author.id !== client.user?.id) {
                         return await client.method.interactionSend(interaction, { content: lang.buttonreaction_message_other_user_error });
@@ -201,7 +221,7 @@ export const command: Command = {
                 return;
             };
 
-            await interaction.channel.messages.fetch(messagei!)
+            await (channel as GuildTextBasedChannel | null)?.messages.fetch(messagei!)
                 .then(async (message) => {
                     let res = await client.db.get(`${interaction.guildId}.GUILD.REACTION_ROLES.${message.id}`) as DatabaseStructure.ReactionRolesData[""];
                     let fetched = Object.values(res).find(x => x.reactionNAME === reaction);
