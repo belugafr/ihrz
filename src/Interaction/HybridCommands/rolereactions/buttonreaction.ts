@@ -157,8 +157,6 @@ export const command: Command = {
         let match = reaction?.match(regex);
         reaction = match ? match[1] : reaction;
 
-        console.log(channel)
-
         if (type == "add") {
             if (!role) { return await client.method.interactionSend(interaction, { content: lang.buttonreaction_roles_not_found }); };
             if (!reaction) { return await client.method.interactionSend(interaction, { content: lang.reactionroles_missing_reaction_added }) };

@@ -210,7 +210,7 @@ export const command: Command = {
                 return;
             };
 
-            let message = await interaction.channel.messages.fetch(messagei as string).catch(async () => {
+            let message = await (channel as BaseGuildTextChannel)?.messages.fetch(messagei as string).catch(async () => {
                 await client.method.interactionSend(interaction, { content: lang.reactionroles_cant_fetched_reaction_remove })
                 return;
             });
