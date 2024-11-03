@@ -361,7 +361,7 @@ export function hasSubCommand(options: Option[] | undefined): boolean {
     return options.some(option => option.type === ApplicationCommandOptionType.Subcommand);
 }
 
-export async function punish(data: any, user: GuildMember | undefined) {
+export async function punish(data: any, user: GuildMember | undefined, reason?: string) {
     async function derank() {
         let user_roles = Array.from(user?.roles.cache.values()!);
         let role_app = user_roles.find(x => x.managed);
@@ -372,7 +372,7 @@ export async function punish(data: any, user: GuildMember | undefined) {
         user_roles
             .filter(x => !x.managed && x.position < x.guild.members.me?.roles.highest.position! && x.id !== x.guild.roles.everyone.id)
             .forEach(async role => {
-                await user?.roles.remove(role.id, "Protection").catch(() => { })
+                await user?.roles.remove(role.id, reason || "Protection").catch(() => { })
             });
     }
     switch (data?.['SANCTION']) {
@@ -382,7 +382,7 @@ export async function punish(data: any, user: GuildMember | undefined) {
             await derank();
             break;
         case 'simply+ban':
-            user?.ban({ reason: 'Protect!' }).catch(async () => await derank().catch(() => false));
+            user?.ban({ reason: reason || 'Protect!' }).catch(async () => await derank().catch(() => false));
             break;
         default:
             return;
