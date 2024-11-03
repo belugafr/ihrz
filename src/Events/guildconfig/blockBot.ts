@@ -49,7 +49,7 @@ export const event: BotEvent = {
             let embed = new EmbedBuilder()
                 .setColor(2829617)
                 .setTitle(`⚠️ Danger in ${member.guild.name} ⚠️`)
-                .setDescription(`# PunishPub Warning\nSomeone have try to add discord bot.`)
+                .setDescription(`# BotAdd Warning\nSomeone have try to add discord bot.`)
                 .setFields(
                     { name: "User", value: filteredLog?.executor?.toString() || '`Not detected`', inline: true },
                     { name: "Target bot", value: member.toString(), inline: true },
