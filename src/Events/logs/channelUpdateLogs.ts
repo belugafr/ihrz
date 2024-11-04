@@ -99,8 +99,9 @@ export const event: BotEvent = {
         var firstEntry = fetchedLogs.entries.first();
 
         let someinfo = await client.db.get(`${oldChannel.guildId}.GUILD.SERVER_LOGS.channel`);
+        if (!someinfo) return;
 
-        let Msgchannel = oldChannel.guild.channels.cache.get("1287779711082168410");
+        let Msgchannel = oldChannel.guild.channels.cache.get(someinfo);
         if (!Msgchannel) return;
 
         let icon = firstEntry?.executor?.displayAvatarURL();
