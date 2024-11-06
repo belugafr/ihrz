@@ -92,12 +92,12 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member = interaction.options.getMember('user') as GuildMember | null;
             var user = interaction.options.getUser('user');
-            var reason = interaction.options.getString('reason');
+            var reason = interaction.options.getString('reason') || 'blacklisted!'
         } else {
             var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var member = client.method.member(interaction, args!, 0) as GuildMember | null;
             var user = await client.method.user(interaction, args!, 0);
-            var reason = client.method.longString(args!, 1);
+            var reason = client.method.longString(args!, 1) || 'blacklisted!';
         };
 
         if (!member && !user) {
@@ -205,12 +205,12 @@ export const command: Command = {
 
             await tableBlacklist.set(`${member.user.id}`, {
                 blacklisted: true,
-                reason: reason,
+                reason,
                 owner: interaction.member.user.id,
                 createdAt: new Date().getTime()
             });
 
-            await member.ban({ reason: 'blacklisted !' }).then(async () => {
+            await member.ban({ reason }).then(async () => {
                 await client.method.interactionSend(interaction, {
                     content: lang.blacklist_command_work
                         .replace(/\${member\.user\.username}/g, String(member?.user.globalName || member?.user.username))
@@ -226,7 +226,7 @@ export const command: Command = {
                 let guild = client.guilds.cache.find(guild => guild.id === guildId);
                 if (guild) {
                     try {
-                        await guild.members.ban(member?.user.id!, { reason: reason || 'blacklisted!' });
+                        await guild.members.ban(member?.user.id!, { reason });
                         return true;
                     } catch {
                         return false;
@@ -258,7 +258,7 @@ export const command: Command = {
 
             await tableBlacklist.set(`${user.id}`, {
                 blacklisted: true,
-                reason: reason,
+                reason,
                 owner: interaction.member.user.id,
                 createdAt: new Date().getTime()
             });
@@ -272,7 +272,7 @@ export const command: Command = {
                 let guild = client.guilds.cache.find(guild => guild.id === guildId);
                 if (guild) {
                     try {
-                        await guild.members.ban(user?.id!, { reason: reason || 'blacklisted!' });
+                        await guild.members.ban(user?.id!, { reason });
                         return true;
                     } catch {
                         return false;
