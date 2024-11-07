@@ -203,9 +203,16 @@ export const initializeDatabase = async (config: ConfigData): Promise<QuickDB<an
                         const memoryMap = new Map(memoryData.map(item => [item.id, item.value]));
 
                         for (const [id, value] of memoryMap) {
-                            if (!postgresMap.has(id) || JSON.stringify(postgresMap.get(id)) !== JSON.stringify(value)) {
+                            const postgresValue = postgresMap.get(id);
+                            if (!postgresValue || JSON.stringify(postgresValue) !== JSON.stringify(value)) {
                                 try {
-                                    await postgresTable.set(id, value);
+                                    if (table !== 'OWNIHRZ') {
+                                        await postgresTable.set(id, value);
+                                    } else {
+                                        for (const { id, value } of postgresData) {
+                                            await memoryTable.set(id, value);
+                                        }
+                                    }
                                 } catch (error) {
                                     logger.err(error as any);
                                 }
