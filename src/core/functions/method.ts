@@ -504,6 +504,11 @@ export async function buttonUnreact(msg: Message, buttonEmoji: string): Promise<
     return msg;
 }
 
+export function isAnimated(attachmentUrl: string): boolean {
+    const fileName = attachmentUrl.split('/').pop() || '';
+    return fileName.startsWith('a_');
+}
+
 export const permission = perm;
 export const bot = f;
 export const helper = h;

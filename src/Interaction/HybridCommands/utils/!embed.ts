@@ -64,6 +64,7 @@ export default {
         };
 
         let potentialEmbed = await client.db.get(`EMBED.${arg}`);
+        let files: { attachment: any; name: string; }[] = [];
 
         const permissionsArray = [PermissionsBitField.Flags.Administrator]
         const permissions = interaction instanceof ChatInputCommandInteraction ?
@@ -249,19 +250,27 @@ export default {
                     break;
                 case '10':
                     await handleCollector(i, 'embed_choose_10', (message) => {
-                        let files = [];
+                        files.splice(0, files.length); //clear the embed for next changes
 
                         if (isValidLink(message.content)) {
                             __tempEmbed.setImage(message.content);
                         } else if (message.attachments.first()?.contentType?.startsWith("image/")) {
-                            __tempEmbed.setImage("attachment://image.png");
+                            let name = "image.png";
+
+                            if (client.method.isAnimated(message.attachments.first()?.url!)) {
+                                name = "image.gif"
+                            }
+
+                            __tempEmbed.setImage("attachment://" + name);
+
                             files.push(
                                 {
                                     attachment: message.attachments.first()?.url!,
-                                    name: 'image.png'
+                                    name
                                 }
                             )
-                        }
+                        };
+
                         response.edit({
                             embeds: [__tempEmbed], files
                         });
@@ -319,7 +328,8 @@ export default {
 
             await confirmation.update({
                 content: lang.embed_send_message.replace('${interaction.user.id}', interaction.member?.user.id!),
-                components: [channelSelectMenu]
+                components: [channelSelectMenu],
+                files: files
             });
 
             let seCollector = (interaction.channel as BaseGuildTextChannel)?.createMessageComponentCollector({
@@ -334,12 +344,13 @@ export default {
                     let channel = interaction.guild?.channels.cache.get(result.channels.first()?.id!);
                     if (!channel) return;
 
-                    await (channel as BaseGuildTextChannel).send({ embeds: [__tempEmbed] });
+                    await (channel as BaseGuildTextChannel).send({ embeds: [__tempEmbed], files });
                     seCollector.stop();
                     await response.edit({
                         content: lang.embed_send_embed_work.replace('${interaction.user.id}', interaction.member?.user.id!).replace('${message.content}', channel.id),
                         embeds: [],
-                        components: []
+                        components: [],
+                        files: []
                     });
                 }
             });
@@ -378,7 +389,8 @@ export default {
                     await confirmation.update({
                         content: lang.embed_save_message.replace('${interaction.user.id}', interaction.member?.user.id!).replace('${await saveEmbed()}', embedId),
                         components: [],
-                        embeds: []
+                        embeds: [],
+                        files: []
                     });
                     buttonCollector.stop();
                     break;
@@ -386,7 +398,8 @@ export default {
                     await confirmation.update({
                         content: lang.embed_cancel_message.replace('${interaction.user.id}', interaction.member?.user.id!),
                         components: [],
-                        embeds: []
+                        embeds: [],
+                        files: []
                     });
                     buttonCollector.stop();
                     break;
