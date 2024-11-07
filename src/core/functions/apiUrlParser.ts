@@ -29,7 +29,8 @@ export const ClusterMethod = {
     ShutdownContainer: 3,
     PowerOnContainer: 4,
     ChangeTokenContainer: 5,
-    ChangeOwnerContainer: 6
+    ChangeOwnerContainer: 6,
+    ChangeExpireTime: 7
 };
 
 export function assetsFinder(body: Assets, type: string): string {
@@ -73,6 +74,9 @@ export function OwnIhrzCluster(config: ConfigData, cluster_number: number, clust
             break;
         case 6:
             data += `change_owner`
+            break;
+        case 7:
+            data += `change_time`
             break;
     }
 

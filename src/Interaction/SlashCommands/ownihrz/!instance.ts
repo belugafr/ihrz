@@ -34,7 +34,7 @@ const OWNIHRZ = new OwnIHRZ();
 import { SubCommandArgumentValue } from '../../../core/functions/method';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: SubCommandArgumentValue) => {        
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: SubCommandArgumentValue) => {
         let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
 
@@ -71,8 +71,6 @@ export default {
                             return;
                         }
 
-                        await tableOWNIHRZ.set(`CLUSTER.${userId}.${id_to_bot}.PowerOff`, true);
-
                         await interaction.reply({
                             content: `OwnIHRZ of <@${userId}>, with id of:\`${id_to_bot}\` are now shutdown.\nNow, the bot container can't be Power On when iHorizon-Prod booting...`,
                             ephemeral: true
@@ -103,8 +101,6 @@ export default {
                             return;
                         }
 
-                        await tableOWNIHRZ.set(`CLUSTER.${userId}.${id_to_bot}.PowerOff`, false);
-
                         await interaction.reply({ content: `OwnIHRZ of <@${userId}>, with id of:\`${id_to_bot}\` are now Power On.\nNow, the bot container can be Power On when iHorizon-Prod booting...`, ephemeral: true });
                         return await OWNIHRZ.PowerOn(client.config, fetch.Cluster, id_to_bot);
                     }
@@ -118,8 +114,6 @@ export default {
                 for (let botId in botData) {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
-
-                        await tableOWNIHRZ.delete(`CLUSTER.${userId}.${id_to_bot}`);
 
                         await interaction.reply({
                             content: `OwnIHRZ of <@${userId}>, with id of:\`${id_to_bot}\` are now deleted.\nThe bot container has been entierly erased...`,
@@ -151,15 +145,19 @@ export default {
             for (let userId in ownihrzClusterData as any) {
                 for (let botId in ownihrzClusterData[userId]) {
                     if (botId === id_to_bot) {
+                        let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
                         let time = interaction.options.getString('time') || '0d';
 
-                        await tableOWNIHRZ.add(`CLUSTER.${userId}.${id_to_bot}.ExpireIn`, client.timeCalculator.to_ms(time)!);
+                        OWNIHRZ.Change_Time(client.config, fetch.Cluster, id_to_bot, {
+                            method: "add",
+                            ms: client.timeCalculator.to_ms(time)!
+                        })
 
                         let ExpireIn = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}.ExpireIn`);
                         let expire: string | null = null;
 
                         if (ExpireIn !== null) {
-                            expire = format(new Date(ExpireIn), 'ddd, MMM DD YYYY');
+                            expire = format(new Date(ExpireIn - client.timeCalculator.to_ms(time)!), 'ddd, MMM DD YYYY');
                         }
 
                         await interaction.reply({ content: `OwnIHRZ of <@${userId}>, with id of:\`${id_to_bot}\` have now this expire Date changed!.\nThe bot expire now in \`${expire}\`!`, ephemeral: true });
@@ -173,15 +171,19 @@ export default {
             for (let userId in ownihrzClusterData as any) {
                 for (let botId in ownihrzClusterData[userId]) {
                     if (botId === id_to_bot) {
+                        let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
                         let time = interaction.options.getString('time') || '0d';
 
-                        await tableOWNIHRZ.sub(`CLUSTER.${userId}.${id_to_bot}.ExpireIn`, client.timeCalculator.to_ms(time)!);
+                        OWNIHRZ.Change_Time(client.config, fetch.Cluster, id_to_bot, {
+                            method: "add",
+                            ms: client.timeCalculator.to_ms(time)!
+                        })
 
                         let ExpireIn = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}.ExpireIn`);
                         let expire: string | null = null;
 
                         if (ExpireIn !== null) {
-                            expire = format(new Date(ExpireIn), 'ddd, MMM DD YYYY');
+                            expire = format(new Date(ExpireIn - client.timeCalculator.to_ms(time)!), 'ddd, MMM DD YYYY');
                         }
 
                         await interaction.reply({

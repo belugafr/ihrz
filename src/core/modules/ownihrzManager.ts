@@ -24,7 +24,7 @@ import logger from "../logger.js";
 import { Client } from 'discord.js';
 import { OwnIhrzCluster, ClusterMethod } from "../functions/apiUrlParser.js";
 import { AxiosResponse, axios } from "../functions/axios.js";
-import { Custom_iHorizon } from "../../../types/ownihrz.js";
+import { Custom_iHorizon, OwnIHRZ_New_Expire_Time_Object, OwnIHRZ_New_Owner_Object } from "../../../types/ownihrz.js";
 import { ConfigData } from "../../../types/configDatad.js";
 
 class OwnIHRZ {
@@ -170,18 +170,27 @@ class OwnIHRZ {
         });
     };
 
-    async Change_Owner(config: ConfigData, cluster_id: number, botId: string, new_owner_id1: string, new_owner_id2: string) {
+    async Change_Owner(config: ConfigData, cluster_id: number, botId: string, OwnerData: OwnIHRZ_New_Owner_Object) {
         return await axios.post(OwnIhrzCluster(config, cluster_id, ClusterMethod.ChangeOwnerContainer),
             {
                 adminKey: config.api.apiToken,
                 botId,
-                OwnerOne: new_owner_id1,
-                OwnerTwo: new_owner_id2
+                OwnerData
             },
             { headers: { 'Accept': 'application/json' } }
         );
     }
 
+    async Change_Time(config: ConfigData, cluster_id: number, botId: string, data: OwnIHRZ_New_Expire_Time_Object) {
+        return await axios.post(OwnIhrzCluster(config, cluster_id, ClusterMethod.ChangeExpireTime),
+            {
+                adminKey: config.api.apiToken,
+                botId,
+                data
+            },
+            { headers: { 'Accept': 'application/json' } }
+        );
+    }
 }
 
 export { OwnIHRZ }

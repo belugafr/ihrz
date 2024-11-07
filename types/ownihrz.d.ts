@@ -34,3 +34,14 @@ export interface Custom_iHorizon {
     Code: string;
     ExpireIn: string;
 }
+
+export interface OwnIHRZ_New_Owner_Object {
+    OldOwnerOne: string;
+    NewOwnerOne: string;
+    NewOwnerTwo: string;
+}
+
+export interface OwnIHRZ_New_Expire_Time_Object {
+    method: "sub" | "add",
+    ms: number;
+}

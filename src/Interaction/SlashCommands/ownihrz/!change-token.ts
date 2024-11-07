@@ -114,10 +114,6 @@ export default {
 
             try {
                 await OWNIHRZ.Change_Token(client.config, id_2.Cluster!, id_2.Code, newToken);
-
-                await table.set(`CLUSTER.${id_2.OwnerOne}.${botId}`, {
-                    Auth: newToken
-                });
             } catch (error: any) {
                 return logger.err(error)
             };
