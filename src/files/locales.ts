@@ -19,7 +19,7 @@
 ・ Copyright © 2020-2024 iHorizon
 */
 
-const discordLocales = {
+export const discordLocales: { [key: string]: string } = {
     "en-US": "🇺🇸",
     "en-GB": "🇬🇧",
     "en-CA": "🇨🇦",
