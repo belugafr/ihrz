@@ -20,7 +20,6 @@
 */
 
 import { Assets } from "../../../types/assets.js";
-import { ConfigData } from "../../../types/configDatad.js";
 import config from "../../files/config.js";
 
 export enum ClusterMethod {
