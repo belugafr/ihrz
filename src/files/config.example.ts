@@ -58,6 +58,7 @@ const config: ConfigData = {
                 authorization: "password",
                 // The password of the Node
 
+                secure: false
             }
         ],
 

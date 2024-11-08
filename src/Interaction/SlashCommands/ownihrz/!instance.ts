@@ -74,7 +74,7 @@ export default {
                             ephemeral: true
                         });
 
-                        return await client.ownihrz.ShutDown(client.config, fetch.Cluster, id_to_bot);
+                        return await client.ownihrz.ShutDown(fetch.Cluster, id_to_bot);
                     }
                 }
             }
@@ -100,7 +100,7 @@ export default {
                         }
 
                         await interaction.reply({ content: `OwnIHRZ of <@${userId}>, with id of:\`${id_to_bot}\` are now Power On.\nNow, the bot container can be Power On when iHorizon-Prod booting...`, ephemeral: true });
-                        return await client.ownihrz.PowerOn(client.config, fetch.Cluster, id_to_bot);
+                        return await client.ownihrz.PowerOn(fetch.Cluster, id_to_bot);
                     }
                 }
             }
@@ -117,7 +117,7 @@ export default {
                             content: `OwnIHRZ of <@${userId}>, with id of:\`${id_to_bot}\` are now deleted.\nThe bot container has been entierly erased...`,
                             ephemeral: true
                         });
-                        return await client.ownihrz.Delete(client.config, fetch.Cluster, id_to_bot);
+                        return await client.ownihrz.Delete(fetch.Cluster, id_to_bot);
                     }
                 }
             }

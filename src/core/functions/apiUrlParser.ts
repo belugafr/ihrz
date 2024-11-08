@@ -21,23 +21,30 @@
 
 import { Assets } from "../../../types/assets.js";
 import { ConfigData } from "../../../types/configDatad.js";
+import config from "../../files/config.js";
 
-export const ClusterMethod = {
-    CreateContainer: 0,
-    DeleteContainer: 1,
-    StartupContainer: 2,
-    ShutdownContainer: 3,
-    PowerOnContainer: 4,
-    ChangeTokenContainer: 5,
-    ChangeOwnerContainer: 6,
-    ChangeExpireTime: 7
+export enum ClusterMethod {
+    CreateContainer = 0,
+    DeleteContainer = 1,
+    StartupContainer = 2,
+    ShutdownContainer = 3,
+    PowerOnContainer = 4,
+    ChangeTokenContainer = 5,
+    ChangeOwnerContainer = 6,
+    ChangeExpireTime = 7
 };
+
+export enum GatewayMethod {
+    GenerateOauthLink = 0,
+    CreateRestoreCordGuild = 1
+};
+
 
 export function assetsFinder(body: Assets, type: string): string {
     return `https://raw.githubusercontent.com/ihrz/assets/main/${type}/${Math.floor(Math.random() * body[type])}.gif`;
 };
 
-export function OwnIhrzCluster(config: ConfigData, cluster_number: number, cluster_method: number, bot_id?: string, discord_bot_token?: string): string {
+export function OwnIhrzCluster(cluster_number: number, cluster_method: ClusterMethod, bot_id?: string, discord_bot_token?: string): string {
     var data = config.core.cluster[cluster_number];
     var admin_key = config.api.apiToken;
 
@@ -82,3 +89,17 @@ export function OwnIhrzCluster(config: ConfigData, cluster_number: number, clust
 
     return data;
 };
+
+export function HorizonGateway(gateway_method: GatewayMethod, value1?: any, value2?: any): string {
+    var data = config.api.HorizonGateway;
+
+    if (!data) throw "Error: HorizonGateway empty in the configurations files";
+
+    switch (gateway_method) {
+        case 0:
+            data += "/api/ihorizon/v1/oauth2"
+            break;
+    }
+
+    return data;
+}
