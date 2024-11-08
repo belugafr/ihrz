@@ -373,6 +373,11 @@ export namespace DatabaseStructure {
         bypassChannels?: string[]
     }
 
+    export interface TermCordSchema {
+        channelId: string;
+        messageId: string;
+    }
+
     export interface DbGuildObject {
         BOT?: DbGuildBotObject;
         LANG?: {
@@ -422,6 +427,7 @@ export namespace DatabaseStructure {
         };
         BLOCK_NEW_ACCOUNT?: BlockNewAccountSchema;
         ANTISPAM?: AntiSpam.AntiSpamOptions;
+        TERMCORD?: TermCordSchema
     }
 
     export interface DbTicketConfigurationObject {
