@@ -25,16 +25,13 @@ import {
     EmbedBuilder,
 } from 'discord.js';
 
-import { OwnIHRZ } from '../../../core/modules/ownihrzManager.js';
 import { format } from '../../../core/functions/date-and-time.js';
 
 import { LanguageData } from '../../../../types/languageData';
 
-const OWNIHRZ = new OwnIHRZ();
-
 async function buildEmbed(client: Client, data: any, lang: LanguageData, guildID: string, interaction: ChatInputCommandInteraction) {
 
-    let bot_1 = (await OWNIHRZ.Get_Bot(data.Auth).catch(() => { }))?.data || 404;
+    let bot_1 = (await client.ownihrz.Get_Bot(data.Auth).catch(() => { }))?.data || 404;
 
     let utils_msg = lang.mybot_list_utils_msg
         .replace('${data_2[i].bot.id}', data.Bot.Id)

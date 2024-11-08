@@ -26,11 +26,9 @@ import {
 } from 'discord.js';
 
 import { format } from '../../../core/functions/date-and-time.js';
-import { OwnIHRZ } from '../../../core/modules/ownihrzManager.js';
 
 import { LanguageData } from '../../../../types/languageData';
 
-const OWNIHRZ = new OwnIHRZ();
 import { SubCommandArgumentValue } from '../../../core/functions/method';
 
 export default {
@@ -76,7 +74,7 @@ export default {
                             ephemeral: true
                         });
 
-                        return await OWNIHRZ.ShutDown(client.config, fetch.Cluster, id_to_bot);
+                        return await client.ownihrz.ShutDown(client.config, fetch.Cluster, id_to_bot);
                     }
                 }
             }
@@ -102,7 +100,7 @@ export default {
                         }
 
                         await interaction.reply({ content: `OwnIHRZ of <@${userId}>, with id of:\`${id_to_bot}\` are now Power On.\nNow, the bot container can be Power On when iHorizon-Prod booting...`, ephemeral: true });
-                        return await OWNIHRZ.PowerOn(client.config, fetch.Cluster, id_to_bot);
+                        return await client.ownihrz.PowerOn(client.config, fetch.Cluster, id_to_bot);
                     }
                 }
             }
@@ -119,7 +117,7 @@ export default {
                             content: `OwnIHRZ of <@${userId}>, with id of:\`${id_to_bot}\` are now deleted.\nThe bot container has been entierly erased...`,
                             ephemeral: true
                         });
-                        return await OWNIHRZ.Delete(client.config, fetch.Cluster, id_to_bot);
+                        return await client.ownihrz.Delete(client.config, fetch.Cluster, id_to_bot);
                     }
                 }
             }
@@ -148,7 +146,7 @@ export default {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
                         let time = interaction.options.getString('time') || '0d';
 
-                        OWNIHRZ.Change_Time(client.config, fetch.Cluster, id_to_bot, {
+                        client.ownihrz.Change_Time(client.config, fetch.Cluster, id_to_bot, {
                             method: "add",
                             ms: client.timeCalculator.to_ms(time)!
                         })
@@ -174,7 +172,7 @@ export default {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
                         let time = interaction.options.getString('time') || '0d';
 
-                        OWNIHRZ.Change_Time(client.config, fetch.Cluster, id_to_bot, {
+                        client.ownihrz.Change_Time(client.config, fetch.Cluster, id_to_bot, {
                             method: "add",
                             ms: client.timeCalculator.to_ms(time)!
                         })

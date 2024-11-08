@@ -28,10 +28,15 @@ import { Custom_iHorizon, OwnIHRZ_New_Expire_Time_Object, OwnIHRZ_New_Owner_Obje
 import { ConfigData } from "../../../types/configDatad.js";
 
 class OwnIHRZ {
+    private client: Client;
+
+    constructor(client: Client) {
+        this.client = client
+    }
 
     // Working
-    async Startup_Cluster(client: Client) {
-        var table_1 = client.db.table("OWNIHRZ");
+    async Startup_Cluster() {
+        var table_1 = this.client.db.table("OWNIHRZ");
 
         (await table_1.all()).forEach(owner_one => {
             var cluster_ownihrz = owner_one.value;
@@ -42,7 +47,7 @@ class OwnIHRZ {
 
                     axios.get(
                         OwnIhrzCluster(
-                            client.config,
+                            this.client.config,
                             parseInt(cluster_ownihrz[owner_id][bot_id].Cluster),
                             ClusterMethod.StartupContainer,
                             bot_id,
@@ -102,8 +107,8 @@ class OwnIHRZ {
     };
 
     // Working
-    async QuitProgram(client: Client) {
-        let table = client.db.table("OWNIHRZ")
+    async QuitProgram() {
+        let table = this.client.db.table("OWNIHRZ")
         let ownihrzClusterData = await table.get("CLUSTER");
 
         for (let userId in ownihrzClusterData as any) {
@@ -111,7 +116,7 @@ class OwnIHRZ {
                 if (ownihrzClusterData[userId][botId].PowerOff || !ownihrzClusterData[userId][botId].Code) continue;
                 await axios.get(
                     OwnIhrzCluster(
-                        client.config,
+                        this.client.config,
                         parseInt(ownihrzClusterData[userId][botId].Cluster),
                         ClusterMethod.ShutdownContainer,
                         botId,

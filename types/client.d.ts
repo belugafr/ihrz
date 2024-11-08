@@ -43,6 +43,7 @@ import { ConfigData } from "./configDatad.js";
 import { BashCommands } from "./bashCommands.js";
 import { SteganoDB } from "stegano.db";
 import { StreamNotifier } from "../src/core/StreamNotifier.js";
+import { OwnIHRZ } from "../src/core/modules/ownihrzManager.js";
 
 declare module 'discord.js' {
     export interface Client {
@@ -69,6 +70,7 @@ declare module 'discord.js' {
         owners: string[],
         method: typeof argsHelper,
         bash: Collection<string, BashCommands>,
-        notifier: StreamNotifier
+        notifier: StreamNotifiern,
+        ownihrz: OwnIHRZ
     }
 };

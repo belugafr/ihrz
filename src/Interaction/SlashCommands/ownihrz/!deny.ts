@@ -25,11 +25,8 @@ import {
     EmbedBuilder,
 } from 'discord.js';
 
-import { OwnIHRZ } from '../../../core/modules/ownihrzManager.js';
-
 import { LanguageData } from '../../../../types/languageData';
 
-const OWNIHRZ = new OwnIHRZ();
 import { SubCommandArgumentValue } from '../../../core/functions/method';
 
 export default {
@@ -65,7 +62,7 @@ export default {
 
         id_2.code = id_1;
 
-        let bot_1 = (await OWNIHRZ.Get_Bot(id_2.auth).catch(() => { }))?.data || 404
+        let bot_1 = (await client.ownihrz.Get_Bot(id_2.auth).catch(() => { }))?.data || 404
 
         if (bot_1 === 404) {
             await interaction.reply({ content: data.mybot_instance_deny_token_error });

@@ -28,9 +28,7 @@ import {
 import { generatePassword } from '../../../core/functions/random.js';
 
 import { LanguageData } from '../../../../types/languageData';
-import { OwnIHRZ } from '../../../core/modules/ownihrzManager.js';
 
-const OWNIHRZ = new OwnIHRZ();
 import { SubCommandArgumentValue } from '../../../core/functions/method';
 
 export default {
@@ -44,7 +42,7 @@ export default {
         await interaction.deferReply({ ephemeral: true });
 
         let discord_bot_token = interaction.options.getString('discord_bot_token') as string;
-        let bot_1 = (await OWNIHRZ.Get_Bot(discord_bot_token).catch(() => { }))?.data || 404;
+        let bot_1 = (await client.ownihrz.Get_Bot(discord_bot_token).catch(() => { }))?.data || 404;
 
         if (!bot_1.bot) {
             await interaction.editReply({ content: data.mybot_submit_token_invalid });

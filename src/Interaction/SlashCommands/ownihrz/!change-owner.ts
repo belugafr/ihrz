@@ -32,7 +32,6 @@ import { Custom_iHorizon } from '../../../../types/ownihrz';
 
 import logger from '../../../core/logger.js';
 
-const OWNIHRZ = new OwnIHRZ();
 import { SubCommandArgumentValue } from '../../../core/functions/method';
 
 export default {
@@ -84,7 +83,7 @@ export default {
             return;
         }
 
-        let bot_1 = (await OWNIHRZ.Get_Bot(id_2.Auth).catch(() => { }))?.data || 404
+        let bot_1 = (await client.ownihrz.Get_Bot(id_2.Auth).catch(() => { }))?.data || 404
 
         if (!bot_1.bot) {
             await interaction.reply({ content: data.mybot_manage_accept_token_error });
@@ -110,7 +109,7 @@ export default {
             });
 
             try {
-                await OWNIHRZ.Change_Owner(client.config, id_2.Cluster!, id_2.Code, {
+                await client.ownihrz.Change_Owner(client.config, id_2.Cluster!, id_2.Code, {
                     OldOwnerOne: id_2.OwnerOne,
                     NewOwnerOne: OwnerOne,
                     NewOwnerTwo: OwnerTwo

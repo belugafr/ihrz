@@ -32,7 +32,6 @@ import { Custom_iHorizon } from '../../../../types/ownihrz';
 
 import logger from '../../../core/logger.js';
 
-const OWNIHRZ = new OwnIHRZ();
 import { SubCommandArgumentValue } from '../../../core/functions/method';
 
 export default {
@@ -67,14 +66,14 @@ export default {
         id_2.AdminKey = client.config.api?.apiToken!;
         id_2.Code = id;
 
-        await OWNIHRZ.Active_Intents(id_2.Auth).catch(() => { })
+        await client.ownihrz.Active_Intents(id_2.Auth).catch(() => { })
 
         if (!client.owners.includes(interaction.user.id)) {
             await interaction.reply({ content: client.iHorizon_Emojis.icon.No_Logo, ephemeral: true });
             return;
         };
 
-        let bot_1 = (await OWNIHRZ.Get_Bot(id_2.Auth).catch(() => { }))?.data || 404
+        let bot_1 = (await client.ownihrz.Get_Bot(id_2.Auth).catch(() => { }))?.data || 404
 
         if (!bot_1.bot) {
             await interaction.reply({ content: data.mybot_manage_accept_token_error });
@@ -107,7 +106,7 @@ export default {
             });
 
             try {
-                OWNIHRZ.Create_Container(client.config, cluster, id_2).then(async () => {
+                client.ownihrz.Create_Container(client.config, cluster, id_2).then(async () => {
                     await table.delete(`OWNIHRZ.${interaction.user.id}.${id}`);
                 });
 

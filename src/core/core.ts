@@ -90,9 +90,10 @@ export async function main(client: Client) {
     client.timeCalculator = new iHorizonTimeCalculator();
     client.lyricsSearcher = new LyricsManager();
     client.vanityInvites = new Collection<Snowflake, VanityInviteData>();
+    client.ownihrz = new OwnIHRZ(client)
 
     process.on('SIGINT', async () => {
-        if (client.config.core.shutdownClusterWhenStop) await new OwnIHRZ().QuitProgram(client);
+        if (client.config.core.shutdownClusterWhenStop) await client.ownihrz.QuitProgram();
         await client.destroy();
         process.exit(0);
     });
