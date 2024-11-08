@@ -98,6 +98,9 @@ export function HorizonGateway(gateway_method: GatewayMethod, value1?: any, valu
         case 0:
             data += "/api/ihorizon/v1/oauth2"
             break;
+        case 1: 
+            data += "/api/ihorizon/v1/create-oauth2"
+            break;
     }
 
     return data;
