@@ -94,6 +94,10 @@ iHorizon_Unlock = "<a:iHorizon_Unlock:1298775695086059663>"
 
 iHorizon_Lock = "<a:iHorizon_Lock:1298775494820368445>"
 
+iHorizon_Plus = "<a:iHorizon_Plus:1304550737912664095>"
+
+iHorizon_Minus = "<a:iHorizon_Minus:1304550736239132794>"
+
 [vc]
 
 Name = "<:iHorizon_VC_Name:1210204645859922010>"
