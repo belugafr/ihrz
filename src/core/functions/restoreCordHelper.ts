@@ -1,7 +1,7 @@
 import * as apiUrlParser from "./apiUrlParser.js";
 import { axios } from "./axios.js";
 
-export const Oauth2_Link = 'https://discord.com/oauth2/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code&scope=identify+guilds.join&state={guild_id}'
+export const Oauth2_Link = 'https://discord.com/oauth2/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code&scope=identify+guilds+guilds.join&state={guild_id}'
 
 // {client_id}: id of the app/bot, 
 // {redirect_uri}: URL OF HORIZON GATEWAY, 
