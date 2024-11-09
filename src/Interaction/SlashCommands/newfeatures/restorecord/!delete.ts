@@ -1,0 +1,86 @@
+/*
+・ iHorizon Discord Bot (https://github.com/ihrz/ihrz)
+
+・ Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+
+    ・   Under the following terms:
+
+        ・ Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+        ・ NonCommercial — You may not use the material for commercial purposes.
+
+        ・ ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+
+        ・ No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
+
+・ Mainly developed by Kisakay (https://github.com/Kisakay)
+
+・ Copyright © 2020-2024 iHorizon
+*/
+
+import {
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    Channel,
+    ChatInputCommandInteraction,
+    Client,
+    GuildTextBasedChannel,
+    PermissionsBitField
+} from 'discord.js';
+import { LanguageData } from '../../../../../types/languageData';
+import { SubCommandArgumentValue } from '../../../../core/functions/method';
+import { DatabaseStructure } from '../../../../../types/database_structure';
+
+export default {
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: SubCommandArgumentValue) => {
+        let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
+        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
+
+        // Guard's Typing
+        if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
+
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
+            await interaction.reply({ content: lang.security_disable_not_admin });
+            return;
+        };
+
+        let result: DatabaseStructure.RestoreCordSchema | null = await client.db.get(`${interaction.guildId}.GUILD.RESTORECORD`);
+
+        if (!result) return client.method.interactionSend(interaction, { content: "La configuration du module n'est pas trouver!" });
+
+        (interaction.guild.channels.cache.get(result?.channelId!) as GuildTextBasedChannel | undefined)?.messages.fetch(result?.messageId)
+            .then(async msg => {
+                if (msg?.author.id !== client.user?.id) {
+                    return await client.method.interactionSend(interaction, { content: lang.buttonreaction_message_other_user_error });
+                };
+
+                msg.edit({
+                    components: []
+                });
+
+                // await client.method.iHorizonLogs.send(interaction, {
+                //     title: lang.buttonreaction_logs_embed_title_added,
+                //     description: lang.buttonreaction_logs_embed_description_added
+                //         .replace("${interaction.user.id}", interaction.member?.user.id!)
+                //         .replace("${messagei}", messagei!)
+                //         .replace("${reaction}", reaction)
+                //         .replace("${role}", role?.toString()!)
+                // });
+
+                await client.db.delete(`${interaction.guildId}.GUILD.RESTORECORD`);
+
+                await client.method.interactionSend(interaction, {
+                    content: `${interaction.user.toString()}, vous venez de supprimer la configuration du module "RestoreCord". Par mesure de sécurité (des données), je supprime uniquement le bouton, les données oauth2 et le secret code ne sont pas supprimer!\n# Elle seront supprimer dans 48 heures! `, ephemeral: true
+                });
+            })
+            .catch(async (err) => {
+                console.error(err)
+                await client.method.interactionSend(interaction, { content: lang.reactionroles_cant_fetched_reaction_remove })
+                return;
+            });
+        return;
+
+    },
+};
