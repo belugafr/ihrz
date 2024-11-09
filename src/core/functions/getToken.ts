@@ -25,7 +25,7 @@ import { encrypt } from "./encryptDecryptMethod.js";
 
 export async function getToken(): Promise<string | undefined> {
     if (config.api.HorizonGateway) {
-        let url = config.api.HorizonGateway + "api/ihorizon/v1/login";
+        let url = config.api.HorizonGateway + "/api/ihorizon/v1/login";
         let key = config.api.apiToken;
 
         try {
