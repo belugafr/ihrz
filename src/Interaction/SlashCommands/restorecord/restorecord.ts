@@ -189,7 +189,7 @@ export const command: Command = {
         },
 
     ],
-    category: 'newfeatures',
+    category: 'restorecord',
     thinking: false,
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        // Guard's Typing
