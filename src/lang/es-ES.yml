@@ -373,6 +373,8 @@ help_ownihrz_dsc: "¡Hospeda y gestiona tu propio bot personalizado de iHorizon!
 help_ownihrz_fields: "OWNIHRZ"
 help_notifier_dsc: "¡Recibe una notificación cuando un Youtuber o Streamer publique un video!"
 help_notifier_fields: "Notificador"
+help_restorecord_fields: "RestoreCord"
+help_restorecord_dsc: "Verificación del servidor con oAuth2. Si tu servidor ha sido atacado o eliminado, ¡puedes recuperar a tus antiguos miembros con oAuth2!"
 
 # /say
 say_footer_msg: "\n\nEnviado desde `/say` por ${interaction.user}"

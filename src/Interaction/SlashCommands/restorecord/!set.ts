@@ -29,9 +29,9 @@ import {
     GuildTextBasedChannel,
     PermissionsBitField
 } from 'discord.js';
-import { LanguageData } from '../../../../../types/languageData';
-import { SubCommandArgumentValue } from '../../../../core/functions/method';
-import { createRestoreCord, createRestoreCordLink } from '../../../../core/functions/restoreCordHelper.js';
+import { LanguageData } from '../../../../types/languageData';
+import { SubCommandArgumentValue } from '../../../core/functions/method';
+import { createRestoreCord, createRestoreCordLink } from '../../../core/functions/restoreCordHelper.js';
 
 export default {
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: SubCommandArgumentValue) => {

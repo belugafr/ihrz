@@ -30,9 +30,9 @@ import {
     PermissionsBitField,
 } from 'discord.js';
 import WebSocket from 'ws';
-import { forceJoinRestoreCord, getGuildDataPerSecretCode } from '../../../../core/functions/restoreCordHelper.js';
-import { SubCommandArgumentValue } from '../../../../core/functions/method.js';
-import { LanguageData } from '../../../../../types/languageData.js';
+import { forceJoinRestoreCord, getGuildDataPerSecretCode } from '../../../core/functions/restoreCordHelper.js';
+import { SubCommandArgumentValue } from '../../../core/functions/method.js';
+import { LanguageData } from '../../../../types/languageData.js';
 
 export default {
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: SubCommandArgumentValue) => {

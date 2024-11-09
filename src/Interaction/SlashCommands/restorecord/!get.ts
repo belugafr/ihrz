@@ -29,11 +29,11 @@ import {
     EmbedBuilder,
     PermissionsBitField,
 } from 'discord.js';
-import { LanguageData } from '../../../../../types/languageData';
-import { SubCommandArgumentValue } from '../../../../core/functions/method';
-import { getGuildDataPerSecretCode, securityCodeUpdate } from '../../../../core/functions/restoreCordHelper.js';
-import { discordLocales } from '../../../../files/locales.js';
-import { format } from '../../../../core/functions/date-and-time.js';
+import { LanguageData } from '../../../../types/languageData';
+import { SubCommandArgumentValue } from '../../../core/functions/method';
+import { getGuildDataPerSecretCode, securityCodeUpdate } from '../../../core/functions/restoreCordHelper.js';
+import { discordLocales } from '../../../files/locales.js';
+import { format } from '../../../core/functions/date-and-time.js';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 

@@ -373,6 +373,8 @@ help_ownihrz_dsc: "カスタムiHorizonボットをホストして管理しよ�
 help_ownihrz_fields: "OWNIHRZ"
 help_notifier_dsc: "YouTuberやストリーマーが動画を公開したら通知を受け取ろう！"
 help_notifier_fields: "通知機能"
+help_restorecord_fields: "RestoreCord"
+help_restorecord_dsc: "oAuth2を使用したサーバー検証。サーバーが攻撃されたり削除された場合でも、oAuth2を使用して古いメンバーを復元できます！"
 
 # /say
 say_footer_msg: "\n\n`${interaction.user}` から `/say` から送信"

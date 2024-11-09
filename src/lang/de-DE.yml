@@ -373,6 +373,8 @@ help_ownihrz_dsc: "Hoste und verwalte deinen eigenen benutzerdefinierten iHorizo
 help_ownihrz_fields: "OWNIHRZ"
 help_notifier_dsc: "Werde benachrichtigt, wenn ein YouTuber oder Streamer ein Video veröffentlicht!"
 help_notifier_fields: "Benachrichtigung"
+help_restorecord_fields: "RestoreCord"
+help_restorecord_dsc: "Verifizierung des Servers mit oAuth2. Wenn Ihr Server angegriffen oder gelöscht wurde, können Sie Ihre alten Mitglieder über oAuth2 zurückholen!"
 
 # /say
 say_footer_msg: "\n\nGesendet von `/sagen` von ${interaction.user}"

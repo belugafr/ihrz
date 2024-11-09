@@ -373,6 +373,8 @@ help_ownihrz_dsc: "Host and manage your custom iHorizon bot ! (OWNIHRZ)"
 help_ownihrz_fields: "OWNIHRZ"
 help_notifier_dsc: "Be notified when a Youtuber, Streamer publish a video!"
 help_notifier_fields: "Notifier"
+help_restorecord_fields: "RestoreCord"
+help_restorecord_dsc: "Made server verification with oAuth2. When you server got raided/termed, with this oAuth2, you can recover your old members !"
 
 # /say
 say_footer_msg: "\n\nSent from `/say` by ${interaction.user}"
