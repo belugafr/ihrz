@@ -107,7 +107,7 @@ export function HorizonGateway(gateway_method: GatewayMethod, value1?: any, valu
             data += "/api/ihorizon/v1/forcejoin"
             break;
         case 3:
-            data += "/api/ihorizon/v1/forcejoin"
+            data += "/api/ihorizon/v1/securityCodeUpdate"
             break
     }
 
