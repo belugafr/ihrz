@@ -153,7 +153,6 @@ export default {
 
         const generateImageEmbed = (): EmbedBuilder => {
             const thirdCategoryEmbed = new EmbedBuilder()
-                .setTitle("Troisième catégorie - Informations supplémentaires")
                 .setImage("attachment://image.png")
                 .setColor(2829617)
                 .setTimestamp()
@@ -165,7 +164,7 @@ export default {
 
         const generateEmbed = (page: number): EmbedBuilder => {
             const embed = new EmbedBuilder()
-                .setTitle("Configurations du module de RestoreCord")
+                .setTitle("Stocked user(s)")
                 .setDescription(`Page ${page + 1} / ${Math.ceil(members.length / itemsPerPage)}`)
                 .setFooter(footer)
                 .setTimestamp();

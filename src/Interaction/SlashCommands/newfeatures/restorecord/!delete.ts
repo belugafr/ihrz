@@ -60,19 +60,10 @@ export default {
                     components: []
                 });
 
-                // await client.method.iHorizonLogs.send(interaction, {
-                //     title: lang.buttonreaction_logs_embed_title_added,
-                //     description: lang.buttonreaction_logs_embed_description_added
-                //         .replace("${interaction.user.id}", interaction.member?.user.id!)
-                //         .replace("${messagei}", messagei!)
-                //         .replace("${reaction}", reaction)
-                //         .replace("${role}", role?.toString()!)
-                // });
-
                 await client.db.delete(`${interaction.guildId}.GUILD.RESTORECORD`);
 
                 await client.method.interactionSend(interaction, {
-                    content: `${interaction.user.toString()}, vous venez de supprimer la configuration du module "RestoreCord". Par mesure de sécurité (des données), je supprime uniquement le bouton, les données oauth2 et le secret code ne sont pas supprimer!\n# Elle seront supprimer dans 48 heures! `, ephemeral: true
+                    content: `${interaction.user.toString()}, you have just deleted the configuration of the "RestoreCord" module. For security (data) reasons, I will only delete the button, but the oauth2 data and the secret code will be deleted in 48 hours!`, ephemeral: true
                 });
             })
             .catch(async (err) => {

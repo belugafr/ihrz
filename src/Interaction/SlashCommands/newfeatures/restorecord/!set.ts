@@ -79,27 +79,16 @@ export default {
                             ]
                         })
 
-                        // await client.method.iHorizonLogs.send(interaction, {
-                        //     title: lang.buttonreaction_logs_embed_title_added,
-                        //     description: lang.buttonreaction_logs_embed_description_added
-                        //         .replace("${interaction.user.id}", interaction.member?.user.id!)
-                        //         .replace("${messagei}", messagei!)
-                        //         .replace("${reaction}", reaction)
-                        //         .replace("${role}", role?.toString()!)
-                        // });
-
                         let msgLink = `https://discord.com/channels/${interaction.guildId}/${channel?.id}/${messagei}`;
 
                         await client.method.interactionSend(interaction, {
-                            content: `${interaction.user.toString()}, vous venez de configurer le module "RestoreCord". Maintenant, quand un membre du serveur discord clique sur le bouton et qu'il se connecteras en Oauth2, il seras dans la base de données.
-Il pourras tôt ou tard, rejoindre le serveur automatiquement avec l'oAuth2.\n# LISEZ AVEC ATTENTION\nLe message ${msgLink} possède maintenant un bouton qui feras office de vérification.
-VOICI LE CODE PRIVÉE QUI NE DOIS ÊTRE DILVUGUÉ À PERSONNES. UNE PERSONNES POSSÈDANT CE CODE POURRAIT, LE SUPPRIMER, AJOUTER DES MEMBRES SUR SONT SERVEUR... GARDER-LE QUEL'QUES PART. iHorizon NE VOUS LE DONNERAS PLUS JAMAIS:
-\`\`\`${res.secretCode}\`\`\``, ephemeral: true
+                            content: `${interaction.user.toString()}, you have just set up the "RestoreCord" module. Now, when a member of the Discord server clicks on the button and logs in via OAuth2, they will be added to the database. They will eventually be able to automatically join the server with OAuth2.\n# READ CAREFULLY\nThe message ${msgLink} now has a button that will serve as a verification.\nHERE IS THE PRIVATE CODE THAT MUST NOT BE DISCLOSED TO ANYONE. A PERSON WITH THIS CODE COULD DELETE IT, ADD MEMBERS TO THEIR SERVER... KEEP IT SOMEWHERE SAFE. iHorizon WILL NEVER GIVE IT TO YOU AGAIN:\n\`\`\`${res.secretCode}\`\`\``,
+                            ephemeral: true
                         });
 
-                        await interaction.user.send(`# Le code de RestoreCord de ${interaction.guild.name}\n\`\`\`${res.secretCode}\`\`\``)
-                            .catch(() => interaction.followUp({ content: "J'ai voulu vous envoyer le code en message privée mais vous avez bloquer vos MP :/", ephemeral: true }))
-                            .then(() => interaction.followUp({ content: "Au cas où, je vous ai envoyer le code en message privée !", ephemeral: true }))
+                        await interaction.user.send(`# The RestoreCord code for ${interaction.guild.name}\n\`\`\`${res.secretCode}\`\`\``)
+                            .catch(() => interaction.followUp({ content: "I tried to send you the code in a private message, but you have blocked your DMs :/", ephemeral: true }))
+                            .then(() => interaction.followUp({ content: "In case you missed it, I sent you the code in a private message!", ephemeral: true }))
                             ;
 
                         await client.db.set(`${interaction.guildId}.GUILD.RESTORECORD`, {
