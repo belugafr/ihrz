@@ -107,7 +107,6 @@ export default {
 
             })
             .catch(async (err) => {
-                console.error(err)
                 await client.method.interactionSend(interaction, { content: lang.reactionroles_cant_fetched_reaction_remove })
                 return;
             });

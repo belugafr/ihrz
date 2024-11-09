@@ -190,7 +190,7 @@ export const command: Command = {
 
     ],
     category: 'restorecord',
-    thinking: false,
+    thinking: true,
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        // Guard's Typing
         let command2 = interaction.options.getSubcommand();
