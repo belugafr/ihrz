@@ -91,7 +91,7 @@ export default {
 
                         await interaction.user.send(lang.rc_command_ok_dm.replace("${interaction.guild.name}", interaction.guild.name).replace("${res.secretCode}", res.secretCode!))
                             .catch(() => interaction.followUp({ content: lang.rc_command_dm_failed, ephemeral: true }))
-                            .then(() => interaction.followUp({ content: "", ephemeral: true }))
+                            .then(() => interaction.followUp({ content: lang.rc_command_dm_ok, ephemeral: true }))
                             ;
 
                         await client.db.set(`${interaction.guildId}.GUILD.RESTORECORD`, {
