@@ -32,6 +32,9 @@ export interface GuildRestoreCord {
     config: {
         roleId: string;
         securityCode: string;
+        author: oauth2Author;
+        createDate: number;
+        securityCodeUsed: number;
     },
     members: oauth2Member[];
 }
@@ -44,8 +47,14 @@ export interface oauth2Member {
     locale: string;
 }
 
+export interface oauth2Author {
+    id: string;
+    username: string;
+}
+
 export interface RestoreCord_EntryType {
     guildId: string;
+    author?: oauth2Author
     clientId?: string;
     apiToken?: string;
     roleId?: string;

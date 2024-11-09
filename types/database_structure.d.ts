@@ -373,7 +373,7 @@ export namespace DatabaseStructure {
         bypassChannels?: string[]
     }
 
-    export interface TermCordSchema {
+    export interface RestoreCordSchema {
         channelId: string;
         messageId: string;
     }
@@ -427,7 +427,7 @@ export namespace DatabaseStructure {
         };
         BLOCK_NEW_ACCOUNT?: BlockNewAccountSchema;
         ANTISPAM?: AntiSpam.AntiSpamOptions;
-        TERMCORD?: TermCordSchema
+        RESTORECORD?: RestoreCordSchema
     }
 
     export interface DbTicketConfigurationObject {
