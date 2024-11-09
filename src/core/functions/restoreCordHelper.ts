@@ -44,6 +44,7 @@ export interface oauth2Member {
     id: string;
     username: string;
     globalName: string;
+    registerTimestamp: number;
     locale: string;
 }
 
