@@ -247,7 +247,7 @@ export default {
                 )
         ];
 
-        const message = await interaction.reply({
+        const message = await client.method.interactionSend(interaction, {
             embeds: [currentCategory === 0 ? mainEmbed : generateEmbed(currentPage)],
             components: updateComponents(),
             files: [await client.method.bot.footerAttachmentBuilder(interaction)],
