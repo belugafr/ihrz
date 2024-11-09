@@ -73,7 +73,7 @@ export default {
                                 new ActionRowBuilder<ButtonBuilder>().addComponents(
                                     new ButtonBuilder()
                                         .setStyle(ButtonStyle.Link)
-                                        .setLabel("Verify")
+                                        .setLabel(lang.rc_verify)
                                         .setURL(buttonLink)
                                 )
                             ]
@@ -82,13 +82,16 @@ export default {
                         let msgLink = `https://discord.com/channels/${interaction.guildId}/${channel?.id}/${messagei}`;
 
                         await client.method.interactionSend(interaction, {
-                            content: `${interaction.user.toString()}, you have just set up the "RestoreCord" module. Now, when a member of the Discord server clicks on the button and logs in via OAuth2, they will be added to the database. They will eventually be able to automatically join the server with OAuth2.\n# READ CAREFULLY\nThe message ${msgLink} now has a button that will serve as a verification.\nHERE IS THE PRIVATE CODE THAT MUST NOT BE DISCLOSED TO ANYONE. A PERSON WITH THIS CODE COULD DELETE IT, ADD MEMBERS TO THEIR SERVER... KEEP IT SOMEWHERE SAFE. iHorizon WILL NEVER GIVE IT TO YOU AGAIN:\n\`\`\`${res.secretCode}\`\`\``,
+                            content: lang.rc_command_ok
+                                .replace("${interaction.user.toString()}", interaction.user.toString())
+                                .replace("${res.secretCode}", String(res.secretCode))
+                                .replace("${msgLink}", msgLink),
                             ephemeral: true
                         });
 
-                        await interaction.user.send(`# The RestoreCord code for ${interaction.guild.name}\n\`\`\`${res.secretCode}\`\`\``)
-                            .catch(() => interaction.followUp({ content: "I tried to send you the code in a private message, but you have blocked your DMs :/", ephemeral: true }))
-                            .then(() => interaction.followUp({ content: "In case you missed it, I sent you the code in a private message!", ephemeral: true }))
+                        await interaction.user.send(lang.rc_command_ok_dm.replace("${interaction.guild.name}", interaction.guild.name).replace("${res.secretCode}", res.secretCode!))
+                            .catch(() => interaction.followUp({ content: lang.rc_command_dm_failed, ephemeral: true }))
+                            .then(() => interaction.followUp({ content: "", ephemeral: true }))
                             ;
 
                         await client.db.set(`${interaction.guildId}.GUILD.RESTORECORD`, {
@@ -98,7 +101,7 @@ export default {
 
                     })
                     .catch(async () => {
-                        await client.method.interactionSend(interaction, { content: "Error: HorizonGateway maybe down" });
+                        await client.method.interactionSend(interaction, { content: lang.rc_command_horizongw_down });
                         return;
                     })
 

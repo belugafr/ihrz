@@ -54,7 +54,9 @@ export default {
         const Data = getGuildDataPerSecretCode(await table.all(), secretCode);
 
         if (!Data) return client.method.interactionSend(interaction, {
-            content: `${client.iHorizon_Emojis.icon.No_Logo} The RestoreCord module with key: **${secretCode}** doesn't exist!`,
+            content: lang.rc_key_doesnt_exist
+                .replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                .replace("${secretCode}", secretCode),
             ephemeral: true
         });
 
@@ -69,13 +71,13 @@ export default {
 
         const mainEmbed = new EmbedBuilder()
             .setColor(2829617)
-            .setTitle("RestoreCord General Infos")
+            .setTitle(lang.rc_get_mainEmbed_title)
             .setFields(
-                { name: "Server Id", value: Data.id || "", inline: true },
-                { name: "Given role after verify", value: interaction.guild.roles.cache.get(Data.data.config.roleId)?.toString() || Data.data.config.roleId, inline: true },
-                { name: "Create at", value: `*the date is in MM/DD/YYYY HH:mm format*\n\n${format(new Date(Data.data.config.createDate || 0), "MM/DD/YYYY HH:mm")}`, inline: false },
-                { name: "Key Used Count", value: String(Data.data.config.securityCodeUsed || 0), inline: true },
-                { name: "Configuration Author", value: (await client.users.fetch(Data.data.config.author.id)).toString() || `Unknown user (${Data.data.config.author.id})`, inline: true }
+                { name: lang.rc_get_mainEmbed_field1_name, value: Data.id || "", inline: true },
+                { name: lang.rc_get_mainEmbed_field2_name, value: interaction.guild.roles.cache.get(Data.data.config.roleId)?.toString() || Data.data.config.roleId, inline: true },
+                { name: lang.rc_get_mainEmbed_field3_name, value: `${lang.rc_get_mainEmbed_field3_value}\n\n${format(new Date(Data.data.config.createDate || 0), "MM/DD/YYYY HH:mm")}`, inline: false },
+                { name: lang.rc_get_mainEmbed_field4_name, value: String(Data.data.config.securityCodeUsed || 0), inline: true },
+                { name: lang.rc_get_mainEmbed_field5_name, value: (await client.users.fetch(Data.data.config.author.id)).toString() || lang.rc_get_unkwnon_user.replace("${Data.data.config.author.id}", Data.data.config.author.id), inline: true }
             )
             .setFooter(footer);
 
@@ -104,16 +106,16 @@ export default {
                 return memberDateString === dateLabel;
             }).length;
         });
-        
+
         const localeData = Object.entries(members.reduce((acc: Record<string, number>, member) => {
             acc[member.locale] = (acc[member.locale] || 0) + 1;
             return acc;
         }, {}))
-        .sort(([, a], [, b]) => b - a)
-        .reduce((acc, [key, value]) => {
-            acc[key] = value;
-            return acc;
-        }, {} as Record<string, number>);
+            .sort(([, a], [, b]) => b - a)
+            .reduce((acc, [key, value]) => {
+                acc[key] = value;
+                return acc;
+            }, {} as Record<string, number>);
 
         const recentVerifications = members
             .sort((a, b) => b.registerTimestamp - a.registerTimestamp)
@@ -131,24 +133,32 @@ export default {
         let given_role = interaction.guild.roles.cache.get(Data.data.config.roleId)?.name;
 
         htmlContent = htmlContent
-            .replace('{author_pfp}', interaction.member.user.displayAvatarURL({ size: 512 }))
-            .replace('{author_username}', interaction.member.user.globalName || interaction.member.user.displayName)
-            .replace('{guild_name}', interaction.guild.name)
-            .replace('{config_author}', Data.data.config.author.username)
-            .replace('{create_date}', new Date(Data.data.config.createDate).toLocaleDateString('en-US', {
+            .replaceAll('{author_pfp}', interaction.member.user.displayAvatarURL({ size: 512 }))
+            .replaceAll('{author_username}', interaction.member.user.globalName || interaction.member.user.displayName)
+            .replaceAll('{guild_name}', interaction.guild.name)
+            .replaceAll('{config_author}', Data.data.config.author.username)
+            .replaceAll('{create_date}', new Date(Data.data.config.createDate).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
             }))
-            .replace('{role_id}', given_role !== undefined ? "@" + given_role : Data.data.config.roleId)
-            .replace('{total_members}', String(members.length))
-            .replace('{total_verifications}', String(members.length))
-            .replace('{key_used_count}', String(Data.data.config.securityCodeUsed))
-            .replace('{registrationData}', JSON.stringify(registrationData))
-            .replace('{timeLabels}', JSON.stringify(timeLabels))
-            .replace('{localeData}', JSON.stringify(localeData))
-            .replace('{recentVerifications}', JSON.stringify(recentVerifications));
-
+            .replaceAll('{role_id}', given_role !== undefined ? "@" + given_role : Data.data.config.roleId)
+            .replaceAll('{total_members}', String(members.length))
+            .replaceAll('{total_verifications}', String(members.length))
+            .replaceAll('{key_used_count}', String(Data.data.config.securityCodeUsed))
+            .replaceAll('{registrationData}', JSON.stringify(registrationData))
+            .replaceAll('{timeLabels}', JSON.stringify(timeLabels))
+            .replaceAll('{localeData}', JSON.stringify(localeData))
+            .replaceAll('{recentVerifications}', JSON.stringify(recentVerifications))
+            .replaceAll('{created_by}', lang.rc_created_by)
+            .replaceAll('{created_on}', lang.rc_created_on)
+            .replaceAll('{total_members2}', lang.rc_total_membres)
+            .replaceAll('{total_verification2}', lang.rc_total_verification)
+            .replaceAll('{key_used_count2}', lang.rc_total_key_used_count)
+            .replaceAll('{recent_locales_distribution}', lang.rc_recent_locales_distribution)
+            .replaceAll('{recent_verifications}', lang.rc_recent_verifications)
+            .replaceAll('{registration_over_time}', lang.rc_registration_over_time)
+            .replaceAll('{role}', lang.var_roles);
 
         const image = await client.method.imageManipulation.html2Png(htmlContent, {
             elementSelector: '.container',
@@ -171,8 +181,11 @@ export default {
 
         const generateEmbed = (page: number): EmbedBuilder => {
             const embed = new EmbedBuilder()
-                .setTitle("Stocked user(s)")
-                .setDescription(`Page ${page + 1} / ${Math.ceil(members.length / itemsPerPage)}`)
+                .setTitle(lang.rc_get_secondEmbed_title)
+                .setDescription(lang.rc_get_secondEmbed_footer
+                    .replace("${from}", String(page + 1))
+                    .replace("${to)", String(Math.ceil(members.length / itemsPerPage)))
+                )
                 .setFooter(footer)
                 .setTimestamp();
 
@@ -180,7 +193,7 @@ export default {
             const endIndex = Math.min(startIndex + itemsPerPage, members.length);
             embed.setDescription(members.slice(startIndex, endIndex).map((member, i) => {
                 const localeEmoji = discordLocales[member.locale] || "🌐";
-                return `${i + 1}) <@${member.id}>\n\`Locale\`: ${localeEmoji} (**${member.locale}**)\n\`Username\`: **${member.username}**`;
+                return `${i + 1}) <@${member.id}>\n\`${lang.rc_get_locale}\`: ${localeEmoji} (**${member.locale}**)\n\`${lang.rc_get_username}\`: **${member.username}**`;
             }).join("\n"));
 
             return embed;

@@ -48,7 +48,7 @@ export default {
 
         let result: DatabaseStructure.RestoreCordSchema | null = await client.db.get(`${interaction.guildId}.GUILD.RESTORECORD`);
 
-        if (!result) return client.method.interactionSend(interaction, { content: "La configuration du module n'est pas trouver!" });
+        if (!result) return client.method.interactionSend(interaction, { content: lang.rc_delete_config_not_found });
 
         (interaction.guild.channels.cache.get(result?.channelId!) as GuildTextBasedChannel | undefined)?.messages.fetch(result?.messageId)
             .then(async msg => {
@@ -63,7 +63,9 @@ export default {
                 await client.db.delete(`${interaction.guildId}.GUILD.RESTORECORD`);
 
                 await client.method.interactionSend(interaction, {
-                    content: `${interaction.user.toString()}, you have just deleted the configuration of the "RestoreCord" module. For security (data) reasons, I will only delete the button, but the oauth2 data and the secret code will be deleted in 48 hours!`, ephemeral: true
+                    content: lang.rc_delete_command_ok
+                        .replace("${interaction.user.toString()}", interaction.user.toString()),
+                    ephemeral: true
                 });
             })
             .catch(async (err) => {

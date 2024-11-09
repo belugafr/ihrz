@@ -1701,6 +1701,55 @@ notifier_config_message_embed_fields_notifyMessage: "Messaggio di Notifica"
 notifier_config_message_awaiting_response: "Scrivi il messaggio di notifica."
 notifier_config_message_command_work_on_enable: "Abilitazione del lavoro sul messaggio di notifica."
 
+
+# Module RestoreCord
+# role, set, delete, get, force-join
+
+rc_key_doesnt_exist: "${client.iHorizon_Emojis.icon.No_Logo} Il modulo RestoreCord con la chiave: **${secretCode}** non esiste!"
+rc_verify: "Verifica"
+
+# /restorecord role
+rc_role_embed_title: "Nuova Modifica RestoreCord"
+rc_role_embed_field1_name: "Nuovo ruolo assegnato dopo la verifica"
+
+# /restorecord set
+rc_command_ok: "${interaction.user.toString()}, hai appena configurato il modulo \"RestoreCord\". Ora, quando un membro del server Discord clicca sul pulsante e accede tramite OAuth2, verrà aggiunto al database. Potranno eventualmente unirsi automaticamente al server con OAuth2.\n# LEGGI ATTENTAMENTE\nIl messaggio ${msgLink} ora ha un pulsante che servirà per la verifica.\nECCO IL CODICE PRIVATO CHE NON DEVE ESSERE RIVELATO A NESSUNO. UNA PERSONA CON QUESTO CODICE POTREBBE ELIMINARLO, AGGIUNGERE MEMBRI AL PROPRIO SERVER... CONSERVALO IN UN POSTO SICURO. iHorizon NON TE LO DARÀ MAI PIÙ:\n```${res.secretCode}```"
+rc_command_ok_dm: "# Il codice RestoreCord per ${interaction.guild.name}\n```${res.secretCode}```"
+rc_command_dm_failed: "Ho provato a inviarti il codice in un messaggio privato, ma hai i DM bloccati :/"
+rc_command_dm_ok: "Nel caso te lo fossi perso, ti ho inviato il codice in un messaggio privato!"
+rc_command_horizongw_down: "Errore: HorizonGateway potrebbe essere offline"
+
+# /restorecord delete
+rc_delete_config_not_found: "La configurazione del modulo su questo server non è stata trovata!"
+rc_delete_command_ok: "${interaction.user.toString()}, hai appena eliminato la configurazione del modulo \"RestoreCord\". Per motivi di sicurezza (dati), eliminerò solo il pulsante, ma i dati oauth2 e il codice segreto verranno eliminati tra 48 ore!"
+
+# /restorecord get
+rc_get_mainEmbed_title: "Informazioni Generali RestoreCord"
+rc_get_mainEmbed_field1_name: "ID Server"
+rc_get_mainEmbed_field2_name: "Ruolo assegnato dopo la verifica"
+rc_get_mainEmbed_field3_name: "Creato il"
+rc_get_mainEmbed_field3_value: "*la data è nel formato MM/GG/AAAA HH:mm*"
+rc_get_mainEmbed_field4_name: "Contatore utilizzo chiave"
+rc_get_mainEmbed_field5_name: "Autore della configurazione"
+rc_get_secondEmbed_title: "Utente/i memorizzato/i"
+rc_get_secondEmbed_footer: "Pagina ${from} / ${to}"
+rc_get_locale: "Lingua"
+rc_get_username: "Nome utente"
+rc_get_unkwnon_user: "Utente sconosciuto (${Data.data.config.author.id})"
+
+# /restorecord force-join
+rc_forceJoin_embed_title: "RestoreCord - Unione Forzata"
+rc_forceJoin_embed_desc: "## Sei sicuro di voler forzare l'unione dei membri in questo server?\n### LEGGI ATTENTAMENTE:\nSE CONFERMI QUESTA AZIONE, LA CHIAVE PRIVATA ATTUALE VERRÀ DISTRUTTA. TI VERRÀ FORNITA UNA NUOVA CHIAVE.\n\n\n"
+rc_forceJoin_embed_field1: "Membri trovati"
+rc_forceJoin_embed_field2: "Membri già presenti"
+rc_forceJoin_embed_field3: "Possibili unioni"
+rc_forceJoin_embed_2_field1: "Possibili unioni"
+rc_forceJoin_embed_2_field2: "Uniti"
+rc_forceJoin_ws_size: "# Preparazione all'aggiunta di **${value2}** membri al server."
+rc_forceJoin_ws_start: "# Processo di unione forzata in corso..."
+rc_forceJoin_ws_end: "# Processo di unione forzata completato."
+rc_forceJoin_ws_end_renew_msg: "# LEGGI ATTENTAMENTE\nECCO IL CODICE PRIVATO CHE NON DEVE ESSERE RIVELATO A NESSUNO. UNA PERSONA CON QUESTO CODICE POTREBBE ELIMINARLO, AGGIUNGERE MEMBRI AL PROPRIO SERVER... CONSERVALO IN UN POSTO SICURO. iHorizon NON TE LO DARÀ MAI PIÙ:\n```${value2}```"
+
 # -----------------------------/ \-----------------------------
 # Eventi del Modulo Confessioni
 confession_module_modal_title: "Invia una confessione"
@@ -1928,5 +1977,15 @@ buttonreaction_role_doesnt_exit: "Il ruolo nel mio database non esiste più nel 
 buttonreaction_role_too_high: "Il ruolo è troppo alto, non posso dare/rimuovere il ruolo. Devo cambiare i miei permessi!"
 buttonreaction_role_add: "Non hai più il ruolo ${fetched_role.toString()} ✅"
 buttonreaction_role_remove: "Hai ora il ruolo ${fetched_role.toString()} :tada:"
+
+# RestoreCord HTML
+rc_created_by: "Creato da:"
+rc_created_on: "Creato il:"
+rc_total_membres: "Membri Totali"
+rc_total_verification: "Verifiche Totali"
+rc_total_key_used_count: "Conteggio Usato Chiave"
+rc_recent_locales_distribution: "Distribuzione delle Località dei Membri"
+rc_recent_verifications: "Verifiche Recenti"
+rc_registration_over_time: "Registrazioni nel Tempo"
 
 # -----------------------------\ /-----------------------------

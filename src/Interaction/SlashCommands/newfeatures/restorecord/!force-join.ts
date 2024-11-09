@@ -51,7 +51,9 @@ export default {
         const Data = getGuildDataPerSecretCode(await table.all(), secretCode);
 
         if (!Data) return client.method.interactionSend(interaction, {
-            content: `${client.iHorizon_Emojis.icon.No_Logo} The RestoreCord module with key: **${secretCode}** doesn't exist!`,
+            content: lang.rc_key_doesnt_exist
+                .replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                .replace("${secretCode}", secretCode),
             ephemeral: true
         });
 
@@ -61,13 +63,13 @@ export default {
         });
 
         let embed = new EmbedBuilder()
-            .setTitle("[RestoreCord] Force Join")
-            .setDescription("## Are you sure to force-join member in this guild ?\n### READ CAREFULLY:\nIF YOU CONFIRM THIS ACTION, THE CURRENT PRIVATE KEY WILL BE DESTROYED. A NEW KEY WILL BE PROVIDED TO YOU.\n\n\n")
+            .setTitle(lang.rc_forceJoin_embed_title)
+            .setDescription(lang.rc_forceJoin_embed_desc)
             .setColor(2829617)
             .setFields(
-                { name: "Members found", value: String(members.length), inline: true },
-                { name: "Members already here", value: String(membersAlreadyHere.length), inline: true },
-                { name: "Possible join", value: String(members.length - membersAlreadyHere.length), inline: true },
+                { name: lang.rc_forceJoin_embed_field1, value: String(members.length), inline: true },
+                { name: lang.rc_forceJoin_embed_field2, value: String(membersAlreadyHere.length), inline: true },
+                { name: lang.rc_forceJoin_embed_field3, value: String(members.length - membersAlreadyHere.length), inline: true },
             );
 
         const response = await client.method.interactionSend(interaction, {
@@ -109,8 +111,8 @@ export default {
 
                 const updateEmbed = () => {
                     embed.setFields(
-                        { name: "Possible join", value: String(totalMembers - membersAlreadyHere.length), inline: true },
-                        { name: "Joined", value: String(addedCount), inline: true },
+                        { name: lang.rc_forceJoin_embed_2_field1, value: String(totalMembers - membersAlreadyHere.length), inline: true },
+                        { name: lang.rc_forceJoin_embed_2_field2, value: String(addedCount), inline: true },
                     );
                     interaction.editReply({ embeds: [embed] });
                 };
@@ -145,10 +147,10 @@ export default {
 
                         switch (value) {
                             case "size":
-                                embed.setDescription(`# Preparing to add **${value2}** members to the guild.`);
+                                embed.setDescription(lang.rc_forceJoin_ws_size.replace("${value2}", value2));
                                 break;
                             case "start":
-                                embed.setDescription(`# Force-joining in progress...`);
+                                embed.setDescription(lang.rc_forceJoin_ws_start);
                                 break;
                             case "add":
                                 addedCount++;
@@ -158,15 +160,16 @@ export default {
                                 }
                                 break;
                             case "end":
-                                embed.setDescription("# Force-joining process completed.");
+                                embed.setDescription(lang.rc_forceJoin_ws_end);
                                 await interaction.followUp({
-                                    content: `# READ CAREFULLY\nTHERE IS THE PRIVATE CODE THAT MUST NOT BE DISCLOSED TO ANYONE. A PERSON WITH THIS CODE COULD DELETE IT, ADD MEMBERS TO THEIR SERVER... KEEP IT SOMEWHERE SAFE. iHorizon WILL NEVER GIVE IT TO YOU AGAIN:\n\`\`\`${value2}\`\`\``,
+                                    content: lang.rc_forceJoin_ws_end_renew_msg
+                                        .replace("${value2}", value2),
                                     ephemeral: true
                                 });
 
-                                await interaction.user.send(`# The RestoreCord code for ${interaction.guild.name}\n\`\`\`${value2}\`\`\``)
-                                    .catch(() => interaction.followUp({ content: "I tried to send you the code in a private message, but you have blocked your DMs :/", ephemeral: true }))
-                                    .then(() => interaction.followUp({ content: "In case you missed it, I sent you the code in a private message!", ephemeral: true }))
+                                await interaction.user.send(lang.rc_command_ok_dm.replace("${interaction.guild.name}", interaction.guild.name).replace("${res.secretCode}", value2))
+                                    .catch(() => interaction.followUp({ content: lang.rc_command_dm_failed, ephemeral: true }))
+                                    .then(() => interaction.followUp({ content: lang.rc_command_dm_ok, ephemeral: true }))
                                     ;
                                 break;
                         }

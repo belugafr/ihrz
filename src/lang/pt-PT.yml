@@ -1701,6 +1701,55 @@ notifier_config_message_embed_fields_notifyMessage: "Mensagem de Notificação"
 notifier_config_message_awaiting_response: "Escreva a mensagem de notificação."
 notifier_config_message_command_work_on_enable: "Trabalhando na ativação da mensagem de notificação."
 
+
+# Módulo RestoreCord
+# função, configurar, excluir, obter, adesão forçada
+
+rc_key_doesnt_exist: "${client.iHorizon_Emojis.icon.No_Logo} O módulo RestoreCord com a chave: **${secretCode}** não existe!"
+rc_verify: "Verificar"
+
+# /restorecord função
+rc_role_embed_title: "Nova Modificação no RestoreCord"
+rc_role_embed_field1_name: "Nova função atribuída após verificação"
+
+# /restorecord configurar
+rc_command_ok: "${interaction.user.toString()}, você configurou o módulo \"RestoreCord\". Agora, quando um membro clicar no botão e fizer login via OAuth2, será adicionado ao banco de dados. Eventualmente, ele poderá se juntar ao servidor automaticamente via OAuth2.\n# LEIA ATENTAMENTE\nA mensagem ${msgLink} agora tem um botão para verificação.\nAQUI ESTÁ O CÓDIGO PRIVADO QUE NÃO DEVE SER DIVULGADO A NINGUÉM. UMA PESSOA COM ESTE CÓDIGO PODE EXCLUIR OU ADICIONAR MEMBROS AO SERVIDOR... GUARDE-O EM SEGURANÇA. O iHorizon NÃO FORNECERÁ ESTE CÓDIGO NOVAMENTE:\n```${res.secretCode}```"
+rc_command_ok_dm: "# Código RestoreCord para ${interaction.guild.name}\n```${res.secretCode}```"
+rc_command_dm_failed: "Tentei enviar o código por DM, mas seus DMs estão bloqueados :/"
+rc_command_dm_ok: "Caso não tenha percebido, enviei o código em uma mensagem privada!"
+rc_command_horizongw_down: "Erro: HorizonGateway pode estar offline"
+
+# /restorecord excluir
+rc_delete_config_not_found: "A configuração do módulo neste servidor não foi encontrada!"
+rc_delete_command_ok: "${interaction.user.toString()}, você acabou de excluir a configuração do módulo \"RestoreCord\". Por motivos de segurança (dados), excluirei apenas o botão, mas os dados OAuth2 e o código secreto serão excluídos em 48 horas!"
+
+# /restorecord obter
+rc_get_mainEmbed_title: "Informações Gerais do RestoreCord"
+rc_get_mainEmbed_field1_name: "ID do Servidor"
+rc_get_mainEmbed_field2_name: "Função atribuída após verificação"
+rc_get_mainEmbed_field3_name: "Data de Criação"
+rc_get_mainEmbed_field3_value: "*data no formato MM/DD/YYYY HH:mm*"
+rc_get_mainEmbed_field4_name: "Contagem de Uso da Chave"
+rc_get_mainEmbed_field5_name: "Autor da Configuração"
+rc_get_secondEmbed_title: "Usuário(s) Armazenado(s)"
+rc_get_secondEmbed_footer: "Página ${from} / ${to)}"
+rc_get_locale: "Localidade"
+rc_get_username: "Nome de Usuário"
+rc_get_unkwnon_user: "Usuário desconhecido (${Data.data.config.author.id})"
+
+# /restorecord adesão forçada
+rc_forceJoin_embed_title: "RestoreCord - Adesão Forçada"
+rc_forceJoin_embed_desc: "## Tem certeza de que deseja forçar a adesão de membros a este servidor?\n### LEIA ATENTAMENTE:\nAO CONFIRMAR ESTA AÇÃO, A CHAVE PRIVADA ATUAL SERÁ DESTRUÍDA. VOCÊ RECEBERÁ UMA NOVA CHAVE.\n\n\n"
+rc_forceJoin_embed_field1: "Membros encontrados"
+rc_forceJoin_embed_field2: "Membros já presentes"
+rc_forceJoin_embed_field3: "Possível adesão"
+rc_forceJoin_embed_2_field1: "Possível adesão"
+rc_forceJoin_embed_2_field2: "Aderidos"
+rc_forceJoin_ws_size: "# Preparando para adicionar **${value2}** membros ao servidor."
+rc_forceJoin_ws_start: "# Processo de adesão forçada em andamento..."
+rc_forceJoin_ws_end: "# Processo de adesão forçada concluído."
+rc_forceJoin_ws_end_renew_msg: "# LEIA ATENTAMENTE\nESTE É O CÓDIGO PRIVADO QUE NÃO DEVE SER DIVULGADO. ALGUÉM COM ESTE CÓDIGO PODE EXCLUIR OU ADICIONAR MEMBROS AO SERVIDOR... GUARDE-O EM SEGURANÇA. iHorizon NÃO FORNECERÁ ESTE CÓDIGO NOVAMENTE:\n```${value2}```"
+
 # -----------------------------/ \-----------------------------
 # Eventos do Módulo de Confissões
 confession_module_modal_title: "Enviar uma confissão"
@@ -1928,5 +1977,15 @@ buttonreaction_role_doesnt_exit: "O papel na minha base de dados não existe mai
 buttonreaction_role_too_high: "O papel é muito alto, não posso dar/remover o papel. Preciso mudar minhas permissões!"
 buttonreaction_role_add: "Você não tem mais o papel ${fetched_role.toString()} ✅"
 buttonreaction_role_remove: "Agora você tem o papel ${fetched_role.toString()} :tada:"
+
+# RestoreCord HTML
+rc_created_by: "Criado por:"
+rc_created_on: "Criado em:"
+rc_total_membres: "Total de Membros"
+rc_total_verification: "Total de Verificações"
+rc_total_key_used_count: "Contagem de Uso da Chave"
+rc_recent_locales_distribution: "Distribuição de Locales dos Membros"
+rc_recent_verifications: "Verificações Recentes"
+rc_registration_over_time: "Registros ao Longo do Tempo"
 
 # -----------------------------\ /-----------------------------

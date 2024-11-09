@@ -148,29 +148,29 @@
             <div class="header-left">
                 <img src="{author_pfp}" alt="Profile Picture">
                 <div class="header-text">
-                    <h1>RestoreCord - </h1>
+                    <h1>RestoreCord</h1>
                     <p>{guild_name}</p>
                 </div>
             </div>
             <div class="header-right">
-                <p>Created by: {config_author}</p>
-                <p class="date">Created on: {create_date}</p>
-                <p>Role: {role_id}</p>
+                <p>{created_by} {config_author}</p>
+                <p class="date">{created_on} {create_date}</p>
+                <p>{role}: {role_id}</p>
             </div>
         </div>
 
         <div class="stats-grid">
             <div class="stat-box">
                 <div class="stat-value">{total_members}</div>
-                <div class="stat-label">Total Members</div>
+                <div class="stat-label">{total_members2}</div>
             </div>
             <div class="stat-box">
                 <div class="stat-value">{total_verifications}</div>
-                <div class="stat-label">Total Verifications</div>
+                <div class="stat-label">{total_verification2}</div>
             </div>
             <div class="stat-box">
                 <div class="stat-value">{key_used_count}</div>
-                <div class="stat-label">Key Used Count</div>
+                <div class="stat-label">{key_used_count2}</div>
             </div>
         </div>
 
@@ -180,11 +180,11 @@
 
         <div class="locale-stats">
             <div class="locale-box">
-                <div class="locale-title">Member Locales Distribution</div>
+                <div class="locale-title">{recent_locales_distribution}</div>
                 <div id="localeList"></div>
             </div>
             <div class="locale-box">
-                <div class="locale-title">Recent Verifications</div>
+                <div class="locale-title">{recent_verifications}</div>
                 <div id="recentList"></div>
             </div>
         </div>
@@ -204,7 +204,7 @@
             data: {
                 labels: timeLabels,
                 datasets: [{
-                    label: 'Registrations Over Time',
+                    label: '{registration_over_time}',
                     data: registrationData,
                     borderColor: '#4e5d94',
                     backgroundColor: 'rgba(78, 93, 148, 0.2)',

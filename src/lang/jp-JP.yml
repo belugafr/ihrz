@@ -1701,6 +1701,55 @@ notifier_config_message_embed_fields_notifyMessage: "通知メッセージ"
 notifier_config_message_awaiting_response: "通知メッセージを書いてください。"
 notifier_config_message_command_work_on_enable: "通知メッセージの有効化作業中。"
 
+
+# RestoreCord モジュール
+# ロール、設定、削除、取得、強制参加
+
+rc_key_doesnt_exist: "${client.iHorizon_Emojis.icon.No_Logo} キー：**${secretCode}** による RestoreCord モジュールは存在しません！"
+rc_verify: "確認する"
+
+# /restorecord ロール
+rc_role_embed_title: "RestoreCord 新しい変更"
+rc_role_embed_field1_name: "確認後に付与される新しいロール"
+
+# /restorecord 設定
+rc_command_ok: "${interaction.user.toString()}、\"RestoreCord\" モジュールを設定しました。サーバーメンバーがボタンをクリックし、OAuth2でログインすると、データベースに追加されます。OAuth2を通じてサーバーに自動的に参加できるようになります。\n# よく読んでください\nメッセージ ${msgLink} には確認用のボタンがあります。\nこのコードは非常に重要です。他の誰にも公開しないでください。このコードを持っている人は、削除やメンバー追加ができてしまいます。安全な場所に保管してください。iHorizonは再発行しません:\n```${res.secretCode}```"
+rc_command_ok_dm: "# ${interaction.guild.name} 用の RestoreCord コード\n```${res.secretCode}```"
+rc_command_dm_failed: "DMを送信しようとしましたが、ブロックされています :/"
+rc_command_dm_ok: "念のため、DMでもコードを送信しました！"
+rc_command_horizongw_down: "エラー: HorizonGatewayがダウンしている可能性があります"
+
+# /restorecord 削除
+rc_delete_config_not_found: "このサーバーでのモジュール設定が見つかりません！"
+rc_delete_command_ok: "${interaction.user.toString()}、\"RestoreCord\" モジュールの設定を削除しました。セキュリティ上（データ保護）、ボタンのみ削除し、OAuth2データとシークレットコードは48時間以内に削除されます。"
+
+# /restorecord 取得
+rc_get_mainEmbed_title: "RestoreCord 一般情報"
+rc_get_mainEmbed_field1_name: "サーバーID"
+rc_get_mainEmbed_field2_name: "確認後に付与されるロール"
+rc_get_mainEmbed_field3_name: "作成日時"
+rc_get_mainEmbed_field3_value: "*日付は MM/DD/YYYY HH:mm 形式*"
+rc_get_mainEmbed_field4_name: "キー使用回数"
+rc_get_mainEmbed_field5_name: "設定作成者"
+rc_get_secondEmbed_title: "保存されたユーザー"
+rc_get_secondEmbed_footer: "ページ ${from} / ${to)}"
+rc_get_locale: "ロケール"
+rc_get_username: "ユーザー名"
+rc_get_unkwnon_user: "不明なユーザー (${Data.data.config.author.id})"
+
+# /restorecord 強制参加
+rc_forceJoin_embed_title: "RestoreCord - 強制参加"
+rc_forceJoin_embed_desc: "## このサーバーにメンバーを強制参加させますか？\n### 注意:\nこの操作を実行すると、現在のプライベートキーは破棄され、新しいキーが提供されます。\n\n\n"
+rc_forceJoin_embed_field1: "見つかったメンバー"
+rc_forceJoin_embed_field2: "既存のメンバー"
+rc_forceJoin_embed_field3: "参加可能"
+rc_forceJoin_embed_2_field1: "参加可能"
+rc_forceJoin_embed_2_field2: "参加済み"
+rc_forceJoin_ws_size: "# **${value2}** 人のメンバーをサーバーに追加準備中です。"
+rc_forceJoin_ws_start: "# 強制参加プロセスを開始しています..."
+rc_forceJoin_ws_end: "# 強制参加プロセスが完了しました。"
+rc_forceJoin_ws_end_renew_msg: "# 注意\nこのコードは非常に重要です。他の誰にも公開しないでください。このコードを持っている人は、削除やメンバー追加ができてしまいます。安全な場所に保管してください。iHorizonは再発行しません:\n```${value2}```"
+
 # -----------------------------/ \-----------------------------
 # 告白モジュールイベント
 confession_module_modal_title: "告白を送る"
@@ -1928,5 +1977,15 @@ buttonreaction_role_doesnt_exit: "私のデータベースにある役割は、�
 buttonreaction_role_too_high: "役割が高すぎるため、役割を与えたり削除したりできません。権限を変更する必要があります！"
 buttonreaction_role_add: "${fetched_role.toString()} の役割はもうありません ✅"
 buttonreaction_role_remove: "あなたは今、${fetched_role.toString()} の役割を持っています :tada:"
+
+# RestoreCord HTML
+rc_created_by: "作成者:"
+rc_created_on: "作成日:"
+rc_total_membres: "メンバー総数"
+rc_total_verification: "総認証数"
+rc_total_key_used_count: "キー使用回数"
+rc_recent_locales_distribution: "メンバーのロケール分布"
+rc_recent_verifications: "最近の認証"
+rc_registration_over_time: "時間経過による登録"
 
 # -----------------------------\ /-----------------------------

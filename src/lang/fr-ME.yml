@@ -1701,6 +1701,55 @@ notifier_config_message_embed_fields_notifyMessage: "Message de Notification"
 notifier_config_message_awaiting_response: "Écrivez le message de notification."
 notifier_config_message_command_work_on_enable: "Activation du travail sur le message de notification."
 
+
+# Module RestoreCord
+# role, set, delete, get, force-join
+
+rc_key_doesnt_exist: "${client.iHorizon_Emojis.icon.No_Logo} Le module RestoreCord avec la clé: **${secretCode}** n'existe pas!"
+rc_verify: "Vérifier"
+
+# /restorecord role
+rc_role_embed_title: "Nouvelle Modification RestoreCord"
+rc_role_embed_field1_name: "Nouveau rôle attribué après vérification"
+
+# /restorecord set
+rc_command_ok: "${interaction.user.toString()}, vous venez de configurer le module \"RestoreCord\". Désormais, lorsqu'un membre du serveur Discord clique sur le bouton et se connecte via OAuth2, il sera ajouté à la base de données. Il pourra éventuellement rejoindre automatiquement le serveur avec OAuth2.\n# À LIRE ATTENTIVEMENT\nLe message ${msgLink} possède maintenant un bouton qui servira de vérification.\nVOICI LE CODE PRIVÉ QUI NE DOIT ÊTRE DIVULGUÉ À PERSONNE. UNE PERSONNE AVEC CE CODE POURRAIT LE SUPPRIMER, AJOUTER DES MEMBRES À SON SERVEUR... GARDEZ-LE EN LIEU SÛR. iHorizon NE VOUS LE DONNERA PLUS JAMAIS:\n```${res.secretCode}```"
+rc_command_ok_dm: "# Le code RestoreCord pour ${interaction.guild.name}\n```${res.secretCode}```"
+rc_command_dm_failed: "J'ai essayé de vous envoyer le code en message privé, mais vos MP sont bloqués :/"
+rc_command_dm_ok: "Au cas où vous l'auriez manqué, je vous ai envoyé le code en message privé!"
+rc_command_horizongw_down: "Erreur: HorizonGateway est peut-être hors service"
+
+# /restorecord delete
+rc_delete_config_not_found: "La configuration du module sur ce serveur n'a pas pu être trouvée!"
+rc_delete_command_ok: "${interaction.user.toString()}, vous venez de supprimer la configuration du module \"RestoreCord\". Pour des raisons de sécurité (données), je ne supprimerai que le bouton, mais les données oauth2 et le code secret seront supprimés dans 48 heures!"
+
+# /restorecord get
+rc_get_mainEmbed_title: "Informations Générales RestoreCord"
+rc_get_mainEmbed_field1_name: "ID du Serveur"
+rc_get_mainEmbed_field2_name: "Rôle attribué après vérification"
+rc_get_mainEmbed_field3_name: "Créé le"
+rc_get_mainEmbed_field3_value: "*la date est au format MM/JJ/AAAA HH:mm*"
+rc_get_mainEmbed_field4_name: "Nombre d'utilisations de la clé"
+rc_get_mainEmbed_field5_name: "Auteur de la configuration"
+rc_get_secondEmbed_title: "Utilisateur(s) enregistré(s)"
+rc_get_secondEmbed_footer: "Page ${from} / ${to}"
+rc_get_locale: "Langue"
+rc_get_username: "Nom d'utilisateur"
+rc_get_unkwnon_user: "Utilisateur inconnu (${Data.data.config.author.id})"
+
+# /restorecord force-join
+rc_forceJoin_embed_title: "RestoreCord - Ajout Forcé"
+rc_forceJoin_embed_desc: "## Êtes-vous sûr de vouloir forcer l'ajout de membres dans ce serveur ?\n### À LIRE ATTENTIVEMENT :\nSI VOUS CONFIRMEZ CETTE ACTION, LA CLÉ PRIVÉE ACTUELLE SERA DÉTRUITE. UNE NOUVELLE CLÉ VOUS SERA FOURNIE.\n\n\n"
+rc_forceJoin_embed_field1: "Membres trouvés"
+rc_forceJoin_embed_field2: "Membres déjà présents"
+rc_forceJoin_embed_field3: "Ajouts possibles"
+rc_forceJoin_embed_2_field1: "Ajouts possibles"
+rc_forceJoin_embed_2_field2: "Ajoutés"
+rc_forceJoin_ws_size: "# Préparation à l'ajout de **${value2}** membres au serveur."
+rc_forceJoin_ws_start: "# Ajout forcé en cours..."
+rc_forceJoin_ws_end: "# Processus d'ajout forcé terminé."
+rc_forceJoin_ws_end_renew_msg: "# À LIRE ATTENTIVEMENT\nVOICI LE CODE PRIVÉ QUI NE DOIT ÊTRE DIVULGUÉ À PERSONNE. UNE PERSONNE AVEC CE CODE POURRAIT LE SUPPRIMER, AJOUTER DES MEMBRES À SON SERVEUR... GARDEZ-LE EN LIEU SÛR. iHorizon NE VOUS LE DONNERA PLUS JAMAIS:\n```${value2}```"
+
 # -----------------------------/ \-----------------------------
 # Événements du Module de Confession
 confession_module_modal_title: "Envoyer une confession"
@@ -1928,5 +1977,15 @@ buttonreaction_role_doesnt_exit: "Le rôle dans ma base de données n'existe plu
 buttonreaction_role_too_high: "Le rôle est trop élevé, je ne peux pas donner/enlever le rôle. J'ai besoin de changer mes permissions !"
 buttonreaction_role_add: "Vous n'avez plus le rôle ${fetched_role.toString()} ✅"
 buttonreaction_role_remove: "Vous avez maintenant le rôle ${fetched_role.toString()} :tada:"
+
+# RestoreCord HTML
+rc_created_by: "Créé par :"
+rc_created_on: "Créé le :"
+rc_total_membres: "Nombre Total de Membres"
+rc_total_verification: "Nombre Total de Vérifications"
+rc_total_key_used_count: "Nombre d'Utilisations de la Clé"
+rc_recent_locales_distribution: "Répartition des Locales des Membres"
+rc_recent_verifications: "Vérifications Récentes"
+rc_registration_over_time: "Inscriptions au Fil du Temps"
 
 # -----------------------------\ /-----------------------------

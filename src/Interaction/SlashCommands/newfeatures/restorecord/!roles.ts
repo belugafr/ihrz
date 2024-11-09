@@ -52,7 +52,9 @@ export default {
         const Data = getGuildDataPerSecretCode(await table.all(), secretCode);
 
         if (!Data) return client.method.interactionSend(interaction, {
-            content: `${client.iHorizon_Emojis.icon.No_Logo} The RestoreCord module with key: **${secretCode}** doesn't exist!`,
+            content: lang.rc_key_doesnt_exist
+                .replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                .replace("${secretCode}", secretCode),
             ephemeral: true
         });
 
@@ -62,9 +64,9 @@ export default {
 
         const mainEmbed = new EmbedBuilder()
             .setColor(2829617)
-            .setTitle("RestoreCord New Modifiication")
+            .setTitle(lang.rc_role_embed_title)
             .setFields(
-                { name: "New Given role after verify", value: role.toString(), inline: true },
+                { name: lang.rc_role_embed_field1_name, value: role.toString(), inline: true },
             )
             .setFooter(footer);
 
