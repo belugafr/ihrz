@@ -61,6 +61,13 @@ export interface RestoreCord_EntryType {
     roleId?: string;
 }
 
+export interface RestoreCord_ForceJoin_EntryType {
+    guildId: string;
+    apiToken: string;
+    secretCode: string;
+    targetGuildId: string;
+}
+
 export interface RestoreCord_ResponseType {
     status: "OK" | "ERR";
     message: string;
@@ -91,4 +98,11 @@ export function getGuildDataPerSecretCode(data: { id: string; value: any }[], se
     }
 
     return null;
+}
+
+export async function forceJoinRestoreCord(data: RestoreCord_ForceJoin_EntryType) {
+    return (await axios.post(apiUrlParser.HorizonGateway(apiUrlParser.GatewayMethod.ForceJoinRestoreCord),
+        data,
+        { headers: { 'Accept': 'application/json' } }
+    )).data || {}
 }
