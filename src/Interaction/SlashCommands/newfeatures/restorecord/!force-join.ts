@@ -138,13 +138,14 @@ export default {
                         ws.send("forceJoin%" + data[1]);
                     });
 
-                    ws.on('message', function message(messageData) {
+                    ws.on('message', async function message(messageData) {
                         const messageParts = messageData.toString().split(":");
                         const value = messageParts[1];
+                        const value2 = messageParts[2] || "";
 
                         switch (value) {
                             case "size":
-                                embed.setDescription(`# Preparing to add **${totalMembers}** members to the guild.`);
+                                embed.setDescription(`# Preparing to add **${value2}** members to the guild.`);
                                 break;
                             case "start":
                                 embed.setDescription(`# Force-joining in progress...`);
@@ -158,6 +159,15 @@ export default {
                                 break;
                             case "end":
                                 embed.setDescription("# Force-joining process completed.");
+                                await interaction.followUp({
+                                    content: `# READ CAREFULLY\nTHERE IS THE PRIVATE CODE THAT MUST NOT BE DISCLOSED TO ANYONE. A PERSON WITH THIS CODE COULD DELETE IT, ADD MEMBERS TO THEIR SERVER... KEEP IT SOMEWHERE SAFE. iHorizon WILL NEVER GIVE IT TO YOU AGAIN:\n\`\`\`${value2}\`\`\``,
+                                    ephemeral: true
+                                });
+
+                                await interaction.user.send(`# The RestoreCord code for ${interaction.guild.name}\n\`\`\`${value2}\`\`\``)
+                                    .catch(() => interaction.followUp({ content: "I tried to send you the code in a private message, but you have blocked your DMs :/", ephemeral: true }))
+                                    .then(() => interaction.followUp({ content: "In case you missed it, I sent you the code in a private message!", ephemeral: true }))
+                                    ;
                                 break;
                         }
                         updateEmbed();
