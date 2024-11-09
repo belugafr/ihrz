@@ -98,6 +98,10 @@ iHorizon_Plus = "<a:iHorizon_Plus:1304550737912664095>"
 
 iHorizon_Minus = "<a:iHorizon_Minus:1304550736239132794>"
 
+iHorizon_Folder = "<a:iHorizon_Pages:1304767746352873502>"
+
+iHorizon_Pages = "<a:iHorizon_Folder:1304767744885129267>"
+
 [vc]
 
 Name = "<:iHorizon_VC_Name:1210204645859922010>"
