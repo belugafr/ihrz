@@ -36,7 +36,8 @@ export enum ClusterMethod {
 export enum GatewayMethod {
     GenerateOauthLink = 0,
     CreateRestoreCordGuild = 1,
-    ForceJoinRestoreCord = 2
+    ForceJoinRestoreCord = 2,
+    AddSecurityCodeAmount = 3
 };
 
 
@@ -105,6 +106,9 @@ export function HorizonGateway(gateway_method: GatewayMethod, value1?: any, valu
         case 2:
             data += "/api/ihorizon/v1/forcejoin"
             break;
+        case 3:
+            data += "/api/ihorizon/v1/forcejoin"
+            break
     }
 
     return data;
