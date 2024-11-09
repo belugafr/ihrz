@@ -80,12 +80,12 @@ export async function createRestoreCord(data: RestoreCord_EntryType): Promise<Re
     )).data || {}
 }
 
-export function getGuildDataPerSecretCode(data: { id: string; value: any }[], secretCode: string): GuildRestoreCord | null {
+export function getGuildDataPerSecretCode(data: { id: string; value: any }[], secretCode: string): { id: string, data: GuildRestoreCord } | null {
     for (let index in data) {
         const entry = data[index];
 
         if (entry.value && entry.value.config && entry.value.config.securityCode === secretCode) {
-            return entry.value;
+            return { id: entry.id, data: entry.value };
         }
     }
 
