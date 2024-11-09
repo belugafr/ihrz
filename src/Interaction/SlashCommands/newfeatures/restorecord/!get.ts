@@ -31,7 +31,7 @@ import {
 } from 'discord.js';
 import { LanguageData } from '../../../../../types/languageData';
 import { SubCommandArgumentValue } from '../../../../core/functions/method';
-import { getGuildDataPerSecretCode } from '../../../../core/functions/restoreCordHelper.js';
+import { getGuildDataPerSecretCode, securityCodeUpdate } from '../../../../core/functions/restoreCordHelper.js';
 import { discordLocales } from '../../../../files/locales.js';
 import { format } from '../../../../core/functions/date-and-time.js';
 import { readFileSync } from 'node:fs';
@@ -57,6 +57,8 @@ export default {
             content: `${client.iHorizon_Emojis.icon.No_Logo} The RestoreCord module with key: **${secretCode}** doesn't exist!`,
             ephemeral: true
         });
+
+        await securityCodeUpdate({ guildId: interaction.guildId!, apiToken: client.config.api.apiToken, secretCode });
 
         const members = Data.data.members || [];
         const itemsPerPage = 5;
