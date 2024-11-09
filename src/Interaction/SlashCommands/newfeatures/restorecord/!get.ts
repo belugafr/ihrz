@@ -104,11 +104,16 @@ export default {
                 return memberDateString === dateLabel;
             }).length;
         });
-
-        const localeData = members.reduce((acc: Record<string, number>, member) => {
+        
+        const localeData = Object.entries(members.reduce((acc: Record<string, number>, member) => {
             acc[member.locale] = (acc[member.locale] || 0) + 1;
             return acc;
-        }, {});
+        }, {}))
+        .sort(([, a], [, b]) => b - a)
+        .reduce((acc, [key, value]) => {
+            acc[key] = value;
+            return acc;
+        }, {} as Record<string, number>);
 
         const recentVerifications = members
             .sort((a, b) => b.registerTimestamp - a.registerTimestamp)
