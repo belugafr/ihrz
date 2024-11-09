@@ -24,9 +24,9 @@ import puppeteer from 'puppeteer';
 export async function html2Png(
     code: string,
     options: {
-        width: number;
-        height: number;
-        scaleSize: number;
+        width?: number;
+        height?: number;
+        scaleSize?: number;
         elementSelector: string;
         omitBackground: boolean;
         selectElement: boolean;
@@ -47,9 +47,9 @@ export async function html2Png(
         const page = await browser.newPage();
 
         await page.setViewport({
-            width: options.width,
-            height: options.height,
-            deviceScaleFactor: options.scaleSize,
+            width: options.width ?? 1280,
+            height: options.height ?? 800,
+            deviceScaleFactor: options.scaleSize ?? 1,
         });
 
         await page.setContent(code);
@@ -65,8 +65,8 @@ export async function html2Png(
                 clip: {
                     x: boundingBox.x,
                     y: boundingBox.y,
-                    width: Math.min(boundingBox.width, options.width),
-                    height: Math.min(boundingBox.height, options.height),
+                    width: Math.min(boundingBox.width, options.width ?? 1280),
+                    height: Math.min(boundingBox.height, options.height ?? 800),
                 },
                 type: 'png',
                 omitBackground: options.omitBackground,

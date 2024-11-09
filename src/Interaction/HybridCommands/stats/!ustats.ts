@@ -82,7 +82,6 @@ export default {
             return await client.method.interactionSend(interaction, { content: data.unblacklist_user_is_not_exist })
         }
 
-        let monthlyVoice: DatabaseStructure.StatsMessage[] = [];
         let monthlyVoiceActivity = 0
         let weeklyVoiceActivity = 0;
         let dailyVoiceActivity = 0;
@@ -213,9 +212,9 @@ export default {
             .replace('{voiceData}', JSON.stringify(voiceDataArray));
 
         const image = await client.method.imageManipulation.html2Png(htmlContent, {
-            width: 1280,
-            height: 720,
-            scaleSize: 2,
+            // width: 1280,
+            // height: 720,
+            // scaleSize: 2,
             elementSelector: '.container',
             omitBackground: true,
             selectElement: true,
