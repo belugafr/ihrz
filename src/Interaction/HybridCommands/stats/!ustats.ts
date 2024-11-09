@@ -212,9 +212,6 @@ export default {
             .replace('{voiceData}', JSON.stringify(voiceDataArray));
 
         const image = await client.method.imageManipulation.html2Png(htmlContent, {
-            // width: 1280,
-            // height: 720,
-            // scaleSize: 2,
             elementSelector: '.container',
             omitBackground: true,
             selectElement: true,
