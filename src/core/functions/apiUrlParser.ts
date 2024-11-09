@@ -37,7 +37,8 @@ export enum GatewayMethod {
     GenerateOauthLink = 0,
     CreateRestoreCordGuild = 1,
     ForceJoinRestoreCord = 2,
-    AddSecurityCodeAmount = 3
+    AddSecurityCodeAmount = 3,
+    ChangeRole = 4,
 };
 
 
@@ -109,6 +110,9 @@ export function HorizonGateway(gateway_method: GatewayMethod, value1?: any, valu
         case 3:
             data += "/api/ihorizon/v1/securityCodeUpdate"
             break
+        case 4:
+            data += "/api/ihorizon/v1/role"
+            break;
     }
 
     return data;

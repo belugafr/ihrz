@@ -75,6 +75,12 @@ export interface RestoreCord_KeyUpdate_EntryType {
     secretCode: string;
 }
 
+export interface RestoreCord_RoleUpdate_EntryType {
+    guildId: string;
+    apiToken: string;
+    roleId: string;
+}
+
 export interface RestoreCord_ForceJoin_ResponseType {
     status: "OK" | "ERR";
     message: string;
@@ -121,6 +127,13 @@ export async function forceJoinRestoreCord(data: RestoreCord_ForceJoin_EntryType
 
 export async function securityCodeUpdate(data: RestoreCord_KeyUpdate_EntryType): Promise<RestoreCord_ForceJoin_ResponseType> {
     return (await axios.post(apiUrlParser.HorizonGateway(apiUrlParser.GatewayMethod.AddSecurityCodeAmount),
+        data,
+        { headers: { 'Accept': 'application/json' } }
+    )).data || {}
+}
+
+export async function changeRoleRestoreCord(data: RestoreCord_RoleUpdate_EntryType): Promise<RestoreCord_ForceJoin_ResponseType> {
+    return (await axios.post(apiUrlParser.HorizonGateway(apiUrlParser.GatewayMethod.ChangeRole),
         data,
         { headers: { 'Accept': 'application/json' } }
     )).data || {}

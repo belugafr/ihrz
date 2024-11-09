@@ -153,6 +153,41 @@ export const command: Command = {
             ],
             type: ApplicationCommandOptionType.Subcommand
         },
+        {
+            name: "roles",
+
+            description: "Set new roles for the RestoreCord module",
+            description_localizations: {
+                "fr": "Définir un nouveau rôle pour le module RestoreCord"
+            },
+
+            options: [
+                {
+                    name: 'key',
+                    type: ApplicationCommandOptionType.String,
+
+                    description: "The private key of your RestoreCord config",
+                    description_localizations: {
+                        "fr": "La clé privée de votre configuration RestoreCord"
+                    },
+
+                    required: true
+                },
+                {
+                    name: 'roles',
+                    type: ApplicationCommandOptionType.Role,
+
+                    description: "The new roles for your RestoreCord config",
+                    description_localizations: {
+                        "fr": "Le nouveau rôle pour votre configuration RestoreCord"
+                    },
+
+                    required: true
+                },
+            ],
+            type: ApplicationCommandOptionType.Subcommand
+        },
+
     ],
     category: 'newfeatures',
     thinking: false,
