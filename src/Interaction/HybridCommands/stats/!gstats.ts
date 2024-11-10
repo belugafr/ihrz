@@ -46,7 +46,7 @@ export default {
 
         if (!client.user || !interaction.guild || !interaction.channel) return;
 
-        let leaderboardlang: {
+        let leaderboardData: {
             member: User | undefined,
             dailyMessages: number,
             weeklyMessages: number,
@@ -70,16 +70,16 @@ export default {
         let allVoiceActivities: DatabaseStructure.StatsVoice[] = [];
 
         for (let memberId in res?.USER) {
-            let userlang = res.USER[memberId];
+            let userData = res.USER[memberId];
             let dailyMessages = 0, weeklyMessages = 0, monthlyMessages = 0;
             let dailyVoice = 0, weeklyVoice = 0, monthlyVoice = 0;
 
-            allMessages = [...allMessages, ...userlang.messages || []];
-            allVoiceActivities = [...allVoiceActivities, ...userlang.voices || []];
+            allMessages = [...allMessages, ...userData.messages || []];
+            allVoiceActivities = [...allVoiceActivities, ...userData.voices || []];
 
             let user = client.users.cache.get(memberId);
 
-            userlang.messages?.forEach(message => {
+            userData.messages?.forEach(message => {
                 if (nowTimestamp - message.sentTimestamp <= dailyTimeout) {
                     dailyMessages++;
                 }
@@ -99,7 +99,7 @@ export default {
                 channelStats[message.channelId].monthlyMessages += nowTimestamp - message.sentTimestamp <= monthlyTimeout ? 1 : 0;
             });
 
-            userlang.voices?.forEach(voice => {
+            userData.voices?.forEach(voice => {
                 let voiceDuration = voice.endTimestamp - voice.startTimestamp;
                 if (nowTimestamp - voice.endTimestamp <= dailyTimeout) {
                     dailyVoice += voiceDuration;
@@ -120,7 +120,7 @@ export default {
                 channelStats[voice.channelId].monthlyVoice += nowTimestamp - voice.endTimestamp <= monthlyTimeout ? voiceDuration : 0;
             });
 
-            leaderboardlang.push({
+            leaderboardData.push({
                 member: user,
                 dailyMessages: dailyMessages,
                 weeklyMessages: weeklyMessages,
@@ -145,13 +145,13 @@ export default {
 
         var htmlContent = readFileSync(path.join(process.cwd(), 'src', 'assets', 'guildStatsLeaderboard.html'), 'utf-8');
 
-        leaderboardlang = getStatsLeaderboard(leaderboardlang)
+        leaderboardData = getStatsLeaderboard(leaderboardData)
 
         htmlContent = htmlContent
             .replaceAll('{header_h1_value}', lang.header_h1_value)
             .replaceAll("{guild_pfp}", interaction.guild.iconURL({ size: 512 }) || client.user.displayAvatarURL({ size: 512 }))
             .replaceAll("{author_username}", interaction.guild.name)
-            .replaceAll('{top_message_users}', leaderboardlang.map((user, index) => `
+            .replaceAll('{top_message_users}', leaderboardData.map((user, index) => `
         <div class="list-item">
             <div class="user-info">
                 <span>${index + 1}. @${user.member?.username}</span>
