@@ -40,7 +40,7 @@ export const command: Command = {
 
     options: [
         {
-            name: 'set',
+            name: 'set-user',
 
             description: 'Set permission to user',
             description_localizations: {
@@ -211,7 +211,7 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Subcommand,
         },
         {
-            name: 'list',
+            name: 'perm-list',
 
             description: 'show all granted user in the guild',
             description_localizations: {
@@ -221,7 +221,7 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Subcommand,
         },
         {
-            name: 'roles',
+            name: 'create-roles',
 
             description: 'Create roles for the permission',
             description_localizations: {
@@ -271,10 +271,5 @@ export const command: Command = {
     thinking: true,
     category: 'guildconfig',
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        // Guard's Typing
-        let command2 = interaction.options.getSubcommand();
 
-        const commandModule = await import(`./!${command2}.js`);
-        await commandModule.default.run(client, interaction, lang, { name: command.name, command: client.method.findOptionRecursively(command.options || [], command2) });
-    },
 };

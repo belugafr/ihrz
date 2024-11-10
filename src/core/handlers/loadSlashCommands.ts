@@ -27,6 +27,8 @@ import { Command } from "../../../types/command.js";
 import { EltType } from "../../../types/eltType.js";
 import { Option } from "../../../types/option.js";
 
+import * as argsHelper from '../functions/method.js';
+
 import logger from "../logger.js";
 
 import { fileURLToPath } from 'url';
@@ -100,6 +102,7 @@ export default async function loadCommands(client: Client, path: string = p): Pr
     let paths = buildPaths(path, directoryTree);
 
     if (!client.commands) client.commands = new Collection<string, Command>();
+    if (!client.subCommands) client.subCommands = new Collection<string, Command>();
     if (!client.message_commands) client.message_commands = new Collection<string, Command>();
 
     var i = 0;
@@ -114,12 +117,12 @@ export default async function loadCommands(client: Client, path: string = p): Pr
         }
 
         if (module && module.command) {
-            const { command } = module;
+            const command: Command = module.command
             i++;
 
             if (command.options) {
-                await processOptions(command.options, command.category, command.name, client);
-            };
+                await processCommand(command, path, client);
+            }
 
             if (client.commands.has(command.name)) {
                 logger.err(`Command "${command.name}" already exists! Exiting...`.bgRed);
@@ -135,17 +138,6 @@ export default async function loadCommands(client: Client, path: string = p): Pr
             });
 
             client.commands.set(command.name, command);
-
-            if (command.aliases) {
-                for (let alias of command.aliases) {
-                    if (client.commands.has(alias)) {
-                        logger.err(`Alias "${alias}" for command "${command.name}" already exists! Exiting...`.bgRed);
-                        process.exit(1);
-                    }
-                    client.commands.set(alias, command);
-                }
-            }
-
         } else if (module?.default?.categoryInitializer) {
             client.category.push(module.default.categoryInitializer);
         };
@@ -153,3 +145,103 @@ export default async function loadCommands(client: Client, path: string = p): Pr
 
     logger.log(`${client.config.console.emojis.OK} >> Loaded ${i} Slash commands.`);
 };
+
+interface CommandModule {
+    default: {
+        run: Function;
+    };
+}
+
+async function processCommandOptions(
+    options: Option[],
+    category: string,
+    parentName: string = "",
+    client: Client,
+    directoryPath: string
+): Promise<void> {
+    for (const option of options) {
+        const fullName = parentName ? `${parentName} ${option.name}` : option.name;
+
+        if (option.type === ApplicationCommandOptionType.SubcommandGroup && option.options) {
+            await Promise.all(option.options.map(async (subOption) => {
+                if (argsHelper.isSubCommand(subOption) && subOption.name) {
+                    const commandModule = await loadSubCommandModule(directoryPath, subOption.name);
+                    if (commandModule) {
+                        const fullSubCommandName = `${option.name} ${subOption.name}`;
+
+                        if (client.subCommands.has(fullSubCommandName)) {
+                            logger.err(`Subcommand "${fullSubCommandName}" already exists! Exiting...`.bgRed);
+                            process.exit(1);
+                        }
+
+                        (subOption as any).run = commandModule.default.run;
+                        client.subCommands.set(fullSubCommandName, subOption as any);
+                    }
+                }
+            }));
+        }
+
+        if (option.type === ApplicationCommandOptionType.Subcommand) {
+            client.content.push({
+                cmd: fullName,
+                messageCmd: 0,
+                category: category,
+                desc: option.description,
+                desc_localized: option.description_localizations
+            });
+
+            if (option.name) {
+                const commandModule = await loadSubCommandModule(directoryPath, option.name);
+                if (commandModule) {
+                    if (client.subCommands.has(option.name)) {
+                        logger.err(`Subcommand "${option.name}" already exists! Exiting...`.bgRed);
+                        process.exit(1);
+                    }
+
+                    (option as any).run = commandModule.default.run;
+                    client.subCommands.set(option.name, option as any);
+                }
+            }
+        }
+
+        if (option.options) {
+            await processCommandOptions(
+                option.options,
+                category,
+                fullName,
+                client,
+                directoryPath
+            );
+        }
+    }
+}
+
+async function loadSubCommandModule(directoryPath: string, commandName: string): Promise<CommandModule | null> {
+    try {
+        return await import(`${directoryPath}/!${commandName}.js`) as CommandModule;
+    } catch (error) {
+        logger.err(`Failed to load subcommand module: ${commandName}`);
+        return null;
+    }
+}
+
+async function processCommand(
+    command: Command,
+    path: string,
+    client: Client
+): Promise<void> {
+    if (!command.options) return;
+
+    await processOptions(command.options, command.category, command.name, client);
+
+    if (argsHelper.hasSubCommand(command.options) || argsHelper.hasSubCommandGroup(command.options)) {
+        const directoryPath = path.substring(0, path.lastIndexOf('/'));
+        await processCommandOptions(
+            command.options,
+            command.category,
+            command.name,
+            client,
+            directoryPath
+        );
+    }
+}

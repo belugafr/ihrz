@@ -26,12 +26,13 @@ import {
     AttachmentBuilder,
 } from 'discord.js';
 import { LanguageData } from '../../../../types/languageData';
-import { SubCommandArgumentValue } from '../../../core/functions/method';
+import { Command } from '../../../../types/command';
+import { Option } from '../../../../types/option';
 import { encrypt } from '../../../core/functions/encryptDecryptMethod.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: SubCommandArgumentValue) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {
+        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
 
         // Guard's Typing

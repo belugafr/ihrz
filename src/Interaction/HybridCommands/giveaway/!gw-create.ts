@@ -34,7 +34,8 @@ import { AxiosResponse, axios } from '../../../core/functions/axios.js';
 import logger from '../../../core/logger.js';
 
 import { LanguageData } from '../../../../types/languageData';
-import { SubCommandArgumentValue } from '../../../core/functions/method.js';
+import { Command } from '../../../../types/command.js';
+import { Option } from '../../../../types/option.js';
 
 async function isImageUrl(url: string): Promise<boolean> {
     try {
@@ -46,8 +47,8 @@ async function isImageUrl(url: string): Promise<boolean> {
     }
 };
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: SubCommandArgumentValue, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
+        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
 
         // Guard's Typing

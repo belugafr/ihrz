@@ -25,13 +25,14 @@ import {
     Client,
 } from 'discord.js';
 
-import { TicketDelete } from '../../../core/modules/ticketsManager.js';
-import { LanguageData } from '../../../../types/languageData';
-import { SubCommandArgumentValue } from '../../../core/functions/method';
+import { TicketAddMember } from '../../../core/modules/ticketsManager.js';
+import { LanguageData } from '../../../../types/languageData.js';
+import { Command } from '../../../../types/command.js';
+import { Option } from '../../../../types/option.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: SubCommandArgumentValue) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
+        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
 
         // Guard's Typing
@@ -41,11 +42,10 @@ export default {
             await interaction.editReply({ content: data.ticket_disabled_command });
             return;
         };
-
         if (!(interaction.channel as BaseGuildTextChannel).name.includes('ticket-')) {
-            await interaction.editReply({ content: data.delete_not_in_ticket });
+            await interaction.editReply({ content: data.close_not_in_ticket });
             return;
-        }
-        await TicketDelete(interaction);
+        };
+        await TicketAddMember(interaction);
     },
 };

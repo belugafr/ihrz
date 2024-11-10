@@ -27,7 +27,8 @@ import {
     Message,
 } from 'discord.js';
 import { LanguageData } from '../../../../types/languageData';
-import { SubCommandArgumentValue } from '../../../core/functions/method';
+import { Command } from '../../../../types/command';
+import { Option } from '../../../../types/option';
 import { DatabaseStructure } from '../../../../types/database_structure';
 import { readFileSync } from 'fs';
 import path from 'path';
@@ -47,11 +48,11 @@ export default {
         client: Client,
         interaction: ChatInputCommandInteraction<"cached"> | Message,
         data: LanguageData,
-        command: SubCommandArgumentValue,
+        command: Option | Command | undefined,
         execTimestamp?: number,
         args?: string[]
     ) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
+        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
 
         // Guard's Typing

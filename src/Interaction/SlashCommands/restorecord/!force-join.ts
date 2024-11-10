@@ -31,12 +31,13 @@ import {
 } from 'discord.js';
 import WebSocket from 'ws';
 import { forceJoinRestoreCord, getGuildDataPerSecretCode } from '../../../core/functions/restoreCordHelper.js';
-import { SubCommandArgumentValue } from '../../../core/functions/method.js';
+import { Command } from '../../../../types/command.js';
+import { Option } from '../../../../types/option.js';
 import { LanguageData } from '../../../../types/languageData.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: SubCommandArgumentValue) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined) => {
+        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
 
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;

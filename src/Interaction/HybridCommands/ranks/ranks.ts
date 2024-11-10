@@ -29,9 +29,9 @@ import {
     ChannelType,
 } from 'discord.js';
 
-import { Command } from '../../../../types/command';
 import { LanguageData } from '../../../../types/languageData';
-import { SubCommandArgumentValue } from '../../../core/functions/method';
+import { Command } from '../../../../types/command';
+import { Option } from '../../../../types/option';
 
 export const command: Command = {
     name: "ranks",
@@ -154,7 +154,7 @@ export const command: Command = {
                 "fr": "Définir le canal sur lequel l'utilisateur gagne un nouveau message de niveau XP"
             },
 
-            aliases: ["channel", "chann"],
+            aliases: ["rchannel"],
 
             type: ApplicationCommandOptionType.Subcommand,
             options: [
@@ -237,27 +237,20 @@ export const command: Command = {
     thinking: false,
     category: 'ranks',
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, runningCommand: SubCommandArgumentValue, execTimestamp?: number, options?: string[]) => {
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, runningCommand: Option | Command | undefined, execTimestamp?: number, options?: string[]) => {
         let fetchedCommand: string;
-        let sub: SubCommandArgumentValue | undefined;
 
-        if (interaction instanceof ChatInputCommandInteraction) {
-            fetchedCommand = interaction.options.getSubcommand();
-            sub = { name: command.name, command: command.options?.find(x => fetchedCommand === x.name) }
-        } else {
-            if (!options?.[0]) {
-                await client.method.interactionSend(interaction, { embeds: [await client.method.createAwesomeEmbed(lang, command, client, interaction)] });
-                return;
-            }
-            const cmd = command.options?.find(x => options[0] === x.name || x.aliases?.includes(options[0]));
-            sub = { name: command.name, command: cmd };
-            if (!cmd) return;
-
-            fetchedCommand = cmd.name;
-            options.shift();
+        if (!options?.[0]) {
+            await client.method.interactionSend(interaction, { embeds: [await client.method.createAwesomeEmbed(lang, command, client, interaction)] });
+            return;
         }
+        const cmd = command.options?.find(x => options[0] === x.name || x.aliases?.includes(options[0]));
+        if (!cmd) return;
+
+        fetchedCommand = cmd.name;
+        options.shift();
 
         const commandModule = await import(`./!${fetchedCommand}.js`);
-        await commandModule.default.run(client, interaction, lang, sub, execTimestamp, options);
+        await commandModule.default.run(client, interaction, lang, cmd, execTimestamp, options);
     },
 };

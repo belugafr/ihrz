@@ -49,7 +49,7 @@ export const command: Command = {
             type: ApplicationCommandOptionType.SubcommandGroup,
             options: [
                 {
-                    name: "add",
+                    name: "wl-add",
 
                     description: "Adding an user in the allowlist!",
                     description_localizations: {
@@ -72,7 +72,7 @@ export const command: Command = {
                     ],
                 },
                 {
-                    name: "remove",
+                    name: "wl-remove",
 
                     description: "Removing an user in the allowlist!",
                     description_localizations: {
@@ -95,7 +95,7 @@ export const command: Command = {
                     ],
                 },
                 {
-                    name: "show-list",
+                    name: "wl-list",
 
                     description: "List the users in the allowlist!",
                     description_localizations: {

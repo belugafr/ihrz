@@ -49,6 +49,7 @@ declare module 'discord.js' {
     export interface Client {
         func: clientFunction,
         commands: Collection<string, Command>,
+        subCommands: Collection<string, Command>,
         category: Category[]
         message_commands: Collection<string, Command>,
         player: LavalinkManager,

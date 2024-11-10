@@ -28,9 +28,9 @@ import {
     ChannelType,
 } from 'discord.js';
 
-import { Command } from '../../../../types/command';
 import { LanguageData } from '../../../../types/languageData';
-import { SubCommandArgumentValue } from '../../../core/functions/method';
+import { Command } from '../../../../types/command';
+import { Option } from '../../../../types/option';
 
 export const command: Command = {
     name: "notifier",
@@ -53,7 +53,7 @@ export const command: Command = {
 
             options: [
                 {
-                    name: "add",
+                    name: "author-add",
 
                     description: "Add Streamer/Youtuber/Twitcher",
                     description_localizations: {
@@ -101,7 +101,7 @@ export const command: Command = {
                     ]
                 },
                 {
-                    name: "remove",
+                    name: "author-remove",
 
                     description: "Remove Streamer/Youtuber/Twitcher",
                     description_localizations: {
@@ -149,7 +149,7 @@ export const command: Command = {
                     ]
                 },
                 {
-                    name: "list",
+                    name: "author-list",
 
                     description: "Show Streamer/Youtuber/Twitcher",
                     description_localizations: {
@@ -170,7 +170,7 @@ export const command: Command = {
 
             options: [
                 {
-                    name: "channel",
+                    name: "notify-channel",
 
                     description: "When a Streamer/Youtuber/Twitcher publish a video, iHorizon send a message in channel",
                     description_localizations: {
@@ -212,10 +212,5 @@ export const command: Command = {
     thinking: false,
     category: 'notifier',
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        // Guard's Typing
-        let command2 = interaction.options.getSubcommand();
-        
-        const commandModule = await import(`./!${command2}.js`);
-        await commandModule.default.run(client, interaction, lang, { name: command.name, command: client.method.findOptionRecursively(command.options || [], command2) });
-    },
+
 };

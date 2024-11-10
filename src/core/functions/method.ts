@@ -168,7 +168,9 @@ const isSubCommandArgumentValue = (command: any): command is SubCommandArgumentV
     return command && (command as SubCommandArgumentValue).command !== undefined || command.name !== command?.command
 };
 
-export async function checkCommandArgs(message: Message, command: SubCommandArgumentValue | Command, args: string[], lang: LanguageData): Promise<boolean> {
+export async function checkCommandArgs(message: Message, command: SubCommandArgumentValue | Command | Option | undefined, args: string[], lang: LanguageData): Promise<boolean> {
+    if (!command) return false;
+
     const botPrefix = await message.client.func.prefix.guildPrefix(message.client, message.guildId);
     let cleanBotPrefix = botPrefix.string;
 
@@ -359,6 +361,15 @@ export async function channelSend(interaction: Message | ChatInputCommandInterac
 export function hasSubCommand(options: Option[] | undefined): boolean {
     if (!options) return false;
     return options.some(option => option.type === ApplicationCommandOptionType.Subcommand);
+}
+
+export function hasSubCommandGroup(options: Option[] | undefined): boolean {
+    if (!options) return false;
+    return options.some(option => option.type === ApplicationCommandOptionType.SubcommandGroup);
+}
+
+export function isSubCommand(option: Option | Command): boolean {
+    return option.type === ApplicationCommandOptionType.Subcommand;
 }
 
 export async function punish(data: any, user: GuildMember | undefined, reason?: string) {

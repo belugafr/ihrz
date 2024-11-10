@@ -31,13 +31,14 @@ import {
 
 import logger from '../../../core/logger.js';
 import { LanguageData } from '../../../../types/languageData.js';
-import { SubCommandArgumentValue } from '../../../core/functions/method.js';
+import { Command } from '../../../../types/command.js';
+import { Option } from '../../../../types/option.js';
 import { DatabaseStructure } from '../../../../types/database_structure.js';
 import { generatePassword } from '../../../core/functions/random.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: SubCommandArgumentValue, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
+        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
 
         // Guard's Typing

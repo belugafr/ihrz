@@ -30,11 +30,12 @@ import {
 } from 'discord.js';
 import { LanguageData } from '../../../../../types/languageData';
 import { DatabaseStructure } from '../../../../../types/database_structure';
-import { SubCommandArgumentValue } from '../../../../core/functions/method';
+import { Command } from '../../../../../types/command';
+import { Option } from '../../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: SubCommandArgumentValue) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {
+        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
         if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {

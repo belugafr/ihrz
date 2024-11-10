@@ -19,10 +19,9 @@
 ・ Copyright © 2020-2024 iHorizon
 */
 
-import { ActionRowBuilder, BaseGuildTextChannel, ButtonBuilder, ButtonStyle, ChannelType, Client, CommandInteractionOptionResolver, EmbedBuilder, Guild, GuildChannel, GuildMember, Interaction, PermissionFlagsBits } from 'discord.js';
-import { BotEvent } from '../../../types/event';
-import logger from '../../core/logger.js';
+import { ActionRowBuilder, BaseGuildTextChannel, ButtonBuilder, ButtonStyle, ChannelType, ChatInputCommandInteraction, Client, CommandInteractionOptionResolver, EmbedBuilder, GuildMember, Interaction, PermissionFlagsBits } from 'discord.js';
 import { LanguageData } from '../../../types/languageData';
+import { BotEvent } from '../../../types/event';
 
 var timeout: number = 1000;
 
@@ -36,23 +35,100 @@ async function cooldDown(client: Client, interaction: Interaction) {
     return false;
 };
 
+async function handleCommandExecution(client: Client, interaction: ChatInputCommandInteraction, command: any, lang: LanguageData) {
+    const options = interaction.options as CommandInteractionOptionResolver;
+    const group = options.getSubcommandGroup(false);
+    const subCommand = options.getSubcommand(false);
+
+    console.log(group, subCommand)
+    if (group && subCommand) {
+        const subCmd = client.subCommands.get(group + " " + subCommand);
+
+        console.log(subCmd)
+
+        if (subCmd && subCmd.run) {
+            return await subCmd.run(client, interaction, lang, command, Date.now(), []);
+        }
+    }
+    else if (subCommand) {
+        const subCmd = client.subCommands.get(subCommand);
+
+        console.log(subCmd)
+
+        if (subCmd && subCmd.run) {
+            return await subCmd.run(client, interaction, lang, command, Date.now(), []);
+        }
+    }
+
+    if (command.thinking) {
+        await interaction.deferReply();
+    }
+
+    return await command.run(client, interaction, lang, command, Date.now(), []);
+}
+
+async function handleCommandError(client: Client, interaction: ChatInputCommandInteraction, command: any, error: any) {
+    const block = `\`\`\`TS\nMessage: The command ran into a problem!\nCommand Name: ${command.name}\nError: ${error}\`\`\`\n`;
+    await client.method.interactionSend(interaction, {
+        content: block + "**Let me suggest you to report this issue with `/report`.**"
+    });
+
+    const channel = client.channels.cache.get(client.config.core.reportChannelID);
+    if (!channel) return;
+
+    const options = interaction.options as CommandInteractionOptionResolver;
+    const optionsList = options["_hoistedOptions"].map(element => `${element.name}:${element.value}`);
+
+    let commandPath = interaction.commandName;
+    const group = options.getSubcommandGroup(false);
+    const subCommand = options.getSubcommand(false);
+
+    if (group) commandPath += ` ${group}`;
+    if (subCommand) commandPath += ` ${subCommand}`;
+    if (optionsList.length) commandPath += ` ${optionsList.join(' ')}`;
+
+    await (channel as BaseGuildTextChannel).send({
+        embeds: [
+            new EmbedBuilder()
+                .setTitle(`SLASH_CMD_CRASH_NOT_HANDLE`)
+                .setDescription(block)
+                .setTimestamp()
+                .setFields(
+                    {
+                        name: "🛡️ Bot Admin",
+                        value: interaction.guild?.members.me?.permissions.has(PermissionFlagsBits.Administrator) ? "yes" : "no"
+                    },
+                    {
+                        name: "📝 User Admin",
+                        value: (interaction.member as GuildMember)?.permissions.has(PermissionFlagsBits.Administrator) ? "yes" : "no"
+                    },
+                    {
+                        name: "** **",
+                        value: `/${commandPath}\n\n`
+                    },
+                )
+        ]
+    });
+}
+
 export const event: BotEvent = {
     name: "interactionCreate",
     run: async (client: Client, interaction: Interaction) => {
-
         if (interaction.isAutocomplete()) {
-            let cmd = client.commands.get(interaction.commandName);
-            if (cmd?.autocomplete) await cmd?.autocomplete(client, interaction);
+            const cmd = client.commands.get(interaction.commandName);
+            if (cmd?.autocomplete) await cmd.autocomplete(client, interaction);
             return;
-        };
+        }
 
-        if (!interaction.isChatInputCommand()
-            || interaction.user.bot) return;
+        if (!interaction.isChatInputCommand() || interaction.user.bot) return;
 
-        let command = client.commands?.get(interaction.commandName);
+        const command = client.commands?.get(interaction.commandName);
+        if (!command) {
+            return interaction.reply({ content: 'Connection error.', ephemeral: true });
+        }
 
         if (interaction.channel?.type === ChannelType.DM && !command?.integration_types?.includes(1)) {
-            await interaction.reply({
+            return await interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor(2829617)
@@ -74,76 +150,32 @@ export const event: BotEvent = {
                                 .setURL('https://ihorizon.me'),
                         )
                 ]
-            })
-            return;
+            });
         }
-        if (!command) {
-            return interaction.reply({ content: 'Connection error.', ephemeral: true });
-        };
 
         if (await cooldDown(client, interaction)) {
-            let data = await client.func.getLanguageData(interaction.guild?.id) as LanguageData;
+            const data = await client.func.getLanguageData(interaction.guild?.id) as LanguageData;
+            return await interaction.reply({ content: data.Msg_cooldown, ephemeral: true });
+        }
 
-            await interaction.reply({ content: data.Msg_cooldown, ephemeral: true });
-            return;
-        };
+        if (await client.db.table('BLACKLIST').get(`${interaction.user.id}.blacklisted`)) {
+            return await interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor("#0827F5")
+                        .setTitle(":(")
+                        .setImage(client.config.core.blacklistPictureInEmbed)
+                ],
+                ephemeral: true
+            });
+        }
 
         try {
-            if (await client.db.table('BLACKLIST').get(`${interaction.user.id}.blacklisted`)) {
-                await interaction.reply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setColor("#0827F5").setTitle(":(")
-                            .setImage(client.config.core.blacklistPictureInEmbed)
-                    ], ephemeral: true
-                });
-                return;
-            };
-
-            if (command.thinking) {
-                await interaction.deferReply();
-            };
-
-            let lang = await client.func.getLanguageData(interaction.guildId) as LanguageData;
-            await command.run(client, interaction, lang, command, Date.now(), []);
-        } catch (e: any) {
-            let block = `\`\`\`TS\nMessage: The command ran into a problem!\nCommand Name: ${command.name}\nError: ${e}\`\`\`\n`
-            await client.method.interactionSend(interaction, { content: block + "**Let me suggest you to report this issue with `/report`.**" })
-
-            let channel = client.channels.cache.get(client.config.core.reportChannelID);
-
-            if (channel) {
-                let optionsList: string[] = (interaction.options as CommandInteractionOptionResolver)["_hoistedOptions"].map(element => `${element.name}:${element.value}`)
-                let subCmd: string = '';
-
-                if ((interaction.options as CommandInteractionOptionResolver)["_subcommand"]) {
-                    if ((interaction.options as CommandInteractionOptionResolver).getSubcommandGroup()) subCmd += (interaction.options as CommandInteractionOptionResolver).getSubcommandGroup()! + " ";
-                    subCmd += (interaction.options as CommandInteractionOptionResolver).getSubcommand()
-                };
-
-                return (channel as BaseGuildTextChannel).send({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setTitle(`SLASH_CMD_CRASH_NOT_HANDLE`)
-                            .setDescription(block)
-                            .setTimestamp()
-                            .setFields(
-                                {
-                                    name: "🛡️ Bot Admin",
-                                    value: interaction.guild?.members.me?.permissions.has(PermissionFlagsBits.Administrator) ? "yes" : "no"
-                                },
-                                {
-                                    name: "📝 User Admin",
-                                    value: (interaction.member as GuildMember)?.permissions.has(PermissionFlagsBits.Administrator) ? "yes" : "no"
-                                },
-                                {
-                                    name: "** **",
-                                    value: `/${interaction.commandName} ${subCmd} ${optionsList?.join(' ')}\n\n`
-                                },
-                            )
-                    ]
-                })
-            }
-        };
+            const lang = await client.func.getLanguageData(interaction.guildId) as LanguageData;
+            await handleCommandExecution(client, interaction, command, lang);
+        } catch (error) {
+            console.error(error)
+            // await handleCommandError(client, interaction, command, error);
+        }
     },
 };

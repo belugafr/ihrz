@@ -42,7 +42,8 @@ import { iHorizonModalResolve } from '../../../core/functions/modalHelper.js';
 
 import { LanguageData } from '../../../../types/languageData';
 import { AntiSpam } from '../../../../types/antispam';
-import { SubCommandArgumentValue } from '../../../core/functions/method.js';
+import { Command } from '../../../../types/command.js';
+import { Option } from '../../../../types/option.js';
 
 type AntiSpamOptionKey = keyof AntiSpam.AntiSpamOptions;
 type PresetKeys = "chill" | "guard" | "extreme";
@@ -81,8 +82,8 @@ const AntiSpamPreset: { [key in PresetKeys]: AntiSpam.AntiSpamOptions } = {
 }
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: SubCommandArgumentValue, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command.command!);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
+        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
 
         // Guard's Typing

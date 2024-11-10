@@ -39,7 +39,7 @@ export const command: Command = {
 
     options: [
         {
-            name: "reply",
+            name: "sug-reply",
             name_localizations: {
                 "fr": "répondre"
             },
@@ -76,7 +76,7 @@ export const command: Command = {
             ],
         },
         {
-            name: "deny",
+            name: "sug-deny",
             name_localizations: {
                 "fr": "refusé"
             },
@@ -117,7 +117,7 @@ export const command: Command = {
             ],
         },
         {
-            name: "accept",
+            name: "sug-accept",
             name_localizations: {
                 "fr": "accepté"
             },
@@ -158,7 +158,7 @@ export const command: Command = {
             ],
         },
         {
-            name: "delete",
+            name: "sug-delete",
             name_localizations: {
                 "fr": "supprimer"
             },
@@ -187,10 +187,5 @@ export const command: Command = {
     category: 'suggestion',
     thinking: true,
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        // Guard's Typing
-        let command2 = interaction.options.getSubcommand();
-        
-        const commandModule = await import(`./!${command2}.js`);
-        await commandModule.default.run(client, interaction, lang, { name: command.name, command: client.method.findOptionRecursively(command.options || [], command2) });
-    },
+
 };

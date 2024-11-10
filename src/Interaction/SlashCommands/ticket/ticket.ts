@@ -40,7 +40,7 @@ export const command: Command = {
 
     options: [
         {
-            name: "add",
+            name: "add-member",
 
             description: "Add a member into your ticket!",
             description_localizations: {
@@ -73,7 +73,7 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Subcommand,
         },
         {
-            name: "delete",
+            name: "ticket-delete",
 
             description: "Delete a iHorizon ticket!",
             description_localizations: {
@@ -150,7 +150,7 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Subcommand,
         },
         {
-            name: 'remove',
+            name: 'remove-member',
 
             description: "Remove a member from your ticket!",
             description_localizations: {
@@ -258,10 +258,5 @@ export const command: Command = {
     thinking: true,
     category: 'ticket',
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        // Guard's Typing
-        let command2 = interaction.options.getSubcommand();
-        
-        const commandModule = await import(`./!${command2}.js`);
-        await commandModule.default.run(client, interaction, lang, { name: command.name, command: client.method.findOptionRecursively(command.options || [], command2) });
-    },
+
 };

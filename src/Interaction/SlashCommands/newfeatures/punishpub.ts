@@ -29,9 +29,9 @@ import {
     ApplicationCommandType,
 } from 'discord.js';
 
-import { Command } from '../../../../types/command';
 import { LanguageData } from '../../../../types/languageData';
-import { SubCommandArgumentValue } from '../../../core/functions/method';
+import { Command } from '../../../../types/command';
+import { Option } from '../../../../types/option';
 
 export const command: Command = {
     name: 'punishpub',
@@ -103,7 +103,7 @@ export const command: Command = {
     thinking: false,
     category: 'newfeatures',
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: SubCommandArgumentValue) => {        
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined) => {        
         let permCheck = await client.method.permission.checkCommandPermission(interaction, command as unknown as Command);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
 

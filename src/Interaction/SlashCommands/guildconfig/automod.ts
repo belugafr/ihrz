@@ -250,10 +250,4 @@ export const command: Command = {
     thinking: true,
     category: 'guildconfig',
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        // Guard's Typing
-        let command2 = interaction.options.getSubcommand();
-        
-        const commandModule = await import(`./!${command2}.js`);
-        await commandModule.default.run(client, interaction, lang, { name: command.name, command: client.method.findOptionRecursively(command.options || [], command2) });
-    },
 };
