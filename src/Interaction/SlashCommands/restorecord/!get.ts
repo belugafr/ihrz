@@ -93,7 +93,7 @@ export default {
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         });
 
-        const registrationlang = timeLabels.map(dateLabel => {
+        const registrationData = timeLabels.map(dateLabel => {
             return members.filter(member => {
                 if (!member.registerTimestamp) return false;
 
@@ -107,7 +107,7 @@ export default {
             }).length;
         });
 
-        const localelang = Object.entries(members.reduce((acc: Record<string, number>, member) => {
+        const localeData = Object.entries(members.reduce((acc: Record<string, number>, member) => {
             acc[member.locale] = (acc[member.locale] || 0) + 1;
             return acc;
         }, {}))
@@ -146,9 +146,9 @@ export default {
             .replaceAll('{total_members}', String(members.length))
             .replaceAll('{total_verifications}', String(members.length))
             .replaceAll('{key_used_count}', String(Data.data.config.securityCodeUsed))
-            .replaceAll('{registrationlang}', JSON.stringify(registrationlang))
+            .replaceAll('{registrationData}', JSON.stringify(registrationData))
             .replaceAll('{timeLabels}', JSON.stringify(timeLabels))
-            .replaceAll('{localelang}', JSON.stringify(localelang))
+            .replaceAll('{localeData}', JSON.stringify(localeData))
             .replaceAll('{recentVerifications}', JSON.stringify(recentVerifications))
             .replaceAll('{created_by}', lang.rc_created_by)
             .replaceAll('{created_on}', lang.rc_created_on)
