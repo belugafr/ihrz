@@ -225,9 +225,9 @@ export const command: Command = {
             ],
         },
         {
-            name: 'get-lang',
+            name: 'get-data',
             name_localizations: {
-                "fr": "get-lang"
+                "fr": "get-data"
             },
 
             description: 'Get informations about a giveaway (JSON Body)',
