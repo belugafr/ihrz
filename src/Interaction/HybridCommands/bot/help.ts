@@ -33,12 +33,220 @@ import {
     Message,
     CommandInteractionOptionResolver,
     ApplicationCommandOptionType,
+    ButtonStyle,
+    ButtonBuilder,
 } from 'discord.js'
 
 import { LanguageData } from '../../../../types/languageData';
 import { CategoryData } from '../../../../types/category';
 import { Command } from '../../../../types/command';
 import { DatabaseStructure } from '../../../../types/database_structure';
+
+function createNavigationRow(currentPage: number, totalPages: number): ActionRowBuilder<ButtonBuilder> {
+    const row = new ActionRowBuilder<ButtonBuilder>()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId('first')
+                .setLabel('<<')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(currentPage === 0),
+            new ButtonBuilder()
+                .setCustomId('previous')
+                .setLabel('<')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(currentPage === 0),
+            new ButtonBuilder()
+                .setCustomId('page')
+                .setLabel(`${currentPage + 1}/${totalPages}`)
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(true),
+            new ButtonBuilder()
+                .setCustomId('next')
+                .setLabel('>')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(currentPage === totalPages - 1),
+            new ButtonBuilder()
+                .setCustomId('last')
+                .setLabel('>>')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(currentPage === totalPages - 1)
+        );
+    return row;
+}
+
+async function updatePage(
+    message: Message,
+    embeds: EmbedBuilder[],
+    currentPage: number,
+    menuRows: ActionRowBuilder<any>[],
+    navigationRow: ActionRowBuilder<ButtonBuilder>
+) {
+    const components = [...menuRows];
+    if (embeds.length > 1) {
+        components.push(navigationRow);
+    }
+
+    await message.edit({
+        embeds: [embeds[currentPage]],
+        components: components
+    });
+}
+
+async function handleCategorySelect(
+    i: StringSelectMenuInteraction,
+    response: Message,
+    categories: CategoryData[],
+    menuRows: ActionRowBuilder<any>[],
+    client: Client,
+    lang: LanguageData,
+    bot_prefix: { type: 'prefix' | 'mention'; string: string; },
+    Commands: DatabaseStructure.UtilsPermsData | undefined
+) {
+    if (i.values[0] === "back") {
+        const og_embed = new EmbedBuilder()
+            .setColor('#001eff')
+            .setDescription(lang.help_tip_embed
+                .replaceAll('${client.user?.username}', i.client.user.username)
+                .replaceAll('${client.iHorizon_Emojis.icon.Pin}', client.iHorizon_Emojis.icon.Pin)
+                .replaceAll('${categories.length}', categories.length.toString())
+                .replaceAll('${client.iHorizon_Emojis.badge.Slash_Bot}', client.iHorizon_Emojis.badge.Slash_Bot)
+                .replaceAll('${client.content.filter(c => c.messageCmd === false).length}', i.client.content.filter(c => c.messageCmd === 0 || 3).length.toString())
+                .replaceAll('${client.iHorizon_Emojis.icon.Crown_Logo}', client.iHorizon_Emojis.icon.Crown_Logo)
+                .replaceAll('${config.owner.ownerid1}', client.owners[0])
+                .replaceAll('${config.owner.ownerid2}', client.owners[1] ?? client.owners[0])
+                .replaceAll('${client.iHorizon_Emojis.vc.Region}', client.iHorizon_Emojis.vc.Region)
+                .replaceAll('${client.iHorizon_Emojis.badge.Slash_Bot}', client.iHorizon_Emojis.badge.Slash_Bot)
+            )
+            .setFooter(await client.method.bot.footerBuilder(i))
+            .setImage(`https://ihorizon.me/assets/img/banner/ihrz_${await client.db.get(`${i.guildId}.GUILD.LANG.lang`) || 'en-US'}.png`)
+            .setThumbnail("attachment://footer_icon.png")
+            .setTimestamp();
+        await response.edit({
+            embeds: [og_embed],
+            components: menuRows
+        });
+        return;
+    }
+
+    const categoryIndex = parseInt(i.values[0]);
+    const category = categories[categoryIndex];
+    let embeds: EmbedBuilder[] = [];
+
+    let currentEmbed = new EmbedBuilder()
+        .setTitle(`${category.emoji}・${category.name}`)
+        .setDescription(category.description)
+        .setColor(category.color as ColorResolvable)
+        .setFooter(await client.method.bot.footerBuilder(i))
+        .setThumbnail("attachment://footer_icon.png")
+        .setTimestamp();
+
+    let currentFieldsLength = 0;
+    let currentFieldsCount = 0;
+
+    for (const element of category.value) {
+        let states = "";
+        let cmdPrefix: string;
+
+        const commandStates = Commands?.[element.cmd.split(" ").pop()!];
+        states += commandStates
+            ? `${client.iHorizon_Emojis.icon.iHorizon_Lock} ${commandStates}`
+            : client.iHorizon_Emojis.icon.iHorizon_Unlock;
+
+        switch (element.messageCmd) {
+            case 0:
+                cmdPrefix = `${states} ${client.iHorizon_Emojis.badge.Slash_Bot} **/${element.cmd}**`;
+                break;
+            case 1:
+                cmdPrefix = bot_prefix.type === 'mention'
+                    ? `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} **@Ping-Me ${element.cmd}**`
+                    : `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} **${bot_prefix.string}${element.cmd}**`;
+                break;
+            case 2:
+                cmdPrefix = bot_prefix.type === 'mention'
+                    ? `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} (@Ping-Me) ${client.iHorizon_Emojis.badge.Slash_Bot} **${element.cmd}**`
+                    : `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} (${bot_prefix.string}) ${client.iHorizon_Emojis.badge.Slash_Bot} **${element.cmd}**`;
+                break;
+            default:
+                cmdPrefix = `${states} **${element.cmd}**`;
+        }
+
+        const guildLang = await client.db.get(`${i.guildId}.GUILD.LANG.lang`);
+        const descValue = (guildLang === "fr-ME" || guildLang === "fr-FR")
+            ? `\`${element.desc_localized["fr"]}\``
+            : `\`${element.desc}\``;
+
+        const newFieldLength = cmdPrefix.length + descValue.length;
+
+        if (currentFieldsCount >= 8 || currentFieldsLength + newFieldLength > 5500) {
+            embeds.push(currentEmbed);
+            currentEmbed = new EmbedBuilder()
+                .setTitle(`${category.emoji}・${category.name}`)
+                .setDescription(category.description)
+                .setColor(category.color as ColorResolvable)
+                .setFooter(await client.method.bot.footerBuilder(i))
+                .setThumbnail("attachment://footer_icon.png")
+                .setTimestamp();
+            currentFieldsLength = 0;
+            currentFieldsCount = 0;
+        }
+
+        currentEmbed.addFields({
+            name: cmdPrefix,
+            value: descValue,
+            inline: false
+        });
+
+        currentFieldsLength += newFieldLength;
+        currentFieldsCount++;
+    }
+
+    if (currentFieldsCount > 0) {
+        embeds.push(currentEmbed);
+    }
+
+    let currentPage = 0;
+    const navigationRow = createNavigationRow(currentPage, embeds.length);
+
+    await response.edit({
+        embeds: [embeds[currentPage]],
+        components: [...menuRows, navigationRow]
+    });
+
+    const buttonCollector = response.createMessageComponentCollector({
+        componentType: ComponentType.Button,
+        time: 840_000
+    });
+
+    buttonCollector.on('collect', async (interaction) => {
+        if (interaction.user.id !== i.user.id) {
+            await interaction.reply({
+                content: lang.help_not_for_you,
+                ephemeral: true
+            });
+            return;
+        }
+
+        await interaction.deferUpdate();
+
+        switch (interaction.customId) {
+            case 'first':
+                currentPage = 0;
+                break;
+            case 'previous':
+                currentPage = Math.max(0, currentPage - 1);
+                break;
+            case 'next':
+                currentPage = Math.min(embeds.length - 1, currentPage + 1);
+                break;
+            case 'last':
+                currentPage = embeds.length - 1;
+                break;
+        }
+
+        const updatedNavigationRow = createNavigationRow(currentPage, embeds.length);
+        await updatePage(response, embeds, currentPage, menuRows, updatedNavigationRow);
+    });
+}
 
 export const command: Command = {
     name: 'help',
@@ -75,7 +283,7 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var targetCommand = interaction.options.getString('command-name');
         } else {
-            
+
             var targetCommand = client.method.string(args!, 0);
         };
 
@@ -164,10 +372,6 @@ export const command: Command = {
                 .setThumbnail("attachment://footer_icon.png")
                 .setTimestamp();
 
-            let embed = new EmbedBuilder()
-                .setFooter(await client.method.bot.footerBuilder(interaction))
-                .setThumbnail("attachment://footer_icon.png");
-
             let response = await client.method.interactionSend(interaction, {
                 embeds: [og_embed],
                 components: rows,
@@ -175,94 +379,26 @@ export const command: Command = {
             });
 
             let collector = response.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 840_000 });
-            let guildLang = await client.db.get(`${interaction.guildId}.GUILD.LANG.lang`);
             let bot_prefix = await client.func.prefix.guildPrefix(client, interaction.guild?.id!);
 
             collector.on('collect', async (i: StringSelectMenuInteraction) => {
-
                 if (i.user.id !== interaction.member?.user.id) {
                     await i.reply({ content: lang.help_not_for_you, ephemeral: true });
                     return;
-                };
+                }
 
                 await i.deferUpdate();
 
-                if (i.values[0] === "back") {
-                    await response.edit({ embeds: [og_embed], components: rows });
-                    return;
-                }
-
-                embed
-                    .setTitle(`${categories[i.values[0] as unknown as number].emoji}・${categories[i.values[0] as unknown as number].name}`)
-                    .setDescription(categories[i.values[0] as unknown as number].description)
-                    .setColor(categories[i.values[0] as unknown as number].color as ColorResolvable);
-
-                embed.setFields({ name: ' ', value: ' ' });
-
-                let categoryColor = categories[i.values[0] as unknown as number].color;
-                let commandGroups: { name: string, value: string, inline: boolean }[][] = [];
-                let embeds: EmbedBuilder[] = [];
-                let currentGroup: { name: string, value: string, inline: boolean }[] = [];
-
-                categories[i.values[0] as unknown as number].value.forEach(async (element, index) => {
-                    var states = "";
-                    var cmdPrefix: string;
-                    var commandStates = Commands?.[element.cmd.split(" ").pop()!];
-                    if (!commandStates) {
-                        states += `${client.iHorizon_Emojis.icon.iHorizon_Unlock}`
-                    } else {
-                        states += `${client.iHorizon_Emojis.icon.iHorizon_Lock} ${commandStates}`
-                    }
-
-                    switch (element.messageCmd) {
-                        case 0:
-                            cmdPrefix = `${states} ${client.iHorizon_Emojis.badge.Slash_Bot} **/${element.cmd}**`
-                            break;
-                        case 1:
-                            cmdPrefix = bot_prefix.type === 'mention'
-                                ? `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} **@Ping-Me ${element.cmd}**`
-                                : `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} **${bot_prefix.string}${element.cmd}**`
-                            break;
-                        case 2:
-                            cmdPrefix = bot_prefix.type === 'mention'
-                                ? `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} (@Ping-Me) ${client.iHorizon_Emojis.badge.Slash_Bot} **${element.cmd}**`
-                                : `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} (${bot_prefix.string}) ${client.iHorizon_Emojis.badge.Slash_Bot} **${element.cmd}**`
-                            break;
-                    }
-                    let descValue = (guildLang === "fr-ME" || guildLang === "fr-FR") ? `\`${element.desc_localized["fr"]}\`` : `\`${element.desc}\``;
-                    currentGroup.push({ name: cmdPrefix, value: descValue, inline: false });
-
-                    if ((index + 1) % 20 === 0 || index === categories[i.values[0] as unknown as number].value.length - 1) {
-                        commandGroups.push([...currentGroup]);
-                        currentGroup = [];
-                    }
-                });
-
-                for (const group of commandGroups) {
-                    let newEmbed = new EmbedBuilder().setColor(categoryColor as ColorResolvable);
-
-                    if (embeds.length === 0) {
-                        newEmbed
-                            .setTitle(`${categories[i.values[0] as unknown as number].emoji}・${categories[i.values[0] as unknown as number].name}`)
-                            .setDescription(categories[i.values[0] as unknown as number].description)
-                            .setFooter(await client.method.bot.footerBuilder(interaction))
-                            .setThumbnail("attachment://footer_icon.png")
-                            .setTimestamp();
-                    }
-
-                    group.forEach(field => {
-                        newEmbed.addFields(field);
-                    });
-
-                    const remainingFields = group.length % 2;
-                    if (remainingFields === 0) {
-                        newEmbed.addFields({ name: '**  **', value: '**  **', inline: true });
-                    }
-
-                    embeds.push(newEmbed);
-                }
-
-                await response.edit({ embeds: embeds });
+                await handleCategorySelect(
+                    i,
+                    response,
+                    categories,
+                    rows,
+                    client,
+                    lang,
+                    bot_prefix,
+                    Commands
+                );
             });
 
             collector.on('end', async i => {
