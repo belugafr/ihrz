@@ -37,14 +37,12 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
         let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
         if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
-
-        let data = await client.func.getLanguageData(interaction.guildId) as LanguageData;
 
         let all_bots = Array.from(interaction.guild.members.cache
             .filter(x => x.user.bot)
@@ -56,13 +54,13 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.punishpub_not_admin });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.punishpub_not_admin });
             return;
         };
 
         if (all_bots.length == 0) {
-            await client.method.interactionSend(interaction, { content: data.all_admins_nobody_admins });
+            await client.method.interactionSend(interaction, { content: lang.all_admins_nobody_admins });
             return;
         };
 
@@ -74,7 +72,7 @@ export default {
             let pageUsers = all_bots.slice(i, i + usersPerPage);
             let pageContent = pageUsers.map((userId) => userId).join('\n');
             pages.push({
-                title: data.all_bots_embed_title
+                title: lang.all_bots_embed_title
                     .replace("${i / usersPerPage + 1}", String(i / usersPerPage + 1)),
                 description: pageContent,
             });
@@ -86,7 +84,7 @@ export default {
                 .setTitle(pages[currentPage].title)
                 .setDescription(pages[currentPage].description)
                 .setFooter({
-                    text: data.prevnames_embed_footer_text
+                    text: lang.prevnames_embed_footer_text
                         .replace('${currentPage + 1}', (currentPage + 1).toString())
                         .replace('${pages.length}', pages.length.toString()),
                     iconURL: "attachment://footer_icon.png"
@@ -117,7 +115,7 @@ export default {
 
         collector.on('collect', async (interaction_2) => {
             if (interaction_2.user.id !== interaction.member?.user.id) {
-                await interaction_2.reply({ content: data.help_not_for_you, ephemeral: true });
+                await interaction_2.reply({ content: lang.help_not_for_you, ephemeral: true });
                 return;
             };
 

@@ -34,9 +34,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
@@ -44,7 +42,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var action = interaction.options.getString("time") as string;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var action = (client.method.string(args!, 0) || "0s") as string
         };
 
@@ -55,28 +53,28 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.security_disable_not_admin });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.security_disable_not_admin });
             return;
         };
 
         if (!time) {
             await client.method.interactionSend(interaction, {
-                content: data.too_new_account_invalid_time_on_enable
+                content: lang.too_new_account_invalid_time_on_enable
             });
             return;
         };
 
         await client.db.set(`${interaction.guildId}.GUILD.CONFESSION.cooldown`, time);
         await client.method.interactionSend(interaction, {
-            content: data.confession_coolodwn_command_work
+            content: lang.confession_coolodwn_command_work
                 .replace('${interaction.user.toString()}', interaction.member.user.toString())
                 .replace('${client.timeCalculator.to_beautiful_string(time)}', client.timeCalculator.to_beautiful_string(time))
         });
 
         await client.method.iHorizonLogs.send(interaction, {
-            title: data.confession_cooldown_log_embed_title,
-            description: data.confession_cooldown_log_embed_desc
+            title: lang.confession_cooldown_log_embed_title,
+            description: lang.confession_cooldown_log_embed_desc
                 .replace('${interaction.user}', interaction.member.user.toString())
                 .replace('${client.timeCalculator.to_beautiful_string(time)}', client.timeCalculator.to_beautiful_string(time))
         });

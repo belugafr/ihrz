@@ -40,9 +40,7 @@ import { generatePassword } from '../../../core/functions/random.js';
 import { DatabaseStructure } from '../../../../types/database_structure.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -52,8 +50,8 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.tempmute_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.tempmute_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) });
             return;
         };
 
@@ -61,7 +59,7 @@ export default {
             var tomute = interaction.options.getMember("user") as GuildMember | null;
             var mutetime = interaction.options.getString("time");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var tomute = client.method.member(interaction, args!, 0) as GuildMember | null;
             var mutetime = client.method.string(args!, 1) as string | null;
         };
@@ -71,7 +69,7 @@ export default {
         let mutetimeMS = client.timeCalculator.to_ms(mutetime);
 
         if (!mutetimeMS) {
-            await client.method.interactionSend(interaction, { content: data.too_new_account_invalid_time_on_enable });
+            await client.method.interactionSend(interaction, { content: lang.too_new_account_invalid_time_on_enable });
             return;
         }
 
@@ -79,39 +77,39 @@ export default {
 
         if (!interaction.guild.members.me?.permissions.has([PermissionsBitField.Flags.ManageMessages])) {
             await client.method.interactionSend(interaction, {
-                content: data.tempmute_i_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                content: lang.tempmute_i_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
             });
             return;
         };
 
         if (tomute.id === interaction.member.user.id) {
             await client.method.interactionSend(interaction, {
-                content: data.tempmute_cannot_mute_yourself.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                content: lang.tempmute_cannot_mute_yourself.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
             });
             return;
         }
 
         if (tomute.isCommunicationDisabled() === true) {
-            await client.method.interactionSend(interaction, { content: data.tempmute_already_muted });
+            await client.method.interactionSend(interaction, { content: lang.tempmute_already_muted });
             return;
         };
 
-        await (tomute.timeout(mutetimeMS, data.tempmute_logs_embed_title)).catch(() => { });
+        await (tomute.timeout(mutetimeMS, lang.tempmute_logs_embed_title)).catch(() => { });
 
-        await client.method.interactionSend(interaction, data.tempmute_command_work
+        await client.method.interactionSend(interaction, lang.tempmute_command_work
             .replace("${tomute.id}", tomute.id)
             .replace("${ms(ms(mutetime))}", mutetimeString)
         );
 
         setTimeout(async () => {
             await client.method.channelSend(interaction, {
-                content: data.tempmute_unmuted_by_time.replace("${tomute.id}", tomute?.id!),
+                content: lang.tempmute_unmuted_by_time.replace("${tomute.id}", tomute?.id!),
             });
         }, mutetimeMS);
 
         await client.method.iHorizonLogs.send(interaction, {
-            title: data.tempmute_logs_embed_title,
-            description: data.tempmute_logs_embed_description
+            title: lang.tempmute_logs_embed_title,
+            description: lang.tempmute_logs_embed_description
                 .replace("${interaction.user.id}", interaction.member.user.id)
                 .replace("${tomute.id}", tomute.id)
                 .replace("${ms(ms(mutetime))}", mutetimeString)
@@ -119,7 +117,7 @@ export default {
 
         let warnObject: DatabaseStructure.WarnsData = {
             timestamp: Date.now(),
-            reason: data.tempmute_logs_embed_description
+            reason: lang.tempmute_logs_embed_description
                 .replace("${interaction.user.id}", interaction.member.user.id)
                 .replace("${tomute.id}", tomute.id)
                 .replace("${ms(ms(mutetime))}", mutetimeString),

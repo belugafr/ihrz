@@ -37,9 +37,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
@@ -48,19 +46,19 @@ export default {
             var user = interaction.options.getMember("member") as GuildMember;
             var amount = interaction.options.getNumber("amount")!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var user = client.method.member(interaction, args!, 0)!;
             var amount = client.method.number(args!, 1);
         };
 
-        let a = new EmbedBuilder().setColor("#FF0000").setDescription(data.addinvites_not_admin_embed_description);
+        let a = new EmbedBuilder().setColor("#FF0000").setDescription(lang.addinvites_not_admin_embed_description);
 
         const permissionsArray = [PermissionsBitField.Flags.Administrator]
         const permissions = interaction instanceof ChatInputCommandInteraction ?
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
+        if (!permissions && neededPerm === 0) {
             await client.method.interactionSend(interaction, { embeds: [a] });
             return;
         };
@@ -82,7 +80,7 @@ export default {
         };
 
         let finalEmbed = new EmbedBuilder()
-            .setDescription(data.addinvites_confirmation_embed_description
+            .setDescription(lang.addinvites_confirmation_embed_description
                 .replace(/\${amount}/g, amount!.toString())
                 .replace(/\${user}/g, user.toString())
             )
@@ -92,8 +90,8 @@ export default {
         await client.method.interactionSend(interaction, { embeds: [finalEmbed] });
 
         await client.method.iHorizonLogs.send(interaction, {
-            title: data.addinvites_logs_embed_title,
-            description: data.addinvites_logs_embed_description
+            title: lang.addinvites_logs_embed_title,
+            description: lang.addinvites_logs_embed_description
                 .replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
                 .replace(/\${amount}/g, amount.toString())
                 .replace(/\${user\.id}/g, user.id)

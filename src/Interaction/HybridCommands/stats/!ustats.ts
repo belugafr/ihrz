@@ -47,13 +47,13 @@ export default {
     run: async (
         client: Client,
         interaction: ChatInputCommandInteraction<"cached"> | Message,
-        data: LanguageData,
+        lang: LanguageData,
         command: Option | Command | undefined,
         execTimestamp?: number,
         args?: string[]
     ) => {
         let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
 
         // Guard's Typing
         if (
@@ -71,7 +71,7 @@ export default {
             member = (interaction.options.getMember('member') || interaction.member) as GuildMember;
             user = interaction.user;
         } else {
-            let _ = await client.method.checkCommandArgs(interaction, command, args!, data);
+            let _ = await client.method.checkCommandArgs(interaction, command, args!, lang);
             if (!_) return;
             member = (client.method.member(interaction, args!, 0) || interaction.member) as GuildMember;
             user = interaction.author;
@@ -80,7 +80,7 @@ export default {
         let res = (await client.db.get(`${interaction.guildId}.STATS.USER.${member.user.id}`)) as DatabaseStructure.UserStats | null;
 
         if (!res) {
-            return await client.method.interactionSend(interaction, { content: data.unblacklist_user_is_not_exist })
+            return await client.method.interactionSend(interaction, { content: lang.unblacklist_user_is_not_exist })
         }
 
         let monthlyVoiceActivity = 0
@@ -180,12 +180,12 @@ export default {
         })
 
         htmlContent = htmlContent
-            .replaceAll('{header_h1_value}', data.header_h1_value)
-            .replaceAll('{messages_word}', data.messages_word)
-            .replaceAll('{voice_activity}', data.voice_activity)
-            .replaceAll('{minutes_word}', data.minutes_word)
-            .replaceAll('{top_voice}', data.top_voice)
-            .replaceAll('{top_message}', data.top_message)
+            .replaceAll('{header_h1_value}', lang.header_h1_value)
+            .replaceAll('{messages_word}', lang.messages_word)
+            .replaceAll('{voice_activity}', lang.voice_activity)
+            .replaceAll('{minutes_word}', lang.minutes_word)
+            .replaceAll('{top_voice}', lang.top_voice)
+            .replaceAll('{top_message}', lang.top_message)
             .replaceAll('{author_username}', member.user.globalName || member.user.displayName)
             .replaceAll('{author_pfp}', member.user.displayAvatarURL({ size: 512 }))
             .replaceAll('{guild_name}', interaction.guild.name)

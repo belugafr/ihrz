@@ -31,9 +31,7 @@ import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
@@ -44,7 +42,7 @@ export default {
 
         if (await client.db.get(`${interaction.guildId}.ECONOMY.disabled`) === true) {
             await client.method.interactionSend(interaction,{
-                content: data.economy_disable_msg
+                content: lang.economy_disable_msg
                     .replace('${interaction.user.id}', interaction.member.user.id)
             });
             return;
@@ -54,15 +52,15 @@ export default {
             let time = client.timeCalculator.to_beautiful_string(timeout - (Date.now() - weekly));
 
             await client.method.interactionSend(interaction,{
-                content: data.weekly_cooldown_error
+                content: lang.weekly_cooldown_error
                     .replace(/\${time}/g, time)
             })
         } else {
             let embed = new EmbedBuilder()
-                .setAuthor({ name: data.weekly_embed_title, iconURL: (interaction.member.user as User).displayAvatarURL() })
+                .setAuthor({ name: lang.weekly_embed_title, iconURL: (interaction.member.user as User).displayAvatarURL() })
                 .setColor("#a4cb80")
-                .setDescription(data.weekly_embed_description)
-                .addFields({ name: data.weekly_embed_fields, value: `${amount}${client.iHorizon_Emojis.icon.Coin}` })
+                .setDescription(lang.weekly_embed_description)
+                .addFields({ name: lang.weekly_embed_fields, value: `${amount}${client.iHorizon_Emojis.icon.Coin}` })
 
 
             await client.db.add(`${interaction.guildId}.USER.${interaction.member.user.id}.ECONOMY.money`, amount);

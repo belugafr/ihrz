@@ -33,16 +33,14 @@ import { Option } from '../../../../types/option';
 
 let talkedRecentlyforr = new Set();
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
 
         if (await client.db.get(`${interaction.guildId}.ECONOMY.disabled`) === true) {
             await client.method.interactionSend(interaction, {
-                content: data.economy_disable_msg
+                content: lang.economy_disable_msg
                     .replace('${interaction.user.id}', interaction.member.user.id)
             });
             return;
@@ -51,12 +49,12 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var user = interaction.options.getMember("member") as GuildMember;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var user = client.method.member(interaction, args!, 0) as GuildMember;
         };
 
         if (talkedRecentlyforr.has(interaction.member.user.id)) {
-            await client.method.interactionSend(interaction, { content: data.rob_cooldown_error });
+            await client.method.interactionSend(interaction, { content: lang.rob_cooldown_error });
             return;
         };
 
@@ -64,13 +62,13 @@ export default {
         let author = await client.db.get(`${interaction.guildId}.USER.${interaction.member.user.id}.ECONOMY.money`);
 
         if (author < 250) {
-            await client.method.interactionSend(interaction, { content: data.rob_dont_enought_error });
+            await client.method.interactionSend(interaction, { content: lang.rob_dont_enought_error });
             return;
         };
 
         if (targetuser < 250) {
             await client.method.interactionSend(interaction, {
-                content: data.rob_him_dont_enought_error
+                content: lang.rob_him_dont_enought_error
                     .replace(/\${user\.user\.username}/g, user.user.globalName as string)
             });
             return;
@@ -79,7 +77,7 @@ export default {
         let random = Math.floor(Math.random() * 200) + 1;
 
         let embed = new EmbedBuilder()
-            .setDescription(data.rob_embed_description
+            .setDescription(lang.rob_embed_description
                 .replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
                 .replace(/\${user\.id}/g, user.id)
                 .replace(/\${random}/g, random.toString())

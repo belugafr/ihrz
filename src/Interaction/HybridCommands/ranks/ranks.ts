@@ -124,7 +124,7 @@ export const command: Command = {
                     name: 'user',
                     type: ApplicationCommandOptionType.User,
 
-                    description: 'The user you want to reset the ranks data',
+                    description: 'The user you want to reset the ranks lang',
                     description_localizations: {
                         "fr": "L'utilisateur que vous voulez supprimer du module de rangs."
                     },

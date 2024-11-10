@@ -40,9 +40,7 @@ import { Option } from '../../../../types/option';
 const itemsPerPage = 15;
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
@@ -68,17 +66,17 @@ export default {
         const userId = interaction.member.user.id;
         const userRank = arr.findIndex(user => user.inviter === userId);
         const userRankText = userRank !== -1
-            ? data.leaderboard_rank_text.replace('${userRank + 1}', String(userRank + 1)).replace('${arr.length}', arr.length.toString()).replace('${arr[userRank].invites}', String(arr[userRank].invites))
-            : data.leaderboard_rank_none;
+            ? lang.leaderboard_rank_text.replace('${userRank + 1}', String(userRank + 1)).replace('${arr.length}', arr.length.toString()).replace('${arr[userRank].invites}', String(arr[userRank].invites))
+            : lang.leaderboard_rank_none;
 
-        const text = data.leaderboard_gen_time_msg.replace("${interaction.guild?.name}", interaction.guild?.name!).replace('${Date.now() - execTimestamp}', String(Date.now() - execTimestamp!));
+        const text = lang.leaderboard_gen_time_msg.replace("${interaction.guild?.name}", interaction.guild?.name!).replace('${Date.now() - execTimestamp}', String(Date.now() - execTimestamp!));
 
         const generateEmbed = async (start: number) => {
             const current = arr.slice(start, start + itemsPerPage);
             let pageText = text;
             let i = start + 1;
             current.forEach((index) => {
-                pageText += data.leaderboard_text_inline
+                pageText += lang.leaderboard_text_inline
                     .replace("${i}", String(i === 1 ? "🥇" : i === 2 ? "🥈" : i === 3 ? "🥉" : i.toString()))
                     .replace("${index.invites}", index.invites.toString())
                     .replace("${index.regular}", index.regular.toString())
@@ -94,7 +92,7 @@ export default {
 
             return new EmbedBuilder()
                 .setColor("#FFB6C1")
-                .setTitle(data.leaderboard_default_text + " • " + interaction.guild?.name)
+                .setTitle(lang.leaderboard_default_text + " • " + interaction.guild?.name)
                 .setDescription(pageText)
                 .setTimestamp()
                 .setFooter(await client.method.bot.footerBuilder(interaction))

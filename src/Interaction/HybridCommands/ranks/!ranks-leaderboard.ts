@@ -33,9 +33,7 @@ import { DatabaseStructure } from '../../../../types/database_structure';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -51,13 +49,13 @@ export default {
 
                 if (user) {
                     array.push({
-                        text: data.ranks_leaderboard_txt_text
+                        text: lang.ranks_leaderboard_txt_text
                             .replace('${user}', user.toString())
                             .replace('${user.globalName}', user.globalName!)
                             .replace("${a.level || '0'}", String(a.level || '0'))
                             .replace('${a.xptotal}', a.xptotal?.toString()!),
                         length: a.xptotal,
-                        rawText: data.ranks_leaderboard_txt_raw
+                        rawText: lang.ranks_leaderboard_txt_raw
                             .replace('${user.globalName}', user.globalName!)
                             .replace("${a.level || '0'}", String(a.level || '0'))
                             .replace('${a.xptotal}', a.xptotal?.toString()!)
@@ -74,9 +72,9 @@ export default {
 
         array.forEach(index => {
             if (i < 4) {
-                embed.addFields({ name: data.ranks_leaderboard_top_txt.replace('${i}', i.toString()), value: index.text });
+                embed.addFields({ name: lang.ranks_leaderboard_top_txt.replace('${i}', i.toString()), value: index.text });
             };
-            o += data.ranks_leaderboard_top_txt_raw.replace('${i}', i.toString()).replace('${index.rawText}', index.rawText);
+            o += lang.ranks_leaderboard_top_txt_raw.replace('${i}', i.toString()).replace('${index.rawText}', index.rawText);
             i++;
         });
 
@@ -86,7 +84,7 @@ export default {
         embed
             .setThumbnail(interaction.guild.iconURL())
             .setFooter(await client.method.bot.footerBuilder(interaction))
-            .setTitle(data.ranks_leaderboard_embed_title.replace('${interaction.guild?.name}', interaction.guild.name));
+            .setTitle(lang.ranks_leaderboard_embed_title.replace('${interaction.guild?.name}', interaction.guild.name));
 
         await client.method.interactionSend(interaction, {
             embeds: [embed],

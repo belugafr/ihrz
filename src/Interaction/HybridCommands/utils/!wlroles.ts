@@ -44,29 +44,27 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
 
-        if ((!interaction.member.permissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await client.method.interactionSend(interaction, { content: data.setjoinroles_not_admin });
+        if ((!interaction.member.permissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await client.method.interactionSend(interaction, { content: lang.setjoinroles_not_admin });
             return;
         }
 
         let all_roles: DatabaseStructure.UtilsData["wlRoles"] = await client.db.get(`${interaction.guildId}.UTILS.wlRoles`) || [];
 
         let embed = new EmbedBuilder()
-            .setTitle(data.utils_wlroles_embed_title)
+            .setTitle(lang.utils_wlroles_embed_title)
             .setColor("#475387")
-            .setDescription(data.utils_wlroles_embed_desc)
+            .setDescription(lang.utils_wlroles_embed_desc)
             .addFields({
-                name: data.setjoinroles_help_embed_fields_1_name,
+                name: lang.setjoinroles_help_embed_fields_1_name,
                 value: Array.isArray(all_roles) && all_roles.length > 0
                     ? all_roles.map(x => `<@&${x}>`).join(', ')
-                    : data.setjoinroles_var_none
+                    : lang.setjoinroles_var_none
             });
 
         let roleSelectMenu = new RoleSelectMenuBuilder()
@@ -118,7 +116,7 @@ export default {
 
             if (!roleInteraction.guild?.members.me?.permissions.has(PermissionFlagsBits.ManageRoles)) {
                 await roleInteraction.deferUpdate();
-                await client.method.interactionSend(interaction, { content: data.setjoinroles_var_perm_issue, ephemeral: true });
+                await client.method.interactionSend(interaction, { content: lang.setjoinroles_var_perm_issue, ephemeral: true });
                 return;
             }
 
@@ -128,16 +126,16 @@ export default {
                 let roleDangerousPermissions: string[] = [];
 
                 const dangerousPermissions = [
-                    { flag: PermissionsBitField.Flags.Administrator, name: data.setjoinroles_var_perm_admin },
-                    { flag: PermissionsBitField.Flags.ManageGuild, name: data.setjoinroles_var_perm_manage_guild },
-                    { flag: PermissionsBitField.Flags.ManageRoles, name: data.setjoinroles_var_perm_manage_role },
-                    { flag: PermissionsBitField.Flags.MentionEveryone, name: data.setjoinroles_var_perm_use_mention },
-                    { flag: PermissionsBitField.Flags.BanMembers, name: data.setjoinroles_var_perm_ban_members },
-                    { flag: PermissionsBitField.Flags.KickMembers, name: data.setjoinroles_var_perm_kick_members },
-                    { flag: PermissionsBitField.Flags.ManageWebhooks, name: data.setjoinroles_var_perm_manage_webhooks },
-                    { flag: PermissionsBitField.Flags.ManageChannels, name: data.setjoinroles_var_perm_manage_channels },
-                    { flag: PermissionsBitField.Flags.ManageGuildExpressions, name: data.setjoinroles_var_perm_manage_expression },
-                    { flag: PermissionsBitField.Flags.ViewCreatorMonetizationAnalytics, name: data.setjoinroles_var_perm_view_monetization_analytics },
+                    { flag: PermissionsBitField.Flags.Administrator, name: lang.setjoinroles_var_perm_admin },
+                    { flag: PermissionsBitField.Flags.ManageGuild, name: lang.setjoinroles_var_perm_manage_guild },
+                    { flag: PermissionsBitField.Flags.ManageRoles, name: lang.setjoinroles_var_perm_manage_role },
+                    { flag: PermissionsBitField.Flags.MentionEveryone, name: lang.setjoinroles_var_perm_use_mention },
+                    { flag: PermissionsBitField.Flags.BanMembers, name: lang.setjoinroles_var_perm_ban_members },
+                    { flag: PermissionsBitField.Flags.KickMembers, name: lang.setjoinroles_var_perm_kick_members },
+                    { flag: PermissionsBitField.Flags.ManageWebhooks, name: lang.setjoinroles_var_perm_manage_webhooks },
+                    { flag: PermissionsBitField.Flags.ManageChannels, name: lang.setjoinroles_var_perm_manage_channels },
+                    { flag: PermissionsBitField.Flags.ManageGuildExpressions, name: lang.setjoinroles_var_perm_manage_expression },
+                    { flag: PermissionsBitField.Flags.ViewCreatorMonetizationAnalytics, name: lang.setjoinroles_var_perm_view_monetization_analytics },
                 ];
 
                 for (const perm of dangerousPermissions) {
@@ -160,12 +158,12 @@ export default {
             }
 
             if (dangerous_roles.length > 0) {
-                await handleDangerousRolesConfirmation(roleInteraction, dangerous_roles, confirmedDangerousRoles, embed, og_response, data);
+                await handleDangerousRolesConfirmation(roleInteraction, dangerous_roles, confirmedDangerousRoles, embed, og_response, lang);
             } else if (too_highter_roles.length > 0) {
                 await handleTooHighterRoles(roleInteraction, too_highter_roles);
             } else {
                 await roleInteraction.deferUpdate();
-                updateEmbed(embed, selectedRoles, data);
+                updateEmbed(embed, selectedRoles, lang);
                 await og_response.edit({ embeds: [embed] });
             }
         });
@@ -184,8 +182,8 @@ export default {
                 await og_response.edit({ components: [newComp_2] })
 
                 await client.method.iHorizonLogs.send(interaction, {
-                    title: data.utils_wlRoles_logsEmbed_title,
-                    description: data.utils_wlRoles_logsEmbed_desc
+                    title: lang.utils_wlRoles_logsEmbed_title,
+                    description: lang.utils_wlRoles_logsEmbed_desc
                         .replace("${interaction.member?.user.toString()}", interaction.member?.user.toString()!)
                 });
 
@@ -207,10 +205,10 @@ export default {
             await og_response.edit({ components: [comp, comp_2] });
         });
 
-        function updateEmbed(embed: EmbedBuilder, roles: Role[], data: LanguageData) {
-            const roleValues = roles.map(role => `<@&${role.id}>`).join(', ') || data.setjoinroles_var_none;
+        function updateEmbed(embed: EmbedBuilder, roles: Role[], lang: LanguageData) {
+            const roleValues = roles.map(role => `<@&${role.id}>`).join(', ') || lang.setjoinroles_var_none;
             embed.setFields({
-                name: data.setjoinroles_help_embed_fields_1_name,
+                name: lang.setjoinroles_help_embed_fields_1_name,
                 value: roleValues
             });
         };
@@ -222,15 +220,15 @@ export default {
             confirmedDangerousRoles: Set<string>,
             embed: EmbedBuilder,
             og_response: Message,
-            data: LanguageData) {
+            lang: LanguageData) {
             let dangerous_fields = dangerous_roles.map(role => ({
                 name: `@${role.name} (${role.id})`,
                 value: role.permissions.map(p => `\`${p}\``).join(', ')
             }));
 
             let dangerous_embed = new EmbedBuilder()
-                .setTitle(data.setjoinroles_warn_title)
-                .setDescription(data.setjoinroles_warn_dangerous_perm)
+                .setTitle(lang.setjoinroles_warn_title)
+                .setDescription(lang.setjoinroles_warn_dangerous_perm)
                 .addFields(dangerous_fields);
 
             let confirm_buttons = new ActionRowBuilder<ButtonBuilder>()
@@ -238,11 +236,11 @@ export default {
                     new ButtonBuilder()
                         .setCustomId('dangerous_roles_confirm_yes')
                         .setStyle(ButtonStyle.Danger)
-                        .setLabel(data.mybot_submit_utils_msg_yes),
+                        .setLabel(lang.mybot_submit_utils_msg_yes),
                     new ButtonBuilder()
                         .setCustomId('dangerous_roles_confirm_no')
                         .setStyle(ButtonStyle.Secondary)
-                        .setLabel(data.mybot_submit_utils_msg_no)
+                        .setLabel(lang.mybot_submit_utils_msg_no)
                 );
 
             let warn_msg = await roleInteraction.reply({ embeds: [dangerous_embed], components: [confirm_buttons], ephemeral: true });
@@ -261,7 +259,7 @@ export default {
                     confirm_buttons.components.forEach(x => x.setDisabled(true));
                     await warn_msg.edit({ components: [confirm_buttons] });
 
-                    updateEmbed(embed, selectedRoles, data);
+                    updateEmbed(embed, selectedRoles, lang);
                     await og_response.edit({ embeds: [embed] });
                 } else if (buttonInteraction?.customId === 'dangerous_roles_confirm_no') {
                     await warn_msg.edit({
@@ -270,7 +268,7 @@ export default {
                                 .setDisabled(true)
                                 .setStyle(ButtonStyle.Secondary)
                                 .setCustomId('utils-wlRoles-choice-timeOut')
-                                .setLabel(data.setjoinroles_action_canceled)
+                                .setLabel(lang.setjoinroles_action_canceled)
                         )]
                     });
                 }
@@ -281,7 +279,7 @@ export default {
                             .setDisabled(true)
                             .setStyle(ButtonStyle.Secondary)
                             .setCustomId('utils-wlRoles-choice-timeOut')
-                            .setLabel(data.setjoinroles_timesup_button)
+                            .setLabel(lang.setjoinroles_timesup_button)
                     )]
                 });
             }
@@ -301,8 +299,8 @@ export default {
             }));
 
             let too_highter_embed = new EmbedBuilder()
-                .setTitle(data.setjoinroles_warn_title)
-                .setDescription(data.setjoinroles_too_highter_roles)
+                .setTitle(lang.setjoinroles_warn_title)
+                .setDescription(lang.setjoinroles_too_highter_roles)
                 .addFields(too_highter_fields);
 
             await roleInteraction.reply({

@@ -42,9 +42,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -71,14 +69,14 @@ export default {
         let voiceChannel = (interaction.member as GuildMember).voice.channel;
 
         if (!player || !player.playing || !voiceChannel) {
-            await client.method.interactionSend(interaction, { content: data.nowplaying_no_queue });
+            await client.method.interactionSend(interaction, { content: lang.nowplaying_no_queue });
             return;
         };
 
         let progress = client.func.generateProgressBar(player.position, player.queue.current?.info.duration)
 
         let embed = new EmbedBuilder()
-            .setTitle(data.nowplaying_message_embed_title)
+            .setTitle(lang.nowplaying_message_embed_title)
             .setDescription(`by: ${player.queue.current?.requester}\n**[${player.queue.current?.info.title}](${player.queue.current?.info?.uri})**, ${player.queue.current?.info?.author}`)
             .addFields(
                 { name: '  ', value: progress?.replace(/ 0:00/g, 'LIVE')! }
@@ -101,7 +99,7 @@ export default {
                 if (player || voiceChannel) {
 
                     if (!player || !player.playing || !voiceChannel) {
-                        await i.reply({ content: data.nowplaying_no_queue, ephemeral: true });
+                        await i.reply({ content: lang.nowplaying_no_queue, ephemeral: true });
                         return;
                     };
 
@@ -115,11 +113,11 @@ export default {
                                 if (paused) {
                                     player.resume();
                                     paused = false;
-                                    (channel as BaseGuildTextChannel)?.send({ content: data.nowplaying_resume_button.replace('${interaction.user}', interaction.member?.user.toString()!) });
+                                    (channel as BaseGuildTextChannel)?.send({ content: lang.nowplaying_resume_button.replace('${interaction.user}', interaction.member?.user.toString()!) });
                                 } else {
                                     player.pause();
                                     paused = true;
-                                    (channel as BaseGuildTextChannel)?.send({ content: data.nowplaying_pause_button.replace('${interaction.user}', interaction.member?.user.toString()!) });
+                                    (channel as BaseGuildTextChannel)?.send({ content: lang.nowplaying_pause_button.replace('${interaction.user}', interaction.member?.user.toString()!) });
                                 }
                                 break;
                             case "lyrics":
@@ -133,7 +131,7 @@ export default {
                                 })
 
                                 if (!lyrics) {
-                                    i.reply({ content: data.nowplaying_lyrics_button, ephemeral: true });
+                                    i.reply({ content: lang.nowplaying_lyrics_button, ephemeral: true });
                                 } else {
                                     let trimmedLyrics = lyrics.lyrics.substring(0, 1997);
                                     let embed = new EmbedBuilder()
@@ -157,7 +155,7 @@ export default {
                             case "stop":
                                 await i.deferUpdate();
                                 player.destroy();
-                                (channel as BaseGuildTextChannel).send({ content: data.nowplaying_stop_buttom.replace('${interaction.user}', interaction.member?.user.toString()!) });
+                                (channel as BaseGuildTextChannel).send({ content: lang.nowplaying_stop_buttom.replace('${interaction.user}', interaction.member?.user.toString()!) });
                                 break;
                         }
 

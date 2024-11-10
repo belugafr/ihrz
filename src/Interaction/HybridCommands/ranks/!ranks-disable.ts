@@ -33,9 +33,7 @@ import { LanguageData } from '../../../../types/languageData.js';
 import { Command } from '../../../../types/command.js';
 import { Option } from '../../../../types/option.js';
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -43,7 +41,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var types = interaction.options.getString("action");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var types = client.method.string(args!, 0);
         };
 
@@ -52,41 +50,41 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.disablexp_not_admin });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.disablexp_not_admin });
             return;
         };
 
         if (types == "off") {
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.disablexp_logs_embed_title_disable,
-                description: data.disablexp_logs_embed_description_disable.replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
+                title: lang.disablexp_logs_embed_title_disable,
+                description: lang.disablexp_logs_embed_description_disable.replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
             });
 
             await client.db.set(`${interaction.guildId}.GUILD.XP_LEVELING.disable`, false);
 
-            await client.method.interactionSend(interaction, { content: data.disablexp_command_work_disable });
+            await client.method.interactionSend(interaction, { content: lang.disablexp_command_work_disable });
             return;
         } else if (types == "disable") {
 
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.disablexp_logs_embed_title_disable,
-                description: data.disablexp_logs_embed_description_disable.replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
+                title: lang.disablexp_logs_embed_title_disable,
+                description: lang.disablexp_logs_embed_description_disable.replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
             });
 
             await client.db.set(`${interaction.guildId}.GUILD.XP_LEVELING.disable`, 'disable');
 
-            await client.method.interactionSend(interaction, { content: data.disablexp_command_work_disable_entierly });
+            await client.method.interactionSend(interaction, { content: lang.disablexp_command_work_disable_entierly });
             return;
         } else if (types == "on") {
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.disablexp_logs_embed_title_enable,
-                description: data.disablexp_logs_embed_description_enable.replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
+                title: lang.disablexp_logs_embed_title_enable,
+                description: lang.disablexp_logs_embed_description_enable.replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
             });
 
             await client.db.set(`${interaction.guildId}.GUILD.XP_LEVELING.disable`, true);
 
-            await client.method.interactionSend(interaction, { content: data.disablexp_command_work_enable });
+            await client.method.interactionSend(interaction, { content: lang.disablexp_command_work_enable });
             return;
         };
     },

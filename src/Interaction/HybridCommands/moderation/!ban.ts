@@ -40,9 +40,7 @@ import { Command } from '../../../../types/command.js';
 import { Option } from '../../../../types/option.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -51,13 +49,13 @@ export default {
             var member = interaction.options.getUser("member")!
             var reason = interaction.options.getString("reason")
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var member = await client.method.user(interaction, args!, 0) as User;
             var reason = client.method.longString(args!, 1);
         };
 
         if (!reason) {
-            reason = data.guildprofil_not_set_punishPub
+            reason = lang.guildprofil_not_set_punishPub
         };
 
         const permissionsArray = [PermissionsBitField.Flags.BanMembers]
@@ -65,23 +63,23 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
+        if (!permissions && neededPerm === 0) {
             await client.method.interactionSend(interaction, {
-                content: data.ban_not_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                content: lang.ban_not_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
             });
             return;
         };
 
         if (!member) {
             await client.method.interactionSend(interaction, {
-                content: data.ban_dont_found_member
+                content: lang.ban_dont_found_member
             });
             return;
         };
 
         if (!interaction.guild.members.me?.permissions.has(PermissionsBitField.Flags.BanMembers)) {
             await client.method.interactionSend(interaction, {
-                content: data.ban_dont_have_perm_myself.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                content: lang.ban_dont_have_perm_myself.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
             });
             return;
         };
@@ -90,7 +88,7 @@ export default {
 
         if (member.id === interaction.member.user.id) {
             await client.method.interactionSend(interaction, {
-                content: data.ban_try_to_ban_yourself.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                content: lang.ban_try_to_ban_yourself.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
             });
             return;
         };
@@ -99,14 +97,14 @@ export default {
 
             if ((interaction.member.roles as GuildMemberRoleManager).highest.position <= guildMember.roles.highest.position) {
                 await client.method.interactionSend(interaction, {
-                    content: data.ban_attempt_ban_higter_member.replace("${client.iHorizon_Emojis.icon.Stop_Logo}", client.iHorizon_Emojis.icon.Stop_Logo)
+                    content: lang.ban_attempt_ban_higter_member.replace("${client.iHorizon_Emojis.icon.Stop_Logo}", client.iHorizon_Emojis.icon.Stop_Logo)
                 });
                 return;
             };
 
             if (!guildMember.bannable) {
                 await client.method.interactionSend(interaction, {
-                    content: data.ban_cant_ban_member.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                    content: lang.ban_cant_ban_member.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
                 });
                 return;
             };
@@ -118,10 +116,10 @@ export default {
                     client.method.interactionSend(interaction, {
                         embeds: [
                             new EmbedBuilder()
-                                .setTitle(data.setjoinroles_var_perm_ban_members)
-                                .setFields({ name: data.var_member, value: member.toString(), inline: true },
-                                    { name: data.var_author, value: interaction.member?.toString()!, inline: true },
-                                    { name: data.var_reason, value: reason || data.var_no_set, inline: true }
+                                .setTitle(lang.setjoinroles_var_perm_ban_members)
+                                .setFields({ name: lang.var_member, value: member.toString(), inline: true },
+                                    { name: lang.var_author, value: interaction.member?.toString()!, inline: true },
+                                    { name: lang.var_reason, value: reason || lang.var_no_set, inline: true }
                                 )
                                 .setFooter(await client.method.bot.footerBuilder(interaction))
                         ],
@@ -129,8 +127,8 @@ export default {
                     }).catch(() => { });
 
                     await client.method.iHorizonLogs.send(interaction, {
-                        title: data.ban_logs_embed_title,
-                        description: data.ban_logs_embed_description
+                        title: lang.ban_logs_embed_title,
+                        description: lang.ban_logs_embed_description
                             .replace(/\${member\.user\.id}/g, member.id)
                             .replace(/\${interaction\.member\.id}/g, interaction.member?.user.id!)
                     });
@@ -138,7 +136,7 @@ export default {
         }
 
         member.send({
-            content: data.ban_message_to_the_banned_member
+            content: lang.ban_message_to_the_banned_member
                 .replace(/\${interaction\.guild\.name}/g, interaction.guild.name)
                 .replace(/\${interaction\.member\.user\.username}/g, interaction.member.user.username)
         })

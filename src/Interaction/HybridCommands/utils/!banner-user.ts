@@ -34,9 +34,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -44,7 +42,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var user: User | undefined = interaction.options.getUser('user') || interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var user: User | undefined = await client.method.user(interaction, args!, 0) || interaction.author;
         };
 
@@ -65,7 +63,7 @@ export default {
 
         let embed = new EmbedBuilder()
             .setColor('#c4afed')
-            .setTitle(data.banner_user_embed.replace('${user?.username}', user?.username))
+            .setTitle(lang.banner_user_embed.replace('${user?.username}', user?.username))
             .setImage(`https://cdn.discordapp.com/banners/${user_1?.id}/${banner}.${format}?size=1024`)
             .setThumbnail((user?.displayAvatarURL() as string))
             .setFooter(await client.method.bot.footerBuilder(interaction));

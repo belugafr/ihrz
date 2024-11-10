@@ -33,9 +33,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
@@ -45,15 +43,15 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.end_not_admin });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.end_not_admin });
             return;
         };
 
         if (interaction instanceof ChatInputCommandInteraction) {
             var giveawayId = interaction.options.getString("giveaway-id")!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var giveawayId = client.method.string(args!, 0)!;
         };
 
@@ -65,48 +63,48 @@ export default {
                         iconURL: interaction.guild?.iconURL({ size: 512, forceStatic: false })!
                     })
                     .setColor("#0099ff")
-                    .setTitle(data.gw_getdata_embed_title)
+                    .setTitle(lang.gw_getdata_embed_title)
                     .setFields(
                         {
-                            name: data.gw_getdata_embed_fields_channel,
+                            name: lang.gw_getdata_embed_fields_channel,
                             value: `<#${giveawayData.channelId}>`,
                             inline: true
                         },
                         {
-                            name: data.gw_getdata_embed_fields_amountWinner,
-                            value: data.gw_getdata_embed_fields_value_amountWinner
+                            name: lang.gw_getdata_embed_fields_amountWinner,
+                            value: lang.gw_getdata_embed_fields_value_amountWinner
                                 .replace('${giveawayData.winnerCount}', giveawayData.winnerCount),
                             inline: true
                         },
                         {
-                            name: data.gw_getdata_embed_fields_prize,
-                            value: data.gw_getdata_embed_fields_value_prize
+                            name: lang.gw_getdata_embed_fields_prize,
+                            value: lang.gw_getdata_embed_fields_value_prize
                                 .replace('${giveawayData.prize}', giveawayData.prize),
                             inline: true
                         },
                         {
-                            name: data.gw_getdata_embed_fields_hostedBy,
+                            name: lang.gw_getdata_embed_fields_hostedBy,
                             value: `<@${giveawayData.hostedBy}>`,
                             inline: true
                         },
                         {
-                            name: data.gw_getdata_embed_fields_isEnded,
-                            value: giveawayData.ended ? data.gw_getdata_yes : data.gw_getdata_no,
+                            name: lang.gw_getdata_embed_fields_isEnded,
+                            value: giveawayData.ended ? lang.gw_getdata_yes : lang.gw_getdata_no,
                             inline: true
                         },
                         {
-                            name: data.gw_getdata_embed_fields_isValid,
-                            value: giveawayData.isValid ? data.gw_getdata_yes : data.gw_getdata_no,
+                            name: lang.gw_getdata_embed_fields_isValid,
+                            value: giveawayData.isValid ? lang.gw_getdata_yes : lang.gw_getdata_no,
                             inline: true
                         },
                         {
-                            name: data.gw_getdata_embed_fields_time,
+                            name: lang.gw_getdata_embed_fields_time,
                             value: time(new Date(giveawayData.expireIn), 'd'),
                             inline: true
                         },
                         {
-                            name: data.gw_getdata_embed_fields_entriesAmount,
-                            value: data.gw_getdata_embed_fields_value_entriesAmount
+                            name: lang.gw_getdata_embed_fields_entriesAmount,
+                            value: lang.gw_getdata_embed_fields_value_entriesAmount
                                 .replace('${(giveawayData.entries as string[]).length}', (giveawayData.entries as string[]).length.toString())
                                 .replace('${giveawayId}', giveawayId)
                         },
@@ -115,14 +113,14 @@ export default {
                 if (giveawayData.ended) {
                     embed.addFields(
                         {
-                            name: data.gw_getdata_embed_fields_winners,
+                            name: lang.gw_getdata_embed_fields_winners,
                             value: `${giveawayData.winners.map((x: string) => `<@${x}>`)}`
                         }
                     )
                 }
                 await client.method.interactionSend(interaction, { embeds: [embed] });
             }).catch(async () => {
-                await client.method.interactionSend(interaction, { content: data.gw_doesnt_exit });
+                await client.method.interactionSend(interaction, { content: lang.gw_doesnt_exit });
             })
         return;
     },

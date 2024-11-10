@@ -29,16 +29,14 @@ import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
 
         let embed = new EmbedBuilder()
             .setColor('#c4afed')
-            .setTitle(data.banner_guild_embed)
+            .setTitle(lang.banner_guild_embed)
             .setImage(interaction.guild.bannerURL({ extension: 'png', size: 4096 }))
             .setThumbnail(interaction.guild.iconURL({ size: 4096 }) as string)
             .setFooter(await client.method.bot.footerBuilder(interaction))

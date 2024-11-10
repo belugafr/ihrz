@@ -35,9 +35,7 @@ import { Command } from '../../../../types/command.js';
 import { Option } from '../../../../types/option.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -47,13 +45,13 @@ export default {
             let player = client.player.getPlayer(interaction.guildId as string);
 
             if (!player || !player.playing || !voiceChannel) {
-                await client.method.interactionSend(interaction, { content: data.stop_nothing_playing });
+                await client.method.interactionSend(interaction, { content: lang.stop_nothing_playing });
                 return;
             };
 
             player.stopPlaying();
 
-            await client.method.interactionSend(interaction, { content: data.stop_command_work });
+            await client.method.interactionSend(interaction, { content: lang.stop_command_work });
             return;
         } catch (error: any) {
             logger.err(error);

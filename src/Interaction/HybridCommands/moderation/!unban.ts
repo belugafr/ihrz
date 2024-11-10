@@ -37,9 +37,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -49,14 +47,14 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.unban_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.unban_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) });
             return;
         };
 
         if (!interaction.guild.members.me?.permissions.has([PermissionsBitField.Flags.BanMembers])) {
             await client.method.interactionSend(interaction, {
-                content: data.unban_bot_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                content: lang.unban_bot_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
             })
             return;
         };
@@ -65,40 +63,40 @@ export default {
             var userID = interaction.options.getString('userid');
             var reason = interaction.options.getString('reason');
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var userID = client.method.string(args!, 0);
             var reason = client.method.longString(args!, 1);
         };
 
-        if (!reason) reason = data.unban_reason;
+        if (!reason) reason = lang.unban_reason;
 
         await interaction.guild.bans.fetch()
             .then(async (bans) => {
                 if (bans.size == 0) {
                     await client.method.interactionSend(interaction, {
-                        content: data.unban_there_is_nobody_banned.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                        content: lang.unban_there_is_nobody_banned.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
                     });
                     return;
                 }
                 let bannedID = bans.find(ban => ban.user.id == userID);
                 if (!bannedID) {
                     await client.method.interactionSend(interaction, {
-                        content: data.unban_the_member_is_not_banned.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+                        content: lang.unban_the_member_is_not_banned.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
                     });
                     return;
                 };
 
                 await interaction.guild?.bans.remove(userID as string, reason as string).catch(() => { });
                 await client.method.interactionSend(interaction, {
-                    content: data.unban_is_now_unbanned
+                    content: lang.unban_is_now_unbanned
                         .replace(/\${userID}/g, userID as string)
                 });
             })
             .catch((err: string) => logger.err(err));
 
         await client.method.iHorizonLogs.send(interaction, {
-            title: data.unban_logs_embed_title,
-            description: data.unban_logs_embed_description
+            title: lang.unban_logs_embed_title,
+            description: lang.unban_logs_embed_description
                 .replace(/\${userID}/g, userID as string)
                 .replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
         });

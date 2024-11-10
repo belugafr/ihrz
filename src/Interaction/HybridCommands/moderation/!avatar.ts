@@ -35,9 +35,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -45,7 +43,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member = interaction.options.getMember("user") as GuildMember | null;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var member = client.method.member(interaction, args!, 0) as GuildMember | null;
         };
 
@@ -54,10 +52,10 @@ export default {
         let embed = new EmbedBuilder()
             .setImage(mentionedUser.displayAvatarURL({ extension: 'png', size: 512 }))
             .setColor("#add5ff")
-            .setTitle(data.avatar_embed_title
+            .setTitle(lang.avatar_embed_title
                 .replace('${mentionedUser.username}', mentionedUser.displayName)
             )
-            .setDescription(data.avatar_embed_description)
+            .setDescription(lang.avatar_embed_description)
             .setTimestamp()
             .setFooter(await client.method.bot.footerBuilder(interaction));
 

@@ -28,15 +28,13 @@ import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         if (interaction instanceof ChatInputCommandInteraction) {
             var desc = interaction.options.getString("description")!;
             var user = interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var desc = args?.join(" ") || "None";
             var user = interaction.author;
         };
@@ -45,7 +43,7 @@ export default {
 
         await tableProfil.set(`${user.id}.desc`, desc);
 
-        await client.method.interactionSend(interaction, { content: data.setprofildescriptions_command_work, ephemeral: true });
+        await client.method.interactionSend(interaction, { content: lang.setprofildescriptions_command_work, ephemeral: true });
         return;
     },
 };

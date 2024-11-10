@@ -57,7 +57,7 @@ export async function checkCommandPermission(interaction: ChatInputCommandIntera
     return { allowed: false, neededPerm: cmdNeedPerm };
 }
 
-export async function checkUserPermissions(member: GuildMember,): Promise<DatabaseStructure.UtilsPermsData["user_id"] | 0> {
+export async function checkUserPermissions(member: GuildMember): Promise<DatabaseStructure.UtilsPermsData["user_id"] | 0> {
     let fetch: DatabaseStructure.UtilsPermsData["user_id"] | 0 = (await member.client.db.get(
         `${member.guild.id}.UTILS.USER_PERMS.${member.user.id}`,
     )) || 0;

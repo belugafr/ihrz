@@ -31,9 +31,7 @@ import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
@@ -43,7 +41,7 @@ export default {
 
         if (await client.db.get(`${interaction.guildId}.ECONOMY.disabled`) === true) {
             await client.method.interactionSend(interaction,{
-                content: data.economy_disable_msg
+                content: lang.economy_disable_msg
                     .replace('${interaction.user.id}', interaction.member.user.id)
             });
             return;
@@ -53,7 +51,7 @@ export default {
             let time = client.timeCalculator.to_beautiful_string(timeout - (Date.now() - work));
 
             await client.method.interactionSend(interaction,{
-                content: data.work_cooldown_error
+                content: lang.work_cooldown_error
                     .replace('${interaction.user.id}', interaction.member.user.id)
                     .replace('${time}', time),
                 ephemeral: true
@@ -65,11 +63,11 @@ export default {
 
         let embed = new EmbedBuilder()
             .setAuthor({
-                name: data.work_embed_author
+                name: lang.work_embed_author
                     .replace(/\${interaction\.user\.username}/g, (interaction.member.user as User).globalName || interaction.member.user.username),
                 iconURL: (interaction.member.user as User).displayAvatarURL()
             })
-            .setDescription(data.work_embed_description
+            .setDescription(lang.work_embed_description
                 .replace(/\${interaction\.user\.username}/g, (interaction.member.user as User).globalName || interaction.member.user.username)
                 .replace(/\${amount}/g, amount.toString())
             )

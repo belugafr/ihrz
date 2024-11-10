@@ -37,16 +37,14 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
 
         if (!(interaction.member as GuildMember).voice.channel) {
             await client.method.interactionSend(interaction, {
-                content: data.skip_not_in_voice_channel.replace("${client.iHorizon_Emojis.icon.Warning_Icon}", client.iHorizon_Emojis.icon.Warning_Icon)
+                content: lang.skip_not_in_voice_channel.replace("${client.iHorizon_Emojis.icon.Warning_Icon}", client.iHorizon_Emojis.icon.Warning_Icon)
             });
             return;
         };
@@ -58,7 +56,7 @@ export default {
             let channel = interaction.guild.channels.cache.get(player.textChannelId as string);
 
             if (!player || !player.playing || !voiceChannel) {
-                await client.method.interactionSend(interaction, { content: data.skip_nothing_playing });
+                await client.method.interactionSend(interaction, { content: lang.skip_nothing_playing });
                 return;
             };
 
@@ -72,7 +70,7 @@ export default {
                 embeds: [
                     new EmbedBuilder()
                         .setColor(2829617)
-                        .setDescription(data.event_mp_playerSkip
+                        .setDescription(lang.event_mp_playerSkip
                             .replace("${client.iHorizon_Emojis.icon.Music_Icon}", client.iHorizon_Emojis.icon.Music_Icon)
                             .replace("${track.title}", oldName as string)
                         )
@@ -80,7 +78,7 @@ export default {
             });
 
             await client.method.interactionSend(interaction, {
-                content: data.skip_command_work
+                content: lang.skip_command_work
                     .replace("{queue}", player.queue.current?.info.title as string),
             });
 

@@ -34,9 +34,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
@@ -44,7 +42,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var action = interaction.options.getString("action");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var action = client.method.string(args!, 0);
         };
 
@@ -53,20 +51,20 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.security_disable_not_admin });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.security_disable_not_admin });
             return;
         };
 
         if (action === 'on') {
             await client.db.set(`${interaction.guildId}.CONFESSION.disable`, false);
             await client.method.interactionSend(interaction, {
-                content: data.confession_disable_command_work_on
+                content: lang.confession_disable_command_work_on
             });
 
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.confession_log_embed_title_on_enable,
-                description: data.confession_log_embed_desc_on_enable
+                title: lang.confession_log_embed_title_on_enable,
+                description: lang.confession_log_embed_desc_on_enable
                     .replace('${interaction.user}', interaction.member.user.toString())
             });
 
@@ -75,12 +73,12 @@ export default {
 
             await client.db.set(`${interaction.guildId}.CONFESSION.disable`, true);
             await client.method.interactionSend(interaction, {
-                content: data.confession_disable_command_work_off
+                content: lang.confession_disable_command_work_off
             });
 
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.confession_log_embed_title_on_enable,
-                description: data.confession_log_embed_desc_on_disabled
+                title: lang.confession_log_embed_title_on_enable,
+                description: lang.confession_log_embed_desc_on_disabled
                     .replace('${interaction.user}', interaction.member.user.toString())
             });
 

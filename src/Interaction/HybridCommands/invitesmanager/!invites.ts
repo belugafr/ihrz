@@ -35,9 +35,7 @@ import { Command } from '../../../../types/command.js';
 import { Option } from '../../../../types/option.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -45,7 +43,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member = interaction.options.getMember("member") as GuildMember || interaction.member;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var member = client.method.member(interaction, args!, 0) || interaction.member;
         };
 
@@ -58,11 +56,11 @@ export default {
 
         let embed = new EmbedBuilder()
             .setColor("#92A8D1")
-            .setTitle(data.invites_confirmation_embed_title)
+            .setTitle(lang.invites_confirmation_embed_title)
             .setTimestamp()
             .setThumbnail(member.displayAvatarURL())
             .setDescription(
-                data.invites_confirmation_embed_description
+                lang.invites_confirmation_embed_description
                     .replace(/\${member\.user\.id}/g, member.id)
                     .replace(/\${bonus\s*\|\|\s*0}/g, bonus || 0)
                     .replace(/\${leaves\s*\|\|\s*0}/g, leaves || 0)

@@ -94,6 +94,9 @@ async function executeCommand(
     lang: LanguageData,
     execTimestamp: number
 ) {
+    let permCheck = await client.method.permission.checkCommandPermission(message, command!);
+    if (!permCheck.allowed) return client.method.permission.sendErrorMessage(message, lang, permCheck.neededPerm || 0);
+
     if (!command?.run) {
         await client.method.interactionSend(message, {
             embeds: [await client.method.createAwesomeEmbed(lang, command, client, message)]

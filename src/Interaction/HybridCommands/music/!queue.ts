@@ -34,9 +34,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -44,12 +42,12 @@ export default {
         let player = client.player.getPlayer(interaction.guildId as string);
 
         if (!player) {
-            await client.method.interactionSend(interaction, { content: data.queue_iam_not_voicec });
+            await client.method.interactionSend(interaction, { content: lang.queue_iam_not_voicec });
             return;
         };
 
         if (!player.queue.tracks) {
-            await client.method.interactionSend(interaction, { content: data.queue_no_queue });
+            await client.method.interactionSend(interaction, { content: lang.queue_no_queue });
             return;
         };
 
@@ -57,7 +55,7 @@ export default {
             .map((track, idx) => `**${++idx})** [${track.info.title}](${track.info.uri})`)
 
         if (tracks.length === 0) {
-            await client.method.interactionSend(interaction, { content: data.queue_empty_queue });
+            await client.method.interactionSend(interaction, { content: lang.queue_empty_queue });
             return;
         };
 
@@ -68,10 +66,10 @@ export default {
             let chunk = tracks.slice(0, chunkSize);
             let embed = new EmbedBuilder()
                 .setColor('#ff0000')
-                .setTitle(data.queue_embed_title)
-                .setDescription(chunk.join('\n') || data.queue_embed_description_empty)
+                .setTitle(lang.queue_embed_title)
+                .setDescription(chunk.join('\n') || lang.queue_embed_description_empty)
                 .setFooter({
-                    text: data.queue_embed_footer_text
+                    text: lang.queue_embed_footer_text
                         .replace("{index}", (index + 1).toString())
                         .replace("{track}", player.queue.tracks.length.toString())
                 });

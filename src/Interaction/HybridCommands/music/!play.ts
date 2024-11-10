@@ -39,9 +39,7 @@ import { Option } from '../../../../types/option';
 import { SearchResult } from 'lavalink-client/dist/types';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -51,17 +49,17 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var query = interaction.options.getString("title")!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var query = client.method.longString(args!, 0)!
         }
 
         if (!voiceChannel) {
-            await client.method.interactionSend(interaction, { content: data.p_not_in_voice_channel });
+            await client.method.interactionSend(interaction, { content: lang.p_not_in_voice_channel });
             return;
         };
 
         if (!client.func.isAllowedLinks(query)) {
-            return client.method.interactionSend(interaction, { content: data.p_not_allowed })
+            return client.method.interactionSend(interaction, { content: lang.p_not_allowed })
         };
 
         let res: SearchResult | undefined;
@@ -89,7 +87,7 @@ export default {
 
         if (!res || res.tracks.length === 0) {
             let results = new EmbedBuilder()
-                .setTitle(data.p_embed_title)
+                .setTitle(lang.p_embed_title)
                 .setColor('#ff0000')
                 .setTimestamp();
 
@@ -117,7 +115,7 @@ export default {
             embeds: [
                 new EmbedBuilder()
                     .setColor(2829617)
-                    .setDescription(data.event_mp_audioTrackAdd
+                    .setDescription(lang.event_mp_audioTrackAdd
                         .replace("${client.iHorizon_Emojis.icon.Music_Icon}", client.iHorizon_Emojis.icon.Music_Icon)
                         .replace("${track.title}", res.tracks[0].info.title as string)
                     )
@@ -139,11 +137,11 @@ export default {
             .setDescription(`**${yes.info.title}**`)
             .setColor('#00cc1a')
             .setTimestamp()
-            .setFooter({ text: data.p_duration + `${timeCalcultator()}` })
+            .setFooter({ text: lang.p_duration + `${timeCalcultator()}` })
             .setThumbnail(yes.info.artworkUrl as string);
 
         const i = await client.method.interactionSend(interaction, {
-            content: data.p_loading_message
+            content: lang.p_loading_message
                 .replace("${client.iHorizon_Emojis.icon.Timer}", client.iHorizon_Emojis.icon.Timer)
                 .replace("{result}", res.loadType === "playlist" ? 'playlist' : 'track')
             , embeds: [embed]

@@ -37,9 +37,7 @@ import { Command } from '../../../../types/command.js';
 import { Option } from '../../../../types/option.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -51,19 +49,19 @@ export default {
             if (interaction instanceof ChatInputCommandInteraction) {
                 var mode = interaction.options.getString('mode');
             } else {
-                var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+                var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
                 var mode = client.method.string(args!, 0);
             };
 
             if (!player || !player.playing || !voiceChannel) {
-                await client.method.interactionSend(interaction, { content: data.loop_no_queue });
+                await client.method.interactionSend(interaction, { content: lang.loop_no_queue });
                 return;
             };
 
             await player.setRepeatMode(mode as "off" | "track" | "queue");
 
             await client.method.interactionSend(interaction, {
-                content: data.loop_command_work
+                content: lang.loop_command_work
                     .replace("{mode}", mode === 'track' ? `🔂` : `▶`)
             });
             return;

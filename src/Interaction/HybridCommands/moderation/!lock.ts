@@ -35,9 +35,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -45,7 +43,7 @@ export default {
         let Lockembed = new EmbedBuilder()
             .setColor("#5b3475")
             .setTimestamp()
-            .setDescription(data.lock_embed_message_description
+            .setDescription(lang.lock_embed_message_description
                 .replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
             );
 
@@ -54,15 +52,15 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.lock_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.lock_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) });
             return;
         };
 
         if (interaction instanceof ChatInputCommandInteraction) {
             var role = interaction.options.getRole("role");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, data); if (!_) return;
+            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
             var role = client.method.role(interaction, args!, 0);
         };
 
@@ -72,8 +70,8 @@ export default {
             }).catch(() => { })
 
         await client.method.iHorizonLogs.send(interaction, {
-            title: data.lock_logs_embed_title,
-            description: data.lock_logs_embed_description
+            title: lang.lock_logs_embed_title,
+            description: lang.lock_logs_embed_description
                 .replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
                 .replace(/\${interaction\.channel\.id}/g, interaction.channel.id as string)
         });

@@ -38,9 +38,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -50,15 +48,15 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.setxpchannels_not_admin });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.setxpchannels_not_admin });
             return;
         };
 
         let history = await client.db.get(`${interaction.guildId}.MUSIC_HISTORY`);
 
         if (!history || !history.embed || history.embed.length == 0) {
-            await client.method.interactionSend(interaction, { content: data.history_no_entries });
+            await client.method.interactionSend(interaction, { content: lang.history_no_entries });
             return;
         };
 
@@ -74,7 +72,7 @@ export default {
             let pageContent = pageUsers.map((userId: string) => userId).join('\n');
 
             pages.push({
-                title: data.history_embed_title
+                title: lang.history_embed_title
                     .replace('${interaction.guild?.name}', interaction.guild.name)
                     .replace('${i / usersPerPage + 1}', (i / usersPerPage + 1).toString()),
                 description: pageContent,
@@ -88,7 +86,7 @@ export default {
                 .setTitle(pages[currentPage].title)
                 .setDescription(pages[currentPage].description)
                 .setFooter({
-                    text: data.history_embed_footer_text
+                    text: lang.history_embed_footer_text
                         .replace('${currentPage + 1}', (currentPage + 1).toString())
                         .replace('${pages.length}', pages.length.toString()),
                     iconURL: "attachment://footer_icon.png"

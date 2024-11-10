@@ -38,9 +38,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, data: LanguageData, command: Option | Command | undefined, execTimestamp?: number, args?: string[]) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
@@ -50,15 +48,15 @@ export default {
             interaction.memberPermissions?.has(permissionsArray)
             : interaction.member.permissions.has(permissionsArray);
 
-        if (!permissions && permCheck.neededPerm === 0) {
-            await client.method.interactionSend(interaction, { content: data.lock_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) });
+        if (!permissions && neededPerm === 0) {
+            await client.method.interactionSend(interaction, { content: lang.lock_dont_have_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) });
             return;
         };
 
         let char = Array.from(interaction.guild.members.cache.filter(member => member.isCommunicationDisabled()).values()) || [];
 
         if (char.length == 0) {
-            await client.method.interactionSend(interaction, { content: data.prevnames_undetected });
+            await client.method.interactionSend(interaction, { content: lang.prevnames_undetected });
             return;
         };
 
@@ -79,7 +77,7 @@ export default {
                 .setColor("#000000")
                 .setDescription(pages[currentPage].description)
                 .setFooter({
-                    text: data.prevnames_embed_footer_text
+                    text: lang.prevnames_embed_footer_text
                         .replace('${currentPage + 1}', (currentPage + 1).toString())
                         .replace('${pages.length}', pages.length.toString()),
                     iconURL: "attachment://footer_icon.png"

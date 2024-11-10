@@ -31,7 +31,6 @@ import {
 import { LanguageData } from '../../../../../types/languageData';
 import { Command } from '../../../../../types/command';
 import { Option } from '../../../../../types/option';
-import { SubCommandArgumentValue } from '../../../../core/functions/method.js';
 import { DatabaseStructure } from '../../../../../types/database_structure';
 
 export default {
