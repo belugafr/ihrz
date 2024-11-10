@@ -35,27 +35,30 @@ async function cooldDown(client: Client, interaction: Interaction) {
     return false;
 };
 
-async function handleCommandExecution(client: Client, interaction: ChatInputCommandInteraction, command: any, lang: LanguageData) {
+async function handleCommandExecution(client: Client, interaction: ChatInputCommandInteraction, command: any, lang: LanguageData, thinking: boolean) {
     const options = interaction.options as CommandInteractionOptionResolver;
     const group = options.getSubcommandGroup(false);
     const subCommand = options.getSubcommand(false);
 
-    console.log(group, subCommand)
     if (group && subCommand) {
         const subCmd = client.subCommands.get(group + " " + subCommand);
 
-        console.log(subCmd)
-
         if (subCmd && subCmd.run) {
+            if ((!subCmd.thinking || thinking === undefined) && thinking) {
+                await interaction.deferReply();
+            }
+
             return await subCmd.run(client, interaction, lang, command, Date.now(), []);
         }
     }
     else if (subCommand) {
         const subCmd = client.subCommands.get(subCommand);
 
-        console.log(subCmd)
-
         if (subCmd && subCmd.run) {
+            if ((!subCmd.thinking || thinking === undefined) && thinking) {
+                await interaction.deferReply();
+            }
+
             return await subCmd.run(client, interaction, lang, command, Date.now(), []);
         }
     }
@@ -171,8 +174,13 @@ export const event: BotEvent = {
         }
 
         try {
+            let thinking = false;
+            if (command.thinking) {
+                thinking = true;
+            }
+
             const lang = await client.func.getLanguageData(interaction.guildId) as LanguageData;
-            await handleCommandExecution(client, interaction, command, lang);
+            await handleCommandExecution(client, interaction, command, lang, thinking);
         } catch (error) {
             console.error(error)
             // await handleCommandError(client, interaction, command, error);
