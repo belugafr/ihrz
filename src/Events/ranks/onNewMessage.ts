@@ -21,7 +21,7 @@
 
 import { Client, PermissionsBitField, ChannelType, Message, GuildTextBasedChannel, ClientUser, SnowflakeUtil } from 'discord.js';
 
-import { isMessageCommand } from '../interaction/messageCommandHandler.js';
+import { parseMessageCommand } from '../interaction/messageCommandHandler.js';
 import { LanguageData } from '../../../types/languageData';
 import { BotEvent } from '../../../types/event';
 import { DatabaseStructure } from '../../../types/database_structure.js';
@@ -41,7 +41,7 @@ export const event: BotEvent = {
         let data = await client.func.getLanguageData(message.guild.id) as LanguageData;
         let guildLocal = await client.db.get(`${message.guild.id}.GUILD.LANG.lang`) || "en-US";
 
-        if ((await isMessageCommand(client, message)).s) return;
+        if ((await parseMessageCommand(client, message)).success) return;
 
         if (!message.guild || message.author.bot || message.channel.type !== ChannelType.GuildText) return;
 

@@ -19,79 +19,149 @@
 ・ Copyright © 2020-2024 iHorizon
 */
 
-import { Command } from '../../../types/command';
-import { BotEvent } from '../../../types/event';
 import { BaseGuildTextChannel, Client, EmbedBuilder, GuildMember, Message, PermissionFlagsBits } from 'discord.js';
 import { LanguageData } from '../../../types/languageData';
+import { Command } from '../../../types/command';
+import { BotEvent } from '../../../types/event';
+import { Option } from '../../../types/option';
 
-export async function isMessageCommand(client: Client, message: Message): Promise<{ s: boolean, a?: string[], c?: Command }> {
-    var prefix = await client.func.prefix.guildPrefix(client, message.guildId!);
-
-    let args = message.content.slice(prefix.string.length).trim().split(/ +/g);
-    let command = client.message_commands.get(args.shift()?.toLowerCase() as string);
-
-    if (message.content.startsWith(prefix.string) && command) {
-        return { s: true, a: args, c: command };
-    } else {
-        return { s: false, a: undefined, c: undefined };
-    };
+type MessageCommandResponse = {
+    success: boolean,
+    args?: string[],
+    command?: Command,
+    subCommand?: Option | Command
 };
+
+export async function parseMessageCommand(client: Client, message: Message): Promise<MessageCommandResponse> {
+    const prefix = await client.func.prefix.guildPrefix(client, message.guildId!);
+    if (!message.content.startsWith(prefix.string)) {
+        return { success: false };
+    }
+
+    const args = message.content.slice(prefix.string.length).trim().split(/ +/g);
+    const commandName = args.shift()?.toLowerCase();
+
+    if (!commandName) {
+        return { success: false };
+    }
+
+    const directSubCommand = client.subCommands.get(commandName);
+    if (directSubCommand) {
+        const parentCommand = client.commands.find(cmd =>
+            cmd.options?.some(opt => opt.name === directSubCommand.name)
+        );
+        return {
+            success: true,
+            args: args,
+            command: parentCommand,
+            subCommand: directSubCommand
+        };
+    }
+
+    const mainCommand = client.message_commands.get(commandName);
+    if (mainCommand) {
+        const potentialSubCommandName = args[0]?.toLowerCase();
+        if (potentialSubCommandName && mainCommand.options) {
+            const subCommand = mainCommand.options.find(opt =>
+                opt.name === potentialSubCommandName ||
+                opt.aliases?.includes(potentialSubCommandName)
+            );
+            if (subCommand) {
+                args.shift();
+                return {
+                    success: true,
+                    args: args,
+                    command: mainCommand,
+                    subCommand: subCommand
+                };
+            }
+        }
+        return {
+            success: true,
+            args: args,
+            command: mainCommand
+        };
+    }
+
+    return { success: false };
+}
+
+async function executeCommand(
+    client: Client,
+    message: Message,
+    command: Command,
+    args: string[],
+    lang: LanguageData,
+    execTimestamp: number
+) {
+    if (!command?.run) {
+        await client.method.interactionSend(message, {
+            embeds: [await client.method.createAwesomeEmbed(lang, command, client, message)]
+        });
+        return;
+    }
+
+    await command.run(client, message, lang, command, execTimestamp, args);
+}
+
+async function handleCommandError(client: Client, message: Message, command: Command | Option, error: any) {
+    const errorBlock = `\`\`\`TS\nMessage: The command ran into a problem!\nCommand Name: ${command.name}\nError: ${error}\`\`\`\n`;
+    const channel = client.channels.cache.get(client.config.core.reportChannelID) as BaseGuildTextChannel;
+
+    if (channel) {
+        await channel.send({
+            embeds: [
+                new EmbedBuilder()
+                    .setTitle('MSG_CMD_CRASH_NOT_HANDLE')
+                    .setDescription(errorBlock)
+                    .setTimestamp()
+                    .setFields(
+                        {
+                            name: "🛡️ Bot Admin",
+                            value: message.guild?.members.me?.permissions.has(PermissionFlagsBits.Administrator) ? "yes" : "no"
+                        },
+                        {
+                            name: "📝 User Admin",
+                            value: (message.member as GuildMember)?.permissions.has(PermissionFlagsBits.Administrator) ? "yes" : "no"
+                        },
+                        {
+                            name: "** **",
+                            value: message.content
+                        }
+                    )
+            ]
+        });
+    }
+}
 
 export const event: BotEvent = {
     name: "messageCreate",
     run: async (client: Client, message: Message) => {
-
         if (!message.guild || message.author.bot || !message.channel) return;
 
         if (await client.method.helper.coolDown(message, "msg_commands", 1000)) {
             return;
-        };
+        }
 
         if (await client.db.table('BLACKLIST').get(`${message.author.id}.blacklisted`)) {
             return;
-        };
+        }
 
-        let result = await isMessageCommand(client, message);
+        const result = await parseMessageCommand(client, message);
+        if (!result.success) return;
 
-        if (result.s) {
+        try {
+            const lang = await client.func.getLanguageData(message.guildId) as LanguageData;
+            const execTimestamp = Date.now();
 
-            try {
-                let lang = await client.func.getLanguageData(message.guildId) as LanguageData;
-
-                if (result.c?.run) {
-                    await result.c.run(client, message, lang, result.c, Date.now(), result.a);
-                }
-            } catch (err) {
-                let block = `\`\`\`TS\nMessage: The command ran into a problem!\nCommand Name: ${result.c?.name}\nError: ${err}\`\`\`\n`
-                let channel = client.channels.cache.get(client.config.core.reportChannelID);
-
-                if (channel) {
-
-                    return (channel as BaseGuildTextChannel).send({
-                        embeds: [
-                            new EmbedBuilder()
-                                .setTitle(`MSG_CMD_CRASH_NOT_HANDLE`)
-                                .setDescription(block)
-                                .setTimestamp()
-                                .setFields(
-                                    {
-                                        name: "🛡️ Bot Admin",
-                                        value: message.guild?.members.me?.permissions.has(PermissionFlagsBits.Administrator) ? "yes" : "no"
-                                    },
-                                    {
-                                        name: "📝 User Admin",
-                                        value: (message.member as GuildMember)?.permissions.has(PermissionFlagsBits.Administrator) ? "yes" : "no"
-                                    },
-                                    {
-                                        name: "** **",
-                                        value: message.content
-                                    },
-                                )
-                        ]
-                    })
-                }
-
+            if (result.subCommand) {
+                await executeCommand(client, message, result.subCommand as Command, result.args || [], lang, execTimestamp);
             }
-        };
-    },
+            else if (result.command) {
+                await executeCommand(client, message, result.command, result.args || [], lang, execTimestamp);
+            }
+        } catch (error) {
+            await handleCommandError(client, message, result.subCommand || result.command!, error);
+        }
+    }
 };

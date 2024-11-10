@@ -22,6 +22,7 @@
 import { ActionRowBuilder, BaseGuildTextChannel, ButtonBuilder, ButtonStyle, ChannelType, ChatInputCommandInteraction, Client, CommandInteractionOptionResolver, EmbedBuilder, GuildMember, Interaction, PermissionFlagsBits } from 'discord.js';
 import { LanguageData } from '../../../types/languageData';
 import { BotEvent } from '../../../types/event';
+import { Command } from '../../../types/command';
 
 var timeout: number = 1000;
 
@@ -35,7 +36,7 @@ async function cooldDown(client: Client, interaction: Interaction) {
     return false;
 };
 
-async function handleCommandExecution(client: Client, interaction: ChatInputCommandInteraction, command: any, lang: LanguageData, thinking: boolean) {
+async function handleCommandExecution(client: Client, interaction: ChatInputCommandInteraction, command: Command, lang: LanguageData, thinking: boolean) {
     const options = interaction.options as CommandInteractionOptionResolver;
     const group = options.getSubcommandGroup(false);
     const subCommand = options.getSubcommand(false);
@@ -67,7 +68,8 @@ async function handleCommandExecution(client: Client, interaction: ChatInputComm
         await interaction.deferReply();
     }
 
-    return await command.run(client, interaction, lang, command, Date.now(), []);
+    if (command.run) await command.run(client, interaction, lang, command, Date.now(), []);
+    return
 }
 
 async function handleCommandError(client: Client, interaction: ChatInputCommandInteraction, command: any, error: any) {

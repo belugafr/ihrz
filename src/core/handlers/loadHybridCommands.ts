@@ -139,28 +139,6 @@ async function processCommandOptions(
     client: Client,
     directoryPath: string
 ): Promise<void> {
-    // if (command.options) {
-    //     if (argsHelper.hasSubCommand(command.options)) {
-    //         const lastSlashIndex = path.lastIndexOf('/');
-    //         const directoryPath = path.substring(0, lastSlashIndex);
-    //         for (let option of command.options) {
-    //             if (option.name) {
-    //                 const commandModule = await import(`${directoryPath}/!${option.name}.js`);
-    //                 option.run = commandModule.default.run
-    //                 client.message_commands.set(option.name, option)
-
-    //                 let aliases = option.aliases || [];
-    //                 for (let alias of aliases) {
-    //                     if (client.message_commands.has(alias)) {
-    //                         logger.err(`Alias "${alias}" for command "${command.name}" already exists! Exiting...`.bgRed);
-    //                         process.exit(1);
-    //                     }
-    //                     client.message_commands.set(alias, option);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // };
     for (const option of options) {
         const fullName = parentName ? `${parentName} ${option.name}` : option.name;
 

@@ -626,20 +626,5 @@ export const command: Command = {
     category: 'utils',
     thinking: false,
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, runningCommand: Option | Command | undefined, execTimestamp?: number, options?: string[]) => {
-        let fetchedCommand: string;
 
-        if (!options?.[0]) {
-            await client.method.interactionSend(interaction, { embeds: [await client.method.createAwesomeEmbed(lang, command, client, interaction)] });
-            return;
-        }
-        const cmd = command.options?.find(x => options[0] === x.name || x.aliases?.includes(options[0]));
-        if (!cmd) return;
-
-        fetchedCommand = cmd.name;
-        options.shift();
-
-        const commandModule = await import(`./!${fetchedCommand}.js`);
-        await commandModule.default.run(client, interaction, lang, cmd, execTimestamp, options);
-    },
 };
