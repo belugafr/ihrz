@@ -34,7 +34,7 @@ export default {
             var desc = interaction.options.getString("description")!;
             var user = interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var desc = args?.join(" ") || "None";
             var user = interaction.author;
         };

@@ -47,7 +47,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var nw = interaction.options.getString("nickname") || '';
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var nw = client.method.longString(args!, 0) || '';
         }
 

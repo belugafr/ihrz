@@ -128,7 +128,7 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var type = interaction.options.getString("language");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var type = args?.[0] as string | null;
         };
 

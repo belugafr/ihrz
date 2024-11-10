@@ -116,7 +116,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member = interaction.options.getUser('user') || interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var member = await client.method.user(interaction, args!, 0) || interaction.author;
         };
 

@@ -34,7 +34,7 @@ export default {
             var age = interaction.options.getNumber("age")!;
             var user = interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var age = client.method.number(args!, 0);
             var user = interaction.author;
         };

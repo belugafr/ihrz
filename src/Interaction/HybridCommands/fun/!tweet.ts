@@ -53,7 +53,7 @@ export default {
             var entry = interaction.options.getString('comment');
             var messageArgs = entry!.split(' ');
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var user: User = await client.method.user(interaction, args!, 0) || interaction.author;
             var entry = client.method.longString(args!, 1);
             var messageArgs = entry!.split(' ');

@@ -44,7 +44,7 @@ export default {
             var member = interaction.options.getMember("member") as GuildMember | null;
             var warnID = interaction.options.getString("warn-id")!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var member = client.method.member(interaction, args!, 0) as GuildMember | null;
             var warnID = client.method.longString(args!, 1)!;
         };

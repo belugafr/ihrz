@@ -45,7 +45,7 @@ export default {
             var slap = interaction.options.getUser("user") as User;
             var user = interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var slap = await client.method.user(interaction, args!, 0) as User;
             var user = interaction.author;
         };

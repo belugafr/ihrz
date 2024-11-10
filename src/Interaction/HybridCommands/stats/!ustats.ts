@@ -70,8 +70,6 @@ export default {
             member = (interaction.options.getMember('member') || interaction.member) as GuildMember;
             user = interaction.user;
         } else {
-            let _ = await client.method.checkCommandArgs(interaction, command, args!, lang);
-            if (!_) return;
             member = (client.method.member(interaction, args!, 0) || interaction.member) as GuildMember;
             user = interaction.author;
         }

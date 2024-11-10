@@ -48,7 +48,7 @@ export default {
             var channel = interaction.options.getChannel("to") as TextChannel;
             var buttonTitle = interaction.options.getString('button-title')?.substring(0, 32) || '+';
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var channel = (client.method.channel(interaction, args!, 0) || interaction.channel) as TextChannel;
             var buttonTitle = client.method.string(args!, 1)?.substring(0, 32) || '+';
         };

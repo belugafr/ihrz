@@ -55,7 +55,7 @@ export default {
             var toChannel = interaction.options.getChannel('to')! as BaseGuildVoiceChannel | null;
             await interaction.deferReply();
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var fromChannel = client.method.voiceChannel(interaction, args!, 0);
             var toChannel = client.method.voiceChannel(interaction, args!, 1);
         };

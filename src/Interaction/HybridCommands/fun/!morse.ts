@@ -45,7 +45,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var text = interaction.options.getString("input")?.toUpperCase() as string;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var text = client.method.longString(args!, 0)?.toUpperCase() as string;
         }
 

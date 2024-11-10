@@ -40,7 +40,7 @@ export default {
             var amount = interaction.options.getNumber("amount") as number;
             var user = interaction.options.getMember("member") as GuildMember;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var amount = client.method.number(args!, 0) as number;
             var user = client.method.member(interaction, args!, 0) as GuildMember;
         };

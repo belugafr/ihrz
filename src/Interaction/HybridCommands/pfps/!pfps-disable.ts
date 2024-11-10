@@ -48,7 +48,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var action = interaction.options.getString('action');
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var action = client.method.string(args!, 0);
         }
 

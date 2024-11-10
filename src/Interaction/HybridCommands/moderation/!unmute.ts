@@ -43,7 +43,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var tomute = interaction.options.getMember("user") as GuildMember | null;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var tomute = client.method.member(interaction, args!, 0) as GuildMember | null;
         };
 

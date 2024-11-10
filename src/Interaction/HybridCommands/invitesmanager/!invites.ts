@@ -43,7 +43,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member = interaction.options.getMember("member") as GuildMember || interaction.member;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var member = client.method.member(interaction, args!, 0) || interaction.member;
         };
 

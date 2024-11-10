@@ -41,7 +41,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var toDeposit = interaction.options.getString('how-much') as string;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var toDeposit = client.method.string(args!, 0) as string;
         };
 

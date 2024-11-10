@@ -40,7 +40,7 @@ export default {
             var user1 = interaction.options.getUser("user1") || interaction.user;
             var user2 = interaction.options.getUser("user2") || interaction.guild?.members.cache.random()?.user as User;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var user1 = await client.method.user(interaction, args!, 0) || interaction.author;
             var user2 = await client.method.user(interaction, args!, 1) || interaction.guild?.members.cache.random()?.user as User;
         }

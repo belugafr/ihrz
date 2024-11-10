@@ -58,7 +58,7 @@ export default {
             var msg = interaction.options.getString("message")!;
             var targetMember = interaction.options.getMember("member")!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var isPrivate = client.method.string(args!, 0) === "yes" ? true : false;
             var targetMember = client.method.member(interaction, args!, 1)!;
             var msg = client.method.longString(args!, 2)!

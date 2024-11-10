@@ -118,7 +118,7 @@ export const command: Command = {
             var type = interaction.options.getString("type")!;
             var channel = interaction.options.getChannel("channel") as Channel | null;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var type = client.method.string(args!, 0)!;
             var channel = client.method.channel(interaction, args!, 0)
         };

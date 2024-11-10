@@ -67,7 +67,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var VanityCode = interaction.options.getString('code') as string;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var VanityCode = client.method.string(args!, 0) as string;
         };
 

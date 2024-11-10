@@ -43,7 +43,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var backupID = interaction.options.getString('backup-id') as string;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var backupID = client.method.string(args!, 0) as string;
         };
 

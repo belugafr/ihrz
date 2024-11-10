@@ -42,7 +42,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var action = interaction.options.getString("time") as string;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var action = (client.method.string(args!, 0) || "0s") as string
         };
 

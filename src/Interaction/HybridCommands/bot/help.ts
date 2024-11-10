@@ -75,7 +75,7 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var targetCommand = interaction.options.getString('command-name');
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var targetCommand = client.method.string(args!, 0);
         };
 

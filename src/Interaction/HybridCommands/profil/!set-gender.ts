@@ -35,7 +35,7 @@ export default {
             var gender = interaction.options.getString("gender")!;
             var user = interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var gender = args?.join(" ") || "None"; 
             var user = interaction.author;
         };

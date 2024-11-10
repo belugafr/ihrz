@@ -49,7 +49,7 @@ export default {
             var member = interaction.options.getUser("member")!
             var reason = interaction.options.getString("reason")
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var member = await client.method.user(interaction, args!, 0) as User;
             var reason = client.method.longString(args!, 1);
         };

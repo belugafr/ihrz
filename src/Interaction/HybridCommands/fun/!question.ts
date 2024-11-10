@@ -42,7 +42,7 @@ export default {
             var question = interaction.options.getString("question") as string;
             var user = interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var question = client.method.string(args!, 0) as string;
             var user = interaction.author;
         };

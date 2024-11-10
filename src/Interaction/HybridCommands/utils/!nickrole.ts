@@ -49,7 +49,7 @@ export default {
             var part_of_nickname = interaction.options.getString("nickname")?.toLowerCase();
             var role = interaction.options.getRole('role');
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var action_1 = client.method.string(args!, 0);
             var part_of_nickname = client.method.string(args!, 1)?.toLowerCase();
             var role = client.method.role(interaction, args!, 0);

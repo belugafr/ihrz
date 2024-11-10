@@ -70,7 +70,7 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var code = interaction.options.getString("code")!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var code = args?.join(" ") || "";
         };
 

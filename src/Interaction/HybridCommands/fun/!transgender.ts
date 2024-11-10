@@ -52,7 +52,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member1 = interaction.options.getUser('user') as User || interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var member1 = await client.method.user(interaction, args!, 0) || interaction.author;
         };
 

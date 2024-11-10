@@ -49,7 +49,7 @@ export default {
             if (interaction instanceof ChatInputCommandInteraction) {
                 var mode = interaction.options.getString('mode');
             } else {
-                var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+                
                 var mode = client.method.string(args!, 0);
             };
 

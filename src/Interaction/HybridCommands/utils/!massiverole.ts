@@ -49,7 +49,7 @@ export default {
             var action = interaction.options.getString("action");
             var role = interaction.options.getRole("role");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var action = client.method.string(args!, 0);
             var role = client.method.role(interaction, args!, 0);
         };

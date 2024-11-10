@@ -42,7 +42,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var toWithdraw = interaction.options.getString('how-much') as string;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var toWithdraw = client.method.string(args!, 0) as string;
         };
 

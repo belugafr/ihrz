@@ -74,7 +74,7 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var toSay = interaction.options.getString('content')!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var toSay = args?.join(" ")!;
         };
 

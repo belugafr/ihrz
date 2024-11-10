@@ -59,7 +59,7 @@ export default {
             var tomute = interaction.options.getMember("user") as GuildMember | null;
             var mutetime = interaction.options.getString("time");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var tomute = client.method.member(interaction, args!, 0) as GuildMember | null;
             var mutetime = client.method.string(args!, 1) as string | null;
         };

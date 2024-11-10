@@ -61,7 +61,7 @@ export default {
             var role = interaction.options.getRole("role");
             var author = interaction.member as GuildMember;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var user = client.method.member(interaction, args!, 0)! as GuildMember;
             var role = client.method.role(interaction, args!, 1);
             var author = interaction.member as GuildMember;

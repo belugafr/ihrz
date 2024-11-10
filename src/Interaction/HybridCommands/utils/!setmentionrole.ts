@@ -51,7 +51,7 @@ export default {
             var argsid = interaction.options.getRole("roles");
             var nickname = interaction.options.getString("part-of-nickname");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var type = client.method.string(args!, 0);
             var argsid = client.method.role(interaction, args!, 0) as Role | null;
             var nickname = client.method.longString(args!, 2);

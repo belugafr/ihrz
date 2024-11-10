@@ -72,7 +72,7 @@ export default {
             var imageUrl = interaction.options.getString('image') as string;
             var giveawayPrize = interaction.options.getString("prize");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var giveawayNumberWinners = client.method.number(args!, 0);
             var giveawayDuration = client.method.string(args!, 1);
             var giveawayRequirement = client.method.string(args!, 2);

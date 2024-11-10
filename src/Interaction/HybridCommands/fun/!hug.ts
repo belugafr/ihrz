@@ -46,7 +46,7 @@ export default {
             var hug = interaction.options.getUser("user") as User;
             var user = interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var hug = await client.method.user(interaction, args!, 0) || interaction.author;
             var user = interaction.author;
         }

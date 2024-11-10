@@ -40,7 +40,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var channel = interaction.options.getChannel('to') as BaseGuildTextChannel | null;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var channel = client.method.channel(interaction, args!, 0) as BaseGuildTextChannel | null;
         }
 

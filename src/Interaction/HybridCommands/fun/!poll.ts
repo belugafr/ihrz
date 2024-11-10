@@ -56,7 +56,7 @@ export default {
             var pollMessage = interaction.options.getString("message");
             var user = interaction.user;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var pollMessage = client.method.string(args!, 0);
             var user = interaction.author;
         }

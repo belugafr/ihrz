@@ -50,7 +50,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var inputlang = interaction.options.getString("giveaway-id") as string;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var inputlang = client.method.string(args!, 0) as string;
         };
 

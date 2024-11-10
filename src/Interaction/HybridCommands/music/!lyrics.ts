@@ -43,7 +43,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var title = interaction.options.getString("query")!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var title = (args?.join(" ") || " ") as string
         }
 

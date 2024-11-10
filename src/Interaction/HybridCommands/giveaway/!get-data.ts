@@ -51,7 +51,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var giveawayId = interaction.options.getString("giveaway-id")!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var giveawayId = client.method.string(args!, 0)!;
         };
 

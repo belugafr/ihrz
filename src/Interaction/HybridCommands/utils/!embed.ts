@@ -59,7 +59,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var arg = interaction.options.getString("id");
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var arg = client.method.string(args!, 0);
         };
 

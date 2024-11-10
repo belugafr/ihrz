@@ -54,7 +54,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var numberx = interaction.options.getNumber("number")!;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var numberx = client.method.number(args!, 0);
         };
 

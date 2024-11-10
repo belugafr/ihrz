@@ -44,7 +44,7 @@ export default {
             var type = interaction.options.getString("action");
             var argsid = interaction.options.getChannel("channel") as Channel;
         } else {
-            var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
+            
             var type = client.method.string(args!, 0);
             var argsid = client.method.channel(interaction, args!, 0) || client.method.channel(interaction, args!, 1) || interaction.channel;
         };
