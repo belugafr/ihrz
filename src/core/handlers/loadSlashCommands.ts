@@ -20,56 +20,18 @@
 */
 
 import { ApplicationCommandOptionType, Client, Collection } from 'discord.js';
-import { opendir } from "fs/promises";
-import { join as pathJoin } from "node:path";
 
+import { buildDirectoryTree, buildPaths, CommandModule } from '../handlerHelper.js';
 import { Command } from "../../../types/command.js";
-import { EltType } from "../../../types/eltType.js";
 import { Option } from "../../../types/option.js";
+import { fileURLToPath } from 'url';
 
 import * as argsHelper from '../functions/method.js';
-
 import logger from "../logger.js";
-
-import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-async function buildDirectoryTree(path: string): Promise<(string | object)[]> {
-    let result = [];
-    let dir = await opendir(path);
-    for await (let dirent of dir) {
-        if (!dirent.name.startsWith('!')) {
-            if (dirent.isDirectory()) {
-                result.push({ name: dirent.name, sub: await buildDirectoryTree(pathJoin(path, dirent.name)) });
-            } else {
-                result.push(dirent.name);
-            }
-        }
-    }
-    return result;
-};
-
-function buildPaths(basePath: string, directoryTree: (string | object)[]): string[] {
-    let paths = [];
-    for (let elt of directoryTree) {
-        switch (typeof elt) {
-            case "object":
-                for (let subElt of buildPaths((elt as EltType).name, (elt as EltType).sub)) {
-                    paths.push(pathJoin(basePath, subElt));
-                }
-                break;
-            case "string":
-                paths.push(pathJoin(basePath, elt));
-                break;
-            default:
-                throw new Error('Invalid element type');
-        }
-    }
-    return paths;
-};
 
 async function processOptions(options: Option[], category: string, parentName: string = "", client: Client) {
     for (let option of options) {
@@ -116,6 +78,8 @@ export default async function loadCommands(client: Client, path: string = p): Pr
             module = await import(path, { with: { "type": "json" } })
         }
 
+        if (!module) continue;
+
         if (module && module.command) {
             const command: Command = module.command
             i++;
@@ -145,12 +109,6 @@ export default async function loadCommands(client: Client, path: string = p): Pr
 
     logger.log(`${client.config.console.emojis.OK} >> Loaded ${i} Slash commands.`);
 };
-
-interface CommandModule {
-    default: {
-        run: Function;
-    };
-}
 
 async function processCommandOptions(
     options: Option[],
