@@ -42,8 +42,7 @@ export default {
             return;
         };
 
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
+
 
         if (interaction instanceof ChatInputCommandInteraction) {
             var nw = interaction.options.getString("nickname") || '';
