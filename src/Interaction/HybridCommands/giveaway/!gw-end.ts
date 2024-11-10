@@ -50,27 +50,27 @@ export default {
         };
 
         if (interaction instanceof ChatInputCommandInteraction) {
-            var inputData = interaction.options.getString("giveaway-id");
+            var inputlang = interaction.options.getString("giveaway-id");
         } else {
             var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
-            var inputData = client.method.string(args!, 0);
+            var inputlang = client.method.string(args!, 0);
         };
 
-        if (!await client.giveawaysManager.isValid(inputData as string)) {
+        if (!await client.giveawaysManager.isValid(inputlang as string)) {
             await client.method.interactionSend(interaction, {
                 content: lang.end_not_find_giveaway
-                    .replace(/\${gw}/g, inputData as string)
+                    .replace(/\${gw}/g, inputlang as string)
             });
             return;
         };
 
-        if (await client.giveawaysManager.isEnded(inputData as string)) {
+        if (await client.giveawaysManager.isEnded(inputlang as string)) {
             await client.method.interactionSend(interaction, { content: lang.end_command_error });
             return;
         };
 
         // @ts-ignore
-        client.giveawaysManager.end(client, inputData as string)
+        client.giveawaysManager.end(client, inputlang as string)
 
         await client.method.interactionSend(interaction, {
             content: lang.end_confirmation_message
@@ -81,7 +81,7 @@ export default {
             title: lang.end_logs_embed_title,
             description: lang.end_logs_embed_description
                 .replace(/\${interaction\.user\.id}/g, interaction.member.user.id)
-                .replace(/\${giveaway\.messageID}/g, inputData as string)
+                .replace(/\${giveaway\.messageID}/g, inputlang as string)
         });
 
         return;

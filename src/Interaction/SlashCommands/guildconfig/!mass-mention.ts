@@ -28,7 +28,7 @@ import {
 
 interface Action {
     type: number;
-    metadata: Record<string, any>;
+    metalang: Record<string, any>;
 };
 import { LanguageData } from '../../../../types/languageData';
 import logger from '../../../core/logger.js';
@@ -36,9 +36,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -51,8 +50,8 @@ export default {
 
         let mentionSpamRule = automodRules.find((rule: { triggerType: AutoModerationRuleTriggerType; }) => rule.triggerType === AutoModerationRuleTriggerType.MentionSpam);
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.blockpub_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.blockpub_not_admin });
             return;
 
         } else if (turn === "on") {
@@ -62,7 +61,7 @@ export default {
                 let arrayActionsForRule: Action[] = [
                     {
                         type: 1,
-                        metadata: {
+                        metalang: {
                             customMessage: "This message was prevented by iHorizon"
                         }
                     },
@@ -71,7 +70,7 @@ export default {
                 if (logs_channel) {
                     arrayActionsForRule.push({
                         type: 2,
-                        metadata: {
+                        metalang: {
                             channel: logs_channel,
                         }
                     });
@@ -104,7 +103,7 @@ export default {
 
                 await client.db.set(`${interaction.guildId}.GUILD.GUILD_CONFIG.mass_mention`, "on");
                 await interaction.editReply({
-                    content: data.automod_block_massmention_command_on
+                    content: lang.automod_block_massmention_command_on
                         .replace('${interaction.user}', interaction.user.toString())
                         .replace('${logs_channel}', (logs_channel?.toString() || 'None'))
                         .replace('${max_mention}', max_mention.toString())
@@ -120,7 +119,7 @@ export default {
 
             await client.db.set(`${interaction.guildId}.GUILD.GUILD_CONFIG.mass_mention`, "off");
             await interaction.editReply({
-                content: data.automod_block_massmention_command_off
+                content: lang.automod_block_massmention_command_off
                     .replace('${interaction.user}', interaction.user.toString())
             });
             return;

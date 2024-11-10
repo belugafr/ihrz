@@ -32,9 +32,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -42,29 +41,29 @@ export default {
         let action = interaction.options.getString('action');
 
         if (interaction.user.id !== interaction.guild.ownerId) {
-            await interaction.editReply({ content: data.blockbot_not_owner });
+            await interaction.editReply({ content: lang.blockbot_not_owner });
             return;
         } else if (action === 'on') {
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.blockbot_logs_enable_title,
-                description: data.blockbot_logs_enable_description
+                title: lang.blockbot_logs_enable_title,
+                description: lang.blockbot_logs_enable_description
                     .replace(/\${interaction\.user}/g, interaction.user.toString())
             });
 
             await client.db.set(`${interaction.guildId}.GUILD.BLOCK_BOT`, true);
 
-            await interaction.editReply({ content: data.blockbot_command_work_on_enable });
+            await interaction.editReply({ content: lang.blockbot_command_work_on_enable });
             return;
         } else if (action === 'off') {
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.blockbot_logs_disable_commmand_work,
-                description: data.blockbot_logs_disable_description
+                title: lang.blockbot_logs_disable_commmand_work,
+                description: lang.blockbot_logs_disable_description
                     .replace(/\${interaction\.user}/g, interaction.user.toString())
             });
 
             await client.db.delete(`${interaction.guildId}.GUILD.BLOCK_BOT`);
 
-            await interaction.editReply({ content: data.blockbot_command_work_on_disable });
+            await interaction.editReply({ content: lang.blockbot_command_work_on_disable });
             return;
         };
     },

@@ -36,9 +36,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -50,7 +49,7 @@ export default {
         let tempTable = client.db.table('TEMP');
         let table = client.db.table('OWNIHRZ');
 
-        let allData = await table.get("CLUSTER");
+        let alllang = await table.get("CLUSTER");
 
         let timeout: number = 3600000;
         let executingBefore = await tempTable.get(`OWNIHRZ_CHANGE_OWNER.${botId}.timeout`);
@@ -58,23 +57,23 @@ export default {
         if (executingBefore !== null && timeout - (Date.now() - executingBefore) > 0) {
             let time = client.timeCalculator.to_beautiful_string(timeout - (Date.now() - executingBefore));
 
-            await interaction.reply({ content: data.monthly_cooldown_error.replace(/\${time}/g, time) });
+            await interaction.reply({ content: lang.monthly_cooldown_error.replace(/\${time}/g, time) });
             return;
         };
 
-        function getData() {
-            for (let ownerId in allData) {
-                for (let bot_id in allData[ownerId]) {
+        function getlang() {
+            for (let ownerId in alllang) {
+                for (let bot_id in alllang[ownerId]) {
                     if (bot_id !== botId) continue;
-                    return allData[ownerId][botId];
+                    return alllang[ownerId][botId];
                 }
             }
         }
 
-        let id_2 = getData() as Custom_iHorizon;
+        let id_2 = getlang() as Custom_iHorizon;
 
         if (!id_2) {
-            await interaction.reply({ content: data.mybot_manage_accept_not_found });
+            await interaction.reply({ content: lang.mybot_manage_accept_not_found });
             return;
         };
 
@@ -87,17 +86,17 @@ export default {
         let bot_1 = (await client.ownihrz.Get_Bot(id_2.Auth).catch(() => { }))?.data || 404
 
         if (!bot_1.bot) {
-            await interaction.reply({ content: data.mybot_manage_accept_token_error });
+            await interaction.reply({ content: lang.mybot_manage_accept_token_error });
             return;
         } else {
 
             let embed = new EmbedBuilder()
                 .setColor('#ff7f50')
-                .setTitle(data.mybot_manage_accept_embed_title
+                .setTitle(lang.mybot_manage_accept_embed_title
                     .replace('${bot_1.bot.username}', bot_1.bot.username)
                     .replace('${bot_1.bot.discriminator}', bot_1.bot.discriminator)
                 )
-                .setDescription(data.mybot_change_owner
+                .setDescription(lang.mybot_change_owner
                     .replace("${OwnerOne}", OwnerOne)
                     .replace("${OwnerTwo}", OwnerTwo)
                 )

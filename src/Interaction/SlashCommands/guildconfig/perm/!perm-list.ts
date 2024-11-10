@@ -34,14 +34,13 @@ import { Command } from '../../../../../types/command';
 import { Option } from '../../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {
+
 
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await client.method.interactionSend(interaction, { content: data.setup_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await client.method.interactionSend(interaction, { content: lang.setup_not_admin });
             return;
         };
 
@@ -63,7 +62,7 @@ export default {
 
         const generateEmbed = (page: number) => {
             let embed = new EmbedBuilder()
-                .setTitle(data.perm_list_embed_title)
+                .setTitle(lang.perm_list_embed_title)
                 .setColor("#475387");
 
             let startIndex = page * itemsPerPage;
@@ -86,12 +85,12 @@ export default {
             Object.entries(groupedUsers).forEach(([group, users]) => {
                 embed.addFields({
                     name: `Perm ${group}`,
-                    value: users.join("\n") || data.perm_list_no_user
+                    value: users.join("\n") || lang.perm_list_no_user
                 });
             });
 
             embed.setFooter({
-                text: data.prevnames_embed_footer_text.replace("${currentPage + 1}", String(page + 1))
+                text: lang.prevnames_embed_footer_text.replace("${currentPage + 1}", String(page + 1))
                     .replace("${pages.length}", String(totalPages))
             });
             return embed;

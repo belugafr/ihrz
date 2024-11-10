@@ -34,12 +34,11 @@ import { Command } from '../../../../../types/command';
 import { Option } from '../../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {
+
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await client.method.interactionSend(interaction, { content: data.setup_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await client.method.interactionSend(interaction, { content: lang.setup_not_admin });
             return;
         }
 
@@ -72,16 +71,16 @@ export default {
 
             if (createdRoles.length > 0) {
                 await client.method.interactionSend(interaction, {
-                    content: data.perm_roles_created_role.replace("${createdRoles.join(', ')}", createdRoles.join(", "))
+                    content: lang.perm_roles_created_role.replace("${createdRoles.join(', ')}", createdRoles.join(", "))
                 });
             } else {
                 await client.method.interactionSend(interaction, {
-                    content: data.perm_roles_already_upate
+                    content: lang.perm_roles_already_upate
                 });
             }
         } catch (error) {
             await client.method.interactionSend(interaction, {
-                content: data.perm_roles_error
+                content: lang.perm_roles_error
             });
         }
     },

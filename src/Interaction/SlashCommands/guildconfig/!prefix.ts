@@ -30,9 +30,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -40,23 +39,23 @@ export default {
         let action = interaction.options.getString("action")!;
         let prefix = interaction.options.getString('name');
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.setup_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.setup_not_admin });
             return;
         };
 
         if (action === "mention") {
             await client.db.delete(`${interaction.guildId}.BOT.prefix`);
-            await interaction.editReply({ content: data.guildconfig_setbot_prefix_prefix_now_mention })
+            await interaction.editReply({ content: lang.guildconfig_setbot_prefix_prefix_now_mention })
         } else if (action === "change") {
-            if (!prefix) return await interaction.editReply({ content: data.guildconfig_setbot_prefix_prefix_specify_prefix });
-            if (prefix.length >= 5) return await interaction.editReply({ content: data.guildconfig_setbot_prefix_prefix_too_long });
+            if (!prefix) return await interaction.editReply({ content: lang.guildconfig_setbot_prefix_prefix_specify_prefix });
+            if (prefix.length >= 5) return await interaction.editReply({ content: lang.guildconfig_setbot_prefix_prefix_too_long });
 
             let formatedPrefix = prefix.split(" ")[0];
             await client.db.set(`${interaction.guildId}.BOT.prefix`, formatedPrefix);
 
             await interaction.editReply({
-                content: data.guildconfig_setbot_prefix_prefix_is_good
+                content: lang.guildconfig_setbot_prefix_prefix_is_good
                     .replace("${formatedPrefix}", formatedPrefix)
             });
             return;

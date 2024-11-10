@@ -36,7 +36,7 @@ async function cooldDown(client: Client, interaction: Interaction) {
     return false;
 };
 
-async function handleCommandExecution(client: Client, interaction: ChatInputCommandInteraction, command: Command, lang: LanguageData, thinking: boolean) {
+async function handleCommandExecution(client: Client, interaction: ChatInputCommandInteraction<"cached">, command: Command, lang: LanguageData, thinking: boolean) {
     const options = interaction.options as CommandInteractionOptionResolver;
     const group = options.getSubcommandGroup(false);
     const subCommand = options.getSubcommand(false);
@@ -45,6 +45,9 @@ async function handleCommandExecution(client: Client, interaction: ChatInputComm
         const subCmd = client.subCommands.get(group + " " + subCommand);
 
         if (subCmd && subCmd.run) {
+            let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
+            if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
+
             if ((!subCmd.thinking || thinking === undefined) && thinking) {
                 await interaction.deferReply();
             }
@@ -56,6 +59,9 @@ async function handleCommandExecution(client: Client, interaction: ChatInputComm
         const subCmd = client.subCommands.get(subCommand);
 
         if (subCmd && subCmd.run) {
+            let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
+            if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
+
             if ((!subCmd.thinking || thinking === undefined) && thinking) {
                 await interaction.deferReply();
             }
@@ -67,6 +73,9 @@ async function handleCommandExecution(client: Client, interaction: ChatInputComm
     if (command.thinking) {
         await interaction.deferReply();
     }
+
+    let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
+    if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
 
     if (command.run) await command.run(client, interaction, lang, command, Date.now(), []);
     return
@@ -182,7 +191,7 @@ export const event: BotEvent = {
             }
 
             const lang = await client.func.getLanguageData(interaction.guildId) as LanguageData;
-            await handleCommandExecution(client, interaction, command, lang, thinking);
+            await handleCommandExecution(client, (interaction as ChatInputCommandInteraction<"cached">), command, lang, thinking);
         } catch (error) {
             console.error(error)
             // await handleCommandError(client, interaction, command, error);

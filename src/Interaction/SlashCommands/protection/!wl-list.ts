@@ -29,18 +29,17 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
         var text = "";
 
-        let baseData = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
+        let baselang = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
 
-        if (!baseData) {
+        if (!baselang) {
 
             await client.db.set(`${interaction.guildId}.ALLOWLIST`,
                 {
@@ -51,21 +50,21 @@ export default {
                 }
             );
 
-            baseData = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
+            baselang = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
         };
 
-        for (var i in baseData.list) {
+        for (var i in baselang.list) {
             text += `<@${i}>\n`
         };
 
         if (interaction.user.id !== interaction.guild.ownerId && !text.includes(interaction.user.id)) {
-            await interaction.reply({ content: data.allowlist_show_not_permited });
+            await interaction.reply({ content: lang.allowlist_show_not_permited });
             return;
         };
 
         let embed = new EmbedBuilder()
             .setColor("#000000")
-            .setAuthor({ name: data.allowlist_show_embed_author })
+            .setAuthor({ name: lang.allowlist_show_embed_author })
             .setDescription(`${text}`)
             .setFooter(await client.method.bot.footerBuilder(interaction))
             .setTimestamp();

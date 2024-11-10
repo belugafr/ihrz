@@ -31,9 +31,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -41,21 +40,21 @@ export default {
         let id = interaction.options.getString("id");
         let message = interaction.options.getString("reason");
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.suggest_deny_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.suggest_deny_not_admin });
             return;
         };
 
-        let baseData = await client.db.get(`${interaction.guildId}.SUGGEST`);
+        let baselang = await client.db.get(`${interaction.guildId}.SUGGEST`);
         let fetchId = await client.db.get(`${interaction.guildId}.SUGGESTION.${id}`);
 
-        if (!baseData
-            || baseData?.channel !== interaction.channel?.id
-            || baseData?.disable === true) {
+        if (!baselang
+            || baselang?.channel !== interaction.channel?.id
+            || baselang?.disable === true) {
             await interaction.deleteReply();
             await interaction.followUp({
-                content: data.suggest_deny_not_good_channel
-                    .replace('${baseData?.channel}', baseData?.channel),
+                content: lang.suggest_deny_not_good_channel
+                    .replace('${baselang?.channel}', baselang?.channel),
                 ephemeral: true
             });
 
@@ -64,29 +63,29 @@ export default {
 
         if (!fetchId) {
             await interaction.deleteReply();
-            await interaction.followUp({ content: data.suggest_deny_not_found_db, ephemeral: true });
+            await interaction.followUp({ content: lang.suggest_deny_not_found_db, ephemeral: true });
             return;
         } else if (fetchId.replied) {
             await interaction.deleteReply();
-            await interaction.followUp({ content: data.suggest_deny_already_replied, ephemeral: true });
+            await interaction.followUp({ content: lang.suggest_deny_already_replied, ephemeral: true });
             return;
         };
 
-        let channel = interaction.guild?.channels.cache.get(baseData?.channel);
+        let channel = interaction.guild?.channels.cache.get(baselang?.channel);
 
         await (channel as BaseGuildTextChannel).messages.fetch(fetchId?.msgId).then(async (msg) => {
 
             let embed = new EmbedBuilder(msg.embeds[0].data);
 
             embed.addFields({
-                name: data.suggest_deny_embed_fields_to_put
+                name: lang.suggest_deny_embed_fields_to_put
                     .replace('${interaction.user.username}', interaction.user.globalName as string),
                 value: message as string
             });
 
             embed.setColor('#f13b38');
             embed.setFooter(await client.method.bot.footerBuilder(interaction));
-            embed.setTitle(data.suggest_deny_embed_title_to_put
+            embed.setTitle(lang.suggest_deny_embed_title_to_put
                 .replace('${msg.embeds[0].data?.title}', msg.embeds[0].data?.title as string)
             );
 
@@ -95,7 +94,7 @@ export default {
 
             await interaction.deleteReply();
             await interaction.followUp({
-                content: data.suggest_deny_command_work
+                content: lang.suggest_deny_command_work
                     .replace('${interaction.guild.id}', interaction.guildId as string)
                     .replace('${interaction.channel.id}', interaction.channel?.id as string)
                     .replace('${fetchId?.msgId}', fetchId?.msgId),
@@ -105,7 +104,7 @@ export default {
             return;
         }).catch(async () => {
             await interaction.deleteReply();
-            await interaction.followUp({ content: data.suggest_deny_command_error, ephemeral: true });
+            await interaction.followUp({ content: lang.suggest_deny_command_error, ephemeral: true });
             return;
         });
     },

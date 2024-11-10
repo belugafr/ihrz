@@ -31,9 +31,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -41,17 +40,17 @@ export default {
         let category = interaction.options.getChannel("category-name");
 
         if (await client.db.get(`${interaction.guildId}.GUILD.TICKET.disable`)) {
-            await interaction.editReply({ content: data.ticket_disabled_command });
+            await interaction.editReply({ content: lang.ticket_disabled_command });
             return;
         };
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.setticketcategory_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.setticketcategory_not_admin });
             return;
         };
 
         if (!(category instanceof CategoryChannel)) {
-            await interaction.editReply({ content: data.setticketcategory_not_a_category });
+            await interaction.editReply({ content: lang.setticketcategory_not_a_category });
             return;
         };
 
@@ -60,7 +59,7 @@ export default {
         let embed = new EmbedBuilder()
             .setFooter(await client.method.bot.footerBuilder(interaction))
             .setColor('#00FFFF')
-            .setDescription(data.setticketcategory_command_work
+            .setDescription(lang.setticketcategory_command_work
                 .replace('${category.name}', category.name)
                 .replace('${interaction.user.id}', interaction.user.id)
             );

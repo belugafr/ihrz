@@ -34,15 +34,14 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.guildprofil_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.guildprofil_not_admin });
             return;
         }
 
@@ -50,59 +49,59 @@ export default {
             content: client.iHorizon_Emojis.icon.iHorizon_Discord_Loading
         });
 
-        let baseData = await client.db.get(`${interaction.guildId}.GUILD`) as DatabaseStructure.DbInId['GUILD'];
+        let baselang = await client.db.get(`${interaction.guildId}.GUILD`) as DatabaseStructure.DbInId['GUILD'];
         const pages: EmbedBuilder[] = [];
 
-        const joinDmMessageField = { name: data.guildprofil_embed_fields_joinDmMessage, value: baseData?.GUILD_CONFIG?.joindm ? '```' + baseData?.GUILD_CONFIG?.joindm.substring(0, 1020) + '```' : data.guildprofil_not_set_joinDmMessage };
-        const joinMessageField = { name: data.guildprofil_embed_fields_joinmessage, value: baseData?.GUILD_CONFIG?.joinmessage ? '```' + baseData?.GUILD_CONFIG?.joinmessage + '```' : data.guildprofil_not_set_joinmessage };
-        const leaveMessageField = { name: data.guildprofil_embed_fields_leavemessage, value: baseData?.GUILD_CONFIG?.leavemessage ? '```' + baseData?.GUILD_CONFIG?.leavemessage + '```' : data.guildprofil_not_set_leavemessage };
+        const joinDmMessageField = { name: lang.guildprofil_embed_fields_joinDmMessage, value: baselang?.GUILD_CONFIG?.joindm ? '```' + baselang?.GUILD_CONFIG?.joindm.substring(0, 1020) + '```' : lang.guildprofil_not_set_joinDmMessage };
+        const joinMessageField = { name: lang.guildprofil_embed_fields_joinmessage, value: baselang?.GUILD_CONFIG?.joinmessage ? '```' + baselang?.GUILD_CONFIG?.joinmessage + '```' : lang.guildprofil_not_set_joinmessage };
+        const leaveMessageField = { name: lang.guildprofil_embed_fields_leavemessage, value: baselang?.GUILD_CONFIG?.leavemessage ? '```' + baselang?.GUILD_CONFIG?.leavemessage + '```' : lang.guildprofil_not_set_leavemessage };
 
-        const setChannelsLeaveField = { name: data.guildprofil_embed_fields_setchannelsleave, value: baseData?.GUILD_CONFIG?.leave ? `<#${baseData?.GUILD_CONFIG?.leave}>` : data.guildprofil_not_set_setchannelsleave };
-        const setChannelsJoinField = { name: data.guildprofil_embed_fields_setchannelsjoin, value: baseData?.GUILD_CONFIG?.join ? `<#${baseData?.GUILD_CONFIG?.join}>` : data.guildprofil_not_set_setchannelsjoin };
+        const setChannelsLeaveField = { name: lang.guildprofil_embed_fields_setchannelsleave, value: baselang?.GUILD_CONFIG?.leave ? `<#${baselang?.GUILD_CONFIG?.leave}>` : lang.guildprofil_not_set_setchannelsleave };
+        const setChannelsJoinField = { name: lang.guildprofil_embed_fields_setchannelsjoin, value: baselang?.GUILD_CONFIG?.join ? `<#${baselang?.GUILD_CONFIG?.join}>` : lang.guildprofil_not_set_setchannelsjoin };
 
         const joinRolesField = {
-            name: data.guildprofil_embed_fields_joinroles,
-            value: Array.isArray(baseData?.GUILD_CONFIG?.joinroles) && baseData?.GUILD_CONFIG?.joinroles.length > 0
-                ? baseData?.GUILD_CONFIG?.joinroles.map(x => `<@&${x}>`).join(', ')
-                : data.guildprofil_not_set_joinroles
+            name: lang.guildprofil_embed_fields_joinroles,
+            value: Array.isArray(baselang?.GUILD_CONFIG?.joinroles) && baselang?.GUILD_CONFIG?.joinroles.length > 0
+                ? baselang?.GUILD_CONFIG?.joinroles.map(x => `<@&${x}>`).join(', ')
+                : lang.guildprofil_not_set_joinroles
         };
-        const blockPubField = { name: data.guildprofil_embed_fields_blockpub, value: (baseData?.GUILD_CONFIG?.antipub === 'on') ? data.guildprofil_set_blockpub : data.guildprofil_not_set_blockpub };
+        const blockPubField = { name: lang.guildprofil_embed_fields_blockpub, value: (baselang?.GUILD_CONFIG?.antipub === 'on') ? lang.guildprofil_set_blockpub : lang.guildprofil_not_set_blockpub };
 
         const punishPubField = {
-            name: data.guildprofil_embed_fields_punishPub,
-            value: baseData?.PUNISH?.PUNISH_PUB ? data.guildprofil_set_punishPub
-                .replace(/\${punishPub\.punishementType}/g, baseData.PUNISH.PUNISH_PUB.punishementType ?? '')
-                .replace(/\${punishPub\.amountMax}/g, String(baseData.PUNISH.PUNISH_PUB.amountMax ?? 0)) : data.guildprofil_not_set_punishPub
+            name: lang.guildprofil_embed_fields_punishPub,
+            value: baselang?.PUNISH?.PUNISH_PUB ? lang.guildprofil_set_punishPub
+                .replace(/\${punishPub\.punishementType}/g, baselang.PUNISH.PUNISH_PUB.punishementType ?? '')
+                .replace(/\${punishPub\.amountMax}/g, String(baselang.PUNISH.PUNISH_PUB.amountMax ?? 0)) : lang.guildprofil_not_set_punishPub
         };
         const supportConfigField = {
-            name: data.guildprofil_embed_fields_supportConfig,
-            value: supportConfigToString(baseData?.SUPPORT, data)
+            name: lang.guildprofil_embed_fields_supportConfig,
+            value: supportConfigToString(baselang?.SUPPORT, lang)
         };
         const ticketFetchedField = {
-            name: data.guildprofil_embed_fields_ticketFetched,
-            value: ticketFetchedToString(baseData?.TICKET, data)
+            name: lang.guildprofil_embed_fields_ticketFetched,
+            value: ticketFetchedToString(baselang?.TICKET, lang)
         };
         const reactionRoleField = {
-            name: data.guildprofil_embed_fields_reactionrole,
-            value: reactionRolesToString(baseData?.REACTION_ROLES, interaction.guild, data)
+            name: lang.guildprofil_embed_fields_reactionrole,
+            value: reactionRolesToString(baselang?.REACTION_ROLES, interaction.guild, lang)
         };
         const xpStatsField = {
-            name: data.guildprofil_embed_fields_ranks,
-            value: xpStatsToString(baseData?.XP_LEVELING, data)
+            name: lang.guildprofil_embed_fields_ranks,
+            value: xpStatsToString(baselang?.XP_LEVELING, lang)
         };
         const logsField = {
-            name: data.guildprofil_embed_fields_logs,
-            value: logsToString(baseData?.SERVER_LOGS, data)
+            name: lang.guildprofil_embed_fields_logs,
+            value: logsToString(baselang?.SERVER_LOGS, lang)
         };
         const blockBotField = {
-            name: data.guildprofil_embed_fields_blockbot,
-            value: blockBotToString(baseData?.BLOCK_BOT, data)
+            name: lang.guildprofil_embed_fields_blockbot,
+            value: blockBotToString(baselang?.BLOCK_BOT, lang)
         };
 
         const generateEmbedForFields = (fields: { name: string, value: string }[]) => {
             const embed = new EmbedBuilder()
                 .setColor("#016c9a")
-                .setDescription(data.guildprofil_embed_description.replace(/\${interaction\.guild\.name}/g, interaction.guild?.name as string))
+                .setDescription(lang.guildprofil_embed_description.replace(/\${interaction\.guild\.name}/g, interaction.guild?.name as string))
                 .addFields(fields)
                 .setThumbnail(interaction.guild?.iconURL() as string);
             pages.push(embed);
@@ -143,7 +142,7 @@ export default {
                     pages[currentPage]
                         .setColor("#016c9a")
                         .setFooter({
-                            text: data.prevnames_embed_footer_text
+                            text: lang.prevnames_embed_footer_text
                                 .replace('${currentPage + 1}', (currentPage + 1).toString())
                                 .replace('${pages.length}', pages.length.toString())
                         })
@@ -201,13 +200,13 @@ export default {
     }
 };
 
-function supportConfigToString(supportConfig: any, data: LanguageData): string {
-    return supportConfig ? data.guildprofil_set_supportConfig
+function supportConfigToString(supportConfig: any, lang: LanguageData): string {
+    return supportConfig ? lang.guildprofil_set_supportConfig
         .replace(/\${supportConfig\.input}/g, supportConfig.input ?? '')
-        .replace(/\${supportConfig\.rolesId}/g, supportConfig.rolesId ?? '') : data.guildprofil_not_set_supportConfig;
+        .replace(/\${supportConfig\.rolesId}/g, supportConfig.rolesId ?? '') : lang.guildprofil_not_set_supportConfig;
 }
 
-function ticketFetchedToString(charForTicket: any, data: LanguageData): string {
+function ticketFetchedToString(charForTicket: any, lang: LanguageData): string {
     let ticketFetched = '';
     for (const i in charForTicket) {
         const ticketConfig = charForTicket[i];
@@ -215,10 +214,10 @@ function ticketFetchedToString(charForTicket: any, data: LanguageData): string {
             ticketFetched += `**${ticketConfig.panelName}**: <#${ticketConfig.channel}>\n`;
         }
     }
-    return ticketFetched || data.guildprofil_not_set_ticketFetched;
+    return ticketFetched || lang.guildprofil_not_set_ticketFetched;
 }
 
-function reactionRolesToString(charForRr: any, guild: any, data: LanguageData): string {
+function reactionRolesToString(charForRr: any, guild: any, lang: LanguageData): string {
     let reactionrole = '';
     for (const i in charForRr) {
         const a = charForRr[i];
@@ -227,7 +226,7 @@ function reactionRolesToString(charForRr: any, guild: any, data: LanguageData): 
                 const rolesID = a?.[key].rolesID;
                 const emoji = guild?.emojis.cache.find((emoji: { id: string; }) => emoji.id === key);
 
-                return data.guildprofil_set_reactionrole
+                return lang.guildprofil_set_reactionrole
                     .replace(/\${rolesID}/g, rolesID!)
                     .replace(/\${emoji\s*\|\|\s*key}/g, (emoji || key) as string)
                     .replace(/\${i}/g, i);
@@ -235,17 +234,17 @@ function reactionRolesToString(charForRr: any, guild: any, data: LanguageData): 
             reactionrole = stringContent;
         }
     }
-    return reactionrole || data.guildprofil_not_set_reactionrole;
+    return reactionrole || lang.guildprofil_not_set_reactionrole;
 }
 
-function xpStatsToString(xp: any, data: LanguageData): string {
-    return (xp?.disable === false) ? (xp?.xpchannels ? data.guildprofil_another_enable_xp.replace('${xp.xpchannels}', xp.xpchannels) : data.guildprofil_enable_xp) : data.guildprofil_disable_xp;
+function xpStatsToString(xp: any, lang: LanguageData): string {
+    return (xp?.disable === false) ? (xp?.xpchannels ? lang.guildprofil_another_enable_xp.replace('${xp.xpchannels}', xp.xpchannels) : lang.guildprofil_enable_xp) : lang.guildprofil_disable_xp;
 }
 
-function logsToString(logs: DatabaseStructure.DbGuildObject['SERVER_LOGS'], data: LanguageData): string {
-    return logs ? [logs.roles, logs.moderation, logs.voice, logs.message, logs.boosts, logs.antispam].filter(Boolean).map(log => `<#${log}>`).join(',') : data.guildprofil_not_logs_set;
+function logsToString(logs: DatabaseStructure.DbGuildObject['SERVER_LOGS'], lang: LanguageData): string {
+    return logs ? [logs.roles, logs.moderation, logs.voice, logs.message, logs.boosts, logs.antispam].filter(Boolean).map(log => `<#${log}>`).join(',') : lang.guildprofil_not_logs_set;
 }
 
-function blockBotToString(blockBot: any, data: LanguageData): string {
-    return blockBot ? data.guildprofil_blockbot_on : data.guildprofil_blockbot_off;
+function blockBotToString(blockBot: any, lang: LanguageData): string {
+    return blockBot ? lang.guildprofil_blockbot_on : lang.guildprofil_blockbot_off;
 }

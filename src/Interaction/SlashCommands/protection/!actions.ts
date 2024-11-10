@@ -31,15 +31,14 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
         if (interaction.user.id !== interaction.guild?.ownerId) {
-            await interaction.editReply({ content: data.authorization_actions_not_permited });
+            await interaction.editReply({ content: lang.authorization_actions_not_permited });
             return;
         };
 
@@ -55,11 +54,11 @@ export default {
                 await client.db.set(`${interaction.guild.id}.PROTECTION.${rule}`, { mode: allow });
             }
 
-            if (allow === 'member') allow = data.authorization_actions_everyone;
-            if (allow === 'allowlist') allow = data.authorization_actions_allowlist;
+            if (allow === 'member') allow = lang.authorization_actions_everyone;
+            if (allow === 'allowlist') allow = lang.authorization_actions_allowlist;
 
             await interaction.editReply({
-                content: data.authorization_actions_rule_set
+                content: lang.authorization_actions_rule_set
                     .replace('${interaction.user}', interaction.user.toString())
                     .replace('${rule.toUpperCase()}', allRules.join(","))
                     .replace('${allow}', allow)
@@ -68,11 +67,11 @@ export default {
         } else if (rule !== 'cls' && allow) {
             await client.db.set(`${interaction.guild.id}.PROTECTION.${rule}`, { mode: allow });
 
-            if (allow === 'member') allow = data.authorization_actions_everyone;
-            if (allow === 'allowlist') allow = data.authorization_actions_allowlist;
+            if (allow === 'member') allow = lang.authorization_actions_everyone;
+            if (allow === 'allowlist') allow = lang.authorization_actions_allowlist;
 
             await interaction.editReply({
-                content: data.authorization_actions_rule_set
+                content: lang.authorization_actions_rule_set
                     .replace('${interaction.user}', interaction.user.toString())
                     .replace('${rule.toUpperCase()}', rule.toUpperCase() as unknown as string)
                     .replace('${allow}', allow)
@@ -82,13 +81,13 @@ export default {
             await client.db.set(`${interaction.guild.id}.PROTECTION`, {});
 
             await interaction.editReply({
-                content: data.authorization_actions_rule_clear
+                content: lang.authorization_actions_rule_clear
                     .replace('${interaction.user}', interaction.user.toString())
                     .replace('${interaction.guild.name}', interaction.guild.name)
             });
             return;
         };
 
-        return interaction.editReply({ content: data.close_error_command });
+        return interaction.editReply({ content: lang.close_error_command });
     },
 };

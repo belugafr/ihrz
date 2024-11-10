@@ -30,9 +30,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -40,28 +39,28 @@ export default {
         let action = interaction.options.getString("action");
         let footerName = interaction.options.getString('name');
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.setup_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.setup_not_admin });
             return;
         };
 
         if (action === "reset") {
             await client.db.delete(`${interaction.guildId}.BOT.botName`);
 
-            await interaction.editReply({ content: data.guildconfig_setbot_footername_is_reset });
+            await interaction.editReply({ content: lang.guildconfig_setbot_footername_is_reset });
             return;
         } else if (footerName) {
-            if (footerName.length >= 32) return await interaction.editReply({ content: data.guildconfig_setbot_footername_footer_too_long_msg });
+            if (footerName.length >= 32) return await interaction.editReply({ content: lang.guildconfig_setbot_footername_footer_too_long_msg });
 
             await client.db.set(`${interaction.guildId}.BOT.botName`, footerName);
 
             await interaction.editReply({
-                content: data.guildconfig_setbot_footername_is_good
+                content: lang.guildconfig_setbot_footername_is_good
                     .replace("${footerName}", footerName)
             });
             return;
         } else {
-            await interaction.editReply({ content: data.guildconfig_setbot_footername_not_found });
+            await interaction.editReply({ content: lang.guildconfig_setbot_footername_not_found });
             return;
         }
     },

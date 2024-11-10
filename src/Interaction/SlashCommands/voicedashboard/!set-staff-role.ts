@@ -30,16 +30,15 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
         if (!interaction.memberPermissions?.has([PermissionsBitField.Flags.Administrator])) {
             await interaction.editReply({
-                content: data.tempvoice_staff_not_admin
+                content: lang.tempvoice_staff_not_admin
                     .replace("${interaction.user.id}", interaction.user.id)
             });
             return;
@@ -50,7 +49,7 @@ export default {
         let embed = new EmbedBuilder()
             .setColor(2829617)
             .setDescription(
-                data.tempvoice_staff_desc_embed
+                lang.tempvoice_staff_desc_embed
                     .replace('${targetedRole?.id}', targetedRole?.id as string)
             )
             .setFooter(await client.method.bot.footerBuilder(interaction));

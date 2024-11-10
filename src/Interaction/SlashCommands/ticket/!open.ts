@@ -31,22 +31,21 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
         if (await client.db.get(`${interaction.guildId}.GUILD.TICKET.disable`)) {
-            await interaction.editReply({ content: data.open_disabled_command });
+            await interaction.editReply({ content: lang.open_disabled_command });
             return;
         };
 
         if ((interaction.channel as BaseGuildTextChannel).name.includes('ticket-')) {
             await TicketReOpen(interaction);
         } else {
-            await interaction.editReply({ content: data.open_not_in_ticket });
+            await interaction.editReply({ content: lang.open_not_in_ticket });
             return;
         };
     },

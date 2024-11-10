@@ -32,7 +32,7 @@ export const command: AnotherCommand = {
     type: ApplicationCommandType.User,
     thinking: false,
     run: async (client: Client, interaction: UserContextMenuCommandInteraction) => {
-        let data = await client.func.getLanguageData(interaction.guildId) as LanguageData;
+        let lang = await client.func.getLanguagelang(interaction.guildId) as LanguageData;
         var user1 = interaction.user;
         var user2 = interaction.targetUser;
 
@@ -82,7 +82,7 @@ export const command: AnotherCommand = {
                 .setColor("#FFC0CB")
                 .setTitle("💕")
                 .setImage(`attachment://love.png`)
-                .setDescription(data.love_embed_description
+                .setDescription(lang.love_embed_description
                     .replace('${user1.username}', user1.globalName!)
                     .replace('${user2.username}', user2?.globalName!)
                     .replace('${randomNumber}', randomNumber.toString())
@@ -96,7 +96,7 @@ export const command: AnotherCommand = {
             });
         } catch (error: any) {
             logger.err(error);
-            await interaction.reply({ content: data.love_command_error });
+            await interaction.reply({ content: lang.love_command_error });
         }
     },
 };

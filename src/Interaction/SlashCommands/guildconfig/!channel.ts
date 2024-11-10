@@ -41,30 +41,29 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.setchannels_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.setchannels_not_admin });
             return;
         };
 
-        var baseData = await client.db.get(`${interaction.guildId}.GUILD.GUILD_CONFIG`) as DatabaseStructure.DbGuildObject['GUILD_CONFIG'];
+        var baselang = await client.db.get(`${interaction.guildId}.GUILD.GUILD_CONFIG`) as DatabaseStructure.DbGuildObject['GUILD_CONFIG'];
         var current_join_channel = '';
         var current_leave_channel = '';
 
-        if (baseData?.join) {
-            current_join_channel = `<#${baseData.join}>`
+        if (baselang?.join) {
+            current_join_channel = `<#${baselang.join}>`
         } else {
             current_join_channel = client.iHorizon_Emojis.icon.No_Logo
         };
 
-        if (baseData?.leave) {
-            current_leave_channel = `<#${baseData.leave}>`
+        if (baselang?.leave) {
+            current_leave_channel = `<#${baselang.leave}>`
         } else {
             current_leave_channel = client.iHorizon_Emojis.icon.No_Logo
         };
@@ -72,31 +71,31 @@ export default {
         let embed = new EmbedBuilder()
             .setColor('#6e819a')
             .setFooter(await client.method.bot.footerBuilder(interaction))
-            .setTitle(data.setchannels_title_embed_panel)
+            .setTitle(lang.setchannels_title_embed_panel)
             .setThumbnail((interaction.guild.iconURL() as string))
             .setTimestamp()
             .addFields(
-                { name: data.setchannels_embed_fields_value_join, value: current_join_channel, inline: true },
-                { name: data.setchannels_embed_fields_value_leave, value: current_leave_channel, inline: true }
+                { name: lang.setchannels_embed_fields_value_join, value: current_join_channel, inline: true },
+                { name: lang.setchannels_embed_fields_value_leave, value: current_leave_channel, inline: true }
             );
 
         let action_row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId('guildconfig-channel-panel-change-join-channel')
-                    .setLabel(data.setchannels_button_join)
+                    .setLabel(lang.setchannels_button_join)
                     .setStyle(ButtonStyle.Primary)
             )
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId('guildconfig-channel-panel-change-leave-channel')
-                    .setLabel(data.setchannels_button_leave)
+                    .setLabel(lang.setchannels_button_leave)
                     .setStyle(ButtonStyle.Primary)
             )
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId('guildconfig-channel-panel-erase-data')
-                    .setLabel(data.setchannels_button_delete)
+                    .setCustomId('guildconfig-channel-panel-erase-lang')
+                    .setLabel(lang.setchannels_button_delete)
                     .setStyle(ButtonStyle.Danger)
             );
 
@@ -114,7 +113,7 @@ export default {
         collector.on('collect', async (i) => {
 
             if (i.user.id !== interaction.user.id) {
-                await i.reply({ content: data.help_not_for_you, ephemeral: true });
+                await i.reply({ content: lang.help_not_for_you, ephemeral: true });
                 return;
             };
 
@@ -124,13 +123,13 @@ export default {
                         new ChannelSelectMenuBuilder()
                             .setCustomId('guildconfig-channel-selectMenu-join-channel')
                             .setChannelTypes(ChannelType.GuildText)
-                            // .addDefaultChannels(baseData?.join || interaction.channel?.id!)
+                            // .addDefaultChannels(baselang?.join || interaction.channel?.id!)
                             .setMaxValues(1)
                             .setMinValues(1)
                     )
                     ;
                 let i2 = await i.reply({
-                    content: data.setchannels_which_channel.replace('${interaction.user.id}', interaction.user.id),
+                    content: lang.setchannels_which_channel.replace('${interaction.user.id}', interaction.user.id),
                     components: [channelSelectMenu]
                 });
 
@@ -148,13 +147,13 @@ export default {
 
                     if (!(channel instanceof TextChannel)) {
                         i2.delete();
-                        result.reply(data.setchannels_not_a_text_channel
+                        result.reply(lang.setchannels_not_a_text_channel
                             .replace('${client.iHorizon_Emojis.icon.Warning_Icon}', client.iHorizon_Emojis.icon.Warning_Icon)
                         );
                     } else {
                         await client.method.iHorizonLogs.send(interaction, {
-                            title: data.setchannels_logs_embed_title_on_join,
-                            description: data.setchannels_logs_embed_description_on_join
+                            title: lang.setchannels_logs_embed_title_on_join,
+                            description: lang.setchannels_logs_embed_description_on_join
                                 .replace(/\${argsid\.id}/g, channelId as string)
                                 .replace(/\${interaction\.user\.id}/g, interaction.user.id)
                         });
@@ -163,28 +162,28 @@ export default {
                             let already = await client.db.get(`${interaction.guildId}.GUILD.GUILD_CONFIG.join`);
 
                             if (already === channelId) {
-                                await result.reply({ content: data.setchannels_already_this_channel_on_join });
+                                await result.reply({ content: lang.setchannels_already_this_channel_on_join });
                                 return;
                             };
 
-                            (interaction.guild.channels.cache.get(channelId as string) as BaseGuildTextChannel).send({ content: data.setchannels_confirmation_message_on_join });
+                            (interaction.guild.channels.cache.get(channelId as string) as BaseGuildTextChannel).send({ content: lang.setchannels_confirmation_message_on_join });
                             await client.db.set(`${interaction.guildId}.GUILD.GUILD_CONFIG.join`, channelId);
 
                             i2.delete();
                             i2Collector.stop();
                             await result.reply({
-                                content: data.setchannels_command_work_on_join
+                                content: lang.setchannels_command_work_on_join
                                     .replace(/\${argsid\.id}/g, channelId as string)
                             });
 
                             embed.setFields(
-                                { name: data.setchannels_embed_fields_value_join, value: current_join_channel, inline: true },
-                                { name: data.setchannels_embed_fields_value_leave, value: current_leave_channel, inline: true }
+                                { name: lang.setchannels_embed_fields_value_join, value: current_join_channel, inline: true },
+                                { name: lang.setchannels_embed_fields_value_leave, value: current_leave_channel, inline: true }
                             );
                             response.edit({ embeds: [embed] });
                             return;
                         } catch (e) {
-                            result.reply({ content: data.setchannels_command_error_on_join });
+                            result.reply({ content: lang.setchannels_command_error_on_join });
                         };
 
                     }
@@ -201,13 +200,13 @@ export default {
                         new ChannelSelectMenuBuilder()
                             .setCustomId('guildconfig-channel-selectMenu-leave-channel')
                             .setChannelTypes(ChannelType.GuildText)
-                            // .addDefaultChannels(baseData?.leave || interaction.channel?.id!)
+                            // .addDefaultChannels(baselang?.leave || interaction.channel?.id!)
                             .setMaxValues(1)
                             .setMinValues(1)
                     )
                     ;
                 let i2 = await i.reply({
-                    content: data.setchannels_which_channel.replace('${interaction.user.id}', interaction.user.id),
+                    content: lang.setchannels_which_channel.replace('${interaction.user.id}', interaction.user.id),
                     components: [channelSelectMenu]
                 });
 
@@ -225,15 +224,15 @@ export default {
 
                     if (!(channel instanceof TextChannel)) {
                         i2.delete();
-                        result.reply(data.setchannels_not_a_text_channel
+                        result.reply(lang.setchannels_not_a_text_channel
                             .replace('${client.iHorizon_Emojis.icon.Warning_Icon}', client.iHorizon_Emojis.icon.Warning_Icon)
                         );
                         return;
                     }
 
                     await client.method.iHorizonLogs.send(interaction, {
-                        title: data.setchannels_logs_embed_title_on_leave,
-                        description: data.setchannels_logs_embed_description_on_leave
+                        title: lang.setchannels_logs_embed_title_on_leave,
+                        description: lang.setchannels_logs_embed_description_on_leave
                             .replace(/\${argsid\.id}/g, channelId as string)
                             .replace(/\${interaction\.user\.id}/g, interaction.user.id)
                     });
@@ -242,27 +241,27 @@ export default {
                         let already = await client.db.get(`${interaction.guildId}.GUILD.GUILD_CONFIG.leave`);
 
                         if (already === channelId as string) {
-                            await result.reply({ content: data.setchannels_already_this_channel_on_leave });
+                            await result.reply({ content: lang.setchannels_already_this_channel_on_leave });
                             return;
                         };
 
-                        (interaction.guild.channels.cache.get(channelId as string) as BaseGuildTextChannel).send({ content: data.setchannels_confirmation_message_on_leave });
+                        (interaction.guild.channels.cache.get(channelId as string) as BaseGuildTextChannel).send({ content: lang.setchannels_confirmation_message_on_leave });
                         await client.db.set(`${interaction.guildId}.GUILD.GUILD_CONFIG.leave`, channelId as string);
 
                         i2.delete();
                         i2Collector.stop();
                         await result.reply({
-                            content: data.setchannels_command_work_on_leave
+                            content: lang.setchannels_command_work_on_leave
                                 .replace(/\${argsid\.id}/g, channelId as string)
                         });
 
                         embed.setFields(
-                            { name: data.setchannels_embed_fields_value_join, value: current_join_channel, inline: true },
-                            { name: data.setchannels_embed_fields_value_leave, value: current_leave_channel, inline: true }
+                            { name: lang.setchannels_embed_fields_value_join, value: current_join_channel, inline: true },
+                            { name: lang.setchannels_embed_fields_value_leave, value: current_leave_channel, inline: true }
                         );
                         response.edit({ embeds: [embed] });
                     } catch (e) {
-                        await result.reply({ content: data.setchannels_command_error_on_leave });
+                        await result.reply({ content: lang.setchannels_command_error_on_leave });
                         return;
                     };
 
@@ -272,10 +271,10 @@ export default {
                     await i2.delete().catch(() => { });
                 })
 
-            } else if (i.customId === 'guildconfig-channel-panel-erase-data') {
+            } else if (i.customId === 'guildconfig-channel-panel-erase-lang') {
                 await client.method.iHorizonLogs.send(interaction, {
-                    title: data.setchannels_logs_embed_title_on_off,
-                    description: data.setchannels_logs_embed_description_on_off
+                    title: lang.setchannels_logs_embed_title_on_off,
+                    description: lang.setchannels_logs_embed_description_on_off
                         .replace(/\${interaction\.user\.id}/g, interaction.user.id)
                 });
 
@@ -283,18 +282,18 @@ export default {
                 let joinc = await client.db.get(`${interaction.guildId}.GUILD.GUILD_CONFIG.leave`);
 
                 if (!joinc && !leavec) {
-                    await i.reply({ content: data.setchannels_already_on_off });
+                    await i.reply({ content: lang.setchannels_already_on_off });
                 } else {
                     await client.db.delete(`${interaction.guildId}.GUILD.GUILD_CONFIG.join`);
                     await client.db.delete(`${interaction.guildId}.GUILD.GUILD_CONFIG.leave`);
-                    await i.reply({ content: data.setchannels_command_work_on_off });
+                    await i.reply({ content: lang.setchannels_command_work_on_off });
 
                     current_join_channel = client.iHorizon_Emojis.icon.No_Logo
                     current_leave_channel = client.iHorizon_Emojis.icon.No_Logo
 
                     embed.setFields(
-                        { name: data.setchannels_embed_fields_value_join, value: current_join_channel, inline: true },
-                        { name: data.setchannels_embed_fields_value_leave, value: current_leave_channel, inline: true }
+                        { name: lang.setchannels_embed_fields_value_join, value: current_join_channel, inline: true },
+                        { name: lang.setchannels_embed_fields_value_leave, value: current_leave_channel, inline: true }
                     );
                     response.edit({ embeds: [embed] });
                 }

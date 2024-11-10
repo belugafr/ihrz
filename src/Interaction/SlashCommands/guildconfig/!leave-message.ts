@@ -38,15 +38,14 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.setleavemessage_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.setleavemessage_not_admin });
             return;
         };
 
@@ -56,20 +55,20 @@ export default {
 
         const helpEmbed = new EmbedBuilder()
             .setColor("#ffb3cc")
-            .setDescription(data.setjoinmessage_help_embed_desc)
-            .setTitle(data.setleavemessage_help_embed_title)
+            .setDescription(lang.setjoinmessage_help_embed_desc)
+            .setTitle(lang.setleavemessage_help_embed_title)
             .addFields(
                 {
-                    name: data.setjoinmessage_help_embed_fields_custom_name,
+                    name: lang.setjoinmessage_help_embed_fields_custom_name,
                     value: leaveMessage ? `\`\`\`${leaveMessage}\`\`\`\n${client.method.generateCustomMessagePreview(leaveMessage, {
                         user: interaction.user,
                         guild: interaction.guild!,
                         guildLocal: guildLocal,
-                    })}` : data.setjoinmessage_help_embed_fields_custom_name_empy
+                    })}` : lang.setjoinmessage_help_embed_fields_custom_name_empy
                 },
                 {
-                    name: data.setjoinmessage_help_embed_fields_default_name_empy,
-                    value: `\`\`\`${data.event_goodbye_inviter}\`\`\`\n${client.method.generateCustomMessagePreview(data.event_goodbye_inviter, {
+                    name: lang.setjoinmessage_help_embed_fields_default_name_empy,
+                    value: `\`\`\`${lang.event_goodbye_inviter}\`\`\`\n${client.method.generateCustomMessagePreview(lang.event_goodbye_inviter, {
                         user: interaction.user,
                         guild: interaction.guild!,
                         guildLocal: guildLocal,
@@ -81,11 +80,11 @@ export default {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("leaveMessage-set-message")
-                    .setLabel(data.setjoinmessage_button_set_name)
+                    .setLabel(lang.setjoinmessage_button_set_name)
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("leaveMessage-default-message")
-                    .setLabel(data.setjoinmessage_buttom_del_name)
+                    .setLabel(lang.setjoinmessage_buttom_del_name)
                     .setStyle(ButtonStyle.Danger),
             );
 
@@ -103,19 +102,19 @@ export default {
         collector.on('collect', async (buttonInteraction) => {
 
             if (buttonInteraction.user.id !== interaction.user.id) {
-                await buttonInteraction.reply({ content: data.help_not_for_you, ephemeral: true });
+                await buttonInteraction.reply({ content: lang.help_not_for_you, ephemeral: true });
                 return;
             };
 
             if (buttonInteraction.customId === "leaveMessage-set-message") {
                 let modalInteraction = (await iHorizonModalResolve({
                     customId: 'leaveMessage-modal',
-                    title: data.setleavemessage_awaiting_response,
+                    title: lang.setleavemessage_awaiting_response,
                     deferUpdate: false,
                     fields: [
                         {
                             customId: 'leaveMessage-input',
-                            label: data.guildprofil_embed_fields_leavemessage,
+                            label: lang.guildprofil_embed_fields_leavemessage,
                             style: TextInputStyle.Paragraph,
                             required: true,
                             maxLength: 1010,
@@ -130,40 +129,40 @@ export default {
                 const response = modalInteraction.fields.getTextInputValue('leaveMessage-input');
                 const newEmbed = EmbedBuilder.from(helpEmbed).setFields(
                     {
-                        name: data.setjoinmessage_help_embed_fields_custom_name,
+                        name: lang.setjoinmessage_help_embed_fields_custom_name,
                         value: response ? `\`\`\`${response}\`\`\`\n${client.method.generateCustomMessagePreview(response, {
                             user: interaction.user,
                             guild: interaction.guild!,
                             guildLocal: guildLocal,
-                        })}` : data.setjoinmessage_help_embed_fields_custom_name_empy
+                        })}` : lang.setjoinmessage_help_embed_fields_custom_name_empy
                     },
                 );
 
                 await client.db.set(`${interaction.guildId}.GUILD.GUILD_CONFIG.leavemessage`, response);
                 await modalInteraction.reply({
-                    content: data.setleavemessage_command_work_on_enable
+                    content: lang.setleavemessage_command_work_on_enable
                         .replace("${client.iHorizon_Emojis.icon.Yes_Logo}", client.iHorizon_Emojis.icon.Yes_Logo),
                     ephemeral: true
                 });
                 newEmbed.addFields(helpEmbed.data.fields![1]);
                 await originalResponse.edit({ embeds: [newEmbed] });
                 await client.method.iHorizonLogs.send(interaction, {
-                    title: data.setleavemessage_logs_embed_title_on_enable,
-                    description: data.setleavemessage_logs_embed_description_on_enable
+                    title: lang.setleavemessage_logs_embed_title_on_enable,
+                    description: lang.setleavemessage_logs_embed_description_on_enable
                         .replace("${interaction.user.id}", interaction.user.id)
                 });
             } else if (buttonInteraction.customId === "leaveMessage-default-message") {
                 let newEmbed = EmbedBuilder.from(helpEmbed).setFields(
                     {
-                        name: data.setjoinmessage_help_embed_fields_custom_name,
-                        value: data.setjoinmessage_help_embed_fields_custom_name_empy
+                        name: lang.setjoinmessage_help_embed_fields_custom_name,
+                        value: lang.setjoinmessage_help_embed_fields_custom_name_empy
                     },
                 );
 
                 await client.db.delete(`${interaction.guildId}.GUILD.GUILD_CONFIG.leavemessage`);
 
                 await buttonInteraction.reply({
-                    content: data.setleavemessage_command_work_on_enable
+                    content: lang.setleavemessage_command_work_on_enable
                         .replace("${client.iHorizon_Emojis.icon.Yes_Logo}", client.iHorizon_Emojis.icon.Yes_Logo),
                     ephemeral: true
                 });
@@ -172,8 +171,8 @@ export default {
                 await originalResponse.edit({ embeds: [newEmbed] });
 
                 await client.method.iHorizonLogs.send(interaction, {
-                    title: data.setleavemessage_logs_embed_title_on_disable,
-                    description: data.setleavemessage_logs_embed_description_on_disable
+                    title: lang.setleavemessage_logs_embed_title_on_disable,
+                    description: lang.setleavemessage_logs_embed_description_on_disable
                         .replace("${interaction.user.id}", interaction.user.id)
                 });
             }

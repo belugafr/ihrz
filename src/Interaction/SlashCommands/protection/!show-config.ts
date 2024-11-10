@@ -29,58 +29,57 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
         if (interaction.user.id !== interaction.guild.ownerId) {
-            await interaction.editReply({ content: data.authorization_configshow_not_permited });
+            await interaction.editReply({ content: lang.authorization_configshow_not_permited });
             return;
         };
 
         var text = "";
         var text2 = "";
 
-        let baseData = await client.db.get(`${interaction.guild.id}.ALLOWLIST`);
+        let baselang = await client.db.get(`${interaction.guild.id}.ALLOWLIST`);
 
-        let baseData4Protection = await client.db.get(`${interaction.guild.id}.PROTECTION`);
+        let baselang4Protection = await client.db.get(`${interaction.guild.id}.PROTECTION`);
 
-        if (!baseData || !baseData4Protection) {
-            await interaction.editReply({ content: data.authorization_configshow_not_anything_setup });
+        if (!baselang || !baselang4Protection) {
+            await interaction.editReply({ content: lang.authorization_configshow_not_anything_setup });
             return;
         };
 
-        for (var i in baseData?.list) {
+        for (var i in baselang?.list) {
             text += `<@${i}>\n`
         };
 
-        for (var i in baseData4Protection) {
+        for (var i in baselang4Protection) {
             if (i !== 'SANCTION') {
-                var a = baseData4Protection[i].mode;
+                var a = baselang4Protection[i].mode;
                 text2 += `**${i.toUpperCase()}** -> \`${a}\`\n`
             }
         };
 
         let okay = '';
-        if (baseData4Protection.SANCTION === 'simply') okay = data.authorization_configshow_simply;
-        if (baseData4Protection.SANCTION === 'simply+ban') okay = data.authorization_configshow_simply_ban;
-        if (baseData4Protection.SANCTION === 'simply+derank') okay = data.authorization_configshow_simply_unrank;
+        if (baselang4Protection.SANCTION === 'simply') okay = lang.authorization_configshow_simply;
+        if (baselang4Protection.SANCTION === 'simply+ban') okay = lang.authorization_configshow_simply_ban;
+        if (baselang4Protection.SANCTION === 'simply+derank') okay = lang.authorization_configshow_simply_unrank;
 
-        text2 += data.authorization_configshow_punishement.replace('${okay}', okay);
+        text2 += lang.authorization_configshow_punishement.replace('${okay}', okay);
 
         let embed1 = new EmbedBuilder()
             .setColor('#000000')
-            .setAuthor({ name: data.authorization_configshow_embed1_author })
+            .setAuthor({ name: lang.authorization_configshow_embed1_author })
             .setDescription(text2)
             .setFooter(await client.method.bot.footerBuilder(interaction))
             .setTimestamp();
 
         let embed2 = new EmbedBuilder()
             .setColor("#000000")
-            .setAuthor({ name: data.authorization_configshow_embed2_author })
+            .setAuthor({ name: lang.authorization_configshow_embed2_author })
             .setDescription(text)
             .setFooter(await client.method.bot.footerBuilder(interaction))
             .setTimestamp();

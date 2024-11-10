@@ -36,9 +36,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -48,31 +47,31 @@ export default {
         let panelCategory = interaction.options.getChannel("category") as CategoryChannel | null;
 
         if (await client.db.get(`${interaction.guildId}.GUILD.TICKET.disable`)) {
-            await interaction.editReply({ content: data.ticket_disabled_command });
+            await interaction.editReply({ content: lang.ticket_disabled_command });
             return;
         };
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
             await interaction.editReply({
-                content: data.sethereticket_not_admin.replace(":x:", client.iHorizon_Emojis.icon.No_Logo)
+                content: lang.sethereticket_not_admin.replace(":x:", client.iHorizon_Emojis.icon.No_Logo)
             });
             return;
         };
 
         let comp = new StringSelectMenuBuilder()
             .setCustomId("choose_panel_type")
-            .setPlaceholder(data.sethereticket_command_type_menu_placeholder)
+            .setPlaceholder(lang.sethereticket_command_type_menu_placeholder)
             .addOptions(
                 new StringSelectMenuOptionBuilder()
-                    .setLabel(data.sethereticket_command_type_menu_choice_1_label)
+                    .setLabel(lang.sethereticket_command_type_menu_choice_1_label)
                     .setValue("button_panel"),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel(data.sethereticket_command_type_menu_choice_2_label)
+                    .setLabel(lang.sethereticket_command_type_menu_choice_2_label)
                     .setValue("select_panel")
             );
 
         let response = await interaction.editReply({
-            content: data.sethereticket_command_type_menu_question
+            content: lang.sethereticket_command_type_menu_question
                 .replace("${interaction.user.id}", interaction.user.id),
             components: [
                 new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(comp)
@@ -97,7 +96,7 @@ export default {
 
                 interaction.editReply({
                     components: [],
-                    content: data.sethereticket_command_work
+                    content: lang.sethereticket_command_work
                 });
 
             } else if (i.values[0] === 'select_panel') {

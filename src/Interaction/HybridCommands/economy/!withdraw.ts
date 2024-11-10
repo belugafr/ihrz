@@ -37,7 +37,7 @@ export default {
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
 
-        let dataAccount = await client.db.get(`${interaction.guildId}.USER.${interaction.member.user.id}.ECONOMY`) as DatabaseStructure.EconomyUserSchema;
+        let langAccount = await client.db.get(`${interaction.guildId}.USER.${interaction.member.user.id}.ECONOMY`) as DatabaseStructure.EconomyUserSchema;
 
         if (interaction instanceof ChatInputCommandInteraction) {
             var toWithdraw = interaction.options.getString('how-much') as string;
@@ -54,7 +54,7 @@ export default {
             return;
         };
 
-        if (toWithdraw === "all") toWithdraw = dataAccount.bank?.toString()!;
+        if (toWithdraw === "all") toWithdraw = langAccount.bank?.toString()!;
 
         if (isNaN(Number(toWithdraw))) {
             await client.method.interactionSend(interaction, {
@@ -66,7 +66,7 @@ export default {
 
         var clean_to_withdraw = parseInt(toWithdraw)
 
-        if (toWithdraw && clean_to_withdraw > dataAccount?.bank!) {
+        if (toWithdraw && clean_to_withdraw > langAccount?.bank!) {
             await client.method.interactionSend(interaction, {
                 content: lang.withdraw_cannot_abuse.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
             });

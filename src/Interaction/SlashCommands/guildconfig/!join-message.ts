@@ -48,15 +48,14 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.setjoinmessage_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.setjoinmessage_not_admin });
             return;
         }
 
@@ -68,7 +67,7 @@ export default {
         var backgroundURL = ImageBannerOptions?.backgroundURL || "https://img.freepik.com/vecteurs-libre/fond-courbe-bleue_53876-113112.jpg";
         var profilePictureRound: any = ImageBannerOptions?.profilePictureRound || "status";
         var textColour = ImageBannerOptions?.textColour || "#000000"
-        var message = ImageBannerOptions?.message || data.setjoinmessage_image_default_text;
+        var message = ImageBannerOptions?.message || lang.setjoinmessage_image_default_text;
         var textSize = ImageBannerOptions?.textSize || "40px";
         var avatarSize = ImageBannerOptions?.avatarSize || "140px";
 
@@ -79,16 +78,16 @@ export default {
         let attachment = (await generateJoinImage(interaction.member as GuildMember, { backgroundURL, profilePictureRound, textColour, message, textSize, avatarSize }))!;
         let helpembed_fields = [
             {
-                name: data.setjoinmessage_help_embed_fields_custom_name,
+                name: lang.setjoinmessage_help_embed_fields_custom_name,
                 value: joinMessage ? `\`\`\`${joinMessage}\`\`\`\n${client.method.generateCustomMessagePreview(joinMessage, {
                     user: interaction.user,
                     guild: interaction.guild!,
                     guildLocal: guildLocal,
-                })}` : data.setjoinmessage_help_embed_fields_custom_name_empy
+                })}` : lang.setjoinmessage_help_embed_fields_custom_name_empy
             },
             {
-                name: data.setjoinmessage_help_embed_fields_default_name_empy,
-                value: `\`\`\`${data.event_welcomer_inviter}\`\`\`\n${client.method.generateCustomMessagePreview(data.event_welcomer_inviter, {
+                name: lang.setjoinmessage_help_embed_fields_default_name_empy,
+                value: `\`\`\`${lang.event_welcomer_inviter}\`\`\`\n${client.method.generateCustomMessagePreview(lang.event_welcomer_inviter, {
                     user: interaction.user,
                     guild: interaction.guild!,
                     guildLocal: guildLocal,
@@ -98,24 +97,24 @@ export default {
 
         var helpEmbed = new EmbedBuilder()
             .setColor("#ffb3cc")
-            .setDescription(data.setjoinmessage_help_embed_desc)
-            .setTitle(data.setjoinmessage_help_embed_title)
+            .setDescription(lang.setjoinmessage_help_embed_desc)
+            .setTitle(lang.setjoinmessage_help_embed_title)
             .setFields(helpembed_fields);
 
         const helpEmbed2 = new EmbedBuilder()
             .setColor("#ffb3cc")
-            .setTitle(data.setjoinmessage_var_image_card)
+            .setTitle(lang.setjoinmessage_var_image_card)
             .setImage("attachment://image.png")
 
         const buttons = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("joinMessage-set-message")
-                    .setLabel(data.setjoinmessage_button_set_name)
+                    .setLabel(lang.setjoinmessage_button_set_name)
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("joinMessage-default-message")
-                    .setLabel(data.setjoinmessage_buttom_del_name)
+                    .setLabel(lang.setjoinmessage_buttom_del_name)
                     .setStyle(ButtonStyle.Danger)
             );
 
@@ -123,15 +122,15 @@ export default {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("joinMessage-set-image")
-                    .setLabel(data.setjoinmessage_change_image_button_title)
+                    .setLabel(lang.setjoinmessage_change_image_button_title)
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("joinMessage-default-image")
-                    .setLabel(data.setjoinmessage_default_image_button_title)
+                    .setLabel(lang.setjoinmessage_default_image_button_title)
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("joinMessage-delete-image")
-                    .setLabel(ImageBannerStates !== "off" ? data.setjoinmessage_var_disable_image : data.setjoinmessage_var_enable_image)
+                    .setLabel(ImageBannerStates !== "off" ? lang.setjoinmessage_var_disable_image : lang.setjoinmessage_var_enable_image)
                     .setStyle(ImageBannerStates !== "off" ? ButtonStyle.Danger : ButtonStyle.Success),
             );
 
@@ -153,19 +152,19 @@ export default {
 
         collector.on('collect', async (buttonInteraction) => {
             if (buttonInteraction.user.id !== interaction.user.id) {
-                await buttonInteraction.reply({ content: data.help_not_for_you, ephemeral: true });
+                await buttonInteraction.reply({ content: lang.help_not_for_you, ephemeral: true });
                 return;
             };
 
             if (buttonInteraction.customId === "joinMessage-set-message") {
                 let modalInteraction = await iHorizonModalResolve({
                     customId: 'joinMessage-modal',
-                    title: data.setjoinmessage_awaiting_response,
+                    title: lang.setjoinmessage_awaiting_response,
                     deferUpdate: false,
                     fields: [
                         {
                             customId: 'joinMessage-input',
-                            label: data.guildprofil_embed_fields_joinmessage,
+                            label: lang.guildprofil_embed_fields_joinmessage,
                             style: TextInputStyle.Paragraph,
                             required: true,
                             maxLength: 1010,
@@ -181,19 +180,19 @@ export default {
 
                     helpEmbed.setFields(
                         {
-                            name: data.setjoinmessage_help_embed_fields_custom_name,
+                            name: lang.setjoinmessage_help_embed_fields_custom_name,
                             value: response ? `\`\`\`${response}\`\`\`\n${client.method.generateCustomMessagePreview(response, {
                                 user: interaction.user,
                                 guild: interaction.guild!,
                                 guildLocal: guildLocal,
-                            })}` : data.setjoinmessage_help_embed_fields_custom_name_empy
+                            })}` : lang.setjoinmessage_help_embed_fields_custom_name_empy
                         },
                         helpembed_fields[1]
                     );
 
                     await client.db.set(`${interaction.guildId}.GUILD.GUILD_CONFIG.joinmessage`, response);
                     await modalInteraction.reply({
-                        content: data.setjoinmessage_command_work_on_enable
+                        content: lang.setjoinmessage_command_work_on_enable
                             .replace("${client.iHorizon_Emojis.icon.Green_Tick_Logo}", client.iHorizon_Emojis.icon.Green_Tick_Logo),
                         ephemeral: true
                     });
@@ -206,8 +205,8 @@ export default {
                     await message2.edit({ embeds: emb, files: files });
 
                     await client.method.iHorizonLogs.send(interaction, {
-                        title: data.setjoinmessage_logs_embed_title_on_enable,
-                        description: data.setjoinmessage_logs_embed_description_on_enable
+                        title: lang.setjoinmessage_logs_embed_title_on_enable,
+                        description: lang.setjoinmessage_logs_embed_description_on_enable
                             .replace("${interaction.user.id}", interaction.user.id)
                     });
                 } catch (e) {
@@ -216,8 +215,8 @@ export default {
             } else if (buttonInteraction.customId === "joinMessage-default-message") {
                 helpEmbed.setFields(
                     {
-                        name: data.setjoinmessage_help_embed_fields_custom_name,
-                        value: data.setjoinmessage_help_embed_fields_custom_name_empy
+                        name: lang.setjoinmessage_help_embed_fields_custom_name,
+                        value: lang.setjoinmessage_help_embed_fields_custom_name_empy
                     },
                     helpembed_fields[1]
                 );
@@ -225,7 +224,7 @@ export default {
                 await client.db.delete(`${interaction.guildId}.GUILD.GUILD_CONFIG.joinmessage`);
 
                 await buttonInteraction.reply({
-                    content: data.setjoinmessage_command_work_on_enable
+                    content: lang.setjoinmessage_command_work_on_enable
                         .replace("${client.iHorizon_Emojis.icon.Green_Tick_Logo}", client.iHorizon_Emojis.icon.Green_Tick_Logo),
                     ephemeral: true
                 });
@@ -238,8 +237,8 @@ export default {
                 await message2.edit({ embeds: emb, files: files });
 
                 await client.method.iHorizonLogs.send(interaction, {
-                    title: data.setjoinmessage_logs_embed_title_on_disable,
-                    description: data.setjoinmessage_logs_embed_description_on_disable
+                    title: lang.setjoinmessage_logs_embed_title_on_disable,
+                    description: lang.setjoinmessage_logs_embed_description_on_disable
                         .replace("${interaction.user.id}", interaction.user.id)
                 });
             } else if (buttonInteraction.customId === "joinMessage-set-image") {
@@ -249,22 +248,22 @@ export default {
                     .setCustomId("test")
                     .addOptions(
                         new StringSelectMenuOptionBuilder()
-                            .setLabel(data.setjoinmessage_change_image_propreties_background)
+                            .setLabel(lang.setjoinmessage_change_image_propreties_background)
                             .setValue("change_background"),
                         new StringSelectMenuOptionBuilder()
-                            .setLabel(data.setjoinmessage_change_image_propreties_frame_color)
+                            .setLabel(lang.setjoinmessage_change_image_propreties_frame_color)
                             .setValue("change_frame"),
                         new StringSelectMenuOptionBuilder()
-                            .setLabel(data.setjoinmessage_change_image_propreties_text_colour)
+                            .setLabel(lang.setjoinmessage_change_image_propreties_text_colour)
                             .setValue("change_text_colour"),
                         new StringSelectMenuOptionBuilder()
-                            .setLabel(data.setjoinmessage_change_image_propreties_text_message)
+                            .setLabel(lang.setjoinmessage_change_image_propreties_text_message)
                             .setValue("change_text_message"),
                         new StringSelectMenuOptionBuilder()
-                            .setLabel(data.setjoinmessage_change_image_propreties_text_size)
+                            .setLabel(lang.setjoinmessage_change_image_propreties_text_size)
                             .setValue("change_text_size"),
                         new StringSelectMenuOptionBuilder()
-                            .setLabel(data.setjoinmessage_change_image_propreties_avatar_size)
+                            .setLabel(lang.setjoinmessage_change_image_propreties_avatar_size)
                             .setValue("change_avatar_size"),
                     );
 
@@ -281,13 +280,13 @@ export default {
                 i1_collector.on("collect", async (i1) => {
                     if (i1.values[0] === "change_background") {
                         let res = await iHorizonModalResolve({
-                            title: data.setjoinmessage_change_image_propreties_background,
+                            title: lang.setjoinmessage_change_image_propreties_background,
                             customId: 'change_background',
                             deferUpdate: true,
                             fields: [
                                 {
                                     customId: 'url',
-                                    label: data.setjoinmessage_modal_fields_background_url,
+                                    label: lang.setjoinmessage_modal_fields_background_url,
                                     style: TextInputStyle.Short,
                                     required: true,
                                     maxLength: 300,
@@ -308,10 +307,10 @@ export default {
                             .setCustomId("test")
                             .addOptions(
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_change_image_menu_frame_color_profil)
+                                    .setLabel(lang.setjoinmessage_change_image_menu_frame_color_profil)
                                     .setValue("hexProfileColor"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_change_image_menu_frame_status_profil)
+                                    .setLabel(lang.setjoinmessage_change_image_menu_frame_status_profil)
                                     .setValue("status"),
                             );
 
@@ -334,13 +333,13 @@ export default {
                         i1_collector.stop();
                     } else if (i1.values[0] === "change_text_colour") {
                         let res = await iHorizonModalResolve({
-                            title: data.setjoinmessage_change_image_propreties_text_colour,
+                            title: lang.setjoinmessage_change_image_propreties_text_colour,
                             customId: 'change_text_colour',
                             deferUpdate: false,
                             fields: [
                                 {
                                     customId: 'colour',
-                                    label: data.setjoinmessage_modal_fields_hex_color,
+                                    label: lang.setjoinmessage_modal_fields_hex_color,
                                     style: TextInputStyle.Short,
                                     required: true,
                                     maxLength: 9,
@@ -353,7 +352,7 @@ export default {
                         textColour = res?.fields.getTextInputValue("colour")!;
 
                         if (!isValidColor(textColour)) {
-                            res?.reply({ content: data.embed_choose_12_error.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) })
+                            res?.reply({ content: lang.embed_choose_12_error.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo) })
                         }
 
                         await res?.deferUpdate();
@@ -363,13 +362,13 @@ export default {
                         i1_collector.stop();
                     } else if (i1.values[0] === "change_text_message") {
                         let res = await iHorizonModalResolve({
-                            title: data.setjoinmessage_change_image_propreties_text_message,
+                            title: lang.setjoinmessage_change_image_propreties_text_message,
                             customId: 'change_text_message',
                             deferUpdate: true,
                             fields: [
                                 {
                                     customId: 'msg',
-                                    label: data.setjoinmessage_modal_fields_message,
+                                    label: lang.setjoinmessage_modal_fields_message,
                                     style: TextInputStyle.Short,
                                     required: true,
                                     maxLength: 100,
@@ -391,22 +390,22 @@ export default {
                             .setCustomId("test")
                             .addOptions(
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_text_size + "0.5")
+                                    .setLabel(lang.setjoinmessage_var_text_size + "0.5")
                                     .setValue("20px"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_text_size + "1")
+                                    .setLabel(lang.setjoinmessage_var_text_size + "1")
                                     .setValue("40px"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_text_size + "1.5")
+                                    .setLabel(lang.setjoinmessage_var_text_size + "1.5")
                                     .setValue("60px"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_text_size + "2")
+                                    .setLabel(lang.setjoinmessage_var_text_size + "2")
                                     .setValue("80px"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_text_size + "3")
+                                    .setLabel(lang.setjoinmessage_var_text_size + "3")
                                     .setValue("120px"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_text_size + "4")
+                                    .setLabel(lang.setjoinmessage_var_text_size + "4")
                                     .setValue("160px"),
                             );
 
@@ -434,19 +433,19 @@ export default {
                             .setCustomId("test")
                             .addOptions(
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_avatar_size + "0.5")
+                                    .setLabel(lang.setjoinmessage_var_avatar_size + "0.5")
                                     .setValue("70px"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_avatar_size + "1")
+                                    .setLabel(lang.setjoinmessage_var_avatar_size + "1")
                                     .setValue("140px"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_avatar_size + "1.5")
+                                    .setLabel(lang.setjoinmessage_var_avatar_size + "1.5")
                                     .setValue("210px"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_avatar_size + "2")
+                                    .setLabel(lang.setjoinmessage_var_avatar_size + "2")
                                     .setValue("280px"),
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(data.setjoinmessage_var_avatar_size + "3")
+                                    .setLabel(lang.setjoinmessage_var_avatar_size + "3")
                                     .setValue("430px"),
                             );
 
@@ -475,7 +474,7 @@ export default {
                 backgroundURL = "https://img.freepik.com/vecteurs-libre/fond-courbe-bleue_53876-113112.jpg";
                 profilePictureRound = "status";
                 textColour = "#000000"
-                message = data.setjoinmessage_image_default_text
+                message = lang.setjoinmessage_image_default_text
                 avatarSize = "140px"
                 textSize = "40px"
 
@@ -493,7 +492,7 @@ export default {
                     ImageBannerStates = "on";
 
                     buttons2.components[2].setStyle(ImageBannerStates !== "off" ? ButtonStyle.Danger : ButtonStyle.Success)
-                    buttons2.components[2].setLabel(ImageBannerStates !== "off" ? data.setjoinmessage_var_disable_image : data.setjoinmessage_var_enable_image)
+                    buttons2.components[2].setLabel(ImageBannerStates !== "off" ? lang.setjoinmessage_var_disable_image : lang.setjoinmessage_var_enable_image)
 
                     await interaction.editReply({ embeds: [helpEmbed, helpEmbed2], components: [buttons, buttons2], files: [attachment] });
                 } else {
@@ -501,7 +500,7 @@ export default {
                     ImageBannerStates = "off"
 
                     buttons2.components[2].setStyle(ImageBannerStates !== "off" ? ButtonStyle.Danger : ButtonStyle.Success)
-                    buttons2.components[2].setLabel(ImageBannerStates !== "off" ? data.setjoinmessage_var_disable_image : data.setjoinmessage_var_enable_image)
+                    buttons2.components[2].setLabel(ImageBannerStates !== "off" ? lang.setjoinmessage_var_disable_image : lang.setjoinmessage_var_enable_image)
 
                     await interaction.editReply({ embeds: [helpEmbed], components: [buttons, buttons2], files: [] });
                 }

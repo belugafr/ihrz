@@ -34,7 +34,9 @@ import {
 
 import { isDiscordEmoji, isSingleEmoji } from '../../../core/functions/emojiChecker.js';
 import { LanguageData } from '../../../../types/languageData';
-import { Command } from '../../../../types/command';export const command: Command = {
+import { Command } from '../../../../types/command';
+
+export const command: Command = {
 
     name: 'add-react',
     aliases: ['react-add', 'addreact', 'reactadd'],
@@ -48,8 +50,7 @@ import { Command } from '../../../../types/command';export const command: Comman
     category: 'guildconfig',
     type: "PREFIX_IHORIZON_COMMAND",
     run: async (client: Client, interaction: Message, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
+
 
         let permission = interaction.member?.permissions?.has(PermissionsBitField.Flags.AddReactions);
 

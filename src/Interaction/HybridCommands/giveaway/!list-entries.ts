@@ -48,27 +48,27 @@ export default {
         };
 
         if (interaction instanceof ChatInputCommandInteraction) {
-            var inputData = interaction.options.getString("giveaway-id") as string;
+            var inputlang = interaction.options.getString("giveaway-id") as string;
         } else {
             var _ = await client.method.checkCommandArgs(interaction, command, args!, lang); if (!_) return;
-            var inputData = client.method.string(args!, 0) as string;
+            var inputlang = client.method.string(args!, 0) as string;
         };
 
-        if (!await client.giveawaysManager.isValid(inputData)) {
+        if (!await client.giveawaysManager.isValid(inputlang)) {
             await client.method.interactionSend(interaction, {
                 content: lang.end_not_find_giveaway
-                    .replace(/\${gw}/g, inputData)
+                    .replace(/\${gw}/g, inputlang)
             });
             return;
         };
 
-        if (await client.giveawaysManager.isEnded(inputData)) {
+        if (await client.giveawaysManager.isEnded(inputlang)) {
             await client.method.interactionSend(interaction, { content: lang.end_command_error });
             return;
         };
 
         // @ts-ignore
-        await client.giveawaysManager.listEntries(interaction, inputData)
+        await client.giveawaysManager.listEntries(interaction, inputlang)
         return;
     },
 };

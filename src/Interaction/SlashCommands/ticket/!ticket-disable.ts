@@ -33,15 +33,14 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.disableticket_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.disableticket_not_admin });
             return;
         };
 
@@ -49,21 +48,21 @@ export default {
 
         if (type === "off") {
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.disableticket_logs_embed_title_disable,
-                description: data.disableticket_logs_embed_description_disable.replace(/\${interaction\.user\.id}/g, interaction.user.id)
+                title: lang.disableticket_logs_embed_title_disable,
+                description: lang.disableticket_logs_embed_description_disable.replace(/\${interaction\.user\.id}/g, interaction.user.id)
             });
 
             await client.db.set(`${interaction.guildId}.GUILD.TICKET.disable`, true);
-            await interaction.editReply({ content: data.disableticket_command_work_disable });
+            await interaction.editReply({ content: lang.disableticket_command_work_disable });
             return;
         } else if (type === "on") {
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.disableticket_logs_embed_title_enable,
-                description: data.disableticket_logs_embed_description_enable.replace(/\${interaction\.user\.id}/g, interaction.user.id)
+                title: lang.disableticket_logs_embed_title_enable,
+                description: lang.disableticket_logs_embed_description_enable.replace(/\${interaction\.user\.id}/g, interaction.user.id)
             });
 
             await client.db.set(`${interaction.guildId}.GUILD.TICKET.disable`, false);
-            await interaction.editReply({ content: data.disableticket_command_work_enable });
+            await interaction.editReply({ content: lang.disableticket_command_work_enable });
             return;
         };
     },

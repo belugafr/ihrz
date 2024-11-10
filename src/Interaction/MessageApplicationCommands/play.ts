@@ -40,7 +40,7 @@ export const command: AnotherCommand = {
     thinking: true,
     run: async (client: Client, interaction: MessageContextMenuCommandInteraction) => {
 
-        let data = await client.func.getLanguageData(interaction.guildId) as LanguageData;
+        let lang = await client.func.getLanguagelang(interaction.guildId) as LanguageData;
         let voiceChannel = (interaction.member as GuildMember)?.voice.channel;
 
         let msg = interaction.options.getMessage("message") as Message;
@@ -53,12 +53,12 @@ export const command: AnotherCommand = {
         };
 
         if (!voiceChannel) {
-            await interaction.editReply({ content: data.p_not_in_voice_channel });
+            await interaction.editReply({ content: lang.p_not_in_voice_channel });
             return;
         };
 
         if (!client.func.isAllowedLinks(msg?.content)) {
-            return interaction.editReply({ content: data.p_not_allowed })
+            return interaction.editReply({ content: lang.p_not_allowed })
         };
 
         let player = client.player.createPlayer({
@@ -75,7 +75,7 @@ export const command: AnotherCommand = {
 
             if (res.tracks.length === 0) {
                 let results = new EmbedBuilder()
-                    .setTitle(data.p_embed_title)
+                    .setTitle(lang.p_embed_title)
                     .setColor('#ff0000')
                     .setTimestamp();
 
@@ -91,7 +91,7 @@ export const command: AnotherCommand = {
                 embeds: [
                     new EmbedBuilder()
                         .setColor(2829617)
-                        .setDescription(data.event_mp_audioTrackAdd
+                        .setDescription(lang.event_mp_audioTrackAdd
                             .replace("${client.iHorizon_Emojis.icon.Music_Icon}", client.iHorizon_Emojis.icon.Music_Icon)
                             .replace("${track.title}", res.tracks[0].info.title as string)
                         )
@@ -123,11 +123,11 @@ export const command: AnotherCommand = {
             .setDescription(`**${yes.tracks[0].info.title}**`)
             .setColor('#00cc1a')
             .setTimestamp()
-            .setFooter({ text: data.p_duration + `${timeCalcultator()}` })
+            .setFooter({ text: lang.p_duration + `${timeCalcultator()}` })
             .setThumbnail(yes.tracks[0].info.artworkUrl as string);
 
         await interaction.editReply({
-            content: data.p_loading_message
+            content: lang.p_loading_message
                 .replace("${client.iHorizon_Emojis.icon.Timer}", client.iHorizon_Emojis.icon.Timer)
                 .replace("{result}", yes.playlist ? 'playlist' : 'track')
             , embeds: [embed]

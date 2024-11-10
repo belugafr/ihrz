@@ -32,44 +32,43 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
-        let baseData = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
+        let baselang = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
         let member = interaction.options.getUser('member') as User;
 
         if (interaction.user.id !== interaction.guild.ownerId) {
-            await interaction.reply({ content: data.allowlist_delete_not_owner });
+            await interaction.reply({ content: lang.allowlist_delete_not_owner });
             return;
         };
 
-        if (interaction.user.id !== interaction.guild.ownerId && baseData.list[interaction.user.id]?.allowed !== true) {
-            await interaction.reply({ content: data.allowlist_delete_not_permited });
+        if (interaction.user.id !== interaction.guild.ownerId && baselang.list[interaction.user.id]?.allowed !== true) {
+            await interaction.reply({ content: lang.allowlist_delete_not_permited });
             return;
         };
 
         if (!member) {
-            await interaction.reply({ content: data.allowlist_delete_member_unreachable });
+            await interaction.reply({ content: lang.allowlist_delete_member_unreachable });
             return;
         };
 
         if (member.id === interaction.guild.ownerId) {
-            await interaction.reply({ content: data.allowlist_delete_cant_remove_owner });
+            await interaction.reply({ content: lang.allowlist_delete_cant_remove_owner });
             return;
         };
 
-        if (!baseData.list[member.id]?.allowed == true) {
-            await interaction.reply({ content: data.allowlist_delete_isnt_in });
+        if (!baselang.list[member.id]?.allowed == true) {
+            await interaction.reply({ content: lang.allowlist_delete_isnt_in });
             return;
         };
 
         await client.db.delete(`${interaction.guild.id}.ALLOWLIST.list.${member.id}`);
         await interaction.reply({
-            content: data.allowlist_delete_command_work
+            content: lang.allowlist_delete_command_work
                 .replace('${member.user}', member.toString())
         });
 

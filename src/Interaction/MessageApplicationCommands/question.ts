@@ -34,26 +34,26 @@ export const command: AnotherCommand = {
     thinking: false,
     run: async (client: Client, interaction: MessageContextMenuCommandInteraction) => {
 
-        let data = await client.func.getLanguageData(interaction.guildId) as LanguageData;
+        let lang = await client.func.getLanguagelang(interaction.guildId) as LanguageData;
         let question = interaction.options.getMessage("message")?.content || ".";
 
         let text = question?.split(" ");
 
         if (!text?.[2]) {
-            await interaction.reply({ content: data.question_not_full });
+            await interaction.reply({ content: lang.question_not_full });
             return;
         };
 
-        let reponses = data.question_s;
+        let reponses = lang.question_s;
 
         let embed = new EmbedBuilder()
-            .setTitle(data.question_embed_title
+            .setTitle(lang.question_embed_title
                 .replace(/\${interaction\.user\.username}/g, interaction.targetMessage.author.globalName || interaction.targetMessage.author.tag)
             )
             .setColor("#ddd98b")
             .addFields(
-                { name: data.question_fields_input_embed, value: question, inline: true },
-                { name: data.question_fields_output_embed, value: reponses[Math.floor((Math.random() * reponses.length))] }
+                { name: lang.question_fields_input_embed, value: question, inline: true },
+                { name: lang.question_fields_output_embed, value: reponses[Math.floor((Math.random() * reponses.length))] }
             )
             .setTimestamp();
 

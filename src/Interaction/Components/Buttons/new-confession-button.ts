@@ -41,12 +41,12 @@ export default async function (interaction: ButtonInteraction<"cached">) {
         `${interaction.guildId}.GUILD.CONFESSION.disable`
     )) return;
 
-    let allDataConfession = await interaction.client.db.get(`${interaction.guildId}.GUILD.CONFESSION`) as DatabaseStructure.ConfessionSchema;
+    let alllangConfession = await interaction.client.db.get(`${interaction.guildId}.GUILD.CONFESSION`) as DatabaseStructure.ConfessionSchema;
     let confessionTime = await interaction.client.db.table('TEMP').get(`CONFESSION_COOLDOWN.${interaction.user.id}`);
-    let lang = await interaction.client.func.getLanguageData(interaction.guildId) as LanguageData;
+    let lang = await interaction.client.func.getLanguagelang(interaction.guildId) as LanguageData;
 
-    let timeout = allDataConfession.cooldown!;
-    let panel = allDataConfession.panel;
+    let timeout = alllangConfession.cooldown!;
+    let panel = alllangConfession.panel;
 
     if (confessionTime !== null && timeout - (Date.now() - confessionTime) > 0) {
         let time = interaction.client.timeCalculator.to_beautiful_string(timeout - (Date.now() - confessionTime));
@@ -131,18 +131,18 @@ export default async function (interaction: ButtonInteraction<"cached">) {
         enforceNonce: true, nonce: nonce
     });
 
-    let panelMessage = await interaction.channel?.messages.fetch(allDataConfession.panel?.messageId!);
+    let panelMessage = await interaction.channel?.messages.fetch(alllangConfession.panel?.messageId!);
     let embedFromPanelMessage = panelMessage?.embeds[0];
     let compFromPanelMessage = panelMessage?.components[0];
 
     await panelMessage?.delete();
 
-    const newPanelFromOldData: MessageReplyOptions = {
+    const newPanelFromOldlang: MessageReplyOptions = {
         embeds: [embedFromPanelMessage!], components: [compFromPanelMessage!],
         //  files: [await interaction.client.method.bot.footerAttachmentBuilder(interaction)] 
     };
 
-    interaction.client.method.channelSend(interaction.message, newPanelFromOldData).then(async (msg) => {
+    interaction.client.method.channelSend(interaction.message, newPanelFromOldlang).then(async (msg) => {
         let messageId = msg.id;
         let channelId = msg.channelId;
 

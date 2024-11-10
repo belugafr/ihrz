@@ -31,15 +31,14 @@ import { Option } from '../../../../types/option';
 import { encrypt } from '../../../core/functions/encryptDecryptMethod.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.setup_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.setup_not_admin });
             return;
         };
 
@@ -48,10 +47,10 @@ export default {
         let buffer = Buffer.from(encrypt(client.config.api.apiToken, JSON.stringify(dbGuild)), 'utf-8');
         let attachment = new AttachmentBuilder(buffer, { name: interaction.guildId + '.json' })
 
-        await interaction.editReply({ content: data.guildconfig_config_save_check_dm });
+        await interaction.editReply({ content: lang.guildconfig_config_save_check_dm });
 
         await interaction.user.send({
-            content: data.guildconfig_config_save_user_msg
+            content: lang.guildconfig_config_save_user_msg
                 .replace("${interaction.guild.name}", interaction.guild.name),
             files: [attachment]
         })

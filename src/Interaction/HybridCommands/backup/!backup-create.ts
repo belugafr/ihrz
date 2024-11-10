@@ -69,24 +69,24 @@ export default {
         backup.create(interaction.guild, {
             maxMessagesPerChannel: svMsg === "yes" ? 10 : 0,
             jsonBeautify: true
-        }).then(async (backupData) => {
+        }).then(async (backuplang) => {
 
-            backupData.channels.categories.forEach(category => {
+            backuplang.channels.categories.forEach(category => {
                 i++;
                 category.children.forEach(() => {
                     j++;
                 });
             });
 
-            let elData = { guildName: backupData.name, categoryCount: i, channelCount: j };
+            let ellang = { guildName: backuplang.name, categoryCount: i, channelCount: j };
 
-            await client.db.set(`BACKUPS.${interaction.member?.user.id}.${backupData.id}`, elData);
+            await client.db.set(`BACKUPS.${interaction.member?.user.id}.${backuplang.id}`, ellang);
 
             client.method.channelSend(interaction, { content: lang.backup_command_work_on_creation });
 
             await client.method.interactionSend(interaction, {
                 content: lang.backup_command_work_info_on_creation
-                    .replace("${backupData.id}", backupData.id)
+                    .replace("${backuplang.id}", backuplang.id)
             });
 
             await client.method.iHorizonLogs.send(interaction, {

@@ -142,7 +142,7 @@ export default {
             await response.edit({ components: [] });
         });
 
-        type LanguageDataKeys = keyof LanguageData;
+        type LanguagelangKeys = keyof LanguageData;
 
         async function chooseAction(i: StringSelectMenuInteraction<"cached">) {
             switch (i.values[0]) {
@@ -304,7 +304,7 @@ export default {
             }
         }
 
-        async function handleCollector(i: StringSelectMenuInteraction<"cached">, replyContent: LanguageDataKeys, onCollect: (message: Message) => void) {
+        async function handleCollector(i: StringSelectMenuInteraction<"cached">, replyContent: LanguagelangKeys, onCollect: (message: Message) => void) {
             const replyMessage = Array.isArray(lang[replyContent]) ? (lang[replyContent] as string[]).join(' ') : lang[replyContent];
             let reply = await i.reply({ content: replyMessage.toString(), ephemeral: true });
             let messageCollector = (interaction.channel as BaseGuildTextChannel)?.createMessageCollector({ filter: (m) => m.author.id === interaction.member?.user.id!, max: 1, time: 300_000 });

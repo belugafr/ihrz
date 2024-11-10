@@ -33,9 +33,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -43,15 +42,15 @@ export default {
         let action = interaction.options.getString('action') as string;
         let maximumDate = interaction.options.getString('maximum-date');
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.setup_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.setup_not_admin });
             return;
         }
 
         if (action === 'on') {
             if (!maximumDate) {
                 await interaction.editReply({
-                    content: data.too_new_account_dont_specified_time_on_enable
+                    content: lang.too_new_account_dont_specified_time_on_enable
                 });
                 return;
             }
@@ -59,7 +58,7 @@ export default {
             let calculatedTime = client.timeCalculator.to_ms(maximumDate);
             if (!calculatedTime) {
                 await interaction.editReply({
-                    content: data.too_new_account_invalid_time_on_enable
+                    content: lang.too_new_account_invalid_time_on_enable
                 });
                 return;
             }
@@ -67,8 +66,8 @@ export default {
             let beautifulTime = client.timeCalculator.to_beautiful_string(calculatedTime);
 
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.too_new_account_logEmbed_title,
-                description: data.too_new_account_logEmbed_desc_on_enable
+                title: lang.too_new_account_logEmbed_title,
+                description: lang.too_new_account_logEmbed_desc_on_enable
                     .replace('${interaction.user}', interaction.user.toString())
                     .replace('${beautifulTime}', beautifulTime.toString())
                     .replace('${interaction.guild?.name}', beautifulTime.toString())
@@ -80,7 +79,7 @@ export default {
             });
 
             await interaction.editReply({
-                content: data.too_new_account_logEmbed_desc_on_enable
+                content: lang.too_new_account_logEmbed_desc_on_enable
                     .replace('${interaction.user}', interaction.user.toString())
                     .replace('${beautifulTime}', beautifulTime.toString())
                     .replace('${interaction.guild?.name}', beautifulTime.toString())
@@ -89,15 +88,15 @@ export default {
 
         } else if (action === 'off') {
             await client.method.iHorizonLogs.send(interaction, {
-                title: data.too_new_account_logEmbed_title,
-                description: data.too_new_account_logEmbed_desc_on_disable
+                title: lang.too_new_account_logEmbed_title,
+                description: lang.too_new_account_logEmbed_desc_on_disable
                     .replace('${interaction.user}', interaction.user.toString())
             });
 
             await client.db.delete(`${interaction.guildId}.GUILD.BLOCK_NEW_ACCOUNT`);
 
             await interaction.editReply({
-                content: data.too_new_account_command_work_on_disable
+                content: lang.too_new_account_command_work_on_disable
                     .replace('${interaction.user}', interaction.user.toString())
             });
             return;

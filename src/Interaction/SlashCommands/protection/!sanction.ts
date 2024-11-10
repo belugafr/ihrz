@@ -29,15 +29,14 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
         if (interaction.user.id !== interaction.guild.ownerId) {
-            await interaction.editReply({ content: data.authorization_sanction_not_permited });
+            await interaction.editReply({ content: lang.authorization_sanction_not_permited });
             return;
         };
 
@@ -46,12 +45,12 @@ export default {
         if (choose) {
             await client.db.set(`${interaction.guild.id}.PROTECTION.SANCTION`, choose);
 
-            if (choose === 'simply') choose = data.authorization_sanction_simply;
-            if (choose === 'simply+derank') choose = data.authorization_sanction_simply_unrank;
-            if (choose === 'simply+ban') choose = data.authorization_sanction_simply_ban;
+            if (choose === 'simply') choose = lang.authorization_sanction_simply;
+            if (choose === 'simply+derank') choose = lang.authorization_sanction_simply_unrank;
+            if (choose === 'simply+ban') choose = lang.authorization_sanction_simply_ban;
 
             await interaction.editReply({
-                content: data.authorization_sanction_command_work
+                content: lang.authorization_sanction_command_work
                     .replace('${interaction.user}', interaction.user.toString())
                     .replace('${choose}', choose)
             });

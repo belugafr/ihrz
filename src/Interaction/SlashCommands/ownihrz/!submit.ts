@@ -33,9 +33,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -46,7 +45,7 @@ export default {
         let bot_1 = (await client.ownihrz.Get_Bot(discord_bot_token).catch(() => { }))?.data || 404;
 
         if (!bot_1.bot) {
-            await interaction.editReply({ content: data.mybot_submit_token_invalid });
+            await interaction.editReply({ content: lang.mybot_submit_token_invalid });
             return;
         } else {
             var code = generatePassword({ length: 8, numbers: true })
@@ -67,21 +66,21 @@ export default {
                 }
             );
 
-            let utils_msg = data.mybot_submit_utils_msg
+            let utils_msg = lang.mybot_submit_utils_msg
                 .replace('${bot_1.bot.id}', bot_1.bot.id)
                 .replace('${bot_1.bot.username}', bot_1.bot.username)
                 .replace("${bot_1.bot_public ? 'Yes' : 'No'}",
-                    bot_1.bot_public ? data.mybot_submit_utils_msg_yes : data.mybot_submit_utils_msg_no
+                    bot_1.bot_public ? lang.mybot_submit_utils_msg_yes : lang.mybot_submit_utils_msg_no
                 )
 
             let embed = new EmbedBuilder()
                 .setColor('#ff7f50')
-                .setTitle(data.mybot_submit_embed_title
+                .setTitle(lang.mybot_submit_embed_title
                     .replace('${bot_1.bot.username}', bot_1.bot.username)
                     .replace('${bot_1.bot.discriminator}', bot_1.bot.discriminator)
                 )
                 .setDescription(
-                    data.mybot_submit_embed_desc
+                    lang.mybot_submit_embed_desc
                         .replace('${code}', code)
                         .replace('${utils_msg}', utils_msg)
                 )

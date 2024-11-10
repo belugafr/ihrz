@@ -32,9 +32,8 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
@@ -42,14 +41,14 @@ export default {
         let action = interaction.options.getString("action");
         let footerAvatar = interaction.options.getAttachment("avatar")!;
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.editReply({ content: data.setup_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.editReply({ content: lang.setup_not_admin });
             return;
         };
 
         if (action === "reset") {
             await client.db.delete(`${interaction.guildId}.BOT.botPFP`);
-            await interaction.editReply({ content: data.guildconfig_setbot_footeravatar_is_reset });
+            await interaction.editReply({ content: lang.guildconfig_setbot_footeravatar_is_reset });
             return;
         } else if (footerAvatar && footerAvatar.contentType?.startsWith("image")) {
             const fileBuffer = (await axios.get(footerAvatar.url!, { responseType: "arrayBuffer" })).data;
@@ -58,10 +57,10 @@ export default {
 
             await client.db.set(`${interaction.guildId}.BOT.botPFP`, base64String);
 
-            await interaction.editReply({ content: data.guildconfig_setbot_footeravatar_is_good });
+            await interaction.editReply({ content: lang.guildconfig_setbot_footeravatar_is_good });
             return;
         } else {
-            await interaction.editReply({ content: data.guildconfig_setbot_footeravatar_incorect });
+            await interaction.editReply({ content: lang.guildconfig_setbot_footeravatar_incorect });
             return;
         }
     },

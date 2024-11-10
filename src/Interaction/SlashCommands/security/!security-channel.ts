@@ -30,24 +30,23 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, data: LanguageData, command: Option | Command | undefined) => {        
-        let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
-        if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, data, permCheck.neededPerm || 0);
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;
 
         let channel = interaction.options.getChannel("id");
 
-        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && permCheck.neededPerm === 0)) {
-            await interaction.reply({ content: data.security_channel_not_admin });
+        if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
+            await interaction.reply({ content: lang.security_channel_not_admin });
             return;
         };
 
         await client.db.set(`${interaction.guildId}.SECURITY.channel`, channel?.id);
 
         await interaction.reply({
-            content: data.security_channel_command_work
+            content: lang.security_channel_command_work
                 .replace('${interaction.user}', interaction.user.toString())
                 .replace('${channel}', channel as unknown as string)
         });
