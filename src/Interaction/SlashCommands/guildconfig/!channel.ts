@@ -94,7 +94,7 @@ export default {
             )
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId('guildconfig-channel-panel-erase-lang')
+                    .setCustomId('guildconfig-channel-panel-erase-data')
                     .setLabel(lang.setchannels_button_delete)
                     .setStyle(ButtonStyle.Danger)
             );
@@ -271,7 +271,7 @@ export default {
                     await i2.delete().catch(() => { });
                 })
 
-            } else if (i.customId === 'guildconfig-channel-panel-erase-lang') {
+            } else if (i.customId === 'guildconfig-channel-panel-erase-data') {
                 await client.method.iHorizonLogs.send(interaction, {
                     title: lang.setchannels_logs_embed_title_on_off,
                     description: lang.setchannels_logs_embed_description_on_off
