@@ -40,7 +40,7 @@ export const command: AnotherCommand = {
     thinking: true,
     run: async (client: Client, interaction: MessageContextMenuCommandInteraction) => {
 
-        let lang = await client.func.getLanguagelang(interaction.guildId) as LanguageData;
+        let lang = await client.func.getLanguageData(interaction.guildId) as LanguageData;
         let voiceChannel = (interaction.member as GuildMember)?.voice.channel;
 
         let msg = interaction.options.getMessage("message") as Message;

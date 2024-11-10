@@ -32,7 +32,7 @@ export const command: AnotherCommand = {
     type: ApplicationCommandType.User,
     thinking: false,
     run: async (client: Client, interaction: UserContextMenuCommandInteraction) => {
-        let lang = await client.func.getLanguagelang(interaction.guildId) as LanguageData;
+        let lang = await client.func.getLanguageData(interaction.guildId) as LanguageData;
         var user1 = interaction.user;
         var user2 = interaction.targetUser;
 

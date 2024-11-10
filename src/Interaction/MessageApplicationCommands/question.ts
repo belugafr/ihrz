@@ -34,7 +34,7 @@ export const command: AnotherCommand = {
     thinking: false,
     run: async (client: Client, interaction: MessageContextMenuCommandInteraction) => {
 
-        let lang = await client.func.getLanguagelang(interaction.guildId) as LanguageData;
+        let lang = await client.func.getLanguageData(interaction.guildId) as LanguageData;
         let question = interaction.options.getMessage("message")?.content || ".";
 
         let text = question?.split(" ");
