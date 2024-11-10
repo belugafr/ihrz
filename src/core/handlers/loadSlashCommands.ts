@@ -140,14 +140,6 @@ async function processCommandOptions(
         }
 
         if (option.type === ApplicationCommandOptionType.Subcommand) {
-            client.content.push({
-                cmd: fullName,
-                messageCmd: 0,
-                category: category,
-                desc: option.description,
-                desc_localized: option.description_localizations
-            });
-
             if (option.name) {
                 const commandModule = await loadSubCommandModule(directoryPath, option.name);
                 if (commandModule) {
