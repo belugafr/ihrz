@@ -41,7 +41,7 @@ export default {
 
         let toAnalyze = await client.db.get(`${interaction.guildId}.USER`) as DatabaseStructure.DbGuildUserObject;
 
-        // Convert the user lang to an array for sorting
+        // Convert the user data to an array for sorting
         let usersArray = Object.entries(toAnalyze);
 
         // Sort the users based on their total wealth

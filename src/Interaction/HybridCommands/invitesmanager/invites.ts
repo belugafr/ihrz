@@ -111,7 +111,7 @@ export const command: Command = {
         {
             name: "inv-reset",
 
-            description: "Delete all lang of InviteManager in the guild",
+            description: "Delete all data of InviteManager in the guild",
             description_localizations: {
                 "fr": "Supprimer toute les données du module d'InviteManager"
             },

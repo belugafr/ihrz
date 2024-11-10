@@ -49,53 +49,53 @@ export default {
             content: client.iHorizon_Emojis.icon.iHorizon_Discord_Loading
         });
 
-        let baselang = await client.db.get(`${interaction.guildId}.GUILD`) as DatabaseStructure.DbInId['GUILD'];
+        let baseData = await client.db.get(`${interaction.guildId}.GUILD`) as DatabaseStructure.DbInId['GUILD'];
         const pages: EmbedBuilder[] = [];
 
-        const joinDmMessageField = { name: lang.guildprofil_embed_fields_joinDmMessage, value: baselang?.GUILD_CONFIG?.joindm ? '```' + baselang?.GUILD_CONFIG?.joindm.substring(0, 1020) + '```' : lang.guildprofil_not_set_joinDmMessage };
-        const joinMessageField = { name: lang.guildprofil_embed_fields_joinmessage, value: baselang?.GUILD_CONFIG?.joinmessage ? '```' + baselang?.GUILD_CONFIG?.joinmessage + '```' : lang.guildprofil_not_set_joinmessage };
-        const leaveMessageField = { name: lang.guildprofil_embed_fields_leavemessage, value: baselang?.GUILD_CONFIG?.leavemessage ? '```' + baselang?.GUILD_CONFIG?.leavemessage + '```' : lang.guildprofil_not_set_leavemessage };
+        const joinDmMessageField = { name: lang.guildprofil_embed_fields_joinDmMessage, value: baseData?.GUILD_CONFIG?.joindm ? '```' + baseData?.GUILD_CONFIG?.joindm.substring(0, 1020) + '```' : lang.guildprofil_not_set_joinDmMessage };
+        const joinMessageField = { name: lang.guildprofil_embed_fields_joinmessage, value: baseData?.GUILD_CONFIG?.joinmessage ? '```' + baseData?.GUILD_CONFIG?.joinmessage + '```' : lang.guildprofil_not_set_joinmessage };
+        const leaveMessageField = { name: lang.guildprofil_embed_fields_leavemessage, value: baseData?.GUILD_CONFIG?.leavemessage ? '```' + baseData?.GUILD_CONFIG?.leavemessage + '```' : lang.guildprofil_not_set_leavemessage };
 
-        const setChannelsLeaveField = { name: lang.guildprofil_embed_fields_setchannelsleave, value: baselang?.GUILD_CONFIG?.leave ? `<#${baselang?.GUILD_CONFIG?.leave}>` : lang.guildprofil_not_set_setchannelsleave };
-        const setChannelsJoinField = { name: lang.guildprofil_embed_fields_setchannelsjoin, value: baselang?.GUILD_CONFIG?.join ? `<#${baselang?.GUILD_CONFIG?.join}>` : lang.guildprofil_not_set_setchannelsjoin };
+        const setChannelsLeaveField = { name: lang.guildprofil_embed_fields_setchannelsleave, value: baseData?.GUILD_CONFIG?.leave ? `<#${baseData?.GUILD_CONFIG?.leave}>` : lang.guildprofil_not_set_setchannelsleave };
+        const setChannelsJoinField = { name: lang.guildprofil_embed_fields_setchannelsjoin, value: baseData?.GUILD_CONFIG?.join ? `<#${baseData?.GUILD_CONFIG?.join}>` : lang.guildprofil_not_set_setchannelsjoin };
 
         const joinRolesField = {
             name: lang.guildprofil_embed_fields_joinroles,
-            value: Array.isArray(baselang?.GUILD_CONFIG?.joinroles) && baselang?.GUILD_CONFIG?.joinroles.length > 0
-                ? baselang?.GUILD_CONFIG?.joinroles.map(x => `<@&${x}>`).join(', ')
+            value: Array.isArray(baseData?.GUILD_CONFIG?.joinroles) && baseData?.GUILD_CONFIG?.joinroles.length > 0
+                ? baseData?.GUILD_CONFIG?.joinroles.map(x => `<@&${x}>`).join(', ')
                 : lang.guildprofil_not_set_joinroles
         };
-        const blockPubField = { name: lang.guildprofil_embed_fields_blockpub, value: (baselang?.GUILD_CONFIG?.antipub === 'on') ? lang.guildprofil_set_blockpub : lang.guildprofil_not_set_blockpub };
+        const blockPubField = { name: lang.guildprofil_embed_fields_blockpub, value: (baseData?.GUILD_CONFIG?.antipub === 'on') ? lang.guildprofil_set_blockpub : lang.guildprofil_not_set_blockpub };
 
         const punishPubField = {
             name: lang.guildprofil_embed_fields_punishPub,
-            value: baselang?.PUNISH?.PUNISH_PUB ? lang.guildprofil_set_punishPub
-                .replace(/\${punishPub\.punishementType}/g, baselang.PUNISH.PUNISH_PUB.punishementType ?? '')
-                .replace(/\${punishPub\.amountMax}/g, String(baselang.PUNISH.PUNISH_PUB.amountMax ?? 0)) : lang.guildprofil_not_set_punishPub
+            value: baseData?.PUNISH?.PUNISH_PUB ? lang.guildprofil_set_punishPub
+                .replace(/\${punishPub\.punishementType}/g, baseData.PUNISH.PUNISH_PUB.punishementType ?? '')
+                .replace(/\${punishPub\.amountMax}/g, String(baseData.PUNISH.PUNISH_PUB.amountMax ?? 0)) : lang.guildprofil_not_set_punishPub
         };
         const supportConfigField = {
             name: lang.guildprofil_embed_fields_supportConfig,
-            value: supportConfigToString(baselang?.SUPPORT, lang)
+            value: supportConfigToString(baseData?.SUPPORT, lang)
         };
         const ticketFetchedField = {
             name: lang.guildprofil_embed_fields_ticketFetched,
-            value: ticketFetchedToString(baselang?.TICKET, lang)
+            value: ticketFetchedToString(baseData?.TICKET, lang)
         };
         const reactionRoleField = {
             name: lang.guildprofil_embed_fields_reactionrole,
-            value: reactionRolesToString(baselang?.REACTION_ROLES, interaction.guild, lang)
+            value: reactionRolesToString(baseData?.REACTION_ROLES, interaction.guild, lang)
         };
         const xpStatsField = {
             name: lang.guildprofil_embed_fields_ranks,
-            value: xpStatsToString(baselang?.XP_LEVELING, lang)
+            value: xpStatsToString(baseData?.XP_LEVELING, lang)
         };
         const logsField = {
             name: lang.guildprofil_embed_fields_logs,
-            value: logsToString(baselang?.SERVER_LOGS, lang)
+            value: logsToString(baseData?.SERVER_LOGS, lang)
         };
         const blockBotField = {
             name: lang.guildprofil_embed_fields_blockbot,
-            value: blockBotToString(baselang?.BLOCK_BOT, lang)
+            value: blockBotToString(baseData?.BLOCK_BOT, lang)
         };
 
         const generateEmbedForFields = (fields: { name: string, value: string }[]) => {
