@@ -35,6 +35,7 @@ import {
 import { isDiscordEmoji, isSingleEmoji } from '../../../core/functions/emojiChecker.js';
 import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
+import { Option } from '../../../../types/option.js';
 
 export const command: Command = {
 
@@ -49,12 +50,12 @@ export const command: Command = {
     thinking: false,
     category: 'guildconfig',
     type: "PREFIX_IHORIZON_COMMAND",
-    run: async (client: Client, interaction: Message, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        
+    run: async (client: Client, interaction: Message<true>, lang: LanguageData, command: Command | Option | undefined, neededPerm, options?: string[]) => {
 
 
         let permission = interaction.member?.permissions?.has(PermissionsBitField.Flags.AddReactions);
 
-        let emoji = args![0];
+        let emoji = options![0];
 
         if (!permission) {
             return;
@@ -65,7 +66,7 @@ export const command: Command = {
             return;
         }
 
-        let message = args![1];
+        let message = options![1];
 
         await interaction.reply({ content: `<@${interaction.member?.id}>, maintenant quand un membre envoie \`${message.toLowerCase()}\`, le bot **réagis** avec ${emoji}`, allowedMentions: { repliedUser: false } });
 

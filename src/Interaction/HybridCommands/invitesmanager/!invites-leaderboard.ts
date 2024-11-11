@@ -28,9 +28,6 @@ import {
     ButtonStyle,
     ComponentType,
     Message,
-    MessagePayload,
-    InteractionEditReplyOptions,
-    MessageReplyOptions,
 } from 'discord.js';
 import { LanguageData } from '../../../../types/languageData';
 import { DatabaseStructure } from '../../../../types/database_structure';
@@ -40,9 +37,9 @@ import { Option } from '../../../../types/option';
 const itemsPerPage = 15;
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
+    run: async (client: Client, interaction: Message<true>, lang: LanguageData, command: Command | Option | undefined, neededPerm:number, options?: string[]) => {
         let execTimestamp = Date.now();
-        
+
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
 

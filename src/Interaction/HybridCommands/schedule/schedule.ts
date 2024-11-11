@@ -46,6 +46,7 @@ import { Command } from '../../../../types/command.js';
 import { generatePassword } from '../../../core/functions/random.js';
 import { LanguageData } from '../../../../types/languageData.js';
 import { iHorizonModalResolve } from '../../../core/functions/modalHelper.js';
+import { Option } from '../../../../types/option.js';
 
 export const command: Command = {
     name: "schedule",
@@ -56,8 +57,7 @@ export const command: Command = {
     category: 'schedule',
     thinking: false,
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message<true>, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {        // Guard's Typing
-
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message<true>, lang: LanguageData, command: Command | Option | undefined, neededPerm, options?: string[]) => {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;

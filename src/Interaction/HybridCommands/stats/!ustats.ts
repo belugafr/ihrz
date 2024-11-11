@@ -49,7 +49,6 @@ export default {
         interaction: ChatInputCommandInteraction<"cached"> | Message,
         lang: LanguageData,
         command: Option | Command | undefined,
-        execTimestamp?: number,
         args?: string[]
     ) => {
 

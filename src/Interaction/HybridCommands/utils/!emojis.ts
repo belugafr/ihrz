@@ -47,7 +47,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var str = (interaction.options.getString('emojis') as string).split(' ');
         } else {
-            var str = (args || []) as string[];
+            var str = args!
         };
 
         let cnt: number = 0;

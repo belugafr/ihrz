@@ -170,8 +170,8 @@ async function handleCategorySelect(
                 cmdPrefix = `${states} **${element.cmd}**`;
         }
 
-        const guildLang = await client.db.get(`${i.guildId}.GUILD.LANG.lang`);
-        const descValue = (guildLang === "fr-ME" || guildLang === "fr-FR")
+        const guildData = await client.db.get(`${i.guildId}.GUILD.LANG.lang`);
+        const descValue = (guildData === "fr-ME" || guildData === "fr-FR")
             ? `\`${element.desc_localized["fr"]}\``
             : `\`${element.desc}\``;
 

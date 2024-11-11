@@ -30,10 +30,10 @@ import {
     PermissionsBitField
 } from 'discord.js';
 
-import { isDiscordEmoji, isSingleEmoji } from '../../../core/functions/emojiChecker.js';
 import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
-import { DatabaseStructure } from '../../../../types/database_structure.js'; export const command: Command = {
+import { DatabaseStructure } from '../../../../types/database_structure.js'; import { Option } from '../../../../types/option.js';
+export const command: Command = {
 
     name: 'list-react',
     aliases: ['react-list', 'listreact', 'reactlist'],
@@ -46,8 +46,7 @@ import { DatabaseStructure } from '../../../../types/database_structure.js'; exp
     thinking: false,
     category: 'guildconfig',
     type: "PREFIX_IHORIZON_COMMAND",
-    run: async (client: Client, interaction: Message, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {
-
+    run: async (client: Client, interaction: Message<true>, lang: LanguageData, command: Command | Option | undefined, neededPerm, options?: string[]) => {
 
         let permission = interaction.member?.permissions?.has(PermissionsBitField.Flags.AddReactions);
 

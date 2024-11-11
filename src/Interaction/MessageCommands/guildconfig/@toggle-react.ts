@@ -33,7 +33,10 @@ import {
 } from 'discord.js';
 
 import { LanguageData } from '../../../../types/languageData';
-import { Command } from '../../../../types/command'; export const command: Command = {
+import { Command } from '../../../../types/command';
+import { Option } from '../../../../types/option';
+
+export const command: Command = {
 
     name: 'toggle-react',
     aliases: ['react-toggle', 'togglereact', 'reacttoggle'],
@@ -46,8 +49,7 @@ import { Command } from '../../../../types/command'; export const command: Comma
     thinking: false,
     category: 'guildconfig',
     type: "PREFIX_IHORIZON_COMMAND",
-    run: async (client: Client, interaction: Message, lang: LanguageData, runningCommand: any, execTimestamp?: number, args?: string[]) => {
-
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message<true>, lang: LanguageData, command: Command | Option | undefined, neededPerm, options?: string[]) => {
 
         let permission = interaction.member?.permissions?.has(PermissionsBitField.Flags.AddReactions);
 
