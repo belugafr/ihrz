@@ -52,8 +52,8 @@ export default {
         try {
             let voiceChannel = (interaction.member as GuildMember).voice.channel;
             let player = client.player.getPlayer(interaction.guildId as string);
-            let oldName = player.queue.current?.info.title;
-            let channel = interaction.guild.channels.cache.get(player.textChannelId as string);
+            let oldName = player?.queue.current?.info.title;
+            let channel = interaction.guild.channels.cache.get(player?.textChannelId as string);
 
             if (!player || !player.playing || !voiceChannel) {
                 await client.method.interactionSend(interaction, { content: lang.skip_nothing_playing });
