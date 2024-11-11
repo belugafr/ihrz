@@ -68,7 +68,7 @@ export default {
             return;
         };
 
-        if ((interaction.guild as Guild).memberCount >= 1500) {
+        if ((interaction.guild as Guild).memberCount >= 5500) {
             await client.method.interactionSend(interaction, { content: lang.massiverole_too_much_member });
             return;
         };
