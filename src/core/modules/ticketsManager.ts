@@ -199,7 +199,7 @@ async function CreateSelectPanel(interaction: ChatInputCommandInteraction<"cache
                         label: lang.sethereticket_modal_1_fields_1_label,
                         style: TextInputStyle.Short,
                         required: true,
-                        maxLength: 24,
+                        maxLength: 40,
                         minLength: 2
                     },
                     {
