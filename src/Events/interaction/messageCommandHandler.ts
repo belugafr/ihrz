@@ -19,7 +19,7 @@
 ・ Copyright © 2020-2024 iHorizon
 */
 
-import { BaseGuildTextChannel, Client, EmbedBuilder, GuildMember, Message, PermissionFlagsBits } from 'discord.js';
+import { BaseGuildTextChannel, Client, EmbedBuilder, GuildChannel, GuildMember, Message, PermissionFlagsBits, PermissionsBitField } from 'discord.js';
 import { LanguageData } from '../../../types/languageData';
 import { Command } from '../../../types/command';
 import { BotEvent } from '../../../types/event';
@@ -93,6 +93,12 @@ async function executeCommand(
     args: string[],
     lang: LanguageData,
 ) {
+    const channel = message.channel as GuildChannel;
+    const permissions = channel.permissionsFor(message.member!);
+    const canUseCommands = permissions.has(PermissionsBitField.Flags.UseApplicationCommands);
+
+    if (!canUseCommands) return;
+
     let permCheck = await client.method.permission.checkCommandPermission(message, command!);
     if (!permCheck.allowed) return client.method.permission.sendErrorMessage(message, lang, permCheck.neededPerm || 0);
 
