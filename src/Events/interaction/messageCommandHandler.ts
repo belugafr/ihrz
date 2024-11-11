@@ -106,7 +106,7 @@ async function executeCommand(
         return;
     }
 
-    await command.run(client, message, lang, command, execTimestamp, args);
+    await command.run(client, message, lang, command, permCheck.neededPerm, args);
 }
 
 async function handleCommandError(client: Client, message: Message, command: Command | Option, error: any) {
