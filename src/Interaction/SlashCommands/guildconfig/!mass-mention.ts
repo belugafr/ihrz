@@ -28,7 +28,7 @@ import {
 
 interface Action {
     type: number;
-    metalang: Record<string, any>;
+    metaData: Record<string, any>;
 };
 import { LanguageData } from '../../../../types/languageData';
 import logger from '../../../core/logger.js';
@@ -36,7 +36,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {
 
 
         // Guard's Typing
@@ -48,33 +48,32 @@ export default {
 
         let automodRules = await interaction.guild.autoModerationRules.fetch();
 
-        let mentionSpamRule = automodRules.find((rule: { triggerType: AutoModerationRuleTriggerType; }) => rule.triggerType === AutoModerationRuleTriggerType.MentionSpam);
+        let mentionSpamRule = automodRules.find((rule) => rule.triggerType === AutoModerationRuleTriggerType.MentionSpam);
 
         if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
             await interaction.editReply({ content: lang.blockpub_not_admin });
             return;
 
         } else if (turn === "on") {
+            let arrayActionsForRule: Action[] = [
+                {
+                    type: 1,
+                    metaData: {
+                        customMessage: "This message was prevented by iHorizon"
+                    }
+                },
+            ];
+
+            if (logs_channel) {
+                arrayActionsForRule.push({
+                    type: 2,
+                    metaData: {
+                        channel: logs_channel,
+                    }
+                });
+            };
 
             try {
-
-                let arrayActionsForRule: Action[] = [
-                    {
-                        type: 1,
-                        metalang: {
-                            customMessage: "This message was prevented by iHorizon"
-                        }
-                    },
-                ];
-
-                if (logs_channel) {
-                    arrayActionsForRule.push({
-                        type: 2,
-                        metalang: {
-                            channel: logs_channel,
-                        }
-                    });
-                };
 
                 if (!mentionSpamRule) {
 

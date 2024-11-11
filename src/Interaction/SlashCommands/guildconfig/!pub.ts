@@ -29,7 +29,7 @@ import {
 
 interface Action {
     type: number;
-    metalang: Record<string, any>;
+    metaData: Record<string, any>;
 };
 import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
@@ -58,7 +58,7 @@ export default {
                 let arrayActionsForRule: Action[] = [
                     {
                         type: 1,
-                        metalang: {
+                        metaData: {
                             customMessage: "This message was prevented by iHorizon"
                         }
                     },
@@ -67,7 +67,7 @@ export default {
                 if (logs_channel) {
                     arrayActionsForRule.push({
                         type: 2,
-                        metalang: {
+                        metaData: {
                             channel: logs_channel,
                         }
                     });
