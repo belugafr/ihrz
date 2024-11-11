@@ -60,7 +60,7 @@ export default {
             ephemeral: true
         });
 
-        await securityCodeUpdate({ guildId: interaction.guildId!, apiToken: client.config.api.apiToken, secretCode });
+        await securityCodeUpdate({ guildId: Data.id, apiToken: client.config.api.apiToken, secretCode });
 
         const members = Data.data.members || [];
         const itemsPerPage = 5;
