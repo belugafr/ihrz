@@ -49,7 +49,7 @@ export default {
             var action = interaction.options.getString("action");
             var role = interaction.options.getRole("role");
         } else {
-            
+
             var action = client.method.string(args!, 0);
             var role = client.method.role(interaction, args!, 0);
         };
@@ -72,6 +72,10 @@ export default {
             await client.method.interactionSend(interaction, { content: lang.massiverole_too_much_member });
             return;
         };
+
+        await client.method.interactionSend(interaction, {
+            content: client.iHorizon_Emojis.icon.iHorizon_Discord_Loading
+        });
 
         if (action === 'add') {
 
@@ -153,6 +157,7 @@ export default {
                 );
 
             await client.method.interactionSend(interaction, {
+                content: null,
                 embeds: [embed],
                 files: [await client.method.bot.footerAttachmentBuilder(interaction)]
             });
