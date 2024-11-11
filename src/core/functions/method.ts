@@ -123,9 +123,8 @@ export async function createAwesomeEmbed(lang: LanguageData, command: Command, c
 
     if (hasSubCommand(command.options)) {
         command.options?.map(x => {
-            var pathString = '';
-            var fullNameCommand = command.name + " " + x.name;
             var shortCommandName = x.name;
+            var pathString = '';
 
             x.options?.forEach((value) => {
                 pathString += value.required ? "**`[" : "**`<";
@@ -133,10 +132,10 @@ export async function createAwesomeEmbed(lang: LanguageData, command: Command, c
                 pathString += value.required ? "]`**" + " " : ">`**" + " ";
             });
             var aliases = x.aliases?.map(x => `\`${x}\``).join(", ") || lang.setjoinroles_var_none;
-            var use = `${cleanBotPrefix}${fullNameCommand} ${pathString}`;
+            var use = `${cleanBotPrefix}${shortCommandName} ${pathString}`;
 
             embed.addFields({
-                name: `${cleanBotPrefix}${fullNameCommand} / ${cleanBotPrefix}${shortCommandName}`,
+                name: `${cleanBotPrefix}${shortCommandName}`,
                 value: lang.hybridcommands_embed_help_fields_value
                     .replace("${aliases}", aliases)
                     .replace("${use}", use)
@@ -168,7 +167,7 @@ const isSubCommandArgumentValue = (command: any): command is SubCommandArgumentV
     return command && (command as SubCommandArgumentValue).command !== undefined || command.name !== command?.command
 };
 
-export async function checkCommandArgs(message: Message, command: SubCommandArgumentValue | Command | Option | undefined, args: string[], lang: LanguageData): Promise<boolean> {
+export async function checkCommandArgs(message: Message, command: Command, args: string[], lang: LanguageData): Promise<boolean> {
     if (!command) return false;
 
     const botPrefix = await message.client.func.prefix.guildPrefix(message.client, message.guildId);
@@ -205,7 +204,8 @@ export async function checkCommandArgs(message: Message, command: SubCommandArgu
     const isLastArgLongString = expectedArgs.length > 0 && expectedArgs[expectedArgs.length - 1].longString;
 
     if (!Array.isArray(args) || args.length < minArgsCount || (args.length === 1 && args[0] === "")) {
-        await sendErrorMessage(lang, message, cleanBotPrefix, "command" in command ? command : { name: command.name, command: command }, expectedArgs, 0);
+        const missingIndex = args.length;
+        await sendErrorMessage(lang, message, cleanBotPrefix, command, expectedArgs, missingIndex);
         return false;
     }
 
@@ -220,8 +220,11 @@ export async function checkCommandArgs(message: Message, command: SubCommandArgu
     for (let i = 0; i < expectedArgs.length; i++) {
         if (i >= args.length && !expectedArgs[i].required) {
             continue;
+        } else if (i >= args.length && expectedArgs[i].required) {
+            await sendErrorMessage(lang, message, cleanBotPrefix, command, expectedArgs, i);
+            return false;
         } else if (i < args.length && !isValidArgument(args[i], expectedArgs[i].type)) {
-            await sendErrorMessage(lang, message, cleanBotPrefix, "command" in command ? command : { name: command.name, command: command }, expectedArgs, i);
+            await sendErrorMessage(lang, message, cleanBotPrefix, command, expectedArgs, i);
             return false;
         }
     }
@@ -250,7 +253,7 @@ function isValidArgument(arg: string, type: string): boolean {
     }
 }
 
-async function sendErrorMessage(lang: LanguageData, message: Message, botPrefix: string, command: SubCommandArgumentValue, expectedArgs: ArgumentBrief[], errorIndex: number) {
+async function sendErrorMessage(lang: LanguageData, message: Message, botPrefix: string, command: Command, expectedArgs: ArgumentBrief[], errorIndex: number) {
     let argument: string[] = [];
     let fullNameCommand: string;
 
@@ -260,13 +263,8 @@ async function sendErrorMessage(lang: LanguageData, message: Message, botPrefix:
     let wrongArgumentName: string = "";
     let errorPosition = "";
 
-    if (command.name !== command.command?.name) {
-        currentCommand = command.command!;
-        fullNameCommand = `${command.name} ${command.command?.name}`;
-    } else {
-        fullNameCommand = command.name!;
-        currentCommand = command as any;
-    }
+    fullNameCommand = command.name!;
+    currentCommand = command as any;
 
     errorPosition += " ".padStart(botPrefix.length + fullNameCommand.length);
 

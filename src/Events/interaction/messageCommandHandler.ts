@@ -96,7 +96,6 @@ async function executeCommand(
     let permCheck = await client.method.permission.checkCommandPermission(message, command!);
     if (!permCheck.allowed) return client.method.permission.sendErrorMessage(message, lang, permCheck.neededPerm || 0);
 
-    console.log(args)
     var _ = await client.method.checkCommandArgs(message, command, Array.from(args), lang); if (!_) return;
 
     if (!command?.run) {
@@ -165,8 +164,7 @@ export const event: BotEvent = {
                 await executeCommand(client, message, result.command, result.args || [], lang);
             }
         } catch (error) {
-            console.error(error)
-            // await handleCommandError(client, message, result.subCommand || result.command!, error);
+            await handleCommandError(client, message, result.subCommand || result.command!, error);
         }
     }
 };
