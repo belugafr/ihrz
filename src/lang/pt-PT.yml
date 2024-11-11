@@ -301,6 +301,9 @@ invite_embed_description: "Eu te amo, me mostre seu amor de volta! Me convide!"
 # /kisakay
 kisakay_message: "${client.iHorizon_Emojis.icon.Sparkles} Kisakay é minha criadora e desenvolvedora. É graças a ela e seu teclado que eu existo. Sou profundamente grata a ela!✨ ❤️❤️"
 
+# /andru
+andru_message: "Andru é um colaborador e desenvolvedor. \"O faz-tudo\", ele gerencia o marketing, a comunidade..."
+
 # /nayaweb
 nayaweb_message: "😼NayaWeb é minha segunda desenvolvedora/contribuidora, NayaWeb x Kisakay ❤️"
 

@@ -239,6 +239,7 @@ export interface LanguageData {
   invite_embed_title: string;
   invite_embed_description: string;
   kisakay_message: string;
+  andru_message: string;
   nayaweb_message: string;
   pong_message: string;
   status_be_bot_dev: string;

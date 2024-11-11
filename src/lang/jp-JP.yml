@@ -301,6 +301,9 @@ invite_embed_description: "私はあなたを愛しています、私に対す�
 # /kisakay
 kisakay_message: "${client.iHorizon_Emojis.icon.Sparkles} Kisakayは私の創造者であり開発者です。彼女と彼女のキーボードのおかげで生まれました。彼女には深く感謝しています！✨ ❤️❤️"
 
+# /andru
+andru_message: "Andruはコラボレーターであり開発者です。\"何でも屋\"として、マーケティング、コミュニティを管理しています..."
+
 # /nayaweb
 nayaweb_message: "😼ナヤウェブは私の2番目の開発者/貢献者 , ナヤウェブ x キサケイ ❤️"
 
