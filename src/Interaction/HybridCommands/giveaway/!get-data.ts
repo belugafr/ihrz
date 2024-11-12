@@ -73,13 +73,13 @@ export default {
                         {
                             name: lang.gw_getdata_embed_fields_amountWinner,
                             value: lang.gw_getdata_embed_fields_value_amountWinner
-                                .replace('${giveawaylang.winnerCount}', giveawayData.winnerCount),
+                                .replace('${giveawayData.winnerCount}', giveawayData.winnerCount),
                             inline: true
                         },
                         {
                             name: lang.gw_getdata_embed_fields_prize,
                             value: lang.gw_getdata_embed_fields_value_prize
-                                .replace('${giveawaylang.prize}', giveawayData.prize),
+                                .replace('${giveawayData.prize}', giveawayData.prize),
                             inline: true
                         },
                         {
@@ -105,7 +105,7 @@ export default {
                         {
                             name: lang.gw_getdata_embed_fields_entriesAmount,
                             value: lang.gw_getdata_embed_fields_value_entriesAmount
-                                .replace('${(giveawaylang.entries as string[]).length}', (giveawayData.entries as string[]).length.toString())
+                                .replace('${(giveawayData.entries as string[]).length}', (giveawayData.entries as string[]).length.toString())
                                 .replace('${giveawayId}', giveawayId)
                         },
                     )
