@@ -249,6 +249,7 @@ export namespace DatabaseStructure {
     }
 
     export interface NotifierLastNotifiedMedias {
+        timestamp: string | number | Date;
         userId: string;
         mediaId: string;
     }
