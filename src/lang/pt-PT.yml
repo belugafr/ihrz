@@ -1087,6 +1087,9 @@ start_confirmation_command: "Giveaway started in ${giveawayChannel}!"
 start_logs_embed_title: "Giveaway Logs"
 start_logs_embed_description: "<@${interaction.user.id}> started a giveways in: ${giveawayChannel}"
 start_time_not_valid: "${interaction.user}, the giveaway Duration you specified are invalid, please try again!"
+start_invalid_invites_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | O valor para 'convites' é inválido! É necessário especificar um número de convites para entrar no sorteio!"
+start_invalid_messages_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | O valor para 'mensagens' é inválido! É necessário especificar um número de mensagens para entrar no sorteio!"
+start_invalid_roles_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | A função para o valor 'roles' não foi encontrada! É necessário fornecer um ID de função para entrar no sorteio!"
 
 # /reroll
 reroll_not_perm: "You must have permissions to manage messages to end this giveaway."

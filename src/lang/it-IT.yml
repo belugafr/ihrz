@@ -1087,6 +1087,9 @@ start_confirmation_command: "Il giveaway è stato avviato in ${giveawayChannel}!
 start_logs_embed_title: "Registri Giveaway"
 start_logs_embed_description: "<@${interaction.user.id}> ha avviato un giveaway in: ${giveawayChannel}"
 start_time_not_valid: "${interaction.user}, la durata del giveaway che hai specificato non è valida, riprova!"
+start_invalid_invites_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | Il valore per 'inviti' non è valido! Devi specificare un numero di inviti per partecipare al giveaway!"
+start_invalid_messages_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | Il valore per 'messaggi' non è valido! Devi specificare un numero di messaggi per partecipare al giveaway!"
+start_invalid_roles_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | Il ruolo per 'ruoli' non è trovato! Devi fornire un ID di ruolo per partecipare al giveaway!"
 
 # /reroll
 reroll_not_perm: "Devi avere i permessi per gestire i messaggi per eseguire nuovamente questo giveaway."

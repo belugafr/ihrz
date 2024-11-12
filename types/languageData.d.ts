@@ -799,6 +799,9 @@ export interface LanguageData {
   start_logs_embed_title: string;
   start_logs_embed_description: string;
   start_time_not_valid: string;
+  start_invalid_invites_req_value: string;
+  start_invalid_messages_req_value: string;
+  start_invalid_roles_req_value: string;
   reroll_not_perm: string;
   reroll_dont_find_giveaway: string;
   reroll_command_work: string;

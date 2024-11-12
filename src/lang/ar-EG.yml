@@ -1085,6 +1085,9 @@ start_confirmation_command: "تم بدء المسابقة في ${giveawayChannel
 start_logs_embed_title: "سجلات المسابقات"
 start_logs_embed_description: "<@${interaction.user.id}> بدأ مسابقة في: ${giveawayChannel}"
 start_time_not_valid: "${interaction.user}, مدة المسابقة التي حددتها غير صحيحة، يرجى المحاولة مرة أخرى!"
+start_invalid_invites_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | القيمة لـ 'دعوات' غير صالحة! يجب أن يكون عدد الدعوات للانضمام إلى الهدية!"
+start_invalid_messages_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | القيمة لـ 'رسائل' غير صالحة! يجب أن يكون عدد الرسائل للانضمام إلى الهدية!"
+start_invalid_roles_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | الدور لقيمة 'الأدوار' غير موجود! يجب إدخال معرف الدور للانضمام إلى الهدية!"
 
 # /reroll
 reroll_not_perm: "يجب أن تكون لديك أذونات إدارة الرسائل لإنهاء هذه المسابقة."

@@ -30,6 +30,10 @@ import * as c from '../core.js';
 import * as html from './html2png.js';
 import * as l from './ihorizon-logs.js';
 
+export function isNumber(str: string): boolean {
+    return !isNaN(Number(str)) && str.trim() !== "";
+}
+
 export async function user(interaction: Message, args: string[], argsNumber: number): Promise<User | null> {
     return interaction.content.startsWith(`<@${interaction.client.user.id}`)
         ?

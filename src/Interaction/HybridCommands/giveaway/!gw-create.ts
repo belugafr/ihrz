@@ -65,17 +65,17 @@ export default {
         var giveawayChannel = interaction.channel! as Channel;
 
         if (interaction instanceof ChatInputCommandInteraction) {
-            var giveawayRequirement = interaction.options.getString("requirement");
+            var giveawayRequirement = interaction.options.getString("requirement") as "none" | "invites" | "messages" | "roles";
             var giveawayRequirementValue = interaction.options.getString("requirement-value");
             var giveawayDuration = interaction.options.getString("time");
             var giveawayNumberWinners = interaction.options.getNumber("winner")!;
             var imageUrl = interaction.options.getString('image') as string;
             var giveawayPrize = interaction.options.getString("prize");
         } else {
-            
+
             var giveawayNumberWinners = client.method.number(args!, 0);
             var giveawayDuration = client.method.string(args!, 1);
-            var giveawayRequirement = client.method.string(args!, 2);
+            var giveawayRequirement = client.method.string(args!, 2) as "none" | "invites" | "messages" | "roles";
             var giveawayPrize = client.method.string(args!, 3);
             var giveawayRequirementValue = client.method.string(args!, 4);
             var imageUrl = ""
@@ -96,13 +96,33 @@ export default {
             return;
         };
 
+        if (giveawayRequirement === "invites" && !client.method.isNumber(giveawayRequirementValue || "")) {
+            await client.method.interactionSend(interaction, {
+                content: lang.start_invalid_invites_req_value
+                    .replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+            });
+            return;
+        } else if (giveawayRequirement === 'messages' && !client.method.isNumber(giveawayRequirementValue || "")) {
+            await client.method.interactionSend(interaction, {
+                content: lang.start_invalid_messages_req_value
+                    .replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+            });
+            return;
+        } else if (giveawayRequirement === "roles" && !interaction.guild.roles.cache.has(giveawayRequirementValue || "")) {
+            await client.method.interactionSend(interaction, {
+                content: lang.start_invalid_roles_req_value
+                    .replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
+            });
+            return;
+        }
+
         await client.giveawaysManager.create(giveawayChannel as BaseGuildTextChannel, {
             duration: giveawayDurationFormated,
             prize: giveawayPrize as string,
             winnerCount: giveawayNumberWinners as number,
             hostedBy: interaction.member.user.id,
             embedImageURL: await isImageUrl(imageUrl) ? imageUrl : null,
-            requirement: { type: giveawayRequirement as any, value: giveawayRequirementValue }
+            requirement: { type: giveawayRequirement, value: giveawayRequirementValue }
         });
 
         await client.method.iHorizonLogs.send(interaction, {

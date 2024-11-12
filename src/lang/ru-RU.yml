@@ -1087,6 +1087,9 @@ start_confirmation_command: "Раздача началась в ${giveawayChanne
 start_logs_embed_title: "Журналы раздачи призов"
 start_logs_embed_description: "<@${interaction.user.id}> начал раздачу в: ${giveawayChannel}"
 start_time_not_valid: "${interaction.user}, указанное вами время раздачи недействительно, пожалуйста, попробуйте снова!"
+start_invalid_invites_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | Значение для 'приглашений' недействительно! Укажите количество приглашений для участия в розыгрыше!"
+start_invalid_messages_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | Значение для 'сообщений' недействительно! Укажите количество сообщений для участия в розыгрыше!"
+start_invalid_roles_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | Роль для значения 'roles' не найдена! Укажите ID роли для участия в розыгрыше!"
 
 # /reroll
 reroll_not_perm: "У вас должны быть разрешения на управление сообщениями, чтобы перезапустить эту раздачу призов."

@@ -1087,6 +1087,9 @@ start_confirmation_command: "${giveawayChannel}でギブアウェイが開始さ
 start_logs_embed_title: "ギブアウェイのログ"
 start_logs_embed_description: "<@${interaction.user.id}>が${giveawayChannel}でギブアウェイを開始しました。"
 start_time_not_valid: "${interaction.user}、指定したギブアウェイの期間が無効です。もう一度試してみてください！"
+start_invalid_invites_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | 「招待」の値が無効です！ギブアウェイに参加するために招待数を指定する必要があります！"
+start_invalid_messages_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | 「メッセージ」の値が無効です！ギブアウェイに参加するためにメッセージ数を指定する必要があります！"
+start_invalid_roles_req_value: "${client.iHorizon_Emojis.icon.No_Logo} | 「役割」の値のロールが見つかりません！ギブアウェイに参加するためにロールIDを指定する必要があります！"
 
 # /reroll
 reroll_not_perm: "このギブアウェイを終了するためには、メッセージを管理する権限が必要です。"
