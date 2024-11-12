@@ -258,6 +258,7 @@ export namespace DatabaseStructure {
         users?: NotifierUserSchema[];
         lastMediaNotified?: NotifierLastNotifiedMedias[];
         channelId: string;
+        timestamp: string;
     }
 
     export interface WarnSchema {
