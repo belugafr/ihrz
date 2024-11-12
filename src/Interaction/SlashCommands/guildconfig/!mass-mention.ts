@@ -28,10 +28,9 @@ import {
 
 interface Action {
     type: number;
-    metaData: Record<string, any>;
+    metadata: Record<string, any>;
 };
 import { LanguageData } from '../../../../types/languageData';
-import logger from '../../../core/logger.js';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
@@ -58,7 +57,7 @@ export default {
             let arrayActionsForRule: Action[] = [
                 {
                     type: 1,
-                    metaData: {
+                    metadata: {
                         customMessage: "This message was prevented by iHorizon"
                     }
                 },
@@ -67,8 +66,8 @@ export default {
             if (logs_channel) {
                 arrayActionsForRule.push({
                     type: 2,
-                    metaData: {
-                        channel: logs_channel,
+                    metadata: {
+                        channel: logs_channel.id,
                     }
                 });
             };
@@ -109,7 +108,6 @@ export default {
                 });
                 return;
             } catch (error) {
-                logger.err(error as any);
                 await interaction.editReply({ content: 'Error 404' });
             }
         } else if (turn === "off") {

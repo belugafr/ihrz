@@ -29,7 +29,7 @@ import {
 
 interface Action {
     type: number;
-    metaData: Record<string, any>;
+    metadata: Record<string, any>;
 };
 import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
@@ -46,7 +46,7 @@ export default {
         let logs_channel = interaction.options.getChannel('logs-channel');
 
         let automodRules = await interaction.guild.autoModerationRules.fetch();
-        let KeywordPresetRule = automodRules.find((rule: { triggerType: AutoModerationRuleTriggerType; }) => rule.triggerType === AutoModerationRuleTriggerType.Keyword);
+        let KeywordPresetRule = automodRules.find((rule) => rule.triggerType === AutoModerationRuleTriggerType.Keyword);
 
         if ((!interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) && neededPerm === 0)) {
             await interaction.editReply({ content: lang.blockpub_not_admin });
@@ -58,7 +58,7 @@ export default {
                 let arrayActionsForRule: Action[] = [
                     {
                         type: 1,
-                        metaData: {
+                        metadata: {
                             customMessage: "This message was prevented by iHorizon"
                         }
                     },
@@ -67,7 +67,7 @@ export default {
                 if (logs_channel) {
                     arrayActionsForRule.push({
                         type: 2,
-                        metaData: {
+                        metadata: {
                             channel: logs_channel,
                         }
                     });
