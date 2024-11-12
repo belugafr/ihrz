@@ -58,11 +58,11 @@ export default {
             return;
         };
 
-        let lang2 = await client.db.get(`BACKUPS.${interaction.member.user.id}`) as DatabaseStructure.DbBackupsUserObject;
+        let data2 = await client.db.get(`BACKUPS.${interaction.member.user.id}`) as DatabaseStructure.DbBackupsUserObject;
         let backups = [];
 
-        for (let i in lang2) {
-            let result = lang2[i];
+        for (let i in data2) {
+            let result = data2[i];
 
             let v = (lang.backup_string_see_another_v
                 .replace('${result.categoryCount}', result.categoryCount.toString())

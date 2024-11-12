@@ -237,8 +237,8 @@ export const command: Command = {
                         .replace(/\${interaction\.user\.id}/g, interaction.member.user.id!)
                 });
 
-                let checklang = await client.db.get(`${interaction.guildId}.GUILD.SERVER_LOGS`);
-                if (!checklang) {
+                let checkData = await client.db.get(`${interaction.guildId}.GUILD.SERVER_LOGS`);
+                if (!checkData) {
                     await client.method.interactionSend(interaction, { content: lang.setlogschannel_already_deleted });
                     return;
                 }

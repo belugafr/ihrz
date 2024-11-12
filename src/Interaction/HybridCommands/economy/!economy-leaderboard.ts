@@ -64,16 +64,16 @@ export default {
         // Display the sorted leaderboard
         usersArray.forEach((user, index) => {
             let userId = user[0];
-            let userlang = user[1].ECONOMY;
+            let userData = user[1].ECONOMY;
 
-            if (userId !== 'undefined' && userlang) {
+            if (userId !== 'undefined' && userData) {
                 embed.addFields({
                     name: `#${index + 1}`,
                     value: lang.economy_leaderboard_embed_fields_value
                         .replaceAll('${client.iHorizon_Emojis.icon.Coin}', client.iHorizon_Emojis.icon.Coin)
                         .replace('${userId}', userId)
-                        .replace('${userlang.bank || 0}', String(userlang.bank || 0))
-                        .replace('${userlang.money || 0}', String(userlang.money || 0))
+                        .replace('${userlang.bank || 0}', String(userData.bank || 0))
+                        .replace('${userlang.money || 0}', String(userData.money || 0))
                     ,
                     inline: false,
                 });

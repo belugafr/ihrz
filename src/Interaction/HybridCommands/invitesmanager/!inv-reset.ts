@@ -84,11 +84,11 @@ export default {
             await i.deferUpdate()
 
             if (i.customId === "yes") {
-                const baselang = await client.db.get(`${interaction.guildId}.USER`) as DatabaseStructure.DbGuildUserObject;
-                for (let user in baselang) {
-                    baselang[user].INVITES = {}
+                const baseData = await client.db.get(`${interaction.guildId}.USER`) as DatabaseStructure.DbGuildUserObject;
+                for (let user in baseData) {
+                    baseData[user].INVITES = {}
                 }
-                await client.db.set(`${interaction.guildId}.USER`, baselang);
+                await client.db.set(`${interaction.guildId}.USER`, baseData);
                 await response.edit({ content: lang.resetallinvites_succes_on_delete });
 
                 await client.method.iHorizonLogs.send(interaction, {

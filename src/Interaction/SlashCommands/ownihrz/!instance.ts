@@ -59,8 +59,8 @@ export default {
             };
 
             for (let userId in ownihrzClusterlang as any) {
-                let botlang = ownihrzClusterlang[userId];
-                for (let botId in botlang) {
+                let botData = ownihrzClusterlang[userId];
+                for (let botId in botData) {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
 
@@ -89,8 +89,8 @@ export default {
             };
 
             for (let userId in ownihrzClusterlang as any) {
-                let botlang = ownihrzClusterlang[userId];
-                for (let botId in botlang) {
+                let botData = ownihrzClusterlang[userId];
+                for (let botId in botData) {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
 
@@ -108,8 +108,8 @@ export default {
         } else if (action_to_do === 'delete') {
 
             for (let userId in ownihrzClusterlang as any) {
-                let botlang = ownihrzClusterlang[userId];
-                for (let botId in botlang) {
+                let botData = ownihrzClusterlang[userId];
+                for (let botId in botData) {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
 
@@ -126,10 +126,10 @@ export default {
             let emb = new EmbedBuilder().setColor('#000000').setDescription("OWNIHRZ");
 
             for (let userId in ownihrzClusterlang as any) {
-                let botlang = ownihrzClusterlang[userId];
-                for (let botId in botlang) {
+                let botData = ownihrzClusterlang[userId];
+                for (let botId in botData) {
                     let toAdd =
-                        `**Owner**: <@${userId}>\n**Bot's ID**: \`${botlang[botId].Bot?.Id}\`\n**Bot's Name**: \`${botlang[botId].Bot.Name}\`\n**Expire In**: \`${format(new Date(botlang[botId].ExpireIn), 'ddd, MMM DD YYYY')}\`\r\n`
+                        `**Owner**: <@${userId}>\n**Bot's ID**: \`${botData[botId].Bot?.Id}\`\n**Bot's Name**: \`${botData[botId].Bot.Name}\`\n**Expire In**: \`${format(new Date(botData[botId].ExpireIn), 'ddd, MMM DD YYYY')}\`\r\n`
 
                     emb.addFields({ name: botId, value: toAdd, inline: false })
                 }

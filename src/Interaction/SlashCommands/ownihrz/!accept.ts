@@ -46,13 +46,13 @@ export default {
         let id = interaction.options.getString('id')!;
 
         var table = client.db.table("TEMP");
-        let alllang = await table.get(`OWNIHRZ`);
+        let allData = await table.get(`OWNIHRZ`);
 
         function getlang() {
-            for (let ownerId in alllang) {
-                for (let botId in alllang[ownerId]) {
+            for (let ownerId in allData) {
+                for (let botId in allData[ownerId]) {
                     if (botId !== id) continue;
-                    return alllang[ownerId][botId];
+                    return allData[ownerId][botId];
                 }
             }
         }

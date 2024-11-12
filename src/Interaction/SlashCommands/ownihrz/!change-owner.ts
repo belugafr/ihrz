@@ -49,7 +49,7 @@ export default {
         let tempTable = client.db.table('TEMP');
         let table = client.db.table('OWNIHRZ');
 
-        let alllang = await table.get("CLUSTER");
+        let allData = await table.get("CLUSTER");
 
         let timeout: number = 3600000;
         let executingBefore = await tempTable.get(`OWNIHRZ_CHANGE_OWNER.${botId}.timeout`);
@@ -62,10 +62,10 @@ export default {
         };
 
         function getlang() {
-            for (let ownerId in alllang) {
-                for (let bot_id in alllang[ownerId]) {
+            for (let ownerId in allData) {
+                for (let bot_id in allData[ownerId]) {
                     if (bot_id !== botId) continue;
-                    return alllang[ownerId][botId];
+                    return allData[ownerId][botId];
                 }
             }
         }

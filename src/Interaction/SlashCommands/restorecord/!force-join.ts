@@ -140,8 +140,8 @@ export default {
                         ws.send("forceJoin%" + data[1]);
                     });
 
-                    ws.on('message', async function message(messagelang) {
-                        const messageParts = messagelang.toString().split(":");
+                    ws.on('message', async function message(messageData) {
+                        const messageParts = messageData.toString().split(":");
                         const value = messageParts[1];
                         const value2 = messageParts[2] || "";
 

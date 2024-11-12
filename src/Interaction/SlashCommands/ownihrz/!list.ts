@@ -67,7 +67,7 @@ export default {
         await interaction.deferReply({ ephemeral: true });
         let table_1 = client.db.table("OWNIHRZ");
         let lang_2 = await table_1.get(`MAIN.${interaction.user.id}`);
-        let alllang = await table_1.get("CLUSTER");
+        let allData = await table_1.get("CLUSTER");
 
         let lsEmbed: EmbedBuilder[] = [
             new EmbedBuilder()
@@ -84,9 +84,9 @@ export default {
             }
         }
 
-        if (alllang) {
-            for (let botId in alllang[interaction.user.id]) {
-                let embed = await buildEmbed(client, alllang[interaction.user.id][botId], lang, interaction.guildId!, interaction);
+        if (allData) {
+            for (let botId in allData[interaction.user.id]) {
+                let embed = await buildEmbed(client, allData[interaction.user.id][botId], lang, interaction.guildId!, interaction);
                 lsEmbed.push(embed);
             }
         }

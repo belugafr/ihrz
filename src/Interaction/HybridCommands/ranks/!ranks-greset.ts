@@ -85,9 +85,9 @@ export default {
             await i.deferUpdate()
 
             if (i.customId === "yes") {
-                let Dblang = await client.db.get(`${interaction.guild?.id}.USER`) as DatabaseStructure.DbGuildUserObject[];
+                let DbData = await client.db.get(`${interaction.guild?.id}.USER`) as DatabaseStructure.DbGuildUserObject[];
 
-                for (let entries in Dblang) {
+                for (let entries in DbData) {
                     await client.db.delete(`${interaction.guild?.id}.USER.${entries}.XP_LEVELING`)
                 }
                 await response.edit({ content: lang.resetallinvites_succes_on_delete });

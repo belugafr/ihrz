@@ -37,9 +37,9 @@ export default {
 
         var text = "";
 
-        let baselang = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
+        let baseData = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
 
-        if (!baselang) {
+        if (!baseData) {
 
             await client.db.set(`${interaction.guildId}.ALLOWLIST`,
                 {
@@ -50,10 +50,10 @@ export default {
                 }
             );
 
-            baselang = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
+            baseData = await client.db.get(`${interaction.guildId}.ALLOWLIST`);
         };
 
-        for (var i in baselang.list) {
+        for (var i in baseData.list) {
             text += `<@${i}>\n`
         };
 
