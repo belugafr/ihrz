@@ -36,8 +36,10 @@ export interface GuildRestoreCord {
         createDate: number;
         securityCodeUsed: number;
     },
-    members: oauth2Member[];
+    members: string[];
 }
+
+export type SavedMembersRestoreCord = oauth2Member[];
 
 export interface oauth2Member {
     token: string;
