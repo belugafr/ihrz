@@ -34,20 +34,20 @@ async function buildEmbed(client: Client, data: any, lang: LanguageData, guildID
     let bot_1 = (await client.ownihrz.Get_Bot(data.Auth).catch(() => { }))?.data || 404;
 
     let utils_msg = lang.mybot_list_utils_msg
-        .replace('${lang_2[i].bot.id}', data.Bot.Id)
-        .replace('${lang_2[i].bot.username}', bot_1?.bot?.username || data?.Bot?.Name)
-        .replace("${lang_2[i].bot_public ? 'Yes' : 'No'}", bot_1?.bot_public !== undefined ? (bot_1?.bot_public ? lang.mybot_list_utils_msg_yes : lang.mybot_list_utils_msg_no) : (data?.Bot?.Public ? lang.mybot_list_utils_msg_yes : lang.mybot_list_utils_msg_no));
+        .replace('${data_2[i].bot.id}', data.Bot.Id)
+        .replace('${data_2[i].bot.username}', bot_1?.bot?.username || data?.Bot?.Name)
+        .replace("${data_2[i].bot_public ? 'Yes' : 'No'}", bot_1?.bot_public !== undefined ? (bot_1?.bot_public ? lang.mybot_list_utils_msg_yes : lang.mybot_list_utils_msg_no) : (data?.Bot?.Public ? lang.mybot_list_utils_msg_yes : lang.mybot_list_utils_msg_no));
 
     let expire = format(new Date(data.ExpireIn), 'ddd, MMM DD YYYY');
 
     return new EmbedBuilder()
         .setColor('#ff7f50')
         .setThumbnail(`https://cdn.discordapp.com/avatars/${data.Bot.Id}/${bot_1?.bot?.avatar}.png`)
-        .setTitle(lang.mybot_list_embed1_title.replace('${lang_2[i].bot.username}', bot_1?.bot?.username || data?.Bot?.Name))
+        .setTitle(lang.mybot_list_embed1_title.replace('${data_2[i].bot.username}', bot_1?.bot?.username || data?.Bot?.Name))
         .setDescription(
             lang.mybot_list_embed1_desc
                 .replace("${client.iHorizon_Emojis.icon.Warning_Icon}", client.iHorizon_Emojis.icon.Warning_Icon)
-                .replace('${lang_2[i].code}', data.Code)
+                .replace('${data_2[i].code}', data.Code)
                 .replace('${expire}', expire)
                 .replace('${utils_msg}', utils_msg)
         )
@@ -66,7 +66,7 @@ export default {
 
         await interaction.deferReply({ ephemeral: true });
         let table_1 = client.db.table("OWNIHRZ");
-        let lang_2 = await table_1.get(`MAIN.${interaction.user.id}`);
+        let data_2 = await table_1.get(`MAIN.${interaction.user.id}`);
         let allData = await table_1.get("CLUSTER");
 
         let lsEmbed: EmbedBuilder[] = [
@@ -77,9 +77,9 @@ export default {
                 .setTimestamp()
         ];
 
-        for (let botId in lang_2) {
-            if (lang_2[botId]) {
-                let embed = await buildEmbed(client, lang_2[botId], lang, interaction.guildId!, interaction);
+        for (let botId in data_2) {
+            if (data_2[botId]) {
+                let embed = await buildEmbed(client, data_2[botId], lang, interaction.guildId!, interaction);
                 lsEmbed.push(embed);
             }
         }

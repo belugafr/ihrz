@@ -48,7 +48,7 @@ export default {
         };
 
         let tableOWNIHRZ = client.db.table("OWNIHRZ")
-        let ownihrzClusterlang = await tableOWNIHRZ.get('CLUSTER');
+        let ownihrzClusterData = await tableOWNIHRZ.get('CLUSTER');
 
         // Working with Cluster
         if (action_to_do === 'shutdown') {
@@ -58,8 +58,8 @@ export default {
                 })
             };
 
-            for (let userId in ownihrzClusterlang as any) {
-                let botData = ownihrzClusterlang[userId];
+            for (let userId in ownihrzClusterData as any) {
+                let botData = ownihrzClusterData[userId];
                 for (let botId in botData) {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
@@ -88,8 +88,8 @@ export default {
                 })
             };
 
-            for (let userId in ownihrzClusterlang as any) {
-                let botData = ownihrzClusterlang[userId];
+            for (let userId in ownihrzClusterData as any) {
+                let botData = ownihrzClusterData[userId];
                 for (let botId in botData) {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
@@ -107,8 +107,8 @@ export default {
 
         } else if (action_to_do === 'delete') {
 
-            for (let userId in ownihrzClusterlang as any) {
-                let botData = ownihrzClusterlang[userId];
+            for (let userId in ownihrzClusterData as any) {
+                let botData = ownihrzClusterData[userId];
                 for (let botId in botData) {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
@@ -125,8 +125,8 @@ export default {
         } else if (action_to_do === 'ls') {
             let emb = new EmbedBuilder().setColor('#000000').setDescription("OWNIHRZ");
 
-            for (let userId in ownihrzClusterlang as any) {
-                let botData = ownihrzClusterlang[userId];
+            for (let userId in ownihrzClusterData as any) {
+                let botData = ownihrzClusterData[userId];
                 for (let botId in botData) {
                     let toAdd =
                         `**Owner**: <@${userId}>\n**Bot's ID**: \`${botData[botId].Bot?.Id}\`\n**Bot's Name**: \`${botData[botId].Bot.Name}\`\n**Expire In**: \`${format(new Date(botData[botId].ExpireIn), 'ddd, MMM DD YYYY')}\`\r\n`
@@ -140,8 +140,8 @@ export default {
 
         } else if (action_to_do === 'add-expire') {
 
-            for (let userId in ownihrzClusterlang as any) {
-                for (let botId in ownihrzClusterlang[userId]) {
+            for (let userId in ownihrzClusterData as any) {
+                for (let botId in ownihrzClusterData[userId]) {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
                         let time = interaction.options.getString('time') || '0d';
@@ -166,8 +166,8 @@ export default {
 
         } else if (action_to_do === 'sub-expire') {
 
-            for (let userId in ownihrzClusterlang as any) {
-                for (let botId in ownihrzClusterlang[userId]) {
+            for (let userId in ownihrzClusterData as any) {
+                for (let botId in ownihrzClusterData[userId]) {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
                         let time = interaction.options.getString('time') || '0d';

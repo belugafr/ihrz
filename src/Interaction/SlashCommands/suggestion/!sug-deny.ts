@@ -31,7 +31,7 @@ import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {        
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, neededPerm: number) => {
 
 
         // Guard's Typing
@@ -45,16 +45,16 @@ export default {
             return;
         };
 
-        let baselang = await client.db.get(`${interaction.guildId}.SUGGEST`);
+        let baseData = await client.db.get(`${interaction.guildId}.SUGGEST`);
         let fetchId = await client.db.get(`${interaction.guildId}.SUGGESTION.${id}`);
 
-        if (!baselang
-            || baselang?.channel !== interaction.channel?.id
-            || baselang?.disable === true) {
+        if (!baseData
+            || baseData?.channel !== interaction.channel?.id
+            || baseData?.disable === true) {
             await interaction.deleteReply();
             await interaction.followUp({
                 content: lang.suggest_deny_not_good_channel
-                    .replace('${baselang?.channel}', baselang?.channel),
+                    .replace('${baselang?.channel}', baseData?.channel),
                 ephemeral: true
             });
 
@@ -71,7 +71,7 @@ export default {
             return;
         };
 
-        let channel = interaction.guild?.channels.cache.get(baselang?.channel);
+        let channel = interaction.guild?.channels.cache.get(baseData?.channel);
 
         await (channel as BaseGuildTextChannel).messages.fetch(fetchId?.msgId).then(async (msg) => {
 
