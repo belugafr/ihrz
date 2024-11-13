@@ -54,9 +54,9 @@ export default {
             return;
         };
 
-        let lang_2 = await client.db.get(`BACKUPS.${interaction.member.user.id}.${backupID}`);
+        let data_2 = await client.db.get(`BACKUPS.${interaction.member.user.id}.${backupID}`);
 
-        if (!lang_2) {
+        if (!data_2) {
             await client.method.interactionSend(interaction, { content: lang.backup_backup_doesnt_exist });
             return;
         };
@@ -68,10 +68,10 @@ export default {
             .setColor("#ff1100")
             .setTimestamp()
             .addFields({
-                name: `${lang_2.guildName} - (||${backupID}||)`,
+                name: `${data_2.guildName} - (||${backupID}||)`,
                 value: lang.backup_string_see_v
-                    .replace('${lang.categoryCount}', lang_2.categoryCount)
-                    .replace('${lang.channelCount}', lang_2.channelCount)
+                    .replace('${data.categoryCount}', data_2.categoryCount)
+                    .replace('${data.channelCount}', data_2.channelCount)
             });
 
         var delete_button = new ButtonBuilder()

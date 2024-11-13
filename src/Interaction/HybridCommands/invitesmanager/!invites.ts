@@ -47,12 +47,12 @@ export default {
             var member = client.method.member(interaction, args!, 0) || interaction.member;
         };
 
-        let baselang = await client.db.get(`${interaction.guildId}.USER.${member.id}.INVITES`);
+        let baseData = await client.db.get(`${interaction.guildId}.USER.${member.id}.INVITES`);
 
-        let inv = baselang?.invites;
-        let leaves = baselang?.leaves;
-        let Regular = baselang?.regular;
-        let bonus = baselang?.bonus;
+        let inv = baseData?.invites;
+        let leaves = baseData?.leaves;
+        let Regular = baseData?.regular;
+        let bonus = baseData?.bonus;
 
         let embed = new EmbedBuilder()
             .setColor("#92A8D1")

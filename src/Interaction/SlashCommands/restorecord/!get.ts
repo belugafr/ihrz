@@ -78,7 +78,7 @@ export default {
                 { name: lang.rc_get_mainEmbed_field2_name, value: interaction.guild.roles.cache.get(Data.data.config.roleId)?.toString() || Data.data.config.roleId, inline: true },
                 { name: lang.rc_get_mainEmbed_field3_name, value: `${lang.rc_get_mainEmbed_field3_value}\n\n${format(new Date(Data.data.config.createDate || 0), "MM/DD/YYYY HH:mm")}`, inline: false },
                 { name: lang.rc_get_mainEmbed_field4_name, value: String(Data.data.config.securityCodeUsed || 0), inline: true },
-                { name: lang.rc_get_mainEmbed_field5_name, value: (await client.users.fetch(Data.data.config.author.id)).toString() || lang.rc_get_unkwnon_user.replace("${lang.data.config.author.id}", Data.data.config.author.id), inline: true }
+                { name: lang.rc_get_mainEmbed_field5_name, value: (await client.users.fetch(Data.data.config.author.id)).toString() || lang.rc_get_unkwnon_user.replace("${Data.data.config.author.id}", Data.data.config.author.id), inline: true }
             )
             .setFooter(footer);
 

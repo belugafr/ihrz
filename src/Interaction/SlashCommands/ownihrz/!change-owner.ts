@@ -61,7 +61,7 @@ export default {
             return;
         };
 
-        function getlang() {
+        function getData() {
             for (let ownerId in allData) {
                 for (let bot_id in allData[ownerId]) {
                     if (bot_id !== botId) continue;
@@ -70,7 +70,7 @@ export default {
             }
         }
 
-        let id_2 = getlang() as Custom_iHorizon;
+        let id_2 = getData() as Custom_iHorizon;
 
         if (!id_2) {
             await interaction.reply({ content: lang.mybot_manage_accept_not_found });

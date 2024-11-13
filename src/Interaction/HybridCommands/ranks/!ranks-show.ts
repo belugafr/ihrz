@@ -43,9 +43,9 @@ export default {
             var user = client.method.member(interaction, args!, 0) || interaction.member;
         };
 
-        let baselang = await client.db.get(`${interaction.guildId}.USER.${user.id}.XP_LEVELING`);
-        var level = baselang?.level || 0;
-        var currentxp = baselang?.xp || 0;
+        let baseData = await client.db.get(`${interaction.guildId}.USER.${user.id}.XP_LEVELING`);
+        var level = baseData?.level || 0;
+        var currentxp = baseData?.xp || 0;
 
         var xpNeeded = level * 500 + 500;
         var expNeededForLevelUp = xpNeeded - currentxp;

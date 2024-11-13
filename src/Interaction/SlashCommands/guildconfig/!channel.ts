@@ -52,18 +52,18 @@ export default {
             return;
         };
 
-        var baselang = await client.db.get(`${interaction.guildId}.GUILD.GUILD_CONFIG`) as DatabaseStructure.DbGuildObject['GUILD_CONFIG'];
+        var baseData = await client.db.get(`${interaction.guildId}.GUILD.GUILD_CONFIG`) as DatabaseStructure.DbGuildObject['GUILD_CONFIG'];
         var current_join_channel = '';
         var current_leave_channel = '';
 
-        if (baselang?.join) {
-            current_join_channel = `<#${baselang.join}>`
+        if (baseData?.join) {
+            current_join_channel = `<#${baseData.join}>`
         } else {
             current_join_channel = client.iHorizon_Emojis.icon.No_Logo
         };
 
-        if (baselang?.leave) {
-            current_leave_channel = `<#${baselang.leave}>`
+        if (baseData?.leave) {
+            current_leave_channel = `<#${baseData.leave}>`
         } else {
             current_leave_channel = client.iHorizon_Emojis.icon.No_Logo
         };
@@ -123,7 +123,7 @@ export default {
                         new ChannelSelectMenuBuilder()
                             .setCustomId('guildconfig-channel-selectMenu-join-channel')
                             .setChannelTypes(ChannelType.GuildText)
-                            // .addDefaultChannels(baselang?.join || interaction.channel?.id!)
+                            // .addDefaultChannels(baseData?.join || interaction.channel?.id!)
                             .setMaxValues(1)
                             .setMinValues(1)
                     )
@@ -200,7 +200,7 @@ export default {
                         new ChannelSelectMenuBuilder()
                             .setCustomId('guildconfig-channel-selectMenu-leave-channel')
                             .setChannelTypes(ChannelType.GuildText)
-                            // .addDefaultChannels(baselang?.leave || interaction.channel?.id!)
+                            // .addDefaultChannels(baseData?.leave || interaction.channel?.id!)
                             .setMaxValues(1)
                             .setMinValues(1)
                     )

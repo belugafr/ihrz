@@ -72,8 +72,8 @@ export default {
                     value: lang.economy_leaderboard_embed_fields_value
                         .replaceAll('${client.iHorizon_Emojis.icon.Coin}', client.iHorizon_Emojis.icon.Coin)
                         .replace('${userId}', userId)
-                        .replace('${userlang.bank || 0}', String(userData.bank || 0))
-                        .replace('${userlang.money || 0}', String(userData.money || 0))
+                        .replace('${userData.bank || 0}', String(userData.bank || 0))
+                        .replace('${userData.money || 0}', String(userData.money || 0))
                     ,
                     inline: false,
                 });
