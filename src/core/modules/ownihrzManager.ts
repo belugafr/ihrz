@@ -51,9 +51,9 @@ class OwnIHRZ {
                             ClusterMethod.StartupContainer,
                             bot_id,
                         )
-                    ).then(function (response: AxiosResponse) {
+                    ).then(response => {
                         logger.log(response.data)
-                    }).catch(function (error) { logger.err(error); });
+                    }).catch(error => { logger.err(error); });
                 }
             };
         })
@@ -68,9 +68,9 @@ class OwnIHRZ {
                 ClusterMethod.ShutdownContainer,
                 id_to_bot,
             )
-        ).then(function (response) {
+        ).then(response => {
             logger.log(response.data)
-        }).catch(function (error) { logger.err(error); });
+        }).catch(error => { logger.err(error); });
         return 0;
     };
 
@@ -83,9 +83,9 @@ class OwnIHRZ {
                 ClusterMethod.PowerOnContainer,
                 id_to_bot,
             )
-        ).then(function (response) {
+        ).then(response => {
             logger.log(response.data)
-        }).catch(function (error) { logger.err(error); });
+        }).catch(error => { logger.err(error); });
         return 0;
     };
 
@@ -99,9 +99,9 @@ class OwnIHRZ {
                 ClusterMethod.DeleteContainer,
                 id_to_bot,
             )
-        ).then(function (response) {
+        ).then(response => {
             logger.log(response.data)
-        }).catch(function (error) { logger.err(error); });
+        }).catch(error => { logger.err(error); });
         return 0;
     };
 
@@ -119,9 +119,9 @@ class OwnIHRZ {
                         ClusterMethod.ShutdownContainer,
                         botId,
                     )
-                ).then(function (response) {
+                ).then(response => {
                     logger.log(response.data)
-                }).catch(function (error) { logger.err(error); });
+                }).catch(error => { logger.err(error); });
             }
         };
         return;
