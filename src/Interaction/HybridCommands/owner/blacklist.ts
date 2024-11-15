@@ -91,12 +91,11 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member = interaction.options.getMember('user') as GuildMember | null;
             var user = interaction.options.getUser('user');
-            var reason = interaction.options.getString('reason') || 'blacklisted!'
+            var reason = "iHorizon Project Blacklist - " + (interaction.options.getString('reason') || 'blacklisted!')
         } else {
-            
             var member = client.method.member(interaction, args!, 0) as GuildMember | null;
             var user = await client.method.user(interaction, args!, 0);
-            var reason = client.method.longString(args!, 1) || 'blacklisted!';
+            var reason = "iHorizon Project Blacklist - " + (client.method.longString(args!, 1) || 'blacklisted!')
         };
 
         if (!member && !user) {
