@@ -38,22 +38,22 @@ class OwnIHRZ {
     async Startup_Cluster() {
         var table_1 = this.client.db.table("OWNIHRZ");
 
-        (await table_1.all()).forEach(owner_one => {
+        (await table_1.all()).forEach(async owner_one => {
             var cluster_ownihrz = owner_one.value;
 
             for (let owner_id in cluster_ownihrz) {
                 for (let bot_id in cluster_ownihrz[owner_id]) {
                     if (cluster_ownihrz[owner_id][bot_id].PowerOff || !cluster_ownihrz[owner_id][bot_id].Code) continue;
 
-                    axios.get(
+                    let response = await axios.get(
                         OwnIhrzCluster(
                             parseInt(cluster_ownihrz[owner_id][bot_id].Cluster),
                             ClusterMethod.StartupContainer,
                             bot_id,
                         )
-                    ).then(response => {
-                        logger.log(response.data)
-                    }).catch(error => { logger.err(error); });
+                    );
+                    
+                    logger.log(response.data);
                 }
             };
         })
