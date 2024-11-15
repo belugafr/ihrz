@@ -1834,6 +1834,10 @@ event_srvLogs_voiceStateUpdate_3_description: "<@${targetUser.id}> s'est mute ca
 event_srvLogs_voiceStateUpdate_4_description: "<@${targetUser.id}> s'est demute casque casque dans le salon <#${channelID}>"
 event_srvLogs_voiceStateUpdate_5_description: "<@${targetUser.id}> s'est mute dans le salon <#${channelID}>"
 event_srvLogs_voiceStateUpdate_6_description: "<@${targetUser.id}> s'est demute casque dans le salon <#${channelID}>"
+event_srvLogs_channelUpdate_disabled_for: "-    ❌ ${perm} désactivée pour ${target}\n"
+event_srvLogs_channelUpdate_enabled_for: "-    ✅ ${perm} activée pour ${target}\n"
+event_srvLogs_channelUpdate_allowed_for: "-    ✅ ${perm} autorisée pour ${target}\n"
+event_srvLogs_channelUpdate_unallowed_for: "-    ❌ ${perm} refusée pour ${target}\n"
 
 # Événement de Promotion de Rang
 event_rank_role: "<@${message.author.id}>, tu as maintenant le rôle <@&${fetch.id}>"

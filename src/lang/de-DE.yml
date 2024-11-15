@@ -1834,6 +1834,10 @@ event_srvLogs_voiceStateUpdate_3_description: "<@${targetUser.id}> **hat das Hea
 event_srvLogs_voiceStateUpdate_4_description: "<@${targetUser.id}> **hat das Headset im Kanal <#${channelID}> stummschalten aufgehoben**"
 event_srvLogs_voiceStateUpdate_5_description: "<@${targetUser.id}> **hat sich im Kanal <#${channelID}> stummgeschaltet**"
 event_srvLogs_voiceStateUpdate_6_description: "<@${targetUser.id}> **hat sich im Kanal <#${channelID}> stummschalten aufgehoben**"
+event_srvLogs_channelUpdate_disabled_for: "-    ❌ ${perm} deaktiviert für ${target}\n"
+event_srvLogs_channelUpdate_enabled_for: "-    ✅ ${perm} aktiviert für ${target}\n"
+event_srvLogs_channelUpdate_allowed_for: "-    ✅ ${perm} erlaubt für ${target}\n"
+event_srvLogs_channelUpdate_unallowed_for: "-    ❌ ${perm} nicht erlaubt für ${target}\n"
 
 # Rang-Erhöhung Ereignis
 event_rank_role: "<@${message.author.id}>, du hast jetzt die Rolle <@&${fetch.id}>"

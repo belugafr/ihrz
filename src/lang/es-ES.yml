@@ -1834,6 +1834,10 @@ event_srvLogs_voiceStateUpdate_3_description: "<@${targetUser.id}> ha silenciado
 event_srvLogs_voiceStateUpdate_4_description: "<@${targetUser.id}> ha quitado el silencio de sus auriculares en el canal <#${channelID}>"
 event_srvLogs_voiceStateUpdate_5_description: "<@${targetUser.id}> se ha silenciado en el canal <#${channelID}>"
 event_srvLogs_voiceStateUpdate_6_description: "<@${targetUser.id}> se ha quitado el silencio en el canal <#${channelID}>"
+event_srvLogs_channelUpdate_disabled_for: "-    ❌ ${perm} desactivada para ${target}\n"
+event_srvLogs_channelUpdate_enabled_for: "-    ✅ ${perm} activada para ${target}\n"
+event_srvLogs_channelUpdate_allowed_for: "-    ✅ ${perm} permitida para ${target}\n"
+event_srvLogs_channelUpdate_unallowed_for: "-    ❌ ${perm} no permitida para ${target}\n"
 
 # Evento de Ascenso de Rango
 event_rank_role: "<@${message.author.id}>, ahora tienes el rol <@&${fetch.id}>"

@@ -1834,6 +1834,10 @@ event_srvLogs_voiceStateUpdate_3_description: "<@${targetUser.id}> выключ�
 event_srvLogs_voiceStateUpdate_4_description: "<@${targetUser.id}> включил микрофон в канале <#${channelID}>"
 event_srvLogs_voiceStateUpdate_5_description: "<@${targetUser.id}> выключил звук в канале <#${channelID}>"
 event_srvLogs_voiceStateUpdate_6_description: "<@${targetUser.id}> включил звук в канале <#${channelID}>"
+event_srvLogs_channelUpdate_disabled_for: "-    ❌ ${perm} отключено для ${target}\n"
+event_srvLogs_channelUpdate_enabled_for: "-    ✅ ${perm} включено для ${target}\n"
+event_srvLogs_channelUpdate_allowed_for: "-    ✅ ${perm} разрешено для ${target}\n"
+event_srvLogs_channelUpdate_unallowed_for: "-    ❌ ${perm} не разрешено для ${target}\n"
 
 # Событие повышения уровня
 event_rank_role: "<@${message.author.id}>, у вас теперь есть роль <@&${fetch.id}>"

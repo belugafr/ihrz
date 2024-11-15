@@ -1834,6 +1834,10 @@ event_srvLogs_voiceStateUpdate_3_description: "<@${targetUser.id}> ha messo in m
 event_srvLogs_voiceStateUpdate_4_description: "<@${targetUser.id}> ha tolto il muto alle cuffie nel canale <#${channelID}>"
 event_srvLogs_voiceStateUpdate_5_description: "<@${targetUser.id}> si è messo in muto nel canale <#${channelID}>"
 event_srvLogs_voiceStateUpdate_6_description: "<@${targetUser.id}> si è tolto il muto nel canale <#${channelID}>"
+event_srvLogs_channelUpdate_disabled_for: "-    ❌ ${perm} disabilitata per ${target}\n"
+event_srvLogs_channelUpdate_enabled_for: "-    ✅ ${perm} abilitata per ${target}\n"
+event_srvLogs_channelUpdate_allowed_for: "-    ✅ ${perm} consentita per ${target}\n"
+event_srvLogs_channelUpdate_unallowed_for: "-    ❌ ${perm} non consentita per ${target}\n"
 
 # Evento di Promozione di Livello
 event_rank_role: "<@${message.author.id}>, ora hai il ruolo <@&${fetch.id}>"

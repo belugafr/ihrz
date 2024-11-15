@@ -1834,6 +1834,10 @@ event_srvLogs_voiceStateUpdate_3_description: "<@${targetUser.id}> mutou seu hea
 event_srvLogs_voiceStateUpdate_4_description: "<@${targetUser.id}> desmutou seu headset no canal <#${channelID}>"
 event_srvLogs_voiceStateUpdate_5_description: "<@${targetUser.id}> se mutou no canal <#${channelID}>"
 event_srvLogs_voiceStateUpdate_6_description: "<@${targetUser.id}> se desmutou no canal <#${channelID}>"
+event_srvLogs_channelUpdate_disabled_for: "-    ❌ ${perm} desativada para ${target}\n"
+event_srvLogs_channelUpdate_enabled_for: "-    ✅ ${perm} ativada para ${target}\n"
+event_srvLogs_channelUpdate_allowed_for: "-    ✅ ${perm} permitida para ${target}\n"
+event_srvLogs_channelUpdate_unallowed_for: "-    ❌ ${perm} não permitida para ${target}\n"
 
 # Evento de Subida de Cargo
 event_rank_role: "<@${message.author.id}>, agora você tem o cargo <@&${fetch.id}>"

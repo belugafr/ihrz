@@ -1827,6 +1827,10 @@ event_srvLogs_voiceStateUpdate_3_description: "<@${targetUser.id}> كتم سما
 event_srvLogs_voiceStateUpdate_4_description: "<@${targetUser.id}> ألغى كتم سماعات الرأس الخاصة به في القناة <#${channelID}>"
 event_srvLogs_voiceStateUpdate_5_description: "<@${targetUser.id}> كتم نفسه في القناة <#${channelID}>"
 event_srvLogs_voiceStateUpdate_6_description: "<@${targetUser.id}> ألغى كتم نفسه في القناة <#${channelID}>"
+event_srvLogs_channelUpdate_disabled_for: "-    ❌ ${perm} تم إلغاء تفعيلها لـ ${target}\n"
+event_srvLogs_channelUpdate_enabled_for: "-    ✅ ${perm} تم تفعيلها لـ ${target}\n"
+event_srvLogs_channelUpdate_allowed_for: "-    ✅ ${perm} مسموح بها لـ ${target}\n"
+event_srvLogs_channelUpdate_unallowed_for: "-    ❌ ${perm} تم رفضها لـ ${target}\n"
 
 # حدث الترقية
 event_rank_role: "<@${message.author.id}>, لديك الآن الدور <@&${fetch.id}>"

@@ -1324,6 +1324,10 @@ export interface LanguageData {
   event_srvLogs_voiceStateUpdate_4_description: string;
   event_srvLogs_voiceStateUpdate_5_description: string;
   event_srvLogs_voiceStateUpdate_6_description: string;
+  event_srvLogs_channelUpdate_disabled_for: string;
+  event_srvLogs_channelUpdate_enabled_for: string;
+  event_srvLogs_channelUpdate_allowed_for: string;
+  event_srvLogs_channelUpdate_unallowed_for: string;
   event_rank_role: string;
   event_suggestion_embed_author: string;
   event_security: string;

@@ -1832,6 +1832,10 @@ event_srvLogs_voiceStateUpdate_3_description: "<@${targetUser.id}> muted their h
 event_srvLogs_voiceStateUpdate_4_description: "<@${targetUser.id}> unmuted their headset in the <#${channelID}> channel"
 event_srvLogs_voiceStateUpdate_5_description: "<@${targetUser.id}> muted themselves in the <#${channelID}> channel"
 event_srvLogs_voiceStateUpdate_6_description: "<@${targetUser.id}> unmuted themselves in the <#${channelID}> channel"
+event_srvLogs_channelUpdate_disabled_for: "-    ❌ ${perm} disabled for ${target}\n"
+event_srvLogs_channelUpdate_enabled_for: "-    ✅ ${perm} enabled for ${target}\n"
+event_srvLogs_channelUpdate_allowed_for: "-    ✅ ${perm} allowed for ${target}\n"
+event_srvLogs_channelUpdate_unallowed_for: "-    ❌ ${perm} not allowed for ${target}\n"
 
 # RankUp event
 event_rank_role: "<@${message.author.id}>, you now have the role <@&${fetch.id}>"
