@@ -1307,6 +1307,7 @@ export interface LanguageData {
   ticket_module_button_removemember: string;
   ticket_module_add_question: string;
   ticket_module_remove_question: string;
+  ticket_transcript_failed_to_send: string;
   event_srvLogs_banAdd_description: string;
   event_srvLogs_banAdd_fields_name: string;
   event_srvLogs_banAdd_fields_value: string;

@@ -1815,6 +1815,7 @@ ticket_module_button_addmember: "Ajouter un bouffon"
 ticket_module_button_removemember: "Supprimer un bouffon"
 ticket_module_add_question: "Qui souhaites-tu ajouter à ton ticket ? (Donne son ID, pas son pseudo, trou dballe) !"
 ticket_module_remove_question: "Qui est l'utilisateur que tu souhaites retirer de ton ticket ? (Spécifie son identifiant d'utilisateur) !"
+ticket_transcript_failed_to_send: "J'ai essayé de vous envoyer le fichier par message privé, mais vous avez bloqué vos messages directs :/"
 
 # Server Logs
 event_srvLogs_banAdd_description: "<@${firstEntry.executor.id}> **a banni** <@${firstEntry.target.id}> suivi de 'on t'aime pas dégage'"

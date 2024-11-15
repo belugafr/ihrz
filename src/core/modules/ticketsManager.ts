@@ -722,13 +722,14 @@ async function TicketTranscript(interaction: ButtonInteraction<"cached">) {
                 if (interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator) || interaction.user.id === member?.user.id) {
                     (interaction.channel as BaseGuildTextChannel).permissionOverwrites.create(member?.user.id!, { ViewChannel: false, SendMessages: false, ReadMessageHistory: false });
 
-                    // @ts-ignore
                     let attachment = await discordTranscripts.createTranscript(interactionChannel as TextBasedChannel, {
                         limit: -1,
-                        filename: 'transcript.html',
+                        filename: `${interaction.guildId}-transcript.html`,
                         footerText: "Exported {number} message{s}",
                         poweredBy: false,
-                        hydrate: true
+                        hydrate: true,
+                        saveImages: true,
+                        favicon: interaction.client.user.displayAvatarURL({ size: 512, extension: "png" })
                     });
 
                     let embed = new EmbedBuilder()
@@ -736,10 +737,14 @@ async function TicketTranscript(interaction: ButtonInteraction<"cached">) {
                         .setColor('#0014a8');
 
                     if (interaction.deferred) {
-                        await interaction.editReply({ embeds: [embed], content: data.transript_command_work, files: [attachment] });
+                        await interaction.editReply({ content: data.guildconfig_config_save_check_dm });
                     } else {
-                        await interaction.reply({ embeds: [embed], content: data.transript_command_work, files: [attachment] });
+                        await interaction.reply({ content: data.guildconfig_config_save_check_dm, ephemeral: true });
                     };
+
+                    await interaction.user.send({ embeds: [embed], content: data.transript_command_work, files: [attachment] })
+                        .catch(() => interaction.followUp({ content: data.ticket_transcript_failed_to_send, ephemeral: true }))
+
                     return;
                 }
             }

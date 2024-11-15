@@ -1808,6 +1808,7 @@ ticket_module_button_addmember: "إضافة عضو"
 ticket_module_button_removemember: "إزالة عضو"
 ticket_module_add_question: "من تريد إضافته إلى تذكرتك؟ (حدد معرف المستخدم)!"
 ticket_module_remove_question: "من هو المستخدم الذي تريد إزالته من تذكرتك؟ (حدد معرف المستخدم)!"
+ticket_transcript_failed_to_send: "لقد حاولت إرسال الملف لك في رسالة خاصة، لكن لقد قمت بحظر الرسائل الخاصة بك :/"
 
 # سجلات الخادم
 event_srvLogs_banAdd_description: "<@${firstEntry.executor.id}> **حظر** <@${firstEntry.target.id}>"
