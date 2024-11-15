@@ -173,7 +173,7 @@ export default {
                         let time = interaction.options.getString('time') || '0d';
 
                         client.ownihrz.Change_Time(client.config, fetch.Cluster, id_to_bot, {
-                            method: "add",
+                            method: "sub",
                             ms: client.timeCalculator.to_ms(time)!
                         })
 
