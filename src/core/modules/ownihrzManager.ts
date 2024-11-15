@@ -34,8 +34,19 @@ class OwnIHRZ {
         this.client = client
     }
 
-    // Working
     async Startup_Cluster() {
+        this.client.config.core.cluster.forEach(async (x, index) => {
+            await axios.get(
+                OwnIhrzCluster(
+                    index,
+                    ClusterMethod.StartupCluster,
+                )
+            );
+        })
+    }
+
+    // Working
+    async Startup_Container() {
         var table_1 = this.client.db.table("OWNIHRZ");
 
         (await table_1.all()).forEach(async owner_one => {
@@ -52,7 +63,7 @@ class OwnIHRZ {
                             bot_id,
                         )
                     );
-                    
+
                     logger.log(response.data);
                 }
             };
