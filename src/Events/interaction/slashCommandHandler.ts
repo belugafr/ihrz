@@ -41,6 +41,7 @@ async function handleCommandExecution(client: Client, interaction: ChatInputComm
     const group = options.getSubcommandGroup(false);
     const subCommand = options.getSubcommand(false);
 
+    console.log(group, subCommand)
     if (group && subCommand) {
         const subCmd = client.subCommands.get(group + " " + subCommand);
 
@@ -48,7 +49,7 @@ async function handleCommandExecution(client: Client, interaction: ChatInputComm
             let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
             if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
 
-            if ((!subCmd.thinking || thinking === undefined) && thinking) {
+            if ((subCmd.thinking) || thinking) {
                 await interaction.deferReply();
             }
 
@@ -62,7 +63,7 @@ async function handleCommandExecution(client: Client, interaction: ChatInputComm
             let permCheck = await client.method.permission.checkCommandPermission(interaction, command!);
             if (!permCheck.allowed) return client.method.permission.sendErrorMessage(interaction, lang, permCheck.neededPerm || 0);
 
-            if ((!subCmd.thinking || thinking === undefined) && thinking) {
+            if ((subCmd.thinking) || thinking) {
                 await interaction.deferReply();
             }
 

@@ -20,6 +20,7 @@
 */
 
 import {
+    AttachmentBuilder,
     ChatInputCommandInteraction,
     Client,
     EmbedBuilder,
@@ -30,6 +31,8 @@ import {
 import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 export default {
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
 
@@ -39,7 +42,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var user = interaction.options.getMember("user") as GuildMember || interaction.member;
         } else {
-            
+
             var user = client.method.member(interaction, args!, 0) || interaction.member;
         };
 
@@ -49,6 +52,26 @@ export default {
 
         var xpNeeded = level * 500 + 500;
         var expNeededForLevelUp = xpNeeded - currentxp;
+
+        var htmlContent = readFileSync(path.join(process.cwd(), "src", "assets", "ranksCard.html"), 'utf-8');
+
+        htmlContent = htmlContent
+            .replace('AVATAR_URL', user.displayAvatarURL({ extension: 'png', size: 128 }))
+            .replace('USERNAME', user.user.globalName || user.displayName)
+            .replace('LEVEL', level)
+            .replace('PROGRESS_PERCENT', String((currentxp / xpNeeded) * 100))
+            .replace('CURRENT_XP', currentxp)
+            .replace('XP_NEEDED', String(xpNeeded))
+            .replace('XP_REMAINING', String(expNeededForLevelUp))
+            .replace('TOTAL_XP', currentxp);
+
+        const image = await client.method.imageManipulation.html2Png(htmlContent, {
+            elementSelector: '.card',
+            omitBackground: true,
+            selectElement: true,
+        });
+
+        const attachment = new AttachmentBuilder(image, { name: 'image.png' });
 
         let nivEmbed = new EmbedBuilder()
             .setTitle(lang.level_embed_title
@@ -66,6 +89,7 @@ export default {
                         .replace('${level}', level), inline: true
                 }
             )
+            .setImage("attachment://image.png")
             .setDescription(lang.level_embed_description.replace('${expNeededForLevelUp}', expNeededForLevelUp.toString())
             )
             .setTimestamp()
@@ -75,7 +99,7 @@ export default {
         await client.method.interactionSend(interaction, {
             embeds: [nivEmbed],
             allowedMentions: { repliedUser: false },
-            files: [await client.method.bot.footerAttachmentBuilder(interaction)]
+            files: [await client.method.bot.footerAttachmentBuilder(interaction), attachment]
         });
         return;
     },

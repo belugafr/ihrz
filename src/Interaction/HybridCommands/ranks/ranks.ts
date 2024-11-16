@@ -109,6 +109,8 @@ export const command: Command = {
                     required: false
                 }
             ],
+
+            thinking: true
         },
         {
             name: "ranks-ureset",
