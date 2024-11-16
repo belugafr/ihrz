@@ -74,7 +74,7 @@ export default {
                             ephemeral: true
                         });
 
-                        return await client.ownihrz.ShutDown(fetch.Cluster, id_to_bot);
+                        return await client.ownihrz.ShutDown(fetch.Cluster, id_to_bot, true);
                     }
                 }
             }
