@@ -163,6 +163,8 @@ export interface LanguageData {
   level_embed_fields2_name: string;
   level_embed_fields2_value: string;
   level_embed_description: string;
+  level_xp_needed_for_new_level: string;
+  level_xp_total: string;
   ranks_leaderboard_embed_title: string;
   ranks_leaderboard_top_txt: string;
   ranks_leaderboard_top_txt_raw: string;

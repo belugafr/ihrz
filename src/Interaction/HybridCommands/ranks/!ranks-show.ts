@@ -63,7 +63,11 @@ export default {
             .replace('CURRENT_XP', currentxp)
             .replace('XP_NEEDED', String(xpNeeded))
             .replace('XP_REMAINING', String(expNeededForLevelUp))
-            .replace('TOTAL_XP', currentxp);
+            .replace('TOTAL_XP', currentxp)
+            .replace('{level}', lang.var_level)
+            .replace('{xp_total}', lang.level_xp_total)
+            .replace('{needed_xp}', lang.level_xp_needed_for_new_level)
+            ;
 
         const image = await client.method.imageManipulation.html2Png(htmlContent, {
             elementSelector: '.card',

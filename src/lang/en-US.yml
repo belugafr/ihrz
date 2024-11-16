@@ -172,6 +172,8 @@ level_embed_fields1_value: "`${currentxp}/${xpNeeded}`"
 level_embed_fields2_name: ":money_with_wings:・__Experience:__"
 level_embed_fields2_value: "`${level}`"
 level_embed_description: "`${expNeededForLevelUp}` **experience points needed for the next level!**"
+level_xp_needed_for_new_level: "XP until next level:"
+level_xp_total: "Total XP:"
 
 # /ranks leaderboard
 ranks_leaderboard_embed_title: "${interaction.guild?.name}'s Levels Leaderboard"
