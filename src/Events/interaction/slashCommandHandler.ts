@@ -41,7 +41,6 @@ async function handleCommandExecution(client: Client, interaction: ChatInputComm
     const group = options.getSubcommandGroup(false);
     const subCommand = options.getSubcommand(false);
 
-    console.log(group, subCommand)
     if (group && subCommand) {
         const subCmd = client.subCommands.get(group + " " + subCommand);
 
