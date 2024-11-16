@@ -31,7 +31,8 @@ export enum ClusterMethod {
     ChangeTokenContainer = 5,
     ChangeOwnerContainer = 6,
     ChangeExpireTime = 7,
-    StartupCluster = 8
+    StartupCluster = 8,
+    ShutDownCluster = 9
 };
 
 export enum GatewayMethod {
@@ -103,6 +104,9 @@ export function OwnIhrzCluster(options: {
             break;
         case 8:
             data += `startup_cluster`
+            break;
+        case 9:
+            data += `shutdown_cluster`
             break;
     }
 

@@ -117,25 +117,15 @@ class OwnIHRZ {
 
     // Working
     async QuitProgram() {
-        let table = this.client.db.table("OWNIHRZ")
-        let ownihrzClusterData = await table.get("CLUSTER");
-
-        for (let userId in ownihrzClusterData as any) {
-            for (let botId in ownihrzClusterData[userId]) {
-                if (ownihrzClusterData[userId][botId].PowerOff || !ownihrzClusterData[userId][botId].Code) continue;
-                await axios.get(
-                    OwnIhrzCluster({
-                        cluster_method: ClusterMethod.ShutdownContainer,
-                        cluster_number: parseInt(ownihrzClusterData[userId][botId].Cluster),
-                        bot_id: botId,
-                        forceDatabaseSet: false
-                    })
-                ).then(response => {
-                    logger.log(response.data)
-                }).catch(error => { logger.err(error); });
-            }
-        };
-        return;
+        this.client.config.core.cluster.forEach(async (x, index) => {
+            await axios.post(
+                OwnIhrzCluster({
+                    cluster_method: ClusterMethod.ShutDownCluster,
+                    cluster_number: index
+                }),
+                { adminKey: this.client.config.api.apiToken }
+            );
+        })
     };
 
     async Change_Token(cluster_id: number, botId: string, bot_token: string) {
