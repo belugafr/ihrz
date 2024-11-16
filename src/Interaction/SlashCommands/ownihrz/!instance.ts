@@ -146,6 +146,11 @@ export default {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
                         let time = interaction.options.getString('time') || '0d';
 
+                        if (!client.timeCalculator.to_ms(time)) {
+                            await interaction.reply({ content: `Invalid time format!`, ephemeral: true });
+                            return;
+                        }
+
                         client.ownihrz.Change_Time(client.config, fetch.Cluster, id_to_bot, {
                             method: "add",
                             ms: client.timeCalculator.to_ms(time)!
@@ -171,6 +176,11 @@ export default {
                     if (botId === id_to_bot) {
                         let fetch = await tableOWNIHRZ.get(`CLUSTER.${userId}.${id_to_bot}`);
                         let time = interaction.options.getString('time') || '0d';
+
+                        if (!client.timeCalculator.to_ms(time)) {
+                            await interaction.reply({ content: `Invalid time format!`, ephemeral: true });
+                            return;
+                        }
 
                         client.ownihrz.Change_Time(client.config, fetch.Cluster, id_to_bot, {
                             method: "sub",
