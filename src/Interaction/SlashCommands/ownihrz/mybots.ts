@@ -69,7 +69,7 @@ export const command: Command = {
                         "fr": "Le préfixe du bot (Optionnel)"
                     },
 
-                    required: false
+                    required: true
                 },
                 {
                     name: 'owner_two',
