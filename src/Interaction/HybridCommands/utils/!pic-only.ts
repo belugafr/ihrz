@@ -34,14 +34,18 @@ import {
     Role,
     PermissionFlagsBits,
     Message,
-    BaseGuildTextChannel,
-    ChannelSelectMenuBuilder
+    ChannelSelectMenuBuilder,
+    ChannelType,
+    StringSelectMenuBuilder,
+    StringSelectMenuOptionBuilder,
+    TextInputStyle
 } from 'discord.js';
 
 import { LanguageData } from '../../../../types/languageData';
 import { DatabaseStructure } from '../../../../types/database_structure.js';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
+import { iHorizonModalResolve } from '../../../core/functions/modalHelper.js';
 
 export default {
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
@@ -54,23 +58,51 @@ export default {
             return;
         }
 
-        let all_channels: DatabaseStructure.UtilsData["picOnly"] = await client.db.get(`${interaction.guildId}.UTILS.picOnly`) || [];
+        let all_channels = await client.db.get(`${interaction.guildId}.UTILS.picOnly`) || [] as DatabaseStructure.UtilsData["picOnly"];
+        let baseData: DatabaseStructure.PicOnlyConfig = await client.db.get(`${interaction.guildId}.UTILS.picOnlyConfig`) || {
+            threshold: 3,
+            muteTime: 600000
+        };
 
         let embed = new EmbedBuilder()
             .setTitle(lang.utils_pic_only_embed_title)
             .setColor("#475387")
             .setDescription(lang.utils_pic_only_emnbed_desc)
-            .addFields({
-                name: lang.joinghostping_add_ok_embed_fields_name,
-                value: Array.isArray(all_channels) && all_channels.length > 0
-                    ? all_channels.map(x => `<#${x}>`).join(', ')
-                    : lang.setjoinroles_var_none
-            });
+            .setFields(
+                {
+                    name: lang.joinghostping_add_ok_embed_fields_name,
+                    value: Array.isArray(all_channels) && all_channels.length > 0
+                        ? all_channels.map(x => `<#${x}>`).join(', ')
+                        : lang.setjoinroles_var_none
+                },
+                {
+                    name: lang.antispam_manage_choices_12_label,
+                    value: String(baseData?.threshold || 3),
+                    inline: true
+                },
+                {
+                    name: lang.utils_piconly_embed_fields_3_name,
+                    value: String(client.timeCalculator.to_beautiful_string(baseData.muteTime!) || client.timeCalculator.to_beautiful_string("10m")),
+                    inline: true
+                },
+            );
 
         let channelSelectMenu = new ChannelSelectMenuBuilder()
             .setCustomId('utils-picOnly-role-selecter')
+            .setChannelTypes([ChannelType.GuildText])
             .setMaxValues(25)
             .setMinValues(0);
+
+        let choiceSelectMenu = new StringSelectMenuBuilder()
+            .setCustomId('utils-picOnly-option-selecter')
+            .addOptions(
+                new StringSelectMenuOptionBuilder()
+                    .setLabel(lang.utils_piconly_select1_option1_label)
+                    .setValue("utils-picOnly-option-change-time"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel(lang.utils_piconly_select1_option2_label)
+                    .setValue("utils-picOnly-option-change-threshold")
+            );
 
         if (all_channels !== undefined && all_channels?.length > 1) {
             const channels: string[] = Array.isArray(all_channels) ? all_channels : [all_channels];
@@ -83,15 +115,22 @@ export default {
             .setEmoji('💾');
 
         let comp = new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(channelSelectMenu);
+        let comp_1 = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(choiceSelectMenu);
         let comp_2 = new ActionRowBuilder<ButtonBuilder>().addComponents(saveButton);
 
         let og_response = await client.method.interactionSend(interaction, {
             embeds: [embed],
-            components: [comp, comp_2]
+            components: [comp, comp_1, comp_2]
         });
 
         const collector = og_response.createMessageComponentCollector({
             componentType: ComponentType.ChannelSelect,
+            time: 240_000,
+            filter: (i) => i.user.id === interaction.member?.user.id
+        });
+
+        const collector_1 = og_response.createMessageComponentCollector({
+            componentType: ComponentType.StringSelect,
             time: 240_000,
             filter: (i) => i.user.id === interaction.member?.user.id
         });
@@ -115,6 +154,64 @@ export default {
             await channelInteraction.deferUpdate();
             updateEmbed(embed, all_channels, lang);
             await og_response.edit({ embeds: [embed] });
+        });
+
+
+        collector_1.on('collect', async (stringInteraction) => {
+
+            if (stringInteraction.values[0] === "utils-picOnly-option-change-time") {
+                let response = await iHorizonModalResolve({
+                    title: lang.utils_piconly_modal1_title,
+                    customId: "pic_only_time_config",
+                    deferUpdate: true,
+
+                    fields: [
+                        {
+                            customId: "case_value",
+                            placeHolder: lang.utils_piconly_modal1_fields1_placeholder,
+                            label: lang.utils_piconly_modal1_fields1_label,
+                            style: TextInputStyle.Short,
+                            maxLength: 8,
+                            minLength: 2,
+                            required: true
+                        }
+                    ]
+                }, stringInteraction);
+
+                let calculedTime = client.timeCalculator.to_ms(response?.fields.getTextInputValue("case_value")!) || 600000;
+
+                baseData.muteTime = 1296000000 < calculedTime ? 600000 : calculedTime
+
+                updateEmbed(embed, all_channels, lang);
+                await og_response.edit({ embeds: [embed] });
+                await client.db.set(`${interaction.guildId}.UTILS.picOnlyConfig`, baseData);
+            } else if (stringInteraction.values[0] === "utils-picOnly-option-change-threshold") {
+                let response = await iHorizonModalResolve({
+                    title: lang.utils_piconly_modal2_title,
+                    customId: "pic_only_threshold_config",
+                    deferUpdate: true,
+
+                    fields: [
+                        {
+                            customId: "case_value",
+                            placeHolder: lang.utils_piconly_modal2_fields1_placeholder,
+                            label: lang.utils_piconly_modal2_fields1_label,
+                            style: TextInputStyle.Short,
+                            maxLength: 4,
+                            minLength: 1,
+                            required: true
+                        }
+                    ]
+                }, stringInteraction);
+
+                let threshold = parseInt(response?.fields.getTextInputValue("case_value")!);
+
+                baseData.threshold = 15 < threshold ? 3 : threshold
+
+                updateEmbed(embed, all_channels, lang);
+                await og_response.edit({ embeds: [embed] });
+                await client.db.set(`${interaction.guildId}.UTILS.picOnlyConfig`, baseData);
+            }
         });
 
         buttonCollector.on('collect', async (buttonInteraction: ButtonInteraction) => {
@@ -141,19 +238,34 @@ export default {
                 x.setDisabled(true)
             });
 
+            comp_1.components.forEach(x => {
+                x.setDisabled(true);
+            })
+
             comp_2.components.forEach(x => {
                 x.setDisabled(true);
             })
 
-            await og_response.edit({ components: [comp, comp_2] });
+            await og_response.edit({ components: [comp, comp_1, comp_2] });
         });
 
         function updateEmbed(embed: EmbedBuilder, roles: string[], lang: LanguageData) {
-            const chanValues = roles.map(role => `<#${role}>`).join(', ') || lang.setjoinroles_var_none;
-            embed.setFields({
-                name: lang.joinghostping_add_ok_embed_fields_name,
-                value: chanValues
-            });
+            embed.setFields(
+                {
+                    name: lang.joinghostping_add_ok_embed_fields_name,
+                    value: roles.map(role => `<#${role}>`).join(', ') || lang.setjoinroles_var_none
+                },
+                {
+                    name: lang.antispam_manage_choices_12_label,
+                    value: String(baseData?.threshold || 3),
+                    inline: true
+                },
+                {
+                    name: lang.utils_piconly_embed_fields_3_name,
+                    value: String(client.timeCalculator.to_beautiful_string(baseData.muteTime!) || client.timeCalculator.to_beautiful_string("10m")),
+                    inline: true
+                }
+            );
         };
     },
 };

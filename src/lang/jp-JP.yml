@@ -692,6 +692,15 @@ utils_dm_cant: "${client.iHorizon_Emojis.icon.No_Logo} ${targetMember.toString()
 # /utils pic-only
 utils_pic_only_embed_title: "画像専用チャンネル"
 utils_pic_only_emnbed_desc: "写真・画像のみが許可されているチャンネル。他のコンテンツはボットによってブロックされます"
+utils_piconly_embed_fields_3_name: "タイムアウト時間"
+utils_piconly_select1_option1_label: "タイムアウト時間を変更"
+utils_piconly_select1_option2_label: "しきい値を変更"
+utils_piconly_modal1_title: "画像のみ - 時間設定"
+utils_piconly_modal1_fields1_placeholder: "ミュート時間"
+utils_piconly_modal1_fields1_label: "ミュート時間"
+utils_piconly_modal2_title: "画像のみ - しきい値設定"
+utils_piconly_modal2_fields1_placeholder: "ミュート前のしきい値"
+utils_piconly_modal2_fields1_label: "しきい値"
 
 
 # Guild Config commands
@@ -2009,7 +2018,7 @@ rc_registration_over_time: "時間経過による登録"
 
 # 画像専用モジュール
 piconly_module_punish_msg: "${message.author}、画像専用チャンネルで画像なしのメッセージを多く送信したため、10分間タイムアウトされました。"
-piconly_module_warn_msg: "${message.author}、このチャンネルは画像を含むメッセージのみを受け付けます（対応フォーマット：JPG、PNG、GIF、WEBP、BMP、TIFF）。警告 ${userWarnings.length}/3"
+piconly_module_warn_msg: "${message.author}、このチャンネルは画像を含むメッセージのみを受け付けます（対応フォーマット：JPG、PNG、GIF、WEBP、BMP、TIFF）。警告 ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "画像専用チャンネルでの画像なしメッセージのスパム"
 
 # -----------------------------\ /-----------------------------

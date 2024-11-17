@@ -689,6 +689,15 @@ utils_dm_cant: "${client.iHorizon_Emojis.icon.No_Logo} معرفتش أبعت ا�
 # /utils pic-only
 utils_pic_only_embed_title: "قنوات الصور فقط"
 utils_pic_only_emnbed_desc: "قناة حيث الصور هي الشيء الوحيد المسموح به. المحتوى الآخر محظور من قبل البوت"
+utils_piconly_embed_fields_3_name: "وقت الإيقاف المؤقت"
+utils_piconly_select1_option1_label: "تغيير وقت الإيقاف المؤقت"
+utils_piconly_select1_option2_label: "تغيير الحد الأقصى"
+utils_piconly_modal1_title: "الصور فقط - إعدادات الوقت"
+utils_piconly_modal1_fields1_placeholder: "مدة الكتم"
+utils_piconly_modal1_fields1_label: "وقت الكتم"
+utils_piconly_modal2_title: "الصور فقط - إعداد الحد الأقصى"
+utils_piconly_modal2_fields1_placeholder: "الحد الأقصى قبل الكتم"
+utils_piconly_modal2_fields1_label: "الحد الأقصى"
 
 
 # Guild Config commands
@@ -1996,7 +2005,7 @@ rc_registration_over_time: "التسجيلات عبر الزمن"
 
 # وحدة الصور فقط 
 piconly_module_punish_msg: "${message.author}, تم إيقافك مؤقتًا لمدة 10 دقائق لإرسال الكثير من الرسائل بدون صور في قناة مخصصة للصور."
-piconly_module_warn_msg: "${message.author}, هذه القناة تقبل فقط الرسائل التي تحتوي على صور (التنسيقات المقبولة: JPG, PNG, GIF, WEBP, BMP, TIFF). تحذير ${userWarnings.length}/3"
+piconly_module_warn_msg: "${message.author}, هذه القناة تقبل فقط الرسائل التي تحتوي على صور (التنسيقات المقبولة: JPG, PNG, GIF, WEBP, BMP, TIFF). تحذير ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "إرسال رسائل متكررة بدون صور في قناة مخصصة للصور فقط"
 
 # -----------------------------\ /-----------------------------

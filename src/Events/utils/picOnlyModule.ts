@@ -46,6 +46,7 @@ export const event: BotEvent = {
         if (message.author.bot) return;
 
         const picOnlyChannels = await client.db.get(`${message.guildId}.UTILS.picOnly`) as DatabaseStructure.UtilsData["picOnly"];
+        const picOnlyConfig = await client.db.get(`${message.guildId}.UTILS.picOnlyConfig`) as DatabaseStructure.PicOnlyConfig;
 
         if (picOnlyChannels?.includes(message.channelId) && !message.member?.permissions.has(PermissionFlagsBits.ModerateMembers)) {
             const hasValidImageAttachment = Array.from(message.attachments.values()).some(attachment => {
@@ -73,11 +74,13 @@ export const event: BotEvent = {
                 userWarnings.push(Date.now());
                 warnings.set(userId, userWarnings);
 
+                let threshold = picOnlyConfig.threshold || 3;
+
                 if (userWarnings.length >= 3) {
                     warnings.delete(userId);
 
                     try {
-                        await message.member?.timeout(10 * 60 * 1000, lang.piconly_module_timeout_reason);
+                        await message.member?.timeout((picOnlyConfig.muteTime || 10 * 60 * 1000), lang.piconly_module_timeout_reason);
                         await message.author.send({
                             content: lang.piconly_module_punish_msg
                                 .replace("${message.author}", message.author.toString())
@@ -89,6 +92,7 @@ export const event: BotEvent = {
                         content: lang.piconly_module_warn_msg
                             .replace("${message.author}", message.author.toString())
                             .replace("${userWarnings.length}", String(userWarnings.length))
+                            .replace("${threshold}", String(threshold))
                     }).catch(() => false);
                 }
             }

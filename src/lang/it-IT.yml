@@ -692,6 +692,15 @@ utils_dm_cant: "${client.iHorizon_Emojis.icon.No_Logo} Non sono riuscito a invia
 # /utils pic-only
 utils_pic_only_embed_title: "Canali Solo Immagini"
 utils_pic_only_emnbed_desc: "Canale dove sono permesse solo foto/immagini. Altri contenuti sono bloccati dal bot"
+utils_piconly_embed_fields_3_name: "Tempo di Timeout"
+utils_piconly_select1_option1_label: "Cambia tempo di timeout"
+utils_piconly_select1_option2_label: "Cambia soglia"
+utils_piconly_modal1_title: "SoloFoto - Configurazione Tempo"
+utils_piconly_modal1_fields1_placeholder: "il tempo del muto"
+utils_piconly_modal1_fields1_label: "Tempo di Muto"
+utils_piconly_modal2_title: "SoloFoto - Configurazione Soglia"
+utils_piconly_modal2_fields1_placeholder: "la soglia prima del muto"
+utils_piconly_modal2_fields1_label: "Soglia"
 
 
 # Guild Config commands
@@ -2009,7 +2018,7 @@ rc_registration_over_time: "Registrazioni nel Tempo"
 
 # Modulo SoloImmagini
 piconly_module_punish_msg: "${message.author}, sei stato silenziato per 10 minuti per aver inviato troppi messaggi senza immagini in un canale dedicato alle immagini."
-piconly_module_warn_msg: "${message.author}, questo canale accetta solo messaggi contenenti immagini (formati accettati: JPG, PNG, GIF, WEBP, BMP, TIFF). Avviso ${userWarnings.length}/3"
+piconly_module_warn_msg: "${message.author}, questo canale accetta solo messaggi contenenti immagini (formati accettati: JPG, PNG, GIF, WEBP, BMP, TIFF). Avviso ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "Spam di messaggi senza immagini in un canale solo immagini"
 
 # -----------------------------\ /-----------------------------

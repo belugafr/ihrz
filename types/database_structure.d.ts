@@ -301,6 +301,11 @@ export namespace DatabaseStructure {
         8?: string;
     }
 
+    export interface PicOnlyConfig {
+        threshold?: number;
+        muteTime?: number;
+    }
+
     export interface UtilsData {
         PERMS?: UtilsPermsData;
         USER_PERMS?: UtilsPermsUserData;
@@ -308,6 +313,7 @@ export namespace DatabaseStructure {
         roles?: UtilsRoleData;
         wlRoles?: string[];
         picOnly?: string[];
+        picOnlyConfig?: PicOnlyConfig;
     }
 
     export interface UtilsPermsData {

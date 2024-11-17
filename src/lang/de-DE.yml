@@ -692,6 +692,15 @@ utils_dm_cant: "${client.iHorizon_Emojis.icon.No_Logo} Ich konnte die Nachricht 
 # /utils pic-only
 utils_pic_only_embed_title: "Nur-Bilder-Kanäle"
 utils_pic_only_emnbed_desc: "Kanal, in dem nur Bilder/Fotos erlaubt sind. Andere Inhalte werden vom Bot blockiert"
+utils_piconly_embed_fields_3_name: "Timeout-Zeit"
+utils_piconly_select1_option1_label: "Timeout-Zeit ändern"
+utils_piconly_select1_option2_label: "Schwellenwert ändern"
+utils_piconly_modal1_title: "NurBilder - Zeiteinstellungen"
+utils_piconly_modal1_fields1_placeholder: "die Dauer der Stummschaltung"
+utils_piconly_modal1_fields1_label: "Stummschaltungszeit"
+utils_piconly_modal2_title: "NurBilder - Schwellenwert-Konfiguration"
+utils_piconly_modal2_fields1_placeholder: "der Schwellenwert vor der Stummschaltung"
+utils_piconly_modal2_fields1_label: "Schwellenwert"
 
 
 # Guild Config commands
@@ -2009,7 +2018,7 @@ rc_registration_over_time: "Registrierungen im Laufe der Zeit"
 
 # Nur-Bilder-Modul
 piconly_module_punish_msg: "${message.author}, Sie wurden für 10 Minuten stummgeschaltet, weil Sie zu viele Nachrichten ohne Bilder in einem bildexklusiven Kanal gesendet haben."
-piconly_module_warn_msg: "${message.author}, dieser Kanal akzeptiert nur Nachrichten mit Bildern (akzeptierte Formate: JPG, PNG, GIF, WEBP, BMP, TIFF). Warnung ${userWarnings.length}/3"
+piconly_module_warn_msg: "${message.author}, dieser Kanal akzeptiert nur Nachrichten mit Bildern (akzeptierte Formate: JPG, PNG, GIF, WEBP, BMP, TIFF). Warnung ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "Spam von Nachrichten ohne Bilder in einem Nur-Bilder-Kanal"
 
 # -----------------------------\ /-----------------------------

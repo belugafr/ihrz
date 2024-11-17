@@ -495,6 +495,15 @@ export interface LanguageData {
   utils_dm_cant: string;
   utils_pic_only_embed_title: string;
   utils_pic_only_emnbed_desc: string;
+  utils_piconly_embed_fields_3_name: string;
+  utils_piconly_select1_option1_label: string;
+  utils_piconly_select1_option2_label: string;
+  utils_piconly_modal1_title: string;
+  utils_piconly_modal1_fields1_placeholder: string;
+  utils_piconly_modal1_fields1_label: string;
+  utils_piconly_modal2_title: string;
+  utils_piconly_modal2_fields1_placeholder: string;
+  utils_piconly_modal2_fields1_label: string;
   blockpub_not_admin: string;
   blockpub_now_enable: string;
   blockpub_now_disable: string;

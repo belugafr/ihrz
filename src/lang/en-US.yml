@@ -692,6 +692,17 @@ utils_dm_cant: "${client.iHorizon_Emojis.icon.No_Logo} I couldn't send a message
 utils_pic_only_embed_title: "Pic Only Channels"
 utils_pic_only_emnbed_desc: "Channel where picture/image are the only one things allowed. Another content are blocked by the bot"
 
+# /utils pic-only
+utils_piconly_embed_fields_3_name: "Timeout Time"
+utils_piconly_select1_option1_label: "Change timeout time"
+utils_piconly_select1_option2_label: "Change threshold"
+utils_piconly_modal1_title: "PicOnly - Time Configurations"
+utils_piconly_modal1_fields1_placeholder: "the time of the mute"
+utils_piconly_modal1_fields1_label: "Mute Time"
+utils_piconly_modal2_title: "PicOnly - Threshold Configuration"
+utils_piconly_modal2_fields1_placeholder: "the threshold before mute"
+utils_piconly_modal2_fields1_label: "Threshold"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup
@@ -2007,7 +2018,7 @@ rc_registration_over_time: "Registrations Over Time"
 
 # PicOnly Module
 piconly_module_punish_msg: "${message.author}, you have been timed out for 10 minutes for sending too many messages without pictures in a pictures-only channel."
-piconly_module_warn_msg: "${message.author}, this channel only accepts messages containing pictures (accepted formats: JPG, PNG, GIF, WEBP, BMP, TIFF). Warning ${userWarnings.length}/3"
+piconly_module_warn_msg: "${message.author}, this channel only accepts messages containing pictures (accepted formats: JPG, PNG, GIF, WEBP, BMP, TIFF). Warning ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "Spamming messages without pictures in a pictures-only channel"
 
 # -----------------------------\ /-----------------------------
