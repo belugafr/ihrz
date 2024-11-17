@@ -1990,4 +1990,9 @@ rc_recent_locales_distribution: "توزيع مواقع الأعضاء"
 rc_recent_verifications: "عمليات التحقق الأخيرة"
 rc_registration_over_time: "التسجيلات عبر الزمن"
 
+# وحدة الصور فقط 
+piconly_module_punish_msg: "${message.author}, تم إيقافك مؤقتًا لمدة 10 دقائق لإرسال الكثير من الرسائل بدون صور في قناة مخصصة للصور."
+piconly_module_warn_msg: "${message.author}, هذه القناة تقبل فقط الرسائل التي تحتوي على صور (التنسيقات المقبولة: JPG, PNG, GIF, WEBP, BMP, TIFF). تحذير ${userWarnings.length}/3"
+piconly_module_timeout_reason: "إرسال رسائل متكررة بدون صور في قناة مخصصة للصور فقط"
+
 # -----------------------------\ /-----------------------------

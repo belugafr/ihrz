@@ -2003,4 +2003,9 @@ rc_recent_locales_distribution: "Répartition des Locales des Membres"
 rc_recent_verifications: "Vérifications Récentes"
 rc_registration_over_time: "Inscriptions au Fil du Temps"
 
+# PicOnly Module
+piconly_module_punish_msg: "${message.author}, vous avez été timeout pendant 10 minutes pour avoir envoyé trop de messages sans images dans un salon réservé aux images."
+piconly_module_warn_msg: "${message.author}, ce salon n'accepte que les messages contenant des images (formats acceptés: JPG, PNG, GIF, WEBP, BMP, TIFF). Avertissement ${userWarnings.length}/3"
+piconly_module_timeout_reason: "Spam de messages sans images dans un salon images-only"
+
 # -----------------------------\ /-----------------------------

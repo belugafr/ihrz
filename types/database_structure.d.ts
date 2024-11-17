@@ -307,6 +307,7 @@ export namespace DatabaseStructure {
         unban_members?: string[];
         roles?: UtilsRoleData;
         wlRoles?: string[];
+        picOnly?: string[];
     }
 
     export interface UtilsPermsData {

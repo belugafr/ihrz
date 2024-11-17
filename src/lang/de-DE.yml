@@ -2003,4 +2003,9 @@ rc_recent_locales_distribution: "Mitglieder-Lokalisierung"
 rc_recent_verifications: "Letzte Verifizierungen"
 rc_registration_over_time: "Registrierungen im Laufe der Zeit"
 
+# Nur-Bilder-Modul
+piconly_module_punish_msg: "${message.author}, Sie wurden für 10 Minuten stummgeschaltet, weil Sie zu viele Nachrichten ohne Bilder in einem bildexklusiven Kanal gesendet haben."
+piconly_module_warn_msg: "${message.author}, dieser Kanal akzeptiert nur Nachrichten mit Bildern (akzeptierte Formate: JPG, PNG, GIF, WEBP, BMP, TIFF). Warnung ${userWarnings.length}/3"
+piconly_module_timeout_reason: "Spam von Nachrichten ohne Bilder in einem Nur-Bilder-Kanal"
+
 # -----------------------------\ /-----------------------------

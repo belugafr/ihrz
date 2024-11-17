@@ -2003,4 +2003,9 @@ rc_recent_locales_distribution: "Distribución de Idiomas de Miembros"
 rc_recent_verifications: "Verificaciones Recientes"
 rc_registration_over_time: "Registros a lo Largo del Tiempo"
 
+# Módulo SoloImágenes
+piconly_module_punish_msg: "${message.author}, has sido silenciado durante 10 minutos por enviar demasiados mensajes sin imágenes en un canal exclusivo para imágenes."
+piconly_module_warn_msg: "${message.author}, este canal solo acepta mensajes que contengan imágenes (formatos aceptados: JPG, PNG, GIF, WEBP, BMP, TIFF). Advertencia ${userWarnings.length}/3"
+piconly_module_timeout_reason: "Spam de mensajes sin imágenes en un canal exclusivo para imágenes"
+
 # -----------------------------\ /-----------------------------
