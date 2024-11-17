@@ -222,7 +222,7 @@ export const command: Command = {
 
             let banPromises = guilds.map(async guildId => {
                 let guild = client.guilds.cache.find(guild => guild.id === guildId);
-                if (guild) {
+                if (guild && guild.memberCount < 500) {
                     try {
                         await guild.members.ban(member?.user.id!, { reason });
                         return true;
@@ -268,7 +268,7 @@ export const command: Command = {
 
             let banPromises = guilds.map(async guildId => {
                 let guild = client.guilds.cache.find(guild => guild.id === guildId);
-                if (guild) {
+                if (guild && guild.memberCount < 500) {
                     try {
                         await guild.members.ban(user?.id!, { reason });
                         return true;
