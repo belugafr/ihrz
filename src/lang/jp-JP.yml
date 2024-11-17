@@ -689,6 +689,10 @@ utils_wlRoles_logsEmbed_desc: "${interaction.member?.user.toString()} はホワ�
 utils_dm: "${client.iHorizon_Emojis.icon.Yes_Logo} メッセージは ${targetMember.toString()} に正常に送信されました。"
 utils_dm_cant: "${client.iHorizon_Emojis.icon.No_Logo} ${targetMember.toString()} にメッセージを送信できませんでした。プライベートメッセージをブロックしているか、私をブロックしている可能性があります。"
 
+# /utils pic-only
+utils_pic_only_embed_title: "画像専用チャンネル"
+utils_pic_only_emnbed_desc: "写真・画像のみが許可されているチャンネル。他のコンテンツはボットによってブロックされます"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

@@ -689,6 +689,10 @@ utils_wlRoles_logsEmbed_desc: "${interaction.member?.user.toString()} a modifié
 utils_dm: "${client.iHorizon_Emojis.icon.Yes_Logo} Le message as parfaitement été envoyer à ${targetMember.toString()}"
 utils_dm_cant: "${client.iHorizon_Emojis.icon.No_Logo} Je n'ai pas réussi à envoyer de message à ${targetMember.toString()}. Il à peut-être bloquer les message privée, ou il m'a bloqué ce gros fils de pute!"
 
+# /utils pic-only
+utils_pic_only_embed_title: "Salons Images Uniquement"
+utils_pic_only_emnbed_desc: "Salon où seules les photos/images sont autorisées. Tout autre contenu est bloqué par le bot"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

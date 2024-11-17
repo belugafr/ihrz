@@ -205,6 +205,18 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Subcommand
         },
         {
+            name: 'pic-only',
+
+            description: 'Define channels for only picture sending (block other content)',
+            description_localizations: {
+                "fr": "Définir des canaux pour l'envoi d'images uniquement (bloquer d'autres contenus)"
+            },
+
+            aliases: ["piconly"],
+
+            type: ApplicationCommandOptionType.Subcommand
+        },
+        {
             name: 'setmentionrole',
 
             description: 'Give a specific role to the user who pings me!',

@@ -689,6 +689,10 @@ utils_wlRoles_logsEmbed_desc: "${interaction.member?.user.toString()} ha editado
 utils_dm: "${client.iHorizon_Emojis.icon.Yes_Logo} El mensaje fue enviado con éxito a ${targetMember.toString()}."
 utils_dm_cant: "${client.iHorizon_Emojis.icon.No_Logo} No pude enviar un mensaje a ${targetMember.toString()}. Puede que haya bloqueado los mensajes privados o me haya bloqueado a mí."
 
+# /utils pic-only
+utils_pic_only_embed_title: "Canales Solo Imágenes"
+utils_pic_only_emnbed_desc: "Canal donde solo se permiten fotos/imágenes. Cualquier otro contenido es bloqueado por el bot"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup
