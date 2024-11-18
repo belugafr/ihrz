@@ -19,30 +19,40 @@
 ・ Copyright © 2020-2024 iHorizon
 */
 
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, ComponentType, Interaction } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, ComponentType, Interaction, Message } from "discord.js";
 
 export interface LangForPrompt {
     content: string;
     yesButton: string;
     noButton: string;
+    dangerAction: boolean;
 }
 
-export async function promptYesOrNo(interaction: ChatInputCommandInteraction, lang: LangForPrompt) {
+export async function promptYesOrNo(interaction: ChatInputCommandInteraction<"cached"> | Message, opt: LangForPrompt) {
     const sent = await interaction.client.method.interactionSend(interaction, {
-        content: lang.content,
+        content: opt.content,
         components: [
             new ActionRowBuilder<ButtonBuilder>()
                 .addComponents(
                     new ButtonBuilder()
                         .setCustomId("yes")
-                        .setStyle(ButtonStyle.Danger)
-                        .setLabel(lang.yesButton),
+                        .setStyle(opt.dangerAction ? ButtonStyle.Danger : ButtonStyle.Success)
+                        .setLabel(opt.yesButton),
+                    new ButtonBuilder()
+                        .setCustomId("blank1")
+                        .setStyle(ButtonStyle.Secondary)
+                        .setLabel('<   >')
+                        .setDisabled(true),
                     new ButtonBuilder()
                         .setCustomId("no")
-                        .setStyle(ButtonStyle.Success)
-                        .setLabel(lang.noButton)
+                        .setStyle(opt.dangerAction ? ButtonStyle.Success : ButtonStyle.Danger)
+                        .setLabel(opt.noButton),
                 )
         ]
     });
-    return (await sent.awaitMessageComponent({ componentType: ComponentType.Button, filter: (x) => x.user.id === interaction.user.id }))
+    let e = (await sent.awaitMessageComponent({ componentType: ComponentType.Button, filter: (x) => x.user.id === interaction.member?.user.id }));
+
+    e.deferUpdate();
+
+    return e.customId === "yes" ? true : false;
 }

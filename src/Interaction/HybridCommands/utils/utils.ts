@@ -147,7 +147,45 @@ export const command: Command = {
                 "fr": "Mettre en laisse un utilisateur sur le serveur"
             },
 
-            type: ApplicationCommandOptionType.Subcommand
+            options: [
+                {
+                    name: 'member',
+                    type: ApplicationCommandOptionType.User,
+
+                    description: 'member you want to leash',
+                    description_localizations: {
+                        "fr": "utilisateur que vous souhaitez mettre en laisse"
+                    },
+
+                    required: true,
+                },
+            ],
+
+            type: ApplicationCommandOptionType.Subcommand,
+        },
+        {
+            name: 'unleash',
+
+            description: 'UnLeash a member in the guild',
+            description_localizations: {
+                "fr": "Enlever la laisse à un utilisateur sur le serveur"
+            },
+
+            options: [
+                {
+                    name: 'member',
+                    type: ApplicationCommandOptionType.User,
+
+                    description: 'member you want to unleash',
+                    description_localizations: {
+                        "fr": "utilisateur que vous souhaitez supprimer sa laisse"
+                    },
+
+                    required: true,
+                },
+            ],
+
+            type: ApplicationCommandOptionType.Subcommand,
         },
         {
             name: 'dm',

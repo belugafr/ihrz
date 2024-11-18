@@ -23,25 +23,39 @@ import { Client, User, VoiceState, time } from 'discord.js';
 
 import { BotEvent } from '../../../types/event';
 import { DatabaseStructure } from '../../../types/database_structure';
-import { getDomSubVoiceChannel } from '../../core/functions/leashModuleHelper';
 
 export const event: BotEvent = {
     name: "voiceStateUpdate",
     run: async (client: Client, oldState: VoiceState, newState: VoiceState) => {
+        const baseData = await client.db.get(`${newState.guild.id}.UTILS.LEASH`) as DatabaseStructure.UtilsData["LEASH"];
 
-        let baseData = await client.db.get(`${newState.guild.id}.UTILS.LEASH`) as DatabaseStructure.UtilsData["LEASH"];
+        const pairing = baseData?.find(x =>
+            x.sub === oldState.member?.id ||
+            x.dom === oldState.member?.id ||
+            x.sub === newState.member?.id ||
+            x.dom === newState.member?.id
+        );
 
-        let indexFinded = baseData?.find(x => x.sub === newState.member?.id);
+        if (pairing) {
+            const subMember = newState.guild.members.cache.get(pairing.sub);
+            const domMember = newState.guild.members.cache.get(pairing.dom);
 
-        if (indexFinded) {
-            let subMember = newState.member!;
-            let domMember = newState.guild.members.cache.get(indexFinded.dom);
+            if (!subMember || !domMember) return;
 
-            let subChannel = getDomSubVoiceChannel(subMember);
-            let domChanel = getDomSubVoiceChannel(domMember!);
+            if (subMember.voice.channel === domMember.voice.channel) return;
 
-            if ((subChannel && domChanel) && (subChannel !== domChanel)) {
-                await subMember.voice.setChannel(domChanel);
+            const changingMemberId = newState.member?.id || oldState.member?.id;
+            const isDom = changingMemberId === pairing.dom;
+
+            const targetChannel = isDom ? newState.channel : oldState.channel;
+            const movingMember = isDom ? subMember : domMember;
+
+            if (targetChannel) {
+                try {
+                    await movingMember.voice.setChannel(targetChannel);
+                } catch (error) {
+                    console.error("Channel synchronization error:", error);
+                }
             }
         }
     },
