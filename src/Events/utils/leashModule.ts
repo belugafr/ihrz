@@ -29,30 +29,43 @@ export const event: BotEvent = {
     run: async (client: Client, oldState: VoiceState, newState: VoiceState) => {
         const baseData = await client.db.get(`${newState.guild.id}.UTILS.LEASH`) as DatabaseStructure.UtilsData["LEASH"];
 
-        const pairing = baseData?.find(x =>
+        const matchedPairings = baseData?.filter(x =>
             x.sub === oldState.member?.id ||
             x.dom === oldState.member?.id ||
             x.sub === newState.member?.id ||
             x.dom === newState.member?.id
         );
 
-        if (pairing) {
-            const subMember = newState.guild.members.cache.get(pairing.sub);
+        for (const pairing of matchedPairings || []) {
+            const subMembers = pairing.sub.split(',').map(id =>
+                newState.guild.members.cache.get(id.trim())
+            ).filter(member => member !== undefined);
+
             const domMember = newState.guild.members.cache.get(pairing.dom);
 
-            if (!subMember || !domMember) return;
-
-            if (subMember.voice.channel === domMember.voice.channel) return;
+            if (!domMember || subMembers.length === 0) continue;
 
             const changingMemberId = newState.member?.id || oldState.member?.id;
             const isDom = changingMemberId === pairing.dom;
-
             const targetChannel = isDom ? newState.channel : oldState.channel;
-            const movingMember = isDom ? subMember : domMember;
 
-            if (targetChannel) {
+            if (isDom && targetChannel) {
+                for (const subMember of subMembers) {
+                    if (subMember.voice.channel !== targetChannel) {
+                        try {
+                            await subMember.voice.setChannel(targetChannel);
+                        } catch (error) {
+                            console.error(`Error moving sub ${subMember.id}:`, error);
+                        }
+                    }
+                }
+            }
+            else if (!isDom && domMember.voice.channel && targetChannel !== domMember.voice.channel) {
                 try {
-                    await movingMember.voice.setChannel(targetChannel);
+                    const movingMember = subMembers.find(member => member.id === changingMemberId);
+                    if (movingMember) {
+                        await movingMember.voice.setChannel(domMember.voice.channel);
+                    }
                 } catch (error) {
                     console.error("Channel synchronization error:", error);
                 }

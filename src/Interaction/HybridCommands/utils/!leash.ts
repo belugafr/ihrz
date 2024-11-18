@@ -72,7 +72,7 @@ export default {
         let fetchedData: DatabaseStructure.UtilsData["LEASH"] | null = await client.db.get(`${interaction.guildId}.UTILS.LEASH`);
         let filteredData = fetchedData?.filter(x => x.dom === interaction.member?.user.id) || [];
 
-        if (filteredData.length >= (baseData.maxLeashedByUsers || 3)) {
+        if (filteredData.length >= (baseData.maxLeashedByUsers)) {
             await client.method.interactionSend(interaction, { content: `Little naughty guy, you can't put more than 3 people on a leash :D` });
             return;
         }
