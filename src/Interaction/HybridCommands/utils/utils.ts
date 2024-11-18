@@ -140,6 +140,16 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Subcommand
         },
         {
+            name: 'leash',
+
+            description: 'Leash a member in the guild',
+            description_localizations: {
+                "fr": "Mettre en laisse un utilisateur sur le serveur"
+            },
+
+            type: ApplicationCommandOptionType.Subcommand
+        },
+        {
             name: 'dm',
             name_localizations: {
                 "fr": "mp"
