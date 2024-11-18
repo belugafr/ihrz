@@ -306,7 +306,16 @@ export namespace DatabaseStructure {
         muteTime?: number;
     }
 
+    export interface LeashConfig {
+        maxLeashedByUsers?: number;
+        maxLeashTime?: number;
+    }
+
+    export type LeashData = { dom: string; sub: string; timestamp: number; };
+
     export interface UtilsData {
+        LEASH?: LeashData[]; // yeah, bdsm ref lmao
+        LEASH_CONFIFG?: LeashConfig;
         PERMS?: UtilsPermsData;
         USER_PERMS?: UtilsPermsUserData;
         unban_members?: string[];

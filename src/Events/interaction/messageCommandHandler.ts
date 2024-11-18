@@ -104,6 +104,7 @@ async function executeCommand(
 
     var _ = await client.method.checkCommandArgs(message, command, Array.from(args), lang); if (!_) return;
 
+    // for format like: "+utils" without subcommand behind
     if (!command?.run) {
         await client.method.interactionSend(message, {
             embeds: [await client.method.createAwesomeEmbed(lang, command, client, message)]
