@@ -51,18 +51,18 @@ export const event: BotEvent = {
 
             if (isDom && targetChannel) {
                 for (const subMember of subMembers) {
-                    if (subMember.voice.channel !== targetChannel) {
+                    if (subMember!.voice.channel !== targetChannel) {
                         try {
-                            await subMember.voice.setChannel(targetChannel);
+                            await subMember!.voice.setChannel(targetChannel);
                         } catch (error) {
-                            console.error(`Error moving sub ${subMember.id}:`, error);
+                            console.error(`Error moving sub ${subMember!.id}:`, error);
                         }
                     }
                 }
             }
             else if (!isDom && domMember.voice.channel && targetChannel !== domMember.voice.channel) {
                 try {
-                    const movingMember = subMembers.find(member => member.id === changingMemberId);
+                    const movingMember = subMembers.find(member => member!.id === changingMemberId);
                     if (movingMember) {
                         await movingMember.voice.setChannel(domMember.voice.channel);
                     }

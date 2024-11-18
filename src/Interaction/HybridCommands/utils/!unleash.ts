@@ -62,7 +62,7 @@ export default {
             return;
         }
 
-        let fetchedData: DatabaseStructure.UtilsData["LEASH"] | null = await client.db.get(`${interaction.guildId}.UTILS.LEASH`);
+        let fetchedData: DatabaseStructure.LeashData[] = await client.db.get(`${interaction.guildId}.UTILS.LEASH`);
 
         const pairingToRemove = fetchedData?.find(x =>
             (x.dom === interaction.member?.user.id && x.sub === user.id)
@@ -79,7 +79,7 @@ export default {
             !(x.dom === interaction.member?.user.id && x.sub === user.id)
         );
 
-        await client.db.set(`${interaction.guildId}.UTILS.LEASH`, updatedData || []);
+        await client.db.set(`${interaction.guildId}.UTILS.LEASH`, Array.from(new Set(updatedData)));
 
         await client.method.interactionSend(interaction, {
             content: `${client.iHorizon_Emojis.icon.Yes_Logo} | You have successfully unleashed the user in this guild :)`

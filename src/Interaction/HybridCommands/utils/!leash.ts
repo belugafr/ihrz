@@ -69,13 +69,20 @@ export default {
             maxLeashedByUsers: 3,
             maxLeashTime: client.timeCalculator.to_ms("30min")
         } as DatabaseStructure.LeashConfig;
-        let fetchedData: DatabaseStructure.UtilsData["LEASH"] | null = await client.db.get(`${interaction.guildId}.UTILS.LEASH`);
-        let filteredData = fetchedData?.filter(x => x.dom === interaction.member?.user.id) || [];
+        let fetchedData = (await client.db.get(`${interaction.guildId}.UTILS.LEASH`) || []) as DatabaseStructure.LeashData[];
+        let filteredData = fetchedData.filter(x => x.dom === interaction.member?.user.id) || [];
 
         if (filteredData.length >= (baseData.maxLeashedByUsers)) {
             await client.method.interactionSend(interaction, { content: `Little naughty guy, you can't put more than 3 people on a leash :D` });
             return;
         }
+
+
+        if (filteredData.find(x => x.sub === user.id)) {
+            await client.method.interactionSend(interaction, { content: `Little naughty guy, you already own this cuties :smirk:` });
+            return;
+        }
+
 
         if (!isInVoiceChannel(user) || isInVoiceChannel(interaction.member)) {
             let response = await promptYesOrNo(interaction, {
@@ -90,7 +97,8 @@ export default {
             }
         }
 
-        await client.db.push(`${interaction.guildId}.UTILS.LEASH`, { dom: interaction.member.user.id, sub: user.id });
+        fetchedData!.push({ dom: interaction.member.user.id, sub: user.id, timestamp: Date.now() })
+        await client.db.set(`${interaction.guildId}.UTILS.LEASH`, Array.from(new Set(fetchedData)));
 
         await client.method.interactionSend(interaction, { content: `${client.iHorizon_Emojis.icon.Yes_Logo} | You have sucessfuly leashed the user in this guild :smirk:`, components: [] })
     },
