@@ -128,7 +128,7 @@ async function loadSubCommandModule(directoryPath: string, commandName: string):
         return await import(`${directoryPath}/!${commandName}.js`) as CommandModule;
     } catch (error) {
         logger.err(`Failed to load subcommand module: ${commandName}`);
-        console.log(error)
+        console.error(error)
         return null;
     }
 }

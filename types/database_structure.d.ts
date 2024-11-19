@@ -272,6 +272,10 @@ export namespace DatabaseStructure {
     export interface DbInId {
         USER?: DbGuildUserObject;
         GUILD?: DbGuildObject;
+        PFPS?: {
+            channel?: string;
+            disable?: boolean;
+        };
         TICKET_ALL?: TicketData;
         PROTECTION?: ProtectionData;
         ROLE_SAVER?: RoleSaverData;
@@ -428,10 +432,6 @@ export namespace DatabaseStructure {
             input?: string | null;
             rolesId?: string;
             state?: string;
-        };
-        PFPS?: {
-            channel?: string;
-            disable?: boolean;
         };
         XP_LEVELING?: DbGuildXpLeveling
         REACTION_ROLES?: ReactionRolesData;
