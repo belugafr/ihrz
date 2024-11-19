@@ -19,14 +19,6 @@
 ・ Copyright © 2020-2024 iHorizon
 */
 
-/*
-・ ElektraBots Discord Bot (https://github.com/belugafr/ElektraBots)
-
-・ Mainly developed by NayaWeb (https://github.com/belugafr)
-
-・ Copyright © 2021-2023 ElektraBots
-*/
-
 import {
   AttachmentBuilder,
   ChatInputCommandInteraction,
@@ -71,15 +63,15 @@ export default {
 
     let embed = new EmbedBuilder()
       .setColor('#000000')
-      .setImage('attachment://all-human-have-rights-elektra.png')
+      .setImage('attachment://catsay.png')
       .setTimestamp()
       .setFooter(await client.method.bot.footerBuilder(interaction));
 
     let imgs: AttachmentBuilder | undefined;
 
     try {
-      imgs = new AttachmentBuilder(await newImg.getBufferAsync(Jimp.MIME_GIF), { name: 'all-humans-have-right-elektra.png' });
-      embed.setImage(`attachment://all-humans-have-right-elektra.png`);
+      imgs = new AttachmentBuilder(await newImg.getBufferAsync(Jimp.MIME_GIF), { name: 'catsay.png' });
+      embed.setImage(`attachment://catsay.png`);
 
       if (imgs) {
         await client.method.interactionSend(interaction, {
