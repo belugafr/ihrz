@@ -53,6 +53,9 @@ export const command: Command = {
             required: true
         }
     ],
+
+    aliases: ["unbl"],
+
     thinking: false,
     category: 'owner',
     type: ApplicationCommandType.ChatInput,
@@ -73,7 +76,7 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member = interaction.options.getUser('user');
         } else {
-            
+
             var member = await client.method.user(interaction, args!, 0);
         };
 

@@ -69,6 +69,9 @@ export const command: Command = {
             required: false
         }
     ],
+
+    aliases: ["bl"],
+
     thinking: false,
     category: 'owner',
     type: ApplicationCommandType.ChatInput,

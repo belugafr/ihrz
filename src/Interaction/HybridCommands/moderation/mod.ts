@@ -121,6 +121,8 @@ export const command: Command = {
                     required: true
                 }
             ],
+
+            aliases: ["cls"],
         },
         {
             name: 'mutelist',
