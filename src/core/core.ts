@@ -33,7 +33,7 @@ import { VanityInviteData } from '../../types/vanityUrlData';
 import { ConfigData } from '../../types/configDatad.js';
 
 import { Client, Collection, Snowflake, DefaultWebSocketManagerOptions } from 'discord.js';
-import { readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import backup from 'discord-rebackup';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -42,16 +42,17 @@ import fs from 'fs';
 import { LyricsManager } from './functions/lyrics-fetcher.js';
 import { iHorizonTimeCalculator } from './functions/ms.js';
 import assetsCalc from "./functions/assetsCalc.js";
-import { readFile } from 'node:fs/promises';
 import { getToken } from './functions/getToken.js';
 import { StreamNotifier } from './StreamNotifier.js';
 import { setMaxListeners } from 'node:events';
+import { version } from '../version.js';
+import { InitData } from '../../types/initDataType.js';
+import { CacheStorage } from './cache.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const backups_folder = `${process.cwd()}/src/files/backups`;
-const uptime_path = path.join(process.cwd(), "src", "files", ".uptime")
 
 let global_config: ConfigData;
 
@@ -63,7 +64,7 @@ backup.setStorageFolder(backups_folder);
 
 export async function main(client: Client) {
     initConfig(client.config);
-    timestampInitializer();
+    dataInitializer();
 
     logger.legacy("[*] iHorizon Discord Bot (https://github.com/ihrz/ihrz).".gray);
     logger.legacy("[*] Warning: iHorizon Discord bot is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International".gray);
@@ -156,16 +157,18 @@ export const getConfig = (): ConfigData => {
     return global_config;
 };
 
-export function timestampInitializer() {
-    fs.writeFileSync(uptime_path, Date.now().toString())
+export function dataInitializer() {
+    let baseData: InitData = {
+        initialized_timestamp: Date.now(),
+        _cache: {
+            version: getCacheStorage()?._cache.version || version,
+            updateChannelId: getCacheStorage()?._cache.updateChannelId || "None"
+        }
+    }
+    CacheStorage.set("stored_data", baseData)
     logger.log(`${global_config.console.emojis.OK} >> Timestamp Generated in .uptime`);
 }
 
-export async function getInitedTimestamp(): Promise<number> {
-    try {
-        const content = await readFile(uptime_path);
-        return Number(content);
-    } catch (err) {
-        return 0;
-    }
+export function getCacheStorage(): InitData | undefined {
+    return CacheStorage.get("stored_data");
 }
