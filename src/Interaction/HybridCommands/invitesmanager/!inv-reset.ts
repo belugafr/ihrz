@@ -35,6 +35,7 @@ import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
 import { DatabaseStructure } from '../../../../types/database_structure';
+import { promptYesOrNo } from '../../../core/functions/awaitingResponse.js';
 
 export default {
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
@@ -56,56 +57,28 @@ export default {
             return;
         };
 
-        const response = await client.method.interactionSend(interaction, {
+        let response = await promptYesOrNo(interaction, {
             content: lang.resetallinvites_warning_msg,
-            components: [
-                new ActionRowBuilder<ButtonBuilder>()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId("yes")
-                            .setStyle(ButtonStyle.Danger)
-                            .setLabel(lang.resetallinvites_yes_button),
-                        new ButtonBuilder()
-                            .setCustomId("no")
-                            .setStyle(ButtonStyle.Success)
-                            .setLabel(lang.resetallinvites_no_button)
-                    )
-            ]
+            noButton: lang.resetallinvites_no_button,
+            yesButton: lang.resetallinvites_yes_button,
+            dangerAction: true
         })
 
-        const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 2_240_00 });
-
-        collector.on("collect", async i => {
-            if (i.user.id !== interaction.member?.user.id) {
-                await i.reply({ content: lang.help_not_for_you, ephemeral: true });
-                return;
+        if (response) {
+            const baseData = await client.db.get(`${interaction.guildId}.USER`) as DatabaseStructure.DbGuildUserObject;
+            for (let user in baseData) {
+                baseData[user].INVITES = {}
             }
+            await client.db.set(`${interaction.guildId}.USER`, baseData);
+            await client.method.interactionSend(interaction, { content: lang.resetallinvites_succes_on_delete, components: [] });
 
-            await i.deferUpdate()
-
-            if (i.customId === "yes") {
-                const baseData = await client.db.get(`${interaction.guildId}.USER`) as DatabaseStructure.DbGuildUserObject;
-                for (let user in baseData) {
-                    baseData[user].INVITES = {}
-                }
-                await client.db.set(`${interaction.guildId}.USER`, baseData);
-                await response.edit({ content: lang.resetallinvites_succes_on_delete });
-
-                await client.method.iHorizonLogs.send(interaction, {
-                    title: lang.resetallinvites_logs_embed_title,
-                    description: lang.resetallinvites_logs_embed_desc
-                        .replace("${interaction.member.user.toString()}", interaction.member.user.toString())
-                });
-
-                collector.stop();
-            } else {
-                await response.edit({ content: lang.setjoinroles_action_canceled, components: [] });
-                collector.stop()
-            }
-        });
-
-        collector.on("end", async () => {
-            await response.edit({ components: [] });
-        });
+            await client.method.iHorizonLogs.send(interaction, {
+                title: lang.resetallinvites_logs_embed_title,
+                description: lang.resetallinvites_logs_embed_desc
+                    .replace("${interaction.member.user.toString()}", interaction.member.user.toString())
+            });
+        } else {
+            await client.method.interactionSend(interaction, { content: lang.setjoinroles_action_canceled, components: [] });
+        }
     },
 };

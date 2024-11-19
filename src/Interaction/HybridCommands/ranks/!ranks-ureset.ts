@@ -35,7 +35,7 @@ import {
 import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
-import { DatabaseStructure } from '../../../../types/database_structure';
+import { promptYesOrNo } from '../../../core/functions/awaitingResponse.js';
 
 export default {
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Option | Command | undefined, neededPerm: number, args?: string[]) => {
@@ -46,7 +46,7 @@ export default {
         if (interaction instanceof ChatInputCommandInteraction) {
             var user = interaction.options.getMember("user") as GuildMember || interaction.member;
         } else {
-            
+
             var user = client.method.member(interaction, args!, 0) || interaction.member;
         };
 
@@ -64,53 +64,26 @@ export default {
             return;
         };
 
-        const response = await client.method.interactionSend(interaction, {
+        let response = await promptYesOrNo(interaction, {
             content: lang.reset_uranks_are_you_sure,
-            components: [
-                new ActionRowBuilder<ButtonBuilder>()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId("yes")
-                            .setStyle(ButtonStyle.Danger)
-                            .setLabel(lang.resetallinvites_yes_button),
-                        new ButtonBuilder()
-                            .setCustomId("no")
-                            .setStyle(ButtonStyle.Success)
-                            .setLabel(lang.resetallinvites_no_button)
-                    )
-            ]
+            noButton: lang.resetallinvites_no_button,
+            yesButton: lang.resetallinvites_yes_button,
+            dangerAction: true
         })
 
-        const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 2_240_00 });
+        if (response) {
+            await client.db.delete(`${interaction.guildId}.USER.${user.id}.XP_LEVELING`);
+            await client.method.interactionSend(interaction, { content: lang.resetallinvites_succes_on_delete, components: [] });
 
-        collector.on("collect", async i => {
-            if (i.user.id !== interaction.member?.user.id) {
-                await i.reply({ content: lang.help_not_for_you, ephemeral: true });
-                return;
-            }
+            await client.method.iHorizonLogs.send(interaction, {
+                title: lang.resetallinvites_logs_embed_title,
+                description: lang.reset_uranks_logs_embed_desc
+                    .replace("${interaction.member.user.toString()}", interaction.member.user.toString())
+                    .replace("${user.toString()}", user.toString())
+            });
 
-            await i.deferUpdate()
-
-            if (i.customId === "yes") {
-                await client.db.delete(`${interaction.guildId}.USER.${user.id}.XP_LEVELING`);
-                await response.edit({ content: lang.resetallinvites_succes_on_delete });
-
-                await client.method.iHorizonLogs.send(interaction, {
-                    title: lang.resetallinvites_logs_embed_title,
-                    description: lang.reset_uranks_logs_embed_desc
-                        .replace("${interaction.member.user.toString()}", interaction.member.user.toString())
-                        .replace("${user.toString()}", user.toString())
-                });
-
-                collector.stop();
-            } else {
-                await response.edit({ content: lang.setjoinroles_action_canceled, components: [] });
-                collector.stop()
-            }
-        });
-
-        collector.on("end", async () => {
-            await response.edit({ components: [] });
-        });
+        } else {
+            await client.method.interactionSend(interaction, { content: lang.setjoinroles_action_canceled, components: [] });
+        }
     },
 };
