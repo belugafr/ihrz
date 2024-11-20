@@ -36,7 +36,7 @@ import { MongoClient } from 'mongodb';
 export type db = QuickDB<any> | SteganoDB | PallasDB;
 let dbInstance: db;
 
-const tables = ['OWNER', 'OWNIHRZ', 'BLACKLIST', 'PREVNAMES', 'API', 'TEMP', 'SCHEDULE', 'USER_PROFIL', 'json', "RESTORECORD"];
+const tables = ['json', 'OWNER', 'OWNIHRZ', 'BLACKLIST', 'PREVNAMES', 'API', 'TEMP', 'SCHEDULE', 'USER_PROFIL', "RESTORECORD"];
 const readOnlyTables = ["RESTORECORD", "OWNIHRZ"];
 
 async function isReachable(database: ConfigData['database']): Promise<boolean> {
