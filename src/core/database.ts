@@ -25,6 +25,7 @@ import { MongoDriver } from 'quickmongo';
 import ansiEscapes from 'ansi-escapes';
 import { SteganoDB } from 'stegano.db';
 import mysql from 'mysql2/promise.js';
+import { PallasDB } from 'pallas.db';
 import { setInterval } from 'timers';
 
 import { ConfigData } from '../../types/configDatad.js';
@@ -32,7 +33,8 @@ import logger from './logger.js';
 import fs from 'fs';
 import { MongoClient } from 'mongodb';
 
-let dbInstance: QuickDB<any> | SteganoDB;
+export type db = QuickDB<any> | SteganoDB | PallasDB;
+let dbInstance: db;
 
 const tables = ['OWNER', 'OWNIHRZ', 'BLACKLIST', 'PREVNAMES', 'API', 'TEMP', 'SCHEDULE', 'USER_PROFIL', 'json', "RESTORECORD"];
 const readOnlyTables = ["RESTORECORD", "OWNIHRZ"];
@@ -71,8 +73,8 @@ const overwriteLastLine = (message: string) => {
     process.stdout.write(message);
 };
 
-export const initializeDatabase = async (config: ConfigData): Promise<QuickDB<any> | SteganoDB> => {
-    let dbPromise: Promise<QuickDB<any>> | SteganoDB;
+export const initializeDatabase = async (config: ConfigData): Promise<db> => {
+    let dbPromise: Promise<QuickDB<any>> | SteganoDB | PallasDB;
     let databasePath = `${process.cwd()}/src/files`;
 
     if (!fs.existsSync(databasePath)) {
@@ -228,10 +230,8 @@ export const initializeDatabase = async (config: ConfigData): Promise<QuickDB<an
             });
             break;
         case 'SQLITE':
-            dbPromise = new Promise<QuickDB>((resolve, reject) => {
-                logger.log(`${config.console.emojis.HOST} >> Connected to the database (${config.database?.method}) !`);
-                resolve(new QuickDB({ filePath: databasePath + '/db.sqlite' }));
-            });
+            dbPromise = new PallasDB({ dialect: "sqlite", tables: tables });
+            logger.log(`${config.console.emojis.HOST} >> Connected to the database (${config.database?.method}) !`);
             break;
         case 'PNG':
             dbPromise = new SteganoDB(databasePath + '/db.png');
@@ -358,7 +358,7 @@ export const initializeDatabase = async (config: ConfigData): Promise<QuickDB<an
     return dbInstance;
 };
 
-export const getDatabaseInstance = (): QuickDB<any> | SteganoDB => {
+export const getDatabaseInstance = (): db => {
     if (!dbInstance) {
         throw new Error('Database has not been initialized. Call initializeDatabase first.');
     }
