@@ -25,7 +25,7 @@ import { MongoDriver } from 'quickmongo';
 import ansiEscapes from 'ansi-escapes';
 import { SteganoDB } from 'stegano.db';
 import mysql from 'mysql2/promise.js';
-import { PallasDB } from 'pallas.db';
+import { PallasDB } from 'pallas-db';
 import { setInterval } from 'timers';
 
 import { ConfigData } from '../../types/configDatad.js';
@@ -230,7 +230,7 @@ export const initializeDatabase = async (config: ConfigData): Promise<db> => {
             });
             break;
         case 'SQLITE':
-            dbPromise = new PallasDB({ dialect: "sqlite", tables: tables });
+            dbPromise = new PallasDB({ dialect: "sqlite", tables: tables, storage: databasePath + "/db.sqlite" });
             logger.log(`${config.console.emojis.HOST} >> Connected to the database (${config.database?.method}) !`);
             break;
         case 'PNG':

@@ -44,7 +44,7 @@ import { BashCommands } from "./bashCommands.js";
 import { SteganoDB } from "stegano.db";
 import { StreamNotifier } from "../src/core/StreamNotifier.js";
 import { OwnIHRZ } from "../src/core/modules/ownihrzManager.js";
-import { PallasDB } from "pallas.db";
+import { PallasDB } from "pallas-db";
 import { db } from "../src/core/database.js";
 
 declare module 'discord.js' {
