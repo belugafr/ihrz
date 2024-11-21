@@ -34,7 +34,7 @@ import { Option } from '../../../../types/option.js';
 export const command: Command = {
     name: "bulkunban",
 
-    aliases: ["massunban", "bunban"],
+    aliases: ["massunban"],
 
     description: "Mass action about unban",
     description_localizations: {
@@ -54,6 +54,9 @@ export const command: Command = {
         },
         {
             name: "undo",
+            name_localizations: {
+                "fr": 'annuler'
+            },
 
             description: "Undo the unban all of the guild",
             description_localizations: {
