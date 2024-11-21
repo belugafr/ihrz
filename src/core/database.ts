@@ -246,27 +246,32 @@ export const initializeDatabase = async (config: ConfigData): Promise<db> => {
             dbPromise = new Promise<QuickDB>(async (resolve, reject) => {
                 logger.log(`${config.console.emojis.HOST} >> Initializing cached Postgres database setup (${config.database?.method}) !`.green);
 
-                const postgresDB = new PallasDB({
-                    dialect: 'postgres',
+                const postgresDb = new PallasDB({
+                    dialect: "postgres",
+                    tables,
                     host: config.database?.mySQL?.host,
+                    port: config.database?.mySQL?.port,
+                    database: config.database?.mySQL?.database,
                     username: config.database?.mySQL?.user,
                     password: config.database?.mySQL?.password,
-                    port: config.database?.mySQL?.port,
-                    tables: tables
                 });
+
                 const memoryDB = new QuickDB({ driver: new MemoryDriver() });
 
-                // Initial data transfer from Postgres to memory
                 for (const table of tables) {
-                    const allData = await postgresDB.table(table).all();
+                    const memoryTable = memoryDB.table(table);
+                    const allData = await (postgresDb.table(table)).all();
+
+                    console.log(`Loaded table ${table}:`, allData.length)
+
                     for (const { id, value } of allData) {
-                        await memoryDB.table(table).set(id, value);
+                        await memoryTable.set(id, value);
                     }
                 }
 
                 const syncToPostgres = async () => {
                     for (const table of tables) {
-                        const postgresTable = postgresDB.table(table);
+                        const postgresTable = postgresDb.table(table);
                         const memoryTable = memoryDB.table(table);
 
                         const postgresData = await postgresTable.all();
@@ -277,11 +282,9 @@ export const initializeDatabase = async (config: ConfigData): Promise<db> => {
 
                         for (const [id, value] of memoryMap) {
                             const postgresValue = postgresMap.get(id);
-
                             if (!postgresValue || JSON.stringify(postgresValue) !== JSON.stringify(value)) {
                                 try {
                                     if (readOnlyTables.includes(table)) {
-                                        // Revert changes for read-only tables
                                         for (const { id, value } of postgresData) {
                                             await memoryTable.set(id, value);
                                         }

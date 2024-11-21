@@ -19,7 +19,6 @@
 ・ Copyright © 2020-2024 iHorizon
 */
 
-import { initializeDatabase } from './database.js';
 import commandsSync from './commandsSync.js';
 import bash from './bash/bash.js';
 import logger from "./logger.js";
@@ -48,6 +47,7 @@ import { setMaxListeners } from 'node:events';
 import { version } from '../version.js';
 import { InitData } from '../../types/initDataType.js';
 import { CacheStorage } from './cache.js';
+import { getDatabaseInstance } from './database.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -106,7 +106,7 @@ export async function main(client: Client) {
     if (!Number.isNaN(Number.parseInt(client.config.owner.ownerid2))) client.owners.push(client.config.owner.ownerid2)
 
     errorManager.uncaughtExceptionHandler(client);
-    client.db = await initializeDatabase(client.config);
+    client.db = getDatabaseInstance();
     client.notifier = new StreamNotifier(client,
         process.env.TWITCH_APPLICATION_ID || "",
         process.env.TWITCH_APPLICATION_SECRET || "",

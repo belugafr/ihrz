@@ -20,10 +20,15 @@
 */
 
 import './core/functions/colors.js';
+
+import { initializeDatabase } from './core/database.js';
+import { getToken } from './core/functions/getToken.js';
+import logger from './core/logger.js';
+
 import { ShardingManager } from 'discord.js';
 import config from './files/config.js';
-import logger from './core/logger.js';
-import { getToken } from './core/functions/getToken.js';
+
+await initializeDatabase(config);
 
 const _token = await getToken();
 
