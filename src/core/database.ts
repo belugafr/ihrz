@@ -168,6 +168,19 @@ export const initializeDatabase = async (config: ConfigData): Promise<db> => {
                 resolve(db);
             });
             break;
+        case 'POSTGRES2':
+            dbPromise = new PallasDB({
+                host: config.database?.mySQL?.host,
+                username: config.database?.mySQL?.user,
+                password: config.database?.mySQL?.password,
+                database: config.database?.mySQL?.database,
+                port: config.database?.mySQL?.port,
+                dialect: "postgres",
+                tables
+            });
+
+            logger.log(`${config.console.emojis.HOST} >> Connected to the database (${config.database?.method}) !`.green);
+            break;
         case 'CACHED_POSTGRES':
             dbPromise = new Promise<QuickDB>(async (resolve, reject) => {
                 logger.log(`${config.console.emojis.HOST} >> Initializing cached Postgres database setup (${config.database?.method}) !`.green);
