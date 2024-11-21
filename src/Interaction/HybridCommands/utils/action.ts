@@ -33,6 +33,9 @@ import { Option } from '../../../../types/option.js';
 
 export const command: Command = {
     name: "bulkunban",
+    name_localizations: {
+        "fr": 'unban'
+    },
 
     aliases: ["massunban"],
 
