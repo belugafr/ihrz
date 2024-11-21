@@ -34,7 +34,7 @@ import fs from 'fs';
 import { MongoClient } from 'mongodb';
 
 export type db = QuickDB<any> | SteganoDB | PallasDB;
-let dbInstance: db;
+let dbInstance: db | null = null;
 
 const tables = ['json', 'OWNER', 'OWNIHRZ', 'BLACKLIST', 'PREVNAMES', 'API', 'TEMP', 'SCHEDULE', 'USER_PROFIL', "RESTORECORD"];
 const readOnlyTables = ["RESTORECORD", "OWNIHRZ"];
@@ -73,7 +73,11 @@ const overwriteLastLine = (message: string) => {
     process.stdout.write(message);
 };
 
-export const initializeDatabase = async (config: ConfigData): Promise<db> => {
+export async function initializeDatabase(config: ConfigData): Promise<db> {
+    if (dbInstance !== null) {
+        return dbInstance;
+    }
+
     let dbPromise: Promise<QuickDB<any>> | SteganoDB | PallasDB | Promise<PallasDB>;
     let databasePath = `${process.cwd()}/src/files`;
 
@@ -262,8 +266,6 @@ export const initializeDatabase = async (config: ConfigData): Promise<db> => {
                     const memoryTable = memoryDB.table(table);
                     const allData = await (postgresDb.table(table)).all();
 
-                    console.log(`Loaded table ${table}:`, allData.length)
-
                     for (const { id, value } of allData) {
                         await memoryTable.set(id, value);
                     }
@@ -430,11 +432,12 @@ export const initializeDatabase = async (config: ConfigData): Promise<db> => {
             break;
     }
 
-    dbInstance = await dbPromise;
+    dbInstance = await dbPromise
+
     return dbInstance;
 };
 
-export const getDatabaseInstance = (): db => {
+export function getDatabaseInstance(): db {
     if (!dbInstance) {
         throw new Error('Database has not been initialized. Call initializeDatabase first.');
     }

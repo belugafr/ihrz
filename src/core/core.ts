@@ -66,10 +66,6 @@ export async function main(client: Client) {
     initConfig(client.config);
     dataInitializer();
 
-    logger.legacy("[*] iHorizon Discord Bot (https://github.com/ihrz/ihrz).".gray);
-    logger.legacy("[*] Warning: iHorizon Discord bot is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International".gray);
-    logger.legacy("[*] Please respect the terms of this license. Learn more at: https://creativecommons.org/licenses/by-nc-sa/4.0".gray);
-
     if (client.config.discord.phonePresence) {
 
         const { identifyProperties } = DefaultWebSocketManagerOptions;
