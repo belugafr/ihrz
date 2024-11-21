@@ -50,7 +50,7 @@ export const command: Command = {
 
             description: "Unban all member of the guild",
             description_localizations: {
-                "fr": "Bannir tout le monde sur un serveur"
+                "fr": "Débannir toute les personnes bannis du serveur"
             },
 
             type: ApplicationCommandOptionType.Subcommand
@@ -61,9 +61,9 @@ export const command: Command = {
                 "fr": 'annuler'
             },
 
-            description: "Undo the unban all of the guild",
+            description: "Undo the unban all of all members",
             description_localizations: {
-                "fr": "Annuler le dé-bannissement de tout les serveurs"
+                "fr": "Annuler le dé-bannissement de tout les membres"
             },
 
             type: ApplicationCommandOptionType.Subcommand
