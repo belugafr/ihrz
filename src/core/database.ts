@@ -74,7 +74,7 @@ const overwriteLastLine = (message: string) => {
 };
 
 export const initializeDatabase = async (config: ConfigData): Promise<db> => {
-    let dbPromise: Promise<QuickDB<any>> | SteganoDB | PallasDB;
+    let dbPromise: Promise<QuickDB<any>> | SteganoDB | PallasDB | Promise<PallasDB>;
     let databasePath = `${process.cwd()}/src/files`;
 
     if (!fs.existsSync(databasePath)) {
@@ -222,6 +222,66 @@ export const initializeDatabase = async (config: ConfigData): Promise<db> => {
                             if (!postgresValue || JSON.stringify(postgresValue) !== JSON.stringify(value)) {
                                 try {
                                     if (readOnlyTables.includes(table)) {
+                                        for (const { id, value } of postgresData) {
+                                            await memoryTable.set(id, value);
+                                        }
+                                    } else {
+                                        await postgresTable.set(id, value);
+                                    }
+                                } catch (error) {
+                                    logger.err(error as any);
+                                }
+                            }
+                        }
+                    }
+
+                    overwriteLastLine(logger.returnLog(`${config.console.emojis.HOST} >> Synchronized memory database to Postgres !`));
+                };
+
+                setInterval(syncToPostgres, 60000 * 5);
+                resolve(memoryDB);
+            });
+            break;
+        case 'CACHED_POSTGRES2':
+            dbPromise = new Promise<QuickDB>(async (resolve, reject) => {
+                logger.log(`${config.console.emojis.HOST} >> Initializing cached Postgres database setup (${config.database?.method}) !`.green);
+
+                const postgresDB = new PallasDB({
+                    dialect: 'postgres',
+                    host: config.database?.mySQL?.host,
+                    username: config.database?.mySQL?.user,
+                    password: config.database?.mySQL?.password,
+                    port: config.database?.mySQL?.port,
+                    tables: tables
+                });
+                const memoryDB = new QuickDB({ driver: new MemoryDriver() });
+
+                // Initial data transfer from Postgres to memory
+                for (const table of tables) {
+                    const allData = await postgresDB.table(table).all();
+                    for (const { id, value } of allData) {
+                        await memoryDB.table(table).set(id, value);
+                    }
+                }
+
+                const syncToPostgres = async () => {
+                    for (const table of tables) {
+                        const postgresTable = postgresDB.table(table);
+                        const memoryTable = memoryDB.table(table);
+
+                        const postgresData = await postgresTable.all();
+                        const memoryData = await memoryTable.all();
+
+                        const postgresMap = new Map(postgresData.map(item => [item.id, item.value]));
+                        const memoryMap = new Map(memoryData.map(item => [item.id, item.value]));
+
+                        for (const [id, value] of memoryMap) {
+                            const postgresValue = postgresMap.get(id);
+
+                            if (!postgresValue || JSON.stringify(postgresValue) !== JSON.stringify(value)) {
+                                try {
+                                    if (readOnlyTables.includes(table)) {
+                                        // Revert changes for read-only tables
                                         for (const { id, value } of postgresData) {
                                             await memoryTable.set(id, value);
                                         }

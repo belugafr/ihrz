@@ -95,7 +95,8 @@ export interface ConfigData {
         'POSTGRES' | //Quick.DB for postgres
         'PNG' | //SteganoDB with .PNG pictures
         'JSON2' | //SteganoDB for json
-        "POSTGRES2" // PallasDB for postgres
+        "POSTGRES2" | // PallasDB for postgres
+        "CACHED_POSTGRES2" // Quick.DB Memory Cached with PallasDB postgres 
 
         mongoDb?: string;
 
