@@ -22,8 +22,8 @@
 import puppeteer, { Browser } from 'puppeteer';
 
 let browser: Browser | null = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-});;
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
 
 export async function html2Png(
     code: string,
@@ -46,7 +46,7 @@ export async function html2Png(
     try {
         if (browser === null) {
             browser = await puppeteer.launch({
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                args: ['--no-sandbox', '--disable-setuid-sandbox']
             });
         }
 
