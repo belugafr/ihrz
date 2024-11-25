@@ -54,7 +54,7 @@ export default {
             await interaction.deleteReply();
             await interaction.followUp({
                 content: lang.suggest_reply_not_good_channel
-                    .replace('${baselang?.channel}', baseData?.channel),
+                    .replace('${baseData?.channel}', baseData?.channel),
                 ephemeral: true
             });
 
