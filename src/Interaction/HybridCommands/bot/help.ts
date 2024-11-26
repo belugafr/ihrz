@@ -110,7 +110,7 @@ async function handleCategorySelect(
                 .replaceAll('${client.iHorizon_Emojis.icon.Pin}', client.iHorizon_Emojis.icon.Pin)
                 .replaceAll('${categories.length}', categories.length.toString())
                 .replaceAll('${client.iHorizon_Emojis.badge.Slash_Bot}', client.iHorizon_Emojis.badge.Slash_Bot)
-                .replaceAll('${client.content.filter(c => c.messageCmd === false).length}', i.client.content.filter(c => c.messageCmd === 0 || 3).length.toString())
+                .replaceAll('${client.content.filter(c => c.messageCmd === false).length}', i.client.content.length.toString())
                 .replaceAll('${client.iHorizon_Emojis.icon.Crown_Logo}', client.iHorizon_Emojis.icon.Crown_Logo)
                 .replaceAll('${config.owner.ownerid1}', client.owners[0])
                 .replaceAll('${config.owner.ownerid2}', client.owners[1] ?? client.owners[0])
@@ -153,17 +153,21 @@ async function handleCategorySelect(
             ? `${client.iHorizon_Emojis.icon.iHorizon_Lock} ${commandStates}`
             : client.iHorizon_Emojis.icon.iHorizon_Unlock;
 
-        var prefixOrNot = element.prefixCmd ? `${client.iHorizon_Emojis.icon.Prefix_Command} ${bot_prefix.string}${element.prefixCmd} \n` : "";
+        var cleanedPrefixCommandName = element.prefixCmd || element.cmd;
+        var prefixOrNot = `${client.iHorizon_Emojis.icon.Prefix_Command} ${bot_prefix.string}${cleanedPrefixCommandName} \n`;
 
         switch (element.messageCmd) {
+            // Slash command
             case 0:
                 cmdPrefix = `${states}\n${client.iHorizon_Emojis.badge.Slash_Bot} **/${element.cmd}**`;
                 break;
+            // Message command
             case 1:
                 cmdPrefix = bot_prefix.type === 'mention'
-                    ? `${states}\n${client.iHorizon_Emojis.icon.Prefix_Command} **@Ping-Me ${element.prefixCmd}**`
-                    : `${states}\n${client.iHorizon_Emojis.icon.Prefix_Command} **${bot_prefix.string}${element.prefixCmd}**`;
+                    ? `${states}\n${client.iHorizon_Emojis.icon.Prefix_Command} **@Ping-Me ${cleanedPrefixCommandName}**`
+                    : `${states}\n${client.iHorizon_Emojis.icon.Prefix_Command} **${bot_prefix.string}${cleanedPrefixCommandName}**`;
                 break;
+            // Hybrid commabd
             case 2:
                 cmdPrefix = bot_prefix.type === 'mention'
                     ? `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} (@Ping-Me) ${element.prefixCmd}\n≠${client.iHorizon_Emojis.badge.Slash_Bot} **${element.prefixCmd}**`
@@ -299,7 +303,7 @@ export const command: Command = {
                 const placeholderKey = cat.options.placeholder;
                 const placeholder = lang[placeholderKey as keyof LanguageData];
 
-                const commands = client.content.filter(c => c.category === cat.categoryName);
+                const commands = client.content.filter(c => c.category === cat.categoryName && c.cmd !== c.category);
 
                 categories.push({
                     name: placeholder.toString(),
