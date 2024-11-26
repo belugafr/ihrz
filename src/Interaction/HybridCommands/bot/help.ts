@@ -102,6 +102,11 @@ async function handleCategorySelect(
     bot_prefix: { type: 'prefix' | 'mention'; string: string; },
     Commands: DatabaseStructure.UtilsPermsData | undefined
 ) {
+    const previousCollector = (response as any).buttonCollector;
+    if (previousCollector && !previousCollector.ended) {
+        previousCollector.stop();
+    }
+
     if (i.values[0] === "back") {
         const og_embed = new EmbedBuilder()
             .setColor('#001eff')
@@ -167,7 +172,7 @@ async function handleCategorySelect(
                     ? `${states}\n${client.iHorizon_Emojis.icon.Prefix_Command} **@Ping-Me ${cleanedPrefixCommandName}**`
                     : `${states}\n${client.iHorizon_Emojis.icon.Prefix_Command} **${bot_prefix.string}${cleanedPrefixCommandName}**`;
                 break;
-            // Hybrid commabd
+            // Hybrid command
             case 2:
                 cmdPrefix = bot_prefix.type === 'mention'
                     ? `${states} ${client.iHorizon_Emojis.icon.Prefix_Command} (@Ping-Me) ${element.prefixCmd}\n≠${client.iHorizon_Emojis.badge.Slash_Bot} **${element.prefixCmd}**`
@@ -183,7 +188,7 @@ async function handleCategorySelect(
 
         const newFieldLength = cmdPrefix.length + descValue.length;
 
-        if (currentFieldsCount >= 8 || currentFieldsLength + newFieldLength > 5500) {
+        if (currentFieldsCount >= 8 || currentFieldsLength + newFieldLength > 4000) {
             embeds.push(currentEmbed);
             currentEmbed = new EmbedBuilder()
                 .setTitle(`${category.emoji}・${category.name}`)
@@ -223,6 +228,8 @@ async function handleCategorySelect(
         time: 840_000
     });
 
+    (response as any).buttonCollector = buttonCollector;
+
     buttonCollector.on('collect', async (interaction) => {
         if (interaction.user.id !== i.user.id) {
             await interaction.reply({
@@ -251,6 +258,15 @@ async function handleCategorySelect(
 
         const updatedNavigationRow = createNavigationRow(currentPage, embeds.length);
         await updatePage(response, embeds, currentPage, menuRows, updatedNavigationRow);
+    });
+
+    buttonCollector.on('end', async () => {
+        const disabledNavigationRow = createNavigationRow(currentPage, embeds.length);
+        disabledNavigationRow.components.forEach(button => button.setDisabled(true));
+
+        await response.edit({
+            components: [...menuRows, disabledNavigationRow]
+        });
     });
 }
 
