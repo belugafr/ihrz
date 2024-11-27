@@ -268,7 +268,7 @@ async function sendErrorMessage(lang: LanguageData, message: Message, botPrefix:
     let wrongArgumentName: string = "";
     let errorPosition = "";
 
-    fullNameCommand = command.name!;
+    fullNameCommand = command.prefixName || command.name!;
     currentCommand = command as any;
 
     errorPosition += " ".padStart(botPrefix.length + fullNameCommand.length);
@@ -285,7 +285,7 @@ async function sendErrorMessage(lang: LanguageData, message: Message, botPrefix:
     let argsString = argument.join(" ");
     const embed = new EmbedBuilder()
         .setDescription(lang.hybridcommands_args_error_embed_desc
-            .replace("${currentCommand.name}", currentCommand.name ?? "")
+            .replace("${currentCommand.name}", currentCommand.prefixName || currentCommand.name)
             .replace("${currentCommand.description}", currentCommand.description ?? "")
             .replace("${botPrefix}", botPrefix)
             .replace("${fullNameCommand}", fullNameCommand)
