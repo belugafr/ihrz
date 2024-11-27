@@ -184,26 +184,14 @@ export async function checkCommandArgs(message: Message, command: Command, args:
 
     let expectedArgs: ArgumentBrief[] = [];
 
-    if (isSubCommandArgumentValue(command) && command.command) {
-        command.command.options?.forEach(option => {
-            expectedArgs.push({
-                name: option.name,
-                type: getArgumentOptionTypeWithOptions(option),
-                required: option.required || false,
-                longString: option.type === 3 && !option.choices
-            });
+    command.options?.forEach(option => {
+        expectedArgs.push({
+            name: option.name,
+            type: getArgumentOptionTypeWithOptions(option),
+            required: option.required || false,
+            longString: option.type === 3 && !option.choices
         });
-    }
-    else if ('options' in command) {
-        command.options?.forEach(option => {
-            expectedArgs.push({
-                name: option.name,
-                type: getArgumentOptionTypeWithOptions(option),
-                required: option.required || false,
-                longString: option.type === 3 && !option.choices
-            });
-        });
-    }
+    });
 
     const minArgsCount = expectedArgs.filter(arg => arg.required).length;
     const isLastArgLongString = expectedArgs.length > 0 && expectedArgs[expectedArgs.length - 1].longString;
