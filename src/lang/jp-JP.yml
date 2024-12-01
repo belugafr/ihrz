@@ -1006,6 +1006,22 @@ perm_roles_created_role: "以下の役割が作成されました：${createdRol
 perm_roles_already_upate: "すべての役割が既に存在し、最新の状態です。"
 perm_roles_error: "役割の作成または更新中にエラーが発生しました。"
 
+# /toggle-react
+toggle_react_command_work: "<@${interaction.member?.id}>, メンバーが歓迎メッセージを送信すると、ボットは **{activeMsg}**"
+toggle_react_doesnt_react: "もう反応しません"
+toggle_react_react: "反応します"
+
+# /remove-react
+remove_react_command_work: "<@${interaction.member?.id}>, メンバーが `${message.toLowerCase()}` を送信すると、ボットは **もう反応しません**."
+
+# /add-react
+add_react_command_err_emojis: "リアクションの絵文字 `{emoji}` は有効な絵文字ではありません！"
+add_react_command_work: "<@${interaction.member?.id}>, メンバーが `${message.toLowerCase()}` を送信すると、ボットは **{emoji} で反応します**."
+
+# /list-react
+list_react_nothing_found: "データが見つかりませんでした。まずいくつか追加してください。"
+list_react_embed_msg: "誰かが **`${key}`** を送信すると、私は **${value} で反応します**\n"
+
 
 # Member Count commands
 # /setmembercount

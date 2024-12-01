@@ -1006,6 +1006,22 @@ perm_roles_created_role: "الأدوار اللي اتعملت: ${createdRoles.j
 perm_roles_already_upate: "كل الأدوار موجودة وحديثة."
 perm_roles_error: "حصل خطأ أثناء إنشاء أو تحديث الأدوار."
 
+# /toggle-react
+toggle_react_command_work: "<@${interaction.member?.id}>, الآن عندما يرسل أحد الأعضاء رسالة ترحيب، البوت **{activeMsg}**"
+toggle_react_doesnt_react: "لن يتفاعل بعد الآن"
+toggle_react_react: "سيتفاعل"
+
+# /remove-react
+remove_react_command_work: "<@${interaction.member?.id}>, الآن عندما يرسل أحد الأعضاء `${message.toLowerCase()}`، البوت **لن يتفاعل**."
+
+# /add-react
+add_react_command_err_emojis: "الرمز التعبيري `{emoji}` للتفاعل غير صحيح!"
+add_react_command_work: "<@${interaction.member?.id}>, الآن عندما يرسل أحد الأعضاء `${message.toLowerCase()}`، البوت **سيتفاعل** بـ {emoji}"
+
+# /list-react
+list_react_nothing_found: "لم يتم العثور على أي بيانات، يرجى إضافة بعض منها أولاً."
+list_react_embed_msg: "عندما يرسل أحد الأشخاص **`${key}`**، سأ**تفاعل** بـ ${value}\n"
+
 
 # Member Count commands
 # /setmembercount

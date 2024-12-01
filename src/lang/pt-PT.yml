@@ -1006,6 +1006,22 @@ perm_roles_created_role: "Созданы следующие роли: ${createdR
 perm_roles_already_upate: "Все роли уже существуют и актуальны."
 perm_roles_error: "Произошла ошибка при создании или обновлении ролей."
 
+# /toggle-react
+toggle_react_command_work: "<@${interaction.member?.id}>, agora quando um membro enviar uma mensagem de boas-vindas, o bot **{activeMsg}**"
+toggle_react_doesnt_react: "não reagirá mais"
+toggle_react_react: "reagirá"
+
+# /remove-react
+remove_react_command_work: "<@${interaction.member?.id}>, agora quando um membro enviar `${message.toLowerCase()}`, o bot **não reagirá mais**."
+
+# /add-react
+add_react_command_err_emojis: "O emoji `{emoji}` da reação não é válido!"
+add_react_command_work: "<@${interaction.member?.id}>, agora quando um membro enviar `${message.toLowerCase()}`, o bot **reagirá** com {emoji}"
+
+# /list-react
+list_react_nothing_found: "Nenhum dado encontrado, por favor adicione alguns primeiro."
+list_react_embed_msg: "Quando alguém envia **`${key}`**, eu **reagirei** com ${value}\n"
+
 
 # Member Count commands
 # /setmembercount
