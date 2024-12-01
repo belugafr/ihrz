@@ -1413,6 +1413,9 @@ embed_copy_bad_channel_msg: "Il canale in cui si trova il messaggio è irraggiun
 embed_copy_bad_message_msg: "Il messaggio è irraggiungibile!"
 embed_copy_bad_embed_message_msg: "Il messaggio non ha un embed!"
 embed_copy_bad_url_msg: "URL non valida, si prega di riprovare. Il formato corretto è: https://discord.com/channels/${message.guildId}/${interaction.channelId}/${interaction.id}"
+embed_btn_replace: "Sostituisci l'embed"  
+embed_replace_question_msg: "Qual è il nuovo URL del messaggio in cui è necessario sostituire l'embed?"  
+embed_replace_message: "{user}, il nuovo embed ha sostituito l'embed di {messageUrl}"  
 
 # /rolesaver
 rolesaver_embed_title: "Modulo RoleSaver"

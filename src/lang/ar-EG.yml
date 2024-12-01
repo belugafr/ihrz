@@ -1410,6 +1410,9 @@ embed_copy_bad_channel_msg: "القناة التي توجد فيها الرسا�
 embed_copy_bad_message_msg: "الرسالة غير متاحة!"
 embed_copy_bad_embed_message_msg: "الرسالة لا تحتوي على إيمبد!"
 embed_copy_bad_url_msg: "رابط غير صالح، يرجى المحاولة مرة أخرى. التنسيق الصحيح هو: https://discord.com/channels/${message.guildId}/${interaction.channelId}/${interaction.id}"
+embed_btn_replace: "استبدال التضمين"  
+embed_replace_question_msg: "ما هو عنوان URL الجديد للرسالة التي تحتاج إلى استبدال التضمين فيها؟"  
+embed_replace_message: "{user}، تم استبدال التضمين الجديد بالتضمين الخاص بـ {messageUrl}"  
 
 # /rolesaver
 rolesaver_embed_title: "وحدة حفظ الأدوار"

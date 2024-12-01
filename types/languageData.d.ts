@@ -1045,6 +1045,9 @@ export interface LanguageData {
   embed_copy_bad_message_msg: string;
   embed_copy_bad_embed_message_msg: string;
   embed_copy_bad_url_msg: string;
+  embed_btn_replace: string;
+  embed_replace_question_msg: string;
+  embed_replace_message: string;
   rolesaver_embed_title: string;
   rolesaver_embed_desc: string;
   rolesaver_embed_fields_1_name: string;
