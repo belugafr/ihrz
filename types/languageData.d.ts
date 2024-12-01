@@ -507,7 +507,10 @@ export interface LanguageData {
   zip_emojis_doesnt_have_perm: string;
   zip_emojis_command_work: string;
   zip_emojis_command_error: string;
-
+  sticket_no_sticker: string;
+  sticket_command_work: string;
+  sticker_command_error: string;
+  sticket_command_error2: string;
   blockpub_not_admin: string;
   blockpub_now_enable: string;
   blockpub_now_disable: string;
@@ -762,7 +765,7 @@ export interface LanguageData {
   add_react_command_work: string;
   list_react_nothing_found: string;
   list_react_embed_msg: string;
-  
+
   setmembercount_not_admin: string;
   setmembercount_helpembed_title: string;
   setmembercount_helpembed_description: string;

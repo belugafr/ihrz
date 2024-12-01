@@ -707,6 +707,12 @@ zip_emojis_doesnt_have_perm: "Vous n'avez pas la permission de gérer les émoji
 zip_emojis_command_work: "🎉 Exportation terminée en **${calcTime}**ms ! Voici l'archive contenant ${emojis.size} émojis."
 zip_emojis_command_error: "Une erreur s'est produite lors de l'exportation des émojis."
 
+# +sticker  
+sticket_no_sticker: "Aucun autocollant trouvé dans le message auquel vous avez répondu."  
+sticket_command_work: "L'autocollant `${x.name}` a été créé avec succès."  
+sticker_command_error: "Impossible de créer l'autocollant. Une erreur s'est produite : `${err.message}`."  
+sticket_command_error2: "Veuillez répondre à un message contenant un autocollant."  
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

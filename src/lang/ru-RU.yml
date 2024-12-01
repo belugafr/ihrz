@@ -707,6 +707,12 @@ zip_emojis_doesnt_have_perm: "У вас нет разрешения на упр�
 zip_emojis_command_work: "🎉 Экспорт завершен за **${calcTime}** мс! Вот архив, содержащий ${emojis.size} эмодзи."
 zip_emojis_command_error: "Произошла ошибка при экспорте эмодзи."
 
+# +sticker  
+sticket_no_sticker: "Стикер не найден в ответном сообщении."  
+sticket_command_work: "Стикер `${x.name}` успешно создан."  
+sticker_command_error: "Не удалось создать стикер. Произошла ошибка: `${err.message}`."  
+sticket_command_error2: "Пожалуйста, ответьте на сообщение, содержащее стикер."  
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

@@ -707,6 +707,12 @@ zip_emojis_doesnt_have_perm: "Não tem permissão para gerir emojis."
 zip_emojis_command_work: "🎉 Exportação concluída em **${calcTime}**ms! Aqui está o arquivo com ${emojis.size} emojis."
 zip_emojis_command_error: "Ocorreu um erro ao exportar os emojis."
 
+# +sticker  
+sticket_no_sticker: "Nenhum adesivo encontrado na mensagem respondida."  
+sticket_command_work: "O adesivo `${x.name}` foi criado com sucesso."  
+sticker_command_error: "Não foi possível criar o adesivo. Ocorreu um erro: `${err.message}`."  
+sticket_command_error2: "Por favor, responda a uma mensagem que contenha um adesivo."  
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup
