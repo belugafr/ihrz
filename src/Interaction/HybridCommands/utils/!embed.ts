@@ -322,56 +322,121 @@ export default {
 
 
         async function replaceEmbed(confirmation: ButtonInteraction<"cached">) {
-
             await confirmation.update({
                 content: lang.embed_replace_question_msg,
                 components: [],
                 files
             });
 
-            let response = await (interaction.channel as BaseGuildTextChannel)?.awaitMessages({
+            let response2 = await (interaction.channel as BaseGuildTextChannel)?.awaitMessages({
                 filter: (m) => m.author.id === interaction.member?.user.id!,
                 max: 1,
                 time: 300_000,
             });
 
-            const parts = extractDiscordUrlParts(response.first()?.content || 'none');
+            try {
+                const parts = extractDiscordUrlParts(response2.first()?.content || 'none');
 
-            if (parts.userIdOrGuildId !== interaction.guildId) {
-                confirmation.followUp({ content: lang.embed_copy_bad_guild_msg.replace("${interaction.guild?.name}", interaction.guild?.name!), ephemeral: true })
-                return;
+                (response2.first())?.delete().catch(() => { });
+
+                if (parts.userIdOrGuildId !== interaction.guildId) {
+                    await confirmation.followUp({
+                        content: lang.embed_copy_bad_guild_msg.replace("${interaction.guild?.name}", interaction.guild?.name!),
+                        ephemeral: true
+                    });
+
+                    await response.edit({
+                        content: lang.embed_first_message,
+                        embeds: [__tempEmbed],
+                        components: [
+                            new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select),
+                            new ActionRowBuilder<ButtonBuilder>().addComponents(save, send, replace, cancel)
+                        ],
+                        files
+                    });
+                    return;
+                }
+
+                const channel: TextChannel | null = interaction.guild?.channels.cache.get(parts.channelId) as TextChannel;
+
+                if (!channel) {
+                    await confirmation.followUp({ content: lang.embed_copy_bad_channel_msg, ephemeral: true });
+
+                    await response.edit({
+                        content: lang.embed_first_message,
+                        embeds: [__tempEmbed],
+                        components: [
+                            new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select),
+                            new ActionRowBuilder<ButtonBuilder>().addComponents(save, send, replace, cancel)
+                        ],
+                        files
+                    });
+                    return;
+                }
+
+                const targetMessage = await channel?.messages.fetch(parts.messageId);
+
+                if (!targetMessage) {
+                    await confirmation.followUp({ content: lang.embed_copy_bad_message_msg, ephemeral: true });
+
+                    await response.edit({
+                        content: lang.embed_first_message,
+                        embeds: [__tempEmbed],
+                        components: [
+                            new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select),
+                            new ActionRowBuilder<ButtonBuilder>().addComponents(save, send, replace, cancel)
+                        ],
+                        files
+                    });
+                    return;
+                }
+
+                const targetMessageEmbedsSize = targetMessage.embeds.length;
+
+                if (targetMessageEmbedsSize === 0) {
+                    await confirmation.followUp({ content: lang.embed_copy_bad_embed_message_msg, ephemeral: true });
+
+                    await response.edit({
+                        content: lang.embed_first_message,
+                        embeds: [__tempEmbed],
+                        components: [
+                            new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select),
+                            new ActionRowBuilder<ButtonBuilder>().addComponents(save, send, replace, cancel)
+                        ],
+                        files
+                    });
+                    return;
+                }
+
+                targetMessage.edit({ embeds: [__tempEmbed] });
+                await confirmation.editReply({
+                    content: lang.embed_replace_message.replace('{user}', interaction.member?.user.toString()!)
+                        .replace('{messageUrl}', response2.first()?.content!),
+                    files: [],
+                    embeds: [],
+                    components: []
+                });
+            } catch (error) {
+                (response2.first())?.delete().catch(() => { });
+
+                await confirmation.followUp({
+                    content: lang.embed_copy_bad_url_msg
+                        .replace("${message.guildId}", interaction.guildId!)
+                        .replace("${interaction.channelId}", interaction.channelId!)
+                        .replace("${interaction.id}", interaction.id!),
+                    ephemeral: true
+                });
+
+                await response.edit({
+                    content: lang.embed_first_message,
+                    embeds: [__tempEmbed],
+                    components: [
+                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select),
+                        new ActionRowBuilder<ButtonBuilder>().addComponents(save, send, replace, cancel)
+                    ],
+                    files
+                });
             }
-
-            const channel: TextChannel | null = interaction.guild?.channels.cache.get(parts.channelId) as TextChannel;
-
-            if (!channel) {
-                confirmation.followUp({ content: lang.embed_copy_bad_channel_msg, ephemeral: true })
-                return;
-            };
-
-            const targetMessage = await channel?.messages.fetch(parts.messageId);
-
-            if (!targetMessage) {
-                confirmation.followUp({ content: lang.embed_copy_bad_message_msg, ephemeral: true })
-                return;
-            };
-
-            const targetMessageEmbedsSize = targetMessage.embeds.length;
-
-            if (targetMessageEmbedsSize === 0) {
-                confirmation.followUp({ content: lang.embed_copy_bad_embed_message_msg, ephemeral: true })
-                return;
-            };
-
-            targetMessage.edit({ embeds: [__tempEmbed] });
-            response.first()?.delete();
-            confirmation.editReply({
-                content: lang.embed_replace_message.replace('{user}', interaction.member?.user.toString()!)
-                    .replace('{messageUrl}', response.first()?.content!),
-                files: [],
-                embeds: [],
-                components: []
-            })
         }
 
         async function sendEmbed(confirmation: ButtonInteraction<"cached">) {
@@ -483,22 +548,26 @@ export default {
         }
 
         function extractDiscordUrlParts(url: string): { userIdOrGuildId: string, channelId: string, messageId: string } {
-            const urlObj = new URL(url);
-            const pathSegments = urlObj.pathname.split('/').filter(segment => segment !== '');
+            try {
+                const urlObj = new URL(url);
+                const pathSegments = urlObj.pathname.split('/').filter(segment => segment !== '');
 
-            if (pathSegments.length < 4 || pathSegments[0] !== 'channels') {
+                if (pathSegments.length < 4 || pathSegments[0] !== 'channels') {
+                    throw new Error('URL Discord non valide');
+                }
+
+                const userIdOrGuildId = pathSegments[1];
+                const channelId = pathSegments[2];
+                const messageId = pathSegments[3];
+
+                return {
+                    userIdOrGuildId,
+                    channelId,
+                    messageId
+                };
+            } catch (err) {
                 throw new Error('URL Discord non valide');
             }
-
-            const userIdOrGuildId = pathSegments[1];
-            const channelId = pathSegments[2];
-            const messageId = pathSegments[3];
-
-            return {
-                userIdOrGuildId,
-                channelId,
-                messageId
-            };
         }
     },
 };
