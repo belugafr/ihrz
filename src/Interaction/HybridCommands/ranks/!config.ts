@@ -93,10 +93,10 @@ export default {
                     pageRoles.length > 0
                         ? pageRoles.map(([level, roleId]) => ({
                             name: lang.ranks_config_autofields_name
-                                .replace("{level}", level),
+                                .replace("${level}", level),
                             value: lang.ranks_config_autofields_value
-                                .replace("{level}", level)
-                                .replace("{role}", `<@&${roleId}>`),
+                                .replace("${level}", level)
+                                .replace("${roleId}", String(roleId)),
                             inline: false
                         }))
                         : [{
@@ -107,9 +107,9 @@ export default {
                 )
                 .setFooter({
                     text: lang.ranks_config_help_footer
-                        .replace("{currentPage}", currentPage.toString())
-                        .replace("{totalPage}", totalPage.toString())
-                        .replace("{totalRanks}", totalRanks.toString()),
+                        .replace("${currentPage}", currentPage.toString())
+                        .replace("${totalPage}", totalPage.toString())
+                        .replace("${totalRanks}", totalRanks.toString()),
                     iconURL: interaction.guild?.iconURL() || undefined
                 })
                 .setTimestamp();
