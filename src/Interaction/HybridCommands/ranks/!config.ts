@@ -106,7 +106,7 @@ export default {
                         }]
                 )
                 .setFooter({
-                    text: lang.ranks_config_footer_page
+                    text: lang.ranks_config_help_footer
                         .replace("{currentPage}", currentPage.toString())
                         .replace("{totalPage}", totalPage.toString())
                         .replace("{totalRanks}", totalRanks.toString()),

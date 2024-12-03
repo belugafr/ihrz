@@ -76,7 +76,7 @@ export interface LanguageData {
   ranks_config_autofields_value: string;
   ranks_config_nofields_name: string;
   ranks_config_nofields_value: string;
-  ranks_config_footer_page: string;
+  ranks_config_help_footer: string;
   ranks_config_btn_add_name: string;
   ranks_config_btn_remove_name: string;
   ranks_config_add_max_roles: string;
