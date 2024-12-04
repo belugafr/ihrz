@@ -169,28 +169,36 @@ export default {
             componentType: ComponentType.Button
         });
 
-        collector.on('collect', async (interaction) => {
-            if (interaction.customId === 'prev_page') {
+        collector.on('collect', async (interaction2) => {
+            if (interaction2.user.id !== interaction.member?.user.id) {
+                await interaction2.reply({
+                    content: lang.help_not_for_you,
+                    ephemeral: true
+                });
+                return;
+            }
+
+            if (interaction2.customId === 'prev_page') {
                 currentPage = Math.max(0, currentPage - 1);
-                await interaction.update({
+                await interaction2.update({
                     embeds: [createRankRolesEmbed(currentPage)],
                     components: [createActionRow()]
                 });
                 return;
             }
 
-            if (interaction.customId === 'next_page') {
+            if (interaction2.customId === 'next_page') {
                 const roleEntries = Object.entries(ranksConfig.ranksRoles || {});
                 currentPage = Math.min(Math.floor(roleEntries.length / itemsPerPage), currentPage + 1);
-                await interaction.update({
+                await interaction2.update({
                     embeds: [createRankRolesEmbed(currentPage)],
                     components: [createActionRow()]
                 });
                 return;
             }
 
-            if (interaction.customId === 'return_to_main') {
-                await interaction.update({
+            if (interaction2.customId === 'return_to_main') {
+                await interaction2.update({
                     content: null,
                     embeds: [createRankRolesEmbed(currentPage)],
                     components: [createActionRow()]
@@ -198,11 +206,11 @@ export default {
                 return;
             }
 
-            if (interaction.customId === 'add_role') {
+            if (interaction2.customId === 'add_role') {
 
                 const currentRoles = Object.values(ranksConfig.ranksRoles || {});
                 if (currentRoles.length >= 25) {
-                    await interaction.reply({
+                    await interaction2.reply({
                         content: lang.ranks_config_add_max_roles,
                         ephemeral: true
                     });
@@ -216,7 +224,7 @@ export default {
                             .setPlaceholder(lang.ranks_config_add_role_menu_placeholder)
                     );
 
-                let awaiting = await interaction.update({
+                let awaiting = await interaction2.update({
                     content: lang.ranks_config_awaiting1_response,
                     components: [roleSelectRow, createReturnRow()]
                 });
@@ -338,11 +346,11 @@ export default {
             }
 
             // Remove Role Flow
-            if (interaction.customId === 'remove_role') {
+            if (interaction2.customId === 'remove_role') {
                 const roleEntries = Object.entries(ranksConfig.ranksRoles || {});
 
                 if (roleEntries.length === 0) {
-                    await interaction.reply({
+                    await interaction2.reply({
                         content: lang.ranks_config_remove_no_rank,
                         ephemeral: true
                     });
@@ -370,7 +378,7 @@ export default {
                             .addOptions(roleOptions)
                     );
 
-                let awaiting = await interaction.update({
+                let awaiting = await interaction2.update({
                     content: lang.ranks_config_remove_awaiting_response,
                     components: [removeRoleRow, createReturnRow()]
                 });
