@@ -81,22 +81,16 @@ export const command: Command = {
         neededPerm,
         options?: string[],
     ) => {
-        console.log('Rap vs Reality command called');
-        console.log('Options:', options);
+        if (interaction.guild.preferredLocale !== 'fr') return;
 
         const beforeSucksUrl = client.method.string(options!, 0);
         const bigSucksUrl = client.method.string(options!, 1);
 
-        console.log('Before URL:', beforeSucksUrl);
-        console.log('After URL:', bigSucksUrl);
-
         if (!beforeSucksUrl || !bigSucksUrl) {
-            console.error('Missing image URLs');
             return interaction.reply('Please provide two valid image URLs.');
         }
 
         try {
-            console.log('Downloading images...');
             const beforeSucksResponse = await axios.get(beforeSucksUrl, { responseType: 'arraybuffer' });
             const bigSucksResponse = await axios.get(bigSucksUrl, { responseType: 'arraybuffer' });
 
@@ -107,11 +101,6 @@ export const command: Command = {
             const bigSucksPngPath = await convertToPng(
                 Buffer.from(bigSucksResponse.data),
                 `bigSucks-${interaction.id}`
-            );
-
-            console.log('Images downloaded:',
-                beforeSucksResponse.data.byteLength,
-                bigSucksResponse.data.byteLength
             );
 
             const videoWidth = 1920;
@@ -128,7 +117,6 @@ export const command: Command = {
             return new Promise((resolve, reject) => {
                 const outputPath = path.join(tempDir, `merged_video_${Date.now()}.mp4`);
 
-                console.log('Output Path:', outputPath);
                 ffmpeg()
                     .input(path.join(rapRealityPath, 'part1.mp4'))
                     .input(path.join(rapRealityPath, 'part2.mp4'))
@@ -149,8 +137,6 @@ export const command: Command = {
                     .output(outputPath)
                     .on('end', async () => {
                         try {
-                            console.log('Vidéo fusionnée avec succès');
-
                             await interaction.reply({
                                 files: [{
                                     attachment: outputPath,
@@ -158,25 +144,20 @@ export const command: Command = {
                                 }]
                             });
 
-                            // Nettoyer le fichier temporaire
                             fs.unlinkSync(outputPath);
                             resolve(null);
                         } catch (sendError) {
-                            console.error('Erreur lors de l\'envoi de la vidéo:', sendError);
                             reject(sendError);
                         }
                     })
                     .on('error', (err) => {
-                        console.error('Erreur FFmpeg:', err);
                         interaction.reply(`Erreur FFmpeg : ${err.message}`);
                         reject(err);
                     })
                     .run();
 
-
             });
         } catch (error) {
-            console.error('COMPREHENSIVE ERROR:', error);
             interaction.reply(`An error occurred: ${(error as any).message}`);
         }
     }
