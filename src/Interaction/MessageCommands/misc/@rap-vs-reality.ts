@@ -15,6 +15,33 @@ import { Option } from '../../../../types/option.js';
 import { axios } from '../../../core/functions/axios.js';
 import os from 'os';
 import { writeFile } from 'fs/promises';
+import sharp from 'sharp';
+
+const tempDir = path.join(os.tmpdir(), 'rap-vs-reality');
+
+async function convertToPng(buffer: Buffer, filename: string): Promise<string> {
+    if (!fs.existsSync(tempDir)) {
+        fs.mkdirSync(tempDir, { recursive: true });
+    }
+    const outputPath = path.join(tempDir, `${filename}.png`);
+    try {
+        await sharp(buffer)
+            .toFormat('png')
+            .toFile(outputPath);
+
+        return outputPath;
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+async function resizeImage(inputPath: string, outputPath: string
+    , width: number, height: number) {
+    await sharp(inputPath)
+        .resize(width, height)
+        .toFile(outputPath);
+}
 
 export const command: Command = {
     name: 'rap-vs-reality',
@@ -73,42 +100,52 @@ export const command: Command = {
             const beforeSucksResponse = await axios.get(beforeSucksUrl, { responseType: 'arraybuffer' });
             const bigSucksResponse = await axios.get(bigSucksUrl, { responseType: 'arraybuffer' });
 
-            const tempDir = path.join(os.tmpdir(), 'rap-vs-reality');
-            if (!fs.existsSync(tempDir)) {
-                fs.mkdirSync(tempDir);
-            }
-
-            writeFileSync(tempDir + `/beforeSucks-${interaction.id}.png`, Buffer.from(beforeSucksResponse.data));
-            writeFileSync(tempDir + `/bigSucks-${interaction.id}.png`, Buffer.from(bigSucksResponse.data));
+            const beforeSucksPngPath = await convertToPng(
+                Buffer.from(beforeSucksResponse.data),
+                `beforeSucks-${interaction.id}`
+            );
+            const bigSucksPngPath = await convertToPng(
+                Buffer.from(bigSucksResponse.data),
+                `bigSucks-${interaction.id}`
+            );
 
             console.log('Images downloaded:',
                 beforeSucksResponse.data.byteLength,
                 bigSucksResponse.data.byteLength
             );
 
-            const rapRealityPath = path.join(process.cwd(), 'src', 'assets', 'rap-vs-reality');
-            console.log('Rap Reality Path:', rapRealityPath);
+            const videoWidth = 1920;
+            const videoHeight = 1080;
 
-            console.log(tempDir + `/beforeSucks-${interaction.id}.png`)
+            const beforeSucksResizedPath = path.join(tempDir, `beforeSucksResized-${interaction.id}.png`);
+            const bigSucksResizedPath = path.join(tempDir, `bigSucksResized-${interaction.id}.png`);
+
+            await resizeImage(beforeSucksPngPath, beforeSucksResizedPath, videoWidth, videoHeight);
+            await resizeImage(bigSucksPngPath, bigSucksResizedPath, videoWidth, videoHeight);
+
+            const rapRealityPath = path.join(process.cwd(), 'src', 'assets', 'rap-vs-reality');
 
             return new Promise((resolve, reject) => {
-                const outputPath = path.join(os.tmpdir(), `merged_video_${Date.now()}.mp4`);
+                const outputPath = path.join(tempDir, `merged_video_${Date.now()}.mp4`);
 
+                console.log('Output Path:', outputPath);
                 ffmpeg()
                     .input(path.join(rapRealityPath, 'part1.mp4'))
                     .input(path.join(rapRealityPath, 'part2.mp4'))
                     .input(path.join(rapRealityPath, 'part3.mp4'))
                     .input(path.join(rapRealityPath, 'part4.mp4'))
-                    .input(tempDir + `/beforeSucks-${interaction.id}.png`)
-                    .input(tempDir + `/bigSucks-${interaction.id}.png`)
+                    .input(beforeSucksResizedPath)
+                    .input(bigSucksResizedPath)
                     .videoCodec('libx264')
                     .audioCodec('aac')
                     .outputOptions([
-                        '-filter_complex', '[0:v][1:v][2:v][3:v]concat=n=4:v=1[outv];[0:a][1:a][2:a][3:a]concat=n=4:v=0:a=1[outa]',
+                        '-filter_complex',
+                        `[1:v][4:v]overlay=0:0[part2_with_overlay];` +
+                        `[3:v][5:v]overlay=0:0[part4_with_overlay];` +
+                        `[0:v][0:a][part2_with_overlay][1:a][2:v][2:a][part4_with_overlay][3:a]concat=n=4:v=1:a=1[outv][outa]`,
                         '-map', '[outv]',
                         '-map', '[outa]'
                     ])
-
                     .output(outputPath)
                     .on('end', async () => {
                         try {
