@@ -43,7 +43,7 @@ class KdenLive {
 
     async export(projectPath: string) {
         let exportPath = path.join(tempDir, `merged_video_${Date.now()}.mp4`);
-        execSync(`melt -audio-samplerate 44100 ${projectPath} -consumer avformat:${exportPath}`);
+        execSync(`melt -audio-samplerate 44100 ${projectPath} -consumer avformat:${exportPath}`, { stdio: "ignore" });
         rmSync(projectPath);
         return exportPath;
     }
