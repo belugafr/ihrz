@@ -22,14 +22,10 @@
 import {
     Client,
     EmbedBuilder,
-    PermissionsBitField,
     ApplicationCommandOptionType,
     ChatInputCommandInteraction,
-    BaseGuildTextChannel,
     ApplicationCommandType,
     Message,
-    ButtonBuilder,
-    ButtonStyle,
     ChannelType,
     Channel,
     GuildTextBasedChannel,
@@ -38,24 +34,47 @@ import {
     ActionRowBuilder,
     ComponentType,
     TextInputStyle,
-    Embed,
     RoleSelectMenuBuilder,
     StringSelectMenuInteraction,
     CacheType
 } from 'discord.js'
 
 import { Command } from '../../../../types/command.js';
-import logger from '../../../core/logger.js';
 import { LanguageData } from '../../../../types/languageData.js';
 import { DatabaseStructure } from '../../../../types/database_structure.js';
 import { iHorizonModalResolve } from '../../../core/functions/modalHelper.js';
+import { isDiscordEmoji, isSingleEmoji } from '../../../core/functions/emojiChecker.js';
 
-type RoleReactData = {
-    roleId: string;
-    emoji: string;
-    desc: string;
-    label: string;
-}[];
+function generateSelectMenu(data: DatabaseStructure.RoleReactData, messageId: string) {
+    const dynamicSelectMenu = new StringSelectMenuBuilder()
+        .setCustomId(`roleselect_roles%${messageId}`)
+        .setPlaceholder("Select configured roles");
+
+    data.forEach((item, index) => {
+        const selectMenuOption = new StringSelectMenuOptionBuilder()
+            .setLabel(item.label)
+            .setValue(`role_${item.roleId}`);
+        if (item.emoji && (isSingleEmoji(item.emoji) || isDiscordEmoji(item.emoji))) {
+            selectMenuOption.setEmoji(item.emoji);
+        }
+        if (item.desc) {
+            selectMenuOption.setDescription(item.desc);
+        }
+        dynamicSelectMenu.addOptions(selectMenuOption);
+    });
+
+    return dynamicSelectMenu;
+}
+
+async function getMessage(channel: GuildTextBasedChannel, messageId: string) {
+    let fetchedMessage = null;
+    try {
+        fetchedMessage = await channel.messages.fetch(messageId);
+    } catch (error) {
+        fetchedMessage = null;
+    }
+    return fetchedMessage;
+}
 
 export const command: Command = {
     name: 'roleselect',
@@ -89,18 +108,16 @@ export const command: Command = {
     thinking: false,
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, runningCommand: any, neededPerm?: number, args?: string[]) => {
-        // Improved guard clauses
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) {
             return;
         }
 
-        // Flexible channel and message ID extraction
         const channel = interaction instanceof ChatInputCommandInteraction
             ? interaction.options.getChannel("channel") as Channel
             : client.method.channel(interaction, args!, 0) as Channel;
 
         const messageId = interaction instanceof ChatInputCommandInteraction
-            ? interaction.options.getString("messageId") as string
+            ? interaction.options.getString("messageid") as string
             : client.method.string(args!, 1) as string;
 
         // Validate message ID
@@ -111,8 +128,17 @@ export const command: Command = {
             return;
         }
 
+        let fetchedMessage = await getMessage(channel as GuildTextBasedChannel, messageId);
+
+        if (!fetchedMessage) {
+            await client.method.interactionSend(interaction, {
+                content: "Message not found in the specified channel."
+            });
+            return;
+        }
+
         // Fetch existing role select data
-        let baseData: RoleReactData = await client.db.get(`${interaction.guildId}.GUILD.ROLE_SELECT.${messageId}`) || [];
+        let baseData: DatabaseStructure.RoleReactData = await client.db.get(`${interaction.guildId}.GUILD.ROLE_SELECT.${messageId}`) || [];
 
         // Main selection menu
         const selectMenuChoice = new StringSelectMenuBuilder()
@@ -128,7 +154,7 @@ export const command: Command = {
                     .setValue("remove")
                     .setEmoji("🔸"),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel("Save Configuration")
+                    .setLabel("Save and Apply Configuration")
                     .setValue("save")
                     .setEmoji("💾"),
                 new StringSelectMenuOptionBuilder()
@@ -137,71 +163,53 @@ export const command: Command = {
                     .setEmoji("🚫")
             );
 
-        // Dynamic role selection menu
-        const baseSelectMenu = new StringSelectMenuBuilder()
-            .setCustomId("roleselect_second_menu")
-            .setPlaceholder("Select configured roles");
-
-        // Prepare components and embeds
         const components: ActionRowBuilder<StringSelectMenuBuilder>[] = [
             new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenuChoice)
         ];
 
         const embed = new EmbedBuilder()
             .setTitle("Role Select Configuration")
-            .setDescription("Configure role selection options for the specified message")
+            .setDescription("when user select fields in the select menu, they will get the specified set role")
             .setColor(0x2f3136);
 
-        // Update message with existing configurations
-        function updateConfiguration(data: RoleReactData) {
-            // Clear previous embed fields and menu options
+        function updateConfiguration(data: DatabaseStructure.RoleReactData) {
             embed.setFields([]);
-            baseSelectMenu.setOptions([]);
 
             data.forEach((item, index) => {
-                // Add field to embed
                 embed.addFields({
-                    name: `${item.emoji} ${item.label}`,
-                    value: `Role: <@&${item.roleId}>\nDescription: ${item.desc}`,
+                    name: `[${item.emoji || lang.var_none}] ・ ${item.label}`,
+                    value: `Role: ${interaction.guild?.roles.cache.get(item.roleId)?.toString() || lang.var_unknown}\nDescription: ${item.desc || lang.var_none}`,
                     inline: false
                 });
-
-                // Add option to select menu
-                baseSelectMenu.addOptions(
-                    new StringSelectMenuOptionBuilder()
-                        .setLabel(item.label)
-                        .setValue(`role_${index}`)
-                        .setDescription(item.desc)
-                        .setEmoji(item.emoji)
-                );
             });
 
-            // Update components with base select menu if items exist
+            components.length = 1;
             if (data.length > 0) {
                 components.push(
-                    new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(baseSelectMenu)
+                    new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(generateSelectMenu(data, messageId))
                 );
             }
         }
-
-        // Initial configuration update
         updateConfiguration(baseData);
 
-        // Send initial configuration message
         const configMessage = await client.method.interactionSend(interaction, {
             embeds: [embed],
             components: components
         });
 
-        // Component interaction collector
         const collector = configMessage.createMessageComponentCollector({
             componentType: ComponentType.StringSelect,
             time: 300_000, // 5 minutes
+            filter: (x) => {
+                if (x.customId.startsWith("roleselect_roles")) {
+                    x.deferUpdate();
+                    return false;
+                }
+                return true;
+            }
         });
 
-        // Collector event handler
         collector.on("collect", async (interaction2) => {
-            // Ensure only the original user can interact
             if (interaction2.user.id !== interaction.member?.user.id) {
                 await interaction2.reply({
                     content: lang.help_not_for_you,
@@ -226,7 +234,6 @@ export const command: Command = {
             }
         });
 
-        // Handler for adding a new role option
         async function handleAddRoleOption(interaction2: StringSelectMenuInteraction<CacheType>) {
             const modal = await iHorizonModalResolve({
                 title: "Add Role Option",
@@ -236,10 +243,10 @@ export const command: Command = {
                         label: "Emoji",
                         customId: "case_emoji",
                         style: TextInputStyle.Short,
-                        placeHolder: "Select an emoji for this role option",
+                        placeHolder: "Select an emoji for this role option (optional)",
                         maxLength: 120,
                         minLength: 1,
-                        required: true
+                        required: false
                     },
                     {
                         label: "Option Title",
@@ -254,18 +261,18 @@ export const command: Command = {
                         label: "Description",
                         customId: "case_desc",
                         maxLength: 120,
-                        minLength: 8,
+                        minLength: 0,
                         style: TextInputStyle.Paragraph,
-                        placeHolder: "Describe the role option",
-                        required: true
+                        placeHolder: "Describe the role option (optional)",
+                        required: false
                     }
                 ],
                 deferUpdate: false
             }, interaction2);
 
-            const emoji = modal?.fields.getTextInputValue("case_emoji")!;
-            const label = modal?.fields.getTextInputValue("case_title")!;
-            const desc = modal?.fields.getTextInputValue("case_desc")!;
+            const emoji = modal?.fields.getTextInputValue("case_emoji")?.trim() || undefined;
+            const label = modal?.fields.getTextInputValue("case_title")?.trim()!;
+            const desc = modal?.fields.getTextInputValue("case_desc")?.trim() || undefined;
 
             const roleSelectResponse = await modal?.reply({
                 content: "Select a role for this option",
@@ -286,14 +293,28 @@ export const command: Command = {
             });
 
             if (roleResponse) {
-                roleResponse.deferUpdate();
-                roleSelectResponse?.delete();
-                baseData.push({
+                if (baseData.find(x => x.roleId === roleResponse.values[0])) {
+                    await roleResponse.reply({
+                        content: "Role already exists in the configuration.",
+                        ephemeral: true
+                    });
+                    roleSelectResponse?.delete();
+                    updateConfiguration(baseData);
+                    return;
+                }
+
+                const newRoleOption: DatabaseStructure.RoleReactData[number] = {
                     label,
-                    desc,
-                    emoji,
                     roleId: roleResponse.values[0]
-                });
+                };
+
+                if (emoji && (isSingleEmoji(emoji) || isDiscordEmoji(emoji))) {
+                    newRoleOption.emoji = emoji;
+                }
+
+                if (desc) newRoleOption.desc = desc;
+
+                baseData.push(newRoleOption);
 
                 updateConfiguration(baseData);
                 await interaction2.editReply({
@@ -343,13 +364,19 @@ export const command: Command = {
         async function handleSaveConfiguration(interaction2: StringSelectMenuInteraction<CacheType>) {
             try {
                 await client.db.set(`${interaction.guildId}.GUILD.ROLE_SELECT.${messageId}`, baseData);
+                collector.stop();
+
+                let fetchedMessage = await getMessage(channel as GuildTextBasedChannel, messageId);
+
+                fetchedMessage?.edit({
+                    components: [new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(generateSelectMenu(baseData, messageId))]
+                });
+
                 await interaction2.reply({
                     content: "Role selection configuration saved successfully!",
                     ephemeral: true
                 });
-                collector.stop();
             } catch (error) {
-                logger.err("Failed to save role select configuration" + error);
                 await interaction2.reply({
                     content: "Failed to save configuration. Please try again.",
                     ephemeral: true
