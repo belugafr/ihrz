@@ -45,10 +45,10 @@ import { DatabaseStructure } from '../../../../types/database_structure.js';
 import { iHorizonModalResolve } from '../../../core/functions/modalHelper.js';
 import { isDiscordEmoji, isSingleEmoji } from '../../../core/functions/emojiChecker.js';
 
-function generateSelectMenu(data: DatabaseStructure.RoleReactData, messageId: string) {
+function generateSelectMenu(data: DatabaseStructure.RoleReactData, messageId: string, placeholder: string) {
     const dynamicSelectMenu = new StringSelectMenuBuilder()
         .setCustomId(`roleselect_roles%${messageId}`)
-        .setPlaceholder("Select configured roles");
+        .setPlaceholder(placeholder);
 
     data.forEach((item, index) => {
         const selectMenuOption = new StringSelectMenuOptionBuilder()
@@ -139,6 +139,7 @@ export const command: Command = {
 
         // Fetch existing role select data
         let baseData: DatabaseStructure.RoleReactData = await client.db.get(`${interaction.guildId}.GUILD.ROLE_SELECT.${messageId}`) || [];
+        let placeholder = "Select configured roles";
 
         // Main selection menu
         const selectMenuChoice = new StringSelectMenuBuilder()
@@ -153,6 +154,10 @@ export const command: Command = {
                     .setLabel("Remove Role Option")
                     .setValue("remove")
                     .setEmoji("🔸"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Change Select Menu Placeholder")
+                    .setValue("placeholder")
+                    .setEmoji("🏷️"),
                 new StringSelectMenuOptionBuilder()
                     .setLabel("Save and Apply Configuration")
                     .setValue("save")
@@ -186,7 +191,7 @@ export const command: Command = {
             components.length = 1;
             if (data.length > 0) {
                 components.push(
-                    new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(generateSelectMenu(data, messageId))
+                    new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(generateSelectMenu(data, messageId, placeholder))
                 );
             }
         }
@@ -230,6 +235,9 @@ export const command: Command = {
                     break;
                 case "cancel":
                     await handleCancelConfiguration(interaction2);
+                    break;
+                case "placeholder":
+                    await handlePlaceholderConfiguration(interaction2);
                     break;
             }
         });
@@ -369,7 +377,7 @@ export const command: Command = {
                 let fetchedMessage = await getMessage(channel as GuildTextBasedChannel, messageId);
 
                 fetchedMessage?.edit({
-                    components: [new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(generateSelectMenu(baseData, messageId))]
+                    components: [new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(generateSelectMenu(baseData, messageId, placeholder))]
                 });
 
                 await interaction2.reply({
@@ -391,6 +399,32 @@ export const command: Command = {
             });
             collector.stop();
         }
+
+        async function handlePlaceholderConfiguration(interaction2: StringSelectMenuInteraction<CacheType>) {
+            let modal2 = await iHorizonModalResolve({
+                title: "Select Menu Placeholder",
+                customId: "roleselect_placeholder",
+                fields: [
+                    {
+                        label: "Placeholder",
+                        customId: "placeholder",
+                        style: TextInputStyle.Short,
+                        placeHolder: "Select menu placeholder",
+                        maxLength: 50,
+                        minLength: 8,
+                        required: true
+                    }
+                ],
+                deferUpdate: true
+            }, interaction2);
+
+            placeholder = modal2?.fields.getTextInputValue("placeholder")?.trim()!;
+            updateConfiguration(baseData);
+            await interaction2.editReply({
+                embeds: [embed],
+                components: components
+            });
+        };
 
         collector.on('end', async () => {
             await configMessage.edit({
