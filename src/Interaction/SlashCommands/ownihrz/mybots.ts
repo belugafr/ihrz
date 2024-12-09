@@ -133,7 +133,7 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
-                    name: 'bot°_code',
+                    name: 'bot_code',
                     type: ApplicationCommandOptionType.String,
 
                     description: 'Identifiant of your own iHorizon!',
