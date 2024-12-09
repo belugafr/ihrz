@@ -376,9 +376,15 @@ export const command: Command = {
 
                 let fetchedMessage = await getMessage(channel as GuildTextBasedChannel, messageId);
 
-                fetchedMessage?.edit({
-                    components: [new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(generateSelectMenu(baseData, messageId, placeholder))]
-                });
+                if (baseData.length === 0) {
+                    fetchedMessage?.edit({
+                        components: []
+                    });
+                } else {
+                    fetchedMessage?.edit({
+                        components: [new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(generateSelectMenu(baseData, messageId, placeholder))]
+                    });
+                }
 
                 await interaction2.reply({
                     content: lang.roleselect_save_command_ok,
