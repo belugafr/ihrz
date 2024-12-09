@@ -121,9 +121,9 @@ export const command: Command = {
             : client.method.string(args!, 1) as string;
 
         // Validate message ID
-        if (!messageId || messageId.length < 10) {
+        if (!messageId || messageId.length < 9) {
             await client.method.interactionSend(interaction, {
-                content: "Invalid message ID provided."
+                content: lang.roleselect_invalid_message_id
             });
             return;
         }
@@ -132,38 +132,38 @@ export const command: Command = {
 
         if (!fetchedMessage) {
             await client.method.interactionSend(interaction, {
-                content: "Message not found in the specified channel."
+                content: lang.roleselect_message_not_found
             });
             return;
         }
 
         // Fetch existing role select data
         let baseData: DatabaseStructure.RoleReactData = await client.db.get(`${interaction.guildId}.GUILD.ROLE_SELECT.${messageId}`) || [];
-        let placeholder = "Select configured roles";
+        let placeholder = lang.roleselect_default_placeholder;
 
         // Main selection menu
         const selectMenuChoice = new StringSelectMenuBuilder()
             .setCustomId("roleselect_main_menu")
-            .setPlaceholder("Choose an action")
+            .setPlaceholder(lang.roleselect_menu1_placeholder)
             .addOptions(
                 new StringSelectMenuOptionBuilder()
-                    .setLabel("Add Role Option")
+                    .setLabel(lang.roleselect_menu1_add)
                     .setValue("add")
                     .setEmoji("🔹"),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel("Remove Role Option")
+                    .setLabel(lang.roleselect_menu1_remove)
                     .setValue("remove")
                     .setEmoji("🔸"),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel("Change Select Menu Placeholder")
+                    .setLabel(lang.roleselect_menu1_change_placeholder)
                     .setValue("placeholder")
                     .setEmoji("🏷️"),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel("Save and Apply Configuration")
+                    .setLabel(lang.roleselect_menu1_save)
                     .setValue("save")
                     .setEmoji("💾"),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel("Cancel")
+                    .setLabel(lang.roleselect_menu1_cancel)
                     .setValue("cancel")
                     .setEmoji("🚫")
             );
@@ -173,8 +173,8 @@ export const command: Command = {
         ];
 
         const embed = new EmbedBuilder()
-            .setTitle("Role Select Configuration")
-            .setDescription("when user select fields in the select menu, they will get the specified set role")
+            .setTitle(lang.roleselect_menu1_embed_title)
+            .setDescription(lang.roleselect_menu1_embed_description)
             .setColor(0x2f3136);
 
         function updateConfiguration(data: DatabaseStructure.RoleReactData) {
@@ -183,7 +183,7 @@ export const command: Command = {
             data.forEach((item, index) => {
                 embed.addFields({
                     name: `[${item.emoji || lang.var_none}] ・ ${item.label}`,
-                    value: `Role: ${interaction.guild?.roles.cache.get(item.roleId)?.toString() || lang.var_unknown}\nDescription: ${item.desc || lang.var_none}`,
+                    value: `${lang.var_roles}: ${interaction.guild?.roles.cache.get(item.roleId)?.toString() || lang.var_unknown}\n${lang.roleselect_modal1_fields3_label}: ${item.desc || lang.var_none}`,
                     inline: false
                 });
             });
@@ -244,34 +244,34 @@ export const command: Command = {
 
         async function handleAddRoleOption(interaction2: StringSelectMenuInteraction<CacheType>) {
             const modal = await iHorizonModalResolve({
-                title: "Add Role Option",
+                title: lang.roleselect_modal1_title,
                 customId: "roleselect_add_fields",
                 fields: [
                     {
-                        label: "Emoji",
+                        label: lang.roleselect_modal1_fields1_label,
                         customId: "case_emoji",
                         style: TextInputStyle.Short,
-                        placeHolder: "Select an emoji for this role option (optional)",
+                        placeHolder: lang.roleselect_modal1_fields1_placeholder,
                         maxLength: 120,
                         minLength: 1,
                         required: false
                     },
                     {
-                        label: "Option Title",
+                        label: lang.roleselect_modal1_fields2_label,
                         customId: "case_title",
                         style: TextInputStyle.Short,
                         maxLength: 50,
                         minLength: 4,
-                        placeHolder: "Short title for the role option",
+                        placeHolder: lang.roleselect_modal1_fields2_placeholder,
                         required: true
                     },
                     {
-                        label: "Description",
+                        label: lang.roleselect_modal1_fields3_label,
                         customId: "case_desc",
                         maxLength: 120,
                         minLength: 0,
                         style: TextInputStyle.Paragraph,
-                        placeHolder: "Describe the role option (optional)",
+                        placeHolder: lang.roleselect_modal1_fields3_placeholder,
                         required: false
                     }
                 ],
@@ -283,12 +283,12 @@ export const command: Command = {
             const desc = modal?.fields.getTextInputValue("case_desc")?.trim() || undefined;
 
             const roleSelectResponse = await modal?.reply({
-                content: "Select a role for this option",
+                content: lang.roleselect_awaiting1_msg,
                 components: [
                     new ActionRowBuilder<RoleSelectMenuBuilder>().addComponents(
                         new RoleSelectMenuBuilder()
                             .setCustomId('role_selection')
-                            .setPlaceholder("Choose a role")
+                            .setPlaceholder(lang.roleselect_awaiting1_menu_placeholder)
                             .setMaxValues(1)
                     )
                 ],
@@ -303,7 +303,7 @@ export const command: Command = {
             if (roleResponse) {
                 if (baseData.find(x => x.roleId === roleResponse.values[0])) {
                     await roleResponse.reply({
-                        content: "Role already exists in the configuration.",
+                        content: lang.roleselect_role_already_exist,
                         ephemeral: true
                     });
                     roleSelectResponse?.delete();
@@ -335,7 +335,7 @@ export const command: Command = {
         async function handleRemoveRoleOption(interaction2: StringSelectMenuInteraction<CacheType>) {
             if (baseData.length === 0) {
                 await interaction2.reply({
-                    content: "No role options to remove.",
+                    content: lang.roleselect_no_role_found,
                     ephemeral: true
                 });
                 return;
@@ -350,7 +350,7 @@ export const command: Command = {
                 });
 
                 await interaction2.followUp({
-                    content: "All role options have been removed.",
+                    content: lang.roleselect_all_role_removed,
                     ephemeral: true
                 });
                 return;
@@ -364,7 +364,7 @@ export const command: Command = {
             });
 
             await interaction2.followUp({
-                content: "Last role option removed successfully.",
+                content: lang.roleselect_last_role_removed,
                 ephemeral: true
             });
         }
@@ -381,12 +381,12 @@ export const command: Command = {
                 });
 
                 await interaction2.reply({
-                    content: "Role selection configuration saved successfully!",
+                    content: lang.roleselect_save_command_ok,
                     ephemeral: true
                 });
             } catch (error) {
                 await interaction2.reply({
-                    content: "Failed to save configuration. Please try again.",
+                    content: lang.roleselect_failed_to_save_config,
                     ephemeral: true
                 });
             }
@@ -394,7 +394,7 @@ export const command: Command = {
 
         async function handleCancelConfiguration(interaction2: StringSelectMenuInteraction<CacheType>) {
             await interaction2.reply({
-                content: "Role selection configuration canceled.",
+                content: lang.roleselect_canceled_command_ok,
                 ephemeral: true
             });
             collector.stop();
@@ -402,14 +402,14 @@ export const command: Command = {
 
         async function handlePlaceholderConfiguration(interaction2: StringSelectMenuInteraction<CacheType>) {
             let modal2 = await iHorizonModalResolve({
-                title: "Select Menu Placeholder",
+                title: lang.roleselect_modal2_title,
                 customId: "roleselect_placeholder",
                 fields: [
                     {
-                        label: "Placeholder",
+                        label: lang.roleselect_modal2_label,
                         customId: "placeholder",
                         style: TextInputStyle.Short,
-                        placeHolder: "Select menu placeholder",
+                        placeHolder: lang.roleselect_modal2_placeholder,
                         maxLength: 50,
                         minLength: 8,
                         required: true
