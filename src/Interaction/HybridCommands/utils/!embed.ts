@@ -64,7 +64,7 @@ export default {
         };
 
         let potentialEmbed = await client.db.get(`EMBED.${arg}`);
-        let files: { attachment: any; name: string; }[] = [];
+        let files: { attachment: string; name: string; }[] = [];
 
         const permissionsArray = [PermissionsBitField.Flags.Administrator]
         const permissions = interaction instanceof ChatInputCommandInteraction ?
