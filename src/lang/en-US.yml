@@ -2104,6 +2104,7 @@ hybridcommands_global_prefix_cleaned_mention: "@Ping-Me "
 hybridcommands_args_error_embed_desc: "```ts\nCommand Name: ${currentCommand.name}\n```\n```cs\n${botPrefix}${fullNameCommand} ${argsString}\n${errorPosition}\nError when sending \"${wrongArgumentName}\" argument.\n```"
 hybridcommands_embed_help_title: "${commandName} Help Embed"
 hybridcommands_embed_help_fields_value: "**Aliases:** ${aliases}\n**Use:** ${use}"
+hybridcommands_embed_footer_text: "Options within [...] are required, while those within <...> are optional.\nUse the command: ${botPrefix}help [command] for more information."
 
 ping_bot_show_info_msg: "Hey ${message.author.toString()}, I am 100% in `Slash Command` (${client.iHorizon_Emojis.badge.Slash_Bot}) and usable over 85% in prefix command. My prefix on **this server** is `${prefix}` !"
 

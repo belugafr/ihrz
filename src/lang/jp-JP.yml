@@ -2103,6 +2103,7 @@ hybridcommands_global_prefix_cleaned_mention: "@Ping-Me "
 hybridcommands_args_error_embed_desc: "```ts\nコマンド名: ${currentCommand.name}\n```\n```cs\n${botPrefix}${fullNameCommand} ${argsString}\n${errorPosition}\n引数 \"${wrongArgumentName}\" の送信中にエラーが発生しました。\n```"
 hybridcommands_embed_help_title: "${commandName} ヘルプ埋め込み"
 hybridcommands_embed_help_fields_value: "**エイリアス:** ${aliases}\n**使用法:** ${use}"
+hybridcommands_embed_footer_text: "［...］内のオプションは必須で、<...>内のオプションは任意です。\n詳しくは、コマンド: ${botPrefix}help [command] を使用してください。"
 
 ping_bot_show_info_msg: "こんにちは ${message.author.toString()}、私は `Slash Command` (${client.iHorizon_Emojis.badge.Slash_Bot}) で100%使用可能で、プレフィックスコマンドで85%以上使用可能です。このサーバーのプレフィックスは `${prefix}` です！"
 
