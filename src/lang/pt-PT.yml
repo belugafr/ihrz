@@ -2100,7 +2100,7 @@ antispam_log_embed_desc: "${client.user?.toString()} **${actionType}** ${user.to
 
 hybridcommands_global_prefix_mention: "`@Ping-Me`"
 hybridcommands_global_prefix_cleaned_mention: "@Ping-Me "
-hybridcommands_args_error_embed_desc: "```ts\nNome do Comando: ${currentCommand.name}\nDescrição do Comando: ${currentCommand.description}\n```\n```cs\n${botPrefix}${fullNameCommand} ${argsString}\n${errorPosition}\nErro ao enviar o argumento \"${wrongArgumentName}\".\n```"
+hybridcommands_args_error_embed_desc: "```ts\nNome do comando: ${currentCommand.name}\n```\n```cs\n${botPrefix}${fullNameCommand} ${argsString}\n${errorPosition}\nErro ao enviar o argumento \"${wrongArgumentName}\".\n```"
 hybridcommands_embed_help_title: "Incorporar Ajuda de ${commandName}"
 hybridcommands_embed_help_fields_value: "**Apelidos:** ${aliases}\n**Uso:** ${use}"
 

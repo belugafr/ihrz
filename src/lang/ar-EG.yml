@@ -2087,7 +2087,7 @@ antispam_log_embed_desc: "${client.user?.toString()} قد **${actionType}** ${us
 
 hybridcommands_global_prefix_mention: "`@Ping-Me`"
 hybridcommands_global_prefix_cleaned_mention: "@Ping-Me "
-hybridcommands_args_error_embed_desc: "```ts\nاسم الأمر: ${currentCommand.name}\nوصف الأمر: ${currentCommand.description}\n```\n```cs\n${botPrefix}${fullNameCommand} ${argsString}\n${errorPosition}\nخطأ عند إرسال \"${wrongArgumentName}\" كوسيط.\n```"
+hybridcommands_args_error_embed_desc: "```ts\nاسم الأمر: ${currentCommand.name}\n```\n```cs\n${botPrefix}${fullNameCommand} ${argsString}\n${errorPosition}\nحدث خطأ عند إرسال الوسيطة \"${wrongArgumentName}\".\n```"
 hybridcommands_embed_help_title: "دليل ${commandName}"
 hybridcommands_embed_help_fields_value: "**الألقاب:** ${aliases}\n**الاستخدام:** ${use}"
 
