@@ -49,6 +49,9 @@ var_edit: "Редактировать"
 var_confirm: "Подтвердить"
 var_succes: "Успех"
 var_page: "Страница"
+var_permission: "Разрешение"
+var_usage: "Использование"
+var_aliases: "Псевдонимы"
 
 # Команды для тикетов
 # /add, /close, /delete, /sethereticket, /open, /remove, /transript, /disableticket

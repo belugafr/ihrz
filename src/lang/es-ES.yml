@@ -49,6 +49,9 @@ var_edit: "Editar"
 var_confirm: "Confirmar"
 var_succes: "Éxito"
 var_page: "Página"
+var_permission: "Permiso"
+var_usage: "Uso"
+var_aliases: "Alias"
 
 # Ticket commands
 # /add, /close, /delete, /sethereticket, /open, /remove, /transript, /disableticket

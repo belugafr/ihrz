@@ -49,6 +49,9 @@ var_edit: "تعديل"
 var_confirm: "تأكيد"
 var_succes: "نجاح"
 var_page: "صفحة"
+var_permission: "إذن"
+var_usage: "الاستخدام"
+var_aliases: "الأسماء المستعارة"
 
 # Ticket commands
 # /add, /close, /delete, /sethereticket, /open, /remove, /transript, /disableticket

@@ -67,6 +67,9 @@ export interface LanguageData {
   var_confirm: string;
   var_succes: string;
   var_page: string;
+  var_permission: string;
+  var_usage: string;
+  var_aliases: string;
   ticket_disabled_command: string;
   add_disabled_command: string;
   add_command_work: string;

@@ -49,6 +49,9 @@ var_edit: "編集"
 var_confirm: "確認"
 var_succes: "成功"
 var_page: "ページ"
+var_permission: "権限"
+var_usage: "使用法"
+var_aliases: "エイリアス"
 
 # Ticket commands
 # /add, /close, /delete, /sethereticket, /open, /remove, /transript, /disableticket
