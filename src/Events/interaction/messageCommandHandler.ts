@@ -45,6 +45,19 @@ export async function parseMessageCommand(client: Client, message: Message): Pro
         return { success: false };
     }
 
+    if (message.reference && message.reference.messageId) {
+        const referencedMessage = await message.channel.messages.fetch(message.reference.messageId);
+        if (referencedMessage && referencedMessage.author) {
+            const mainCommand = client.message_commands.get(commandName);
+            if (mainCommand && mainCommand.options) {
+                const userOptionIndex = mainCommand.options.findIndex(opt => opt.type === ApplicationCommandOptionType.User);
+                if (userOptionIndex !== -1 && args.length < mainCommand.options.length) {
+                    args.splice(userOptionIndex, 0, referencedMessage.author.id);
+                }
+            }
+        }
+    }
+
     const directSubCommand = client.subCommands.get(commandName);
     if (directSubCommand) {
         const parentCommand = client.commands.find(cmd =>
