@@ -24,6 +24,7 @@ import { LanguageData } from '../../../types/languageData';
 import { Command } from '../../../types/command';
 import { BotEvent } from '../../../types/event';
 import { Option } from '../../../types/option';
+import { appendFile } from 'node:fs';
 
 type MessageCommandResponse = {
     success: boolean,
@@ -127,8 +128,16 @@ async function executeCommand(
     }
 
     var _ = await client.method.checkCommandArgs(message, command, Array.from(args), lang); if (!_) return;
-
+    logMessage(message, command, args);
     await command.run(client, message, lang, command, permCheck.neededPerm, args);
+}
+
+function logMessage(message: Message, command: Command | Option, args: string[]) {
+    appendFile(`${process.cwd()}/src/files/command.log`, `[${(new Date()).toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}] "${message.guild?.name}" #${message.channel ? (message.channel as GuildChannel).name : 'Unknown Channel'}:\n${message.author.username}:\n${command.name} ${args.join(' ')}\n\n`, (err) => {
+        if (err) {
+            console.log('Error writing to command.log');
+        };
+    });
 }
 
 async function handleCommandError(client: Client, message: Message, command: Command | Option, error: any) {
