@@ -118,6 +118,16 @@ const getArgumentOptionTypeWithOptions = (o: Option): string => {
 export const stringifyOption = (option: Option[]): string => {
     let _ = "";
     option.forEach((value) => {
+        _ += value.required ? "[" : "<";
+        _ += getArgumentOptionTypeWithOptions(value);
+        _ += value.required ? "]" + " " : ">" + " ";
+    });
+    return _;
+}
+
+export const boldStringifyOption = (option: Option[]): string => {
+    let _ = "";
+    option.forEach((value) => {
         _ += value.required ? "**`[" : "**`<";
         _ += getArgumentOptionTypeWithOptions(value);
         _ += value.required ? "]`**" + " " : ">`**" + " ";
@@ -142,7 +152,7 @@ export async function createAwesomeEmbed(lang: LanguageData, command: Command, c
     if (hasSubCommand(command.options)) {
         command.options?.map(x => {
             var shortCommandName = x.prefixName || x.name;
-            var pathString = stringifyOption(x.options!);
+            var pathString = boldStringifyOption(x.options!);
 
             var aliases = x.aliases?.map(x => `\`${x}\``).join(", ") || lang.setjoinroles_var_none;
             var use = `${cleanBotPrefix}${shortCommandName} ${pathString}`;
@@ -154,9 +164,9 @@ export async function createAwesomeEmbed(lang: LanguageData, command: Command, c
                     .replace("${use}", use)
             });
         });
-    } else if (command.options) {
+    } else {
         var CommandsPerm = await client.db.get(`${interaction.guildId}.UTILS.PERMS.${command.name}`) as DatabaseStructure.UtilsPermsData[""] | undefined;
-        var pathString = stringifyOption(command.options);
+        var pathString = boldStringifyOption(command.options || []);
 
         embed.setDescription((await client.db.get(`${interaction.guildId}.GUILD.LANG.lang`))?.startsWith("fr-") ? command.description_localizations["fr"] : command.description)
         embed.setFields(

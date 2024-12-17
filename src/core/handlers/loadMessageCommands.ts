@@ -28,6 +28,7 @@ import { EltType } from "../../../types/eltType";
 
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { stringifyOption } from '../functions/method.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -91,6 +92,7 @@ async function loadCommands(client: Client, path: string = p): Promise<void> {
                 desc_localized: command.description_localizations,
                 category: command.category,
                 messageCmd: 1,
+                usage: stringifyOption(command.options || []),
                 aliases: command.aliases
             }
         );

@@ -45,6 +45,7 @@ async function processOptions(options: Option[], category: string, parentName: s
                     messageCmd: 0,
                     category: category,
                     desc: option.description,
+                    usage: null,
                     desc_localized: option.description_localizations
                 }
             )
@@ -94,6 +95,7 @@ export default async function loadCommands(client: Client, path: string = p): Pr
                 desc: command.description,
                 category: command.category,
                 messageCmd: 0,
+                usage: null,
                 desc_localized: command.description_localizations
             });
 
