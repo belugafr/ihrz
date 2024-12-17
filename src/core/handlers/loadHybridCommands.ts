@@ -65,9 +65,6 @@ export default async function loadCommands(client: Client, path: string = p): Pr
     let directoryTree = await buildDirectoryTree(path);
     let paths = buildPaths(path, directoryTree);
 
-    if (!client.commands) client.commands = new Collection<string, Command>();
-    if (!client.subCommands) client.subCommands = new Collection<string, Command>();
-    if (!client.message_commands) client.message_commands = new Collection<string, Command>();
     if (!client.method) client.method = argsHelper;
 
     var i = 0;
