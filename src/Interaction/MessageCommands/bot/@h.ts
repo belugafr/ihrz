@@ -47,6 +47,13 @@ export function setupHelpCategoryCollector(
 
     collector.on('collect', async (interaction) => {
         if (interaction.customId !== 'help_category_select') return;
+        if (interaction.user.id !== helpMessage.author.id) {
+            await interaction.reply({
+                content: lang.help_not_for_you,
+                ephemeral: true
+            });
+            return;
+        };
 
         const selectedCategory = interaction.values[0];
         const matchedCategory = categories.find(
