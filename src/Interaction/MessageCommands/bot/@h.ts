@@ -122,7 +122,7 @@ export const command: Command = {
         "fr": "Un menu de help tah les matrixé"
     },
     thinking: false,
-    category: 'ownihrz',
+    category: 'bot',
     type: "PREFIX_IHORIZON_COMMAND",
     run: async (client: Client, interaction: Message, lang: LanguageData, command: Command, neededPerm: number, args?: string[]) => {
         const categoryEmbeds: { [key: string]: EmbedBuilder[] } = {};
