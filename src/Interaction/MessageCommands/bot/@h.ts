@@ -42,7 +42,7 @@ export function setupHelpCategoryCollector(
 ) {
     const collector = helpMessage.createMessageComponentCollector({
         componentType: ComponentType.StringSelect,
-        time: 120000 // 2 minutes
+        time: 120000 * 15// 30 minutes
     });
 
     collector.on('collect', async (interaction) => {
@@ -182,8 +182,12 @@ export const command: Command = {
                         fieldCount = 0;
                     }
 
+                    let fields_name = `\`${skidBot.botPrefix}${cmd.prefixCmd || cmd.cmd}`
+                    if (cmd.usage) fields_name += " " + cmd.usage;
+                    fields_name += "`";
+
                     currentEmbed.addFields({
-                        name: `\`${skidBot.botPrefix}${cmd.prefixCmd || cmd.cmd} ${cmd.usage}\``,
+                        name: fields_name,
                         value: (skidBot.lang.startsWith("fr") ? cmd.desc_localized["fr"] : cmd.desc)
                     });
                     fieldCount++;
@@ -212,8 +216,12 @@ export const command: Command = {
                         .setFooter({ text: skidBot.footer });
 
                     suite.commands.forEach(cmd => {
+                        let fields_name = `\`${skidBot.botPrefix}${cmd.prefixCmd || cmd.cmd}`
+                        if (cmd.usage) fields_name += " " + cmd.usage;
+                        fields_name += "`";
+
                         suiteEmbed.addFields({
-                            name: `\`${skidBot.botPrefix}${cmd.prefixCmd || cmd.cmd} ${cmd.usage}\``,
+                            name: fields_name,
                             value: (skidBot.lang.startsWith("fr") ? cmd.desc_localized["fr"] : cmd.desc)
                         });
                     });
