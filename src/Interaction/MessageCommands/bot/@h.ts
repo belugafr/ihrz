@@ -39,6 +39,7 @@ export function setupHelpCategoryCollector(
     categoryEmbeds: { [key: string]: EmbedBuilder[] },
     categories: CategoryData[],
     lang: LanguageData,
+    authorId: string
 ) {
     const collector = helpMessage.createMessageComponentCollector({
         componentType: ComponentType.StringSelect,
@@ -47,7 +48,7 @@ export function setupHelpCategoryCollector(
 
     collector.on('collect', async (interaction) => {
         if (interaction.customId !== 'help_category_select') return;
-        if (interaction.user.id !== helpMessage.author.id) {
+        if (interaction.user.id !== authorId) {
             await interaction.reply({
                 content: lang.help_not_for_you,
                 ephemeral: true
@@ -272,6 +273,6 @@ export const command: Command = {
             components: [row]
         });
 
-        setupHelpCategoryCollector(helpMessage, categoryEmbeds, categories, lang);
+        setupHelpCategoryCollector(helpMessage, categoryEmbeds, categories, lang, interaction.member?.user.id!);
     }
 };
