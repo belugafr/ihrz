@@ -246,6 +246,7 @@ export default {
             };
 
             let choice = i.customId;
+            i.deferUpdate();
 
             switch (choice) {
                 case "send_embed":
