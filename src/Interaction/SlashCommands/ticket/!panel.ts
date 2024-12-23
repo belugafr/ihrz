@@ -392,6 +392,16 @@ export default {
                     components
                 });
             }
+
+            // if 0 option fields
+            if (baseData.config.optionFields.length === 0) {
+                return originalResponse.edit({
+                    content: "You need to add at least 1 option field",
+                    embeds: [panelEmbed],
+                    components
+                });
+            }
+
             const send_embed_interaction = await originalResponse.edit({
                 components: [
                     new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(channelSelect)
@@ -1007,6 +1017,11 @@ export default {
                 });
 
                 return i.reply({ ephemeral: true, content: "The related embed does not exist" });
+            }
+
+            // if 0 option fields
+            if (baseData.config.optionFields.length === 0) {
+                return i.reply({ ephemeral: true, content: "You need to add at least 1 option field" });
             }
 
             let embed = EmbedBuilder.from(relatedEmbed.embedSource);
