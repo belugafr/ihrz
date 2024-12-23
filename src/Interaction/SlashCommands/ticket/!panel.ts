@@ -25,6 +25,7 @@ import {
     ButtonBuilder,
     ButtonStyle,
     CacheType,
+    ChannelSelectMenuBuilder,
     ChatInputCommandInteraction,
     Client,
     Component,
@@ -124,7 +125,7 @@ export default {
 
         panel_id = baseData.panelCode;
 
-        let is_saved = false;
+        let is_saved = true;
 
         let panelEmbed = new EmbedBuilder()
             .setTitle("Ticket Panel #" + panel_id)
@@ -190,19 +191,50 @@ export default {
                     .setValue("change_form")
             );
 
+        let panelButton = [
+            new ButtonBuilder()
+                .setCustomId("send_embed")
+                .setLabel("Send embed")
+                .setStyle(ButtonStyle.Primary)
+                .setEmoji(client.iHorizon_Emojis.icon.Green_Tick_Logo),
+        ];
+
         const originalResponse = await client.method.interactionSend(interaction, {
             embeds: [panelEmbed],
             components: [
-                new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
+                new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect),
+                new ActionRowBuilder<ButtonBuilder>().addComponents(panelButton)
             ]
         });
 
-        const collector = originalResponse.createMessageComponentCollector({
+        // collector for string select
+        const og_select_collector = originalResponse.createMessageComponentCollector({
             componentType: ComponentType.StringSelect,
             time: 1_250_000,
         });
 
-        collector.on("collect", async (i) => {
+        // collector for button
+        const button_collector = originalResponse.createMessageComponentCollector({
+            componentType: ComponentType.Button,
+            time: 1_250_000,
+        });
+
+        button_collector.on("collect", async (i) => {
+            if (i.user.id !== interaction.user.id) {
+                return i.reply({ ephemeral: true, content: "This interaction is not for you" });
+            };
+
+            let choice = i.customId;
+
+            switch (choice) {
+                case "send_embed":
+                    await send_embed();
+                    og_select_collector.stop("legitEnd");
+                    break;
+            }
+        });
+
+        og_select_collector.on("collect", async (i) => {
             if (i.user.id !== interaction.user.id) {
                 return i.reply({ ephemeral: true, content: "This interaction is not for you" });
             };
@@ -213,7 +245,7 @@ export default {
                 case "save":
                     i.deferUpdate();
                     await save();
-                    collector.stop("legitEnd");
+                    og_select_collector.stop("legitEnd");
                     break;
                 case "change_embed":
                     change_embed(i);
@@ -239,6 +271,106 @@ export default {
                     break;
             }
         });
+
+        async function send_embed() {
+            let channelSelect = new ChannelSelectMenuBuilder()
+                .setCustomId("send_embed")
+                .setPlaceholder("Select a channel");
+
+            if (!is_saved) {
+                return originalResponse.edit({
+                    content: "You need to save the configuration first",
+                    components: [
+                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
+                    ]
+                });
+            }
+            const send_embed_interaction = await originalResponse.edit({
+                components: [
+                    new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(channelSelect)
+                ],
+                embeds: [],
+                content: "Select a channel to send the embed"
+            });
+
+            // collector for channel select
+            const channelCollector = send_embed_interaction.createMessageComponentCollector({
+                componentType: ComponentType.ChannelSelect,
+                time: 60_000,
+            });
+
+            channelCollector.on("collect", async (i) => {
+                if (i.user.id !== interaction.user.id) {
+                    return i.reply({ ephemeral: true, content: "This interaction is not for you" });
+                };
+
+                let channel = i.values[0];
+                let relatedEmbed = await client.db.get(`EMBED.${baseData.relatedEmbedId}`);
+
+                if (!relatedEmbed || !relatedEmbed.embedSource) {
+                    return i.reply({ ephemeral: true, content: "The related embed does not exist" });
+                }
+
+                let embed = EmbedBuilder.from(relatedEmbed.embedSource);
+
+                let selectMenu = new StringSelectMenuBuilder()
+                    .setCustomId("ticket_option")
+                    .setPlaceholder("Choose an option")
+                    .addOptions(
+                        baseData.config.optionFields.map(x => {
+                            const optionBuilder = new StringSelectMenuOptionBuilder()
+                                .setLabel(x.name)
+                                .setValue(x.value);
+
+                            if (x.desc) {
+                                optionBuilder.setDescription(x.desc);
+                            }
+
+                            if (x.emoji) {
+                                optionBuilder.setEmoji(x.emoji);
+                            }
+
+                            return optionBuilder;
+                        })
+                    );
+
+                let fetchChannel = await i.guild?.channels.fetch(channel);
+
+                if (!fetchChannel || !fetchChannel.isSendable()) {
+                    return i.reply({ ephemeral: true, content: "The channel does not exist or i don't have permission to send message in" });
+                }
+
+                i.deferUpdate();
+
+                let send_embed_interaction = await fetchChannel.send({
+                    embeds: [embed],
+                    components: [
+                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenu)
+                    ]
+                });
+
+                await client.db.set(`${interaction.guildId}.GUILD.TICKET_PANEL.${send_embed_interaction.id}`, baseData);
+
+                await originalResponse.edit({
+                    content: "The embed has been sent",
+                    embeds: [panelEmbed],
+                    components: []
+                });
+
+                channelCollector.stop("legitEnd");
+            });
+
+            channelCollector.on("end", async (_, reason) => {
+                if (reason === "legitEnd") return;
+
+                await send_embed_interaction.edit({
+                    components: [
+                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
+                    ],
+                    embeds: [panelEmbed]
+                });
+            });
+        }
 
         async function save() {
             await client.db.set(`${interaction.guildId}.GUILD.TICKET_PANEL.${panel_id}`, baseData);
@@ -784,7 +916,7 @@ export default {
             })
         }
 
-        collector.on("end", async (_, reason) => {
+        og_select_collector.on("end", async (_, reason) => {
             if (reason === "legitEnd") return;
 
             await originalResponse.edit({
