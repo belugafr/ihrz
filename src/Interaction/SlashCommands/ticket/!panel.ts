@@ -26,6 +26,7 @@ import {
     ButtonStyle,
     CacheType,
     ChannelSelectMenuBuilder,
+    ChannelType,
     ChatInputCommandInteraction,
     Client,
     Component,
@@ -38,7 +39,6 @@ import {
     TextInputStyle,
 } from 'discord.js';
 
-import { TicketReOpen } from '../../../core/modules/ticketsManager.js';
 import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
 import { Option } from '../../../../types/option';
@@ -48,6 +48,8 @@ import { iHorizonModalResolve } from '../../../core/functions/modalHelper.js';
 export interface TicketPanel {
     panelCode: string;
     relatedEmbedId: string;
+    placeholder: string;
+    category?: string;
 
     config: {
         rolesToPing: string[];
@@ -114,7 +116,8 @@ export default {
         let baseData: TicketPanel = await client.db.get(`${interaction.guildId}.GUILD.TICKET_PANEL.${panel_id}`) || {
             panelCode: generatePassword({ length: 10, uppercase: true, numbers: true }),
             relatedEmbedId: null,
-
+            category: null,
+            placeholder: "Select a category to open a ticket",
             config: {
                 rolesToPing: [],
                 optionFields: [],
@@ -152,6 +155,16 @@ export default {
                     inline: true
                 },
                 {
+                    name: "🏷️ Placeholder",
+                    value: baseData.placeholder || lang.var_no_set,
+                    inline: true
+                },
+                {
+                    name: "📤 Category",
+                    value: interaction.guild.channels.cache.get(baseData.category || "")?.toString() || lang.var_no_set,
+                    inline: true
+                },
+                {
                     name: "📔 Option Fields",
                     value: stringifyTicketPanelOption(baseData.config.optionFields) || lang.var_no_set,
                     inline: false
@@ -164,7 +177,7 @@ export default {
             )
             ;
 
-        let panelSelect = new StringSelectMenuBuilder()
+        let panelSelec2t = new StringSelectMenuBuilder()
             .setCustomId("panelSelect")
             .setPlaceholder("Choose options")
             .addOptions(
@@ -180,6 +193,12 @@ export default {
                 new StringSelectMenuOptionBuilder()
                     .setLabel("Add/remove role to ping")
                     .setValue("change_role"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Change placeholder")
+                    .setValue("change_placeholder"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Change category")
+                    .setValue("change_category"),
                 new StringSelectMenuOptionBuilder()
                     .setLabel("Change ping user")
                     .setValue("change_ping"),
@@ -199,12 +218,14 @@ export default {
                 .setEmoji(client.iHorizon_Emojis.icon.Green_Tick_Logo),
         ];
 
+        const components = [
+            new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelec2t),
+            new ActionRowBuilder<ButtonBuilder>().addComponents(panelButton)
+        ];
+
         const originalResponse = await client.method.interactionSend(interaction, {
             embeds: [panelEmbed],
-            components: [
-                new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect),
-                new ActionRowBuilder<ButtonBuilder>().addComponents(panelButton)
-            ]
+            components
         });
 
         // collector for string select
@@ -229,7 +250,6 @@ export default {
             switch (choice) {
                 case "send_embed":
                     await send_embed();
-                    og_select_collector.stop("legitEnd");
                     break;
             }
         });
@@ -269,8 +289,96 @@ export default {
                 case "preview":
                     await preview(i);
                     break;
+                case "change_placeholder":
+                    await change_placeholder(i);
+                    break;
+                case "change_category":
+                    i.deferUpdate();
+                    await change_category();
+                    break;
             }
         });
+
+        async function change_category() {
+            let channelSelect = new ChannelSelectMenuBuilder()
+                .setCustomId("change_category")
+                .setChannelTypes(ChannelType.GuildCategory)
+                .setPlaceholder("Select a category");
+
+
+            const send_embed_interaction = await originalResponse.edit({
+                components: [
+                    new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(channelSelect)
+                ],
+                embeds: [],
+                content: "Select a channel to send the embed"
+            });
+
+            // collector for channel select
+            const channelCollector = send_embed_interaction.createMessageComponentCollector({
+                componentType: ComponentType.ChannelSelect,
+                time: 60_000,
+            });
+
+            channelCollector.on("collect", async (i) => {
+                if (i.user.id !== interaction.user.id) {
+                    return i.reply({ ephemeral: true, content: "This interaction is not for you" });
+                };
+
+                let category = i.values[0];
+                await i.deferUpdate();
+
+                let fetchChannel = await i.guild?.channels.fetch(category)!;
+
+                baseData.category = category;
+                is_saved = false;
+                panelEmbed.data.fields![0].value = "🔴";
+
+                panelEmbed.data.fields![5].value = fetchChannel!.toString();
+
+                await originalResponse.edit({
+                    embeds: [panelEmbed],
+                    components
+                });
+
+                channelCollector.stop("legitEnd");
+            });
+        }
+
+        async function change_placeholder(i: StringSelectMenuInteraction<CacheType>) {
+            let modal = await iHorizonModalResolve({
+                customId: "change_placeholder",
+                deferUpdate: false,
+                title: "Change placeholder",
+                fields: [
+                    {
+                        customId: "placeholder",
+                        label: "Placeholder",
+                        style: TextInputStyle.Short,
+                        required: true,
+                        maxLength: 100,
+                        minLength: 10
+                    }
+                ]
+            }, i);
+
+            if (!modal) return;
+
+            let placeholder = modal.fields.getTextInputValue("placeholder");
+
+            baseData.placeholder = placeholder;
+            is_saved = false;
+            panelEmbed.data.fields![0].value = "🔴";
+
+            panelEmbed.data.fields![4].value = baseData.placeholder;
+
+            modal.deferUpdate();
+
+            await originalResponse.edit({
+                embeds: [panelEmbed],
+                components
+            });
+        }
 
         async function send_embed() {
             let channelSelect = new ChannelSelectMenuBuilder()
@@ -280,9 +388,7 @@ export default {
             if (!is_saved) {
                 return originalResponse.edit({
                     content: "You need to save the configuration first",
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ]
+                    components
                 });
             }
             const send_embed_interaction = await originalResponse.edit({
@@ -314,7 +420,7 @@ export default {
                 let embed = EmbedBuilder.from(relatedEmbed.embedSource);
 
                 let selectMenu = new StringSelectMenuBuilder()
-                    .setCustomId("ticket_option")
+                    .setCustomId("ticket-open-selection-v2")
                     .setPlaceholder("Choose an option")
                     .addOptions(
                         baseData.config.optionFields.map(x => {
@@ -357,6 +463,7 @@ export default {
                     components: []
                 });
 
+                og_select_collector.stop("legitEnd");
                 channelCollector.stop("legitEnd");
             });
 
@@ -364,9 +471,7 @@ export default {
                 if (reason === "legitEnd") return;
 
                 await send_embed_interaction.edit({
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ],
+                    components,
                     embeds: [panelEmbed]
                 });
             });
@@ -434,9 +539,7 @@ export default {
                 // send the new panelEmbed
                 originalResponse.edit({
                     embeds: [panelEmbed],
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ],
+                    components,
                     content: null
                 });
 
@@ -448,9 +551,7 @@ export default {
                 if (reason === "legitEnd") return;
 
                 await change_role_interaction.edit({
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ],
+                    components,
                     embeds: [panelEmbed]
                 });
             });
@@ -465,9 +566,7 @@ export default {
 
             await originalResponse.edit({
                 embeds: [panelEmbed],
-                components: [
-                    new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                ]
+                components,
             });
         }
 
@@ -509,9 +608,7 @@ export default {
 
             await originalResponse.edit({
                 embeds: [panelEmbed],
-                components: [
-                    new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                ]
+                components,
             });
 
         }
@@ -568,9 +665,7 @@ export default {
                 if (reason === "legitEnd") return;
 
                 await select_interaction.edit({
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ],
+                    components,
                     embeds: [panelEmbed]
                 });
             });
@@ -631,9 +726,7 @@ export default {
 
             await originalResponse.edit({
                 embeds: [panelEmbed],
-                components: [
-                    new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                ]
+                components,
             });
         }
 
@@ -680,9 +773,7 @@ export default {
 
                 await originalResponse.edit({
                     embeds: [panelEmbed],
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ],
+                    components,
                     content: null
                 });
 
@@ -693,9 +784,7 @@ export default {
                 if (reason === "legitEnd") return;
 
                 await select_interaction.edit({
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ],
+                    components,
                     embeds: [panelEmbed]
                 });
             })
@@ -753,9 +842,7 @@ export default {
                 if (reason === "legitEnd") return;
 
                 await select_interaction.edit({
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ],
+                    components,
                     embeds: [panelEmbed]
                 });
             });
@@ -806,9 +893,7 @@ export default {
 
             await originalResponse.edit({
                 embeds: [panelEmbed],
-                components: [
-                    new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                ]
+                components
             });
         }
 
@@ -855,9 +940,7 @@ export default {
 
                 await originalResponse.edit({
                     embeds: [panelEmbed],
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ],
+                    components,
                     content: null
                 });
 
@@ -868,9 +951,7 @@ export default {
                 if (reason === "legitEnd") return;
 
                 await select_interaction.edit({
-                    components: [
-                        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(panelSelect)
-                    ],
+                    components,
                     embeds: [panelEmbed]
                 });
             })
@@ -886,7 +967,7 @@ export default {
             let embed = EmbedBuilder.from(relatedEmbed.embedSource);
 
             let selectMenu = new StringSelectMenuBuilder()
-                .setCustomId("ticket_option")
+                .setCustomId("ticket-open-selection-v2-preview")
                 .setPlaceholder("Choose an option")
                 .addOptions(
                     baseData.config.optionFields.map(x => {

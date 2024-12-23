@@ -444,6 +444,14 @@ async function CreateTicketChannel(interaction: ButtonInteraction<"cached"> | St
     }
 };
 
+async function CreateTicketChannelV2(interaction: StringSelectMenuInteraction<"cached">) {
+    let result = await interaction.client.db.get(
+        `${interaction.guildId}.GUILD.TICKET_PANEL.${interaction.message.id}`
+    );
+
+    console.log(result);
+}
+
 interface ResultButton {
     panelName: string;
     reason?: boolean;
@@ -1014,6 +1022,7 @@ export {
 
     CloseTicket,
     CreateTicketChannel,
+    CreateTicketChannelV2,
     CreateSelectPanel,
     TicketTranscript,
     TicketDelete,
