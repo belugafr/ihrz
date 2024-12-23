@@ -673,6 +673,15 @@ export default {
         }
 
         async function add_option(i: StringSelectMenuInteraction<CacheType>) {
+            if (baseData.config.optionFields.length >= 10) {
+                await originalResponse.edit({
+                    embeds: [panelEmbed],
+                    components
+                });
+
+                return i.reply({ ephemeral: true, content: "You can't add more than 10 option fields" });
+            }
+
             let modal = await iHorizonModalResolve({
                 customId: "add_option",
                 deferUpdate: false,
@@ -732,6 +741,14 @@ export default {
         }
 
         async function remove_option() {
+            if (baseData.config.optionFields.length === 0) {
+                return originalResponse.edit({
+                    content: "There are no option fields to remove",
+                    embeds: [panelEmbed],
+                    components
+                });
+            }
+
             let select = new StringSelectMenuBuilder()
                 .setCustomId("remove_option")
                 .setPlaceholder("Choose an option to remove")
@@ -850,6 +867,15 @@ export default {
         }
 
         async function add_form(i: StringSelectMenuInteraction<CacheType>) {
+            if (baseData.config.form.length >= 3) {
+                await originalResponse.edit({
+                    embeds: [panelEmbed],
+                    components
+                });
+
+                return i.reply({ ephemeral: true, content: "You can't add more than 3 form fields" });
+            }
+
             let modal = await iHorizonModalResolve({
                 customId: "add_form",
                 deferUpdate: false,
@@ -899,6 +925,18 @@ export default {
         }
 
         async function remove_form() {
+            if (baseData.config.form.length === 0) {
+                await originalResponse.edit({
+                    embeds: [panelEmbed],
+                    components
+                });
+
+                return originalResponse.edit({
+                    content: "There are no form fields to remove",
+                    components
+                });
+            }
+
             let select = new StringSelectMenuBuilder()
                 .setCustomId("remove_form")
                 .setPlaceholder("Choose an option to remove")
