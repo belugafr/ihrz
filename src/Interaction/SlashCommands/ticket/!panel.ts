@@ -389,7 +389,8 @@ export default {
         async function send_embed() {
             let channelSelect = new ChannelSelectMenuBuilder()
                 .setCustomId("send_embed")
-                .setPlaceholder("Select a channel");
+                .setPlaceholder("Select a channel")
+                .setChannelTypes([ChannelType.GuildText]);
 
             if (!is_saved) {
                 return originalResponse.edit({
