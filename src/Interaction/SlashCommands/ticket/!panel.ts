@@ -1033,7 +1033,7 @@ export default {
 
             let selectMenu = new StringSelectMenuBuilder()
                 .setCustomId("ticket-open-selection-v2-preview")
-                .setPlaceholder("Choose an option")
+                .setPlaceholder(baseData.placeholder)
                 .addOptions(
                     baseData.config.optionFields.map(x => {
                         const optionBuilder = new StringSelectMenuOptionBuilder()
