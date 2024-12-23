@@ -456,7 +456,7 @@ export default {
                     ]
                 });
 
-                await client.db.set(`${interaction.guildId}.GUILD.TICKET_PANEL.${send_embed_interaction.id}`, baseData);
+                await client.db.set(`${interaction.guildId}.GUILD.TICKET_PANEL.${send_embed_interaction.id}`, baseData.panelCode);
 
                 await originalResponse.edit({
                     content: "The embed has been sent",
@@ -962,6 +962,12 @@ export default {
             let relatedEmbed = await client.db.get(`EMBED.${baseData.relatedEmbedId}`);
 
             if (!relatedEmbed || !relatedEmbed.embedSource) {
+                await originalResponse.edit({
+                    content: null,
+                    components,
+                    embeds: [panelEmbed]
+                });
+
                 return i.reply({ ephemeral: true, content: "The related embed does not exist" });
             }
 
