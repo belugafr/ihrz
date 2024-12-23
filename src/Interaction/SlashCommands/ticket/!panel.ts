@@ -32,6 +32,7 @@ import {
     Component,
     ComponentType,
     EmbedBuilder,
+    PermissionFlagsBits,
     RoleSelectMenuBuilder,
     StringSelectMenuBuilder,
     StringSelectMenuInteraction,
@@ -108,6 +109,10 @@ export default {
         };
 
         // check admin perm
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            await interaction.editReply({ content: lang.setup_not_admin });
+            return;
+        }
 
         // check panel id
         let panel_id = interaction.options.getString("panel_id");
