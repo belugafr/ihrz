@@ -422,7 +422,7 @@ export default {
 
                 let selectMenu = new StringSelectMenuBuilder()
                     .setCustomId("ticket-open-selection-v2")
-                    .setPlaceholder("Choose an option")
+                    .setPlaceholder(baseData.placeholder)
                     .addOptions(
                         baseData.config.optionFields.map(x => {
                             const optionBuilder = new StringSelectMenuOptionBuilder()
@@ -721,7 +721,7 @@ export default {
             is_saved = false;
             panelEmbed.data.fields![0].value = "🔴";
 
-            panelEmbed.data.fields![4].value = stringifyTicketPanelOption(baseData.config.optionFields) || lang.var_no_set;
+            panelEmbed.data.fields![6].value = stringifyTicketPanelOption(baseData.config.optionFields) || lang.var_no_set;
 
             modal.deferUpdate();
 
@@ -768,7 +768,7 @@ export default {
                 is_saved = false;
                 panelEmbed.data.fields![0].value = "🔴";
 
-                panelEmbed.data.fields![4].value = stringifyTicketPanelOption(baseData.config.optionFields) || lang.var_no_set;
+                panelEmbed.data.fields![6].value = stringifyTicketPanelOption(baseData.config.optionFields) || lang.var_no_set;
 
                 await i.deferUpdate();
 
@@ -888,7 +888,7 @@ export default {
             is_saved = false;
             panelEmbed.data.fields![0].value = "🔴";
 
-            panelEmbed.data.fields![5].value = stringifyTicketPanelForm(baseData.config.form) || lang.var_no_set;
+            panelEmbed.data.fields![7].value = stringifyTicketPanelForm(baseData.config.form) || lang.var_no_set;
 
             modal.deferUpdate();
 
@@ -935,7 +935,7 @@ export default {
                 is_saved = false;
                 panelEmbed.data.fields![0].value = "🔴";
 
-                panelEmbed.data.fields![5].value = stringifyTicketPanelForm(baseData.config.form) || lang.var_no_set;
+                panelEmbed.data.fields![7].value = stringifyTicketPanelForm(baseData.config.form) || lang.var_no_set;
 
                 await i.deferUpdate();
 
