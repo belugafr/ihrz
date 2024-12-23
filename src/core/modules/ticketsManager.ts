@@ -767,7 +767,7 @@ async function CreateChannelV2(interaction: StringSelectMenuInteraction<"cached"
         if (values.length > 0) {
             let desc = "";
             for (let x in values) {
-                desc += `# ${values[x].questonPlaceholder}\n\`${values[x].questionValue}\`\n`
+                desc += `## ${values[x].questonPlaceholder}\n\`${values[x].questionValue}\`\n`
             }
             embeds.push(
                 new EmbedBuilder()
