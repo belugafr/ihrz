@@ -679,7 +679,7 @@ async function CreateChannelV2(interaction: StringSelectMenuInteraction<"cached"
                 label: field.questionTitle.substring(0, 45),
                 style: TextInputStyle.Short,
                 required: true,
-                placeHolder: field.questionPlaceholder,
+                placeHolder: field.questionPlaceholder?.substring(0, 60),
                 maxLength: 240,
                 minLength: 1
             }
