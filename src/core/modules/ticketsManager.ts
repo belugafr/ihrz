@@ -676,7 +676,7 @@ async function CreateChannelV2(interaction: StringSelectMenuInteraction<"cached"
         let modalFields = result.config.form.map((field) => {
             return {
                 customId: field.questionId.toString(),
-                label: field.questionTitle,
+                label: field.questionTitle.substring(0, 45),
                 style: TextInputStyle.Short,
                 required: true,
                 placeHolder: field.questionPlaceholder,
@@ -687,7 +687,7 @@ async function CreateChannelV2(interaction: StringSelectMenuInteraction<"cached"
 
         let modal = await iHorizonModalResolve({
             customId: 'ticket_reason_modal',
-            title: "Ticket Forms",
+            title: lang.event_ticket_create_reason_modal_fields_1_label,
             deferUpdate: false,
             fields: modalFields
         }, interaction);
