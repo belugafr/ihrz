@@ -668,6 +668,9 @@ async function CreateChannelV2(interaction: StringSelectMenuInteraction<"cached"
     let values: ModalResultArray = [];
     let reasonInteraction: ModalSubmitInteraction<"cached">;
 
+    let category =
+        result.config.optionFields.find(item => item.value === interaction.values[0])?.categoryId
+        || result.category;
 
     if (result.config.form.length >= 1) {
         let modalFields = result.config.form.map((field) => {
@@ -704,9 +707,9 @@ async function CreateChannelV2(interaction: StringSelectMenuInteraction<"cached"
     await interaction.guild?.channels.create({
         name: `ticket-${interaction.user.username}`,
         type: ChannelType.GuildText,
-        parent: interaction.guild.channels.cache.get(result.category || "")?.id || null
+        parent: interaction.guild.channels.cache.get(category || "")?.id || null
     }).then(async (channel) => {
-        if (result.category) {
+        if (category) {
             channel.lockPermissions();
         };
 
