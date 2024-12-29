@@ -47,7 +47,10 @@ import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
 import { iHorizonModalResolve } from '../../../core/functions/modalHelper.js';
 import { DatabaseStructure } from '../../../../types/database_structure.js';
-import { capitalizeFirstLetter } from '../../../../tools/LangsChecker-Tools.js';
+
+function capitalizeFirstLetter(string: string): string {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 export default {
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Command, neededPerm: number, args?: string[]) => {

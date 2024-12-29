@@ -2227,4 +2227,8 @@ piconly_module_punish_msg: "${message.author}, Sie wurden für 10 Minuten stummg
 piconly_module_warn_msg: "${message.author}, dieser Kanal akzeptiert nur Nachrichten mit Bildern (akzeptierte Formate: JPG, PNG, GIF, WEBP, BMP, TIFF). Warnung ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "Spam von Nachrichten ohne Bilder in einem Nur-Bilder-Kanal"
 
+# Nick Kicker Event
+event_nick_kicker_kick_reason: "Gesperrtes Wort im Benutzernamen - Spitzname-Entferner"
+event_nick_kicker_kick_msg: "Im Server `${member.guild.name}` enthält dein Benutzername ein gesperrtes Wort. Du wurdest vom Server gekickt."
+
 # -----------------------------\ /-----------------------------

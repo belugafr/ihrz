@@ -2227,4 +2227,8 @@ piconly_module_punish_msg: "${message.author}, sei stato silenziato per 10 minut
 piconly_module_warn_msg: "${message.author}, questo canale accetta solo messaggi contenenti immagini (formati accettati: JPG, PNG, GIF, WEBP, BMP, TIFF). Avviso ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "Spam di messaggi senza immagini in un canale solo immagini"
 
+# Nick Kicker Event
+event_nick_kicker_kick_reason: "Parola vietata nel nome utente - Espulsore di Nickname"
+event_nick_kicker_kick_msg: "Nel server `${member.guild.name}`, il tuo nome utente contiene una parola vietata. Sei stato espulso dal server."
+
 # -----------------------------\ /-----------------------------

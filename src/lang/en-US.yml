@@ -2228,4 +2228,8 @@ piconly_module_punish_msg: "${message.author}, you have been timed out for 10 mi
 piconly_module_warn_msg: "${message.author}, this channel only accepts messages containing pictures (accepted formats: JPG, PNG, GIF, WEBP, BMP, TIFF). Warning ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "Spamming messages without pictures in a pictures-only channel"
 
+# Nick Kicker Event
+event_nick_kicker_kick_reason: "Blacklisted word in username - Nick Kicker"
+event_nick_kicker_kick_msg: "In the guild `${member.guild.name}`, your username contains a blacklisted word. You have been kicked from the guild."
+
 # -----------------------------\ /-----------------------------

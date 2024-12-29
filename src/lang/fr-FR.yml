@@ -2227,4 +2227,8 @@ piconly_module_punish_msg: "${message.author}, vous avez été timeout pendant 1
 piconly_module_warn_msg: "${message.author}, ce salon n'accepte que les messages contenant des images (formats acceptés: JPG, PNG, GIF, WEBP, BMP, TIFF). Avertissement ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "Spam de messages sans images dans un salon images-only"
 
+# Nick Kicker Event
+event_nick_kicker_kick_reason: "Mot interdit dans le nom d'utilisateur - Expulseur de Pseudos"
+event_nick_kicker_kick_msg: "Dans le serveur `${member.guild.name}`, votre nom d'utilisateur contient un mot interdit. Vous avez été expulsé du serveur."
+
 # -----------------------------\ /-----------------------------

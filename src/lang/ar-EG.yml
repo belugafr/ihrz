@@ -2215,4 +2215,8 @@ piconly_module_punish_msg: "${message.author}, تم إيقافك مؤقتًا ل
 piconly_module_warn_msg: "${message.author}, هذه القناة تقبل فقط الرسائل التي تحتوي على صور (التنسيقات المقبولة: JPG, PNG, GIF, WEBP, BMP, TIFF). تحذير ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "إرسال رسائل متكررة بدون صور في قناة مخصصة للصور فقط"
 
+# Nick Module
+event_nick_kicker_kick_reason: "كلمة محظورة في اسم المستخدم - طارد الألقاب"
+event_nick_kicker_kick_msg: "في السيرفر `${member.guild.name}`، يحتوي اسم المستخدم الخاص بك على كلمة محظورة. تم طردك من السيرفر."
+
 # -----------------------------\ /-----------------------------

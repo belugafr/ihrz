@@ -2227,4 +2227,8 @@ piconly_module_punish_msg: "${message.author}、画像専用チャンネルで�
 piconly_module_warn_msg: "${message.author}、このチャンネルは画像を含むメッセージのみを受け付けます（対応フォーマット：JPG、PNG、GIF、WEBP、BMP、TIFF）。警告 ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "画像専用チャンネルでの画像なしメッセージのスパム"
 
+# Nick Kicker Event
+event_nick_kicker_kick_reason: "ユーザー名に禁止された単語があります - ニックネームキッカー"
+event_nick_kicker_kick_msg: "サーバー `${member.guild.name}` において、あなたのユーザー名に禁止された単語が含まれています。サーバーからキックされました。"
+
 # -----------------------------\ /-----------------------------

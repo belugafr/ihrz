@@ -1628,4 +1628,6 @@ export interface LanguageData {
   piconly_module_punish_msg: string;
   piconly_module_warn_msg: string;
   piconly_module_timeout_reason: string;
+  event_nick_kicker_kick_reason: string;
+  event_nick_kicker_kick_msg: string
 }

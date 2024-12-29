@@ -2227,4 +2227,8 @@ piconly_module_punish_msg: "${message.author}, вы получили тайм-а
 piconly_module_warn_msg: "${message.author}, этот канал принимает только сообщения, содержащие изображения (допустимые форматы: JPG, PNG, GIF, WEBP, BMP, TIFF). Предупреждение ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "Спам сообщениями без изображений в канале только для изображений"
 
+# Nick Kicker Event
+event_nick_kicker_kick_reason: "Запрещенное слово в имени пользователя - Кикер никнеймов"
+event_nick_kicker_kick_msg: "На сервере `${member.guild.name}` ваше имя пользователя содержит запрещенное слово. Вы были исключены с сервера."
+
 # -----------------------------/ \-----------------------------
