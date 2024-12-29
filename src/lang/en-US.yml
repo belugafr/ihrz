@@ -810,6 +810,22 @@ sticket_command_work: "The sticker `${x.name}` has been successfully created."
 sticker_command_error: "The sticker could not be created. An error occurred: `${err.message}`."
 sticket_command_error2: "Please reply to a message containing a sticker."
 
+# /util nick-kicker
+util_nick_kicker_embed_title: "Nick Content Kicker"
+util_nick_kicker_embed_desc: "When member join, if it's nickname contains the an specific word, it will be kicked."
+util_nick_kicker_words: "words"
+util_nick_kicker_select_to_remove: "Select a word to remove"
+util_nick_kicker_remove_word: "Remove this word"
+util_nick_kicker_no_word_to_remove: "There is no word to remove"
+util_nick_kicker_add_word: "Add Word"
+util_nick_kicker_words_max_15: "You can't add more than 15 words"
+util_nick_kicker_disable: "Disable"
+util_nick_kicker_remove_word2: "Remove Word"
+util_nick_kicker_remove_desc: "Remove a word from the nick-kicker"
+util_nick_kicker_add_desc: "Add a word to the nick-kicker"
+util_nick_kicker_disable_desc: "Disable the nick-kicker"
+util_nick_kicker_enable_desc: "Enable the nick-kicker"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

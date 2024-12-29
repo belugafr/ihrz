@@ -809,6 +809,22 @@ sticket_command_work: "L'adesivo `${x.name}` è stato creato con successo."
 sticker_command_error: "Impossibile creare l'adesivo. Si è verificato un errore: `${err.message}`."  
 sticket_command_error2: "Rispondi a un messaggio contenente un adesivo."  
 
+# /util nick-kicker
+util_nick_kicker_embed_title: "Espulsore di Nickname"
+util_nick_kicker_embed_desc: "Quando un membro si unisce, se il suo nickname contiene una parola specifica, verrà espulso"
+util_nick_kicker_words: "parole"
+util_nick_kicker_select_to_remove: "Seleziona una parola da rimuovere"
+util_nick_kicker_remove_word: "Rimuovi questa parola"
+util_nick_kicker_no_word_to_remove: "Non ci sono parole da rimuovere"
+util_nick_kicker_add_word: "Aggiungi Parola"
+util_nick_kicker_words_max_15: "Non puoi aggiungere più di 15 parole"
+util_nick_kicker_disable: "Disattiva"
+util_nick_kicker_remove_word2: "Rimuovi Parola"
+util_nick_kicker_remove_desc: "Rimuovi una parola dall'espulsore di nickname"
+util_nick_kicker_add_desc: "Aggiungi una parola all'espulsore di nickname"
+util_nick_kicker_disable_desc: "Disattiva l'espulsore di nickname"
+util_nick_kicker_enable_desc: "Attiva l'espulsore di nickname"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

@@ -809,6 +809,22 @@ sticket_command_work: "スタンプ `${x.name}` が正常に作成されまし�
 sticker_command_error: "スタンプを作成できませんでした。エラーが発生しました: `${err.message}`。"  
 sticket_command_error2: "スタンプを含むメッセージに返信してください。"  
 
+# /util nick-kicker
+util_nick_kicker_embed_title: "ニックネームキッカー"
+util_nick_kicker_embed_desc: "メンバーが参加したとき、そのニックネームが特定の単語を含んでいる場合、キックされます"
+util_nick_kicker_words: "単語"
+util_nick_kicker_select_to_remove: "削除する単語を選択"
+util_nick_kicker_remove_word: "この単語を削除"
+util_nick_kicker_no_word_to_remove: "削除する単語がありません"
+util_nick_kicker_add_word: "単語を追加"
+util_nick_kicker_words_max_15: "15個以上の単語は追加できません"
+util_nick_kicker_disable: "無効化"
+util_nick_kicker_remove_word2: "単語を削除"
+util_nick_kicker_remove_desc: "ニックネームキッカーから単語を削除"
+util_nick_kicker_add_desc: "ニックネームキッカーに単語を追加"
+util_nick_kicker_disable_desc: "ニックネームキッカーを無効化"
+util_nick_kicker_enable_desc: "ニックネームキッカーを有効化"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

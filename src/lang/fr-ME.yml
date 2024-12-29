@@ -809,6 +809,22 @@ sticket_command_work: "L'autocollant `${x.name}` a été créé avec succès."
 sticker_command_error: "Impossible de créer l'autocollant. Une erreur s'est produite : `${err.message}`."  
 sticket_command_error2: "Veuillez répondre à un message contenant un autocollant."  
 
+# /util nick-kicker
+util_nick_kicker_embed_title: "Expulseur de Pseudos"
+util_nick_kicker_embed_desc: "Quand un membre rejoint, si son pseudo contient un mot spécifique, il sera expulsé"
+util_nick_kicker_words: "mots"
+util_nick_kicker_select_to_remove: "Sélectionnez un mot à supprimer"
+util_nick_kicker_remove_word: "Supprimer ce mot"
+util_nick_kicker_no_word_to_remove: "Il n'y a pas de mot à supprimer"
+util_nick_kicker_add_word: "Ajouter un Mot"
+util_nick_kicker_words_max_15: "Vous ne pouvez pas ajouter plus de 15 mots"
+util_nick_kicker_disable: "Désactiver"
+util_nick_kicker_remove_word2: "Supprimer un Mot"
+util_nick_kicker_remove_desc: "Supprimer un mot de l'expulseur de pseudos"
+util_nick_kicker_add_desc: "Ajouter un mot à l'expulseur de pseudos"
+util_nick_kicker_disable_desc: "Désactiver l'expulseur de pseudos"
+util_nick_kicker_enable_desc: "Activer l'expulseur de pseudos"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

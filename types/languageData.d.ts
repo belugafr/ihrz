@@ -19,8 +19,6 @@
 ・ Copyright © 2020-2024 iHorizon
 */
 
-import { S } from "ollama/dist/shared/ollama.6319775f.js";
-
 export interface LanguageData {
   var_member: string;
   var_user: string;
@@ -609,6 +607,20 @@ export interface LanguageData {
   sticket_command_work: string;
   sticker_command_error: string;
   sticket_command_error2: string;
+  util_nick_kicker_embed_title: string;
+  util_nick_kicker_embed_desc: string;
+  util_nick_kicker_words: string;
+  util_nick_kicker_select_to_remove: string;
+  util_nick_kicker_remove_word: string;
+  util_nick_kicker_no_word_to_remove: string;
+  util_nick_kicker_add_word: string;
+  util_nick_kicker_words_max_15: string;
+  util_nick_kicker_disable: string;
+  util_nick_kicker_remove_word2: string;
+  util_nick_kicker_remove_desc: string;
+  util_nick_kicker_add_desc: string;
+  util_nick_kicker_disable_desc: string;
+  util_nick_kicker_enable_desc: string;
   blockpub_not_admin: string;
   blockpub_now_enable: string;
   blockpub_now_disable: string;

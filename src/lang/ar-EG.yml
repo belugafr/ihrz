@@ -807,6 +807,22 @@ sticket_command_work: "تم إنشاء الملصق `${x.name}` بنجاح."
 sticker_command_error: "تعذر إنشاء الملصق. حدث خطأ: `${err.message}`."  
 sticket_command_error2: "يرجى الرد على رسالة تحتوي على ملصق."  
 
+# /util nick-kicker
+util_nick_kicker_embed_title: "طارد الألقاب"
+util_nick_kicker_embed_desc: "عندما ينضم العضو، إذا كان لقبه يحتوي على كلمة محددة، سيتم طرده"
+util_nick_kicker_words: "الكلمات"
+util_nick_kicker_select_to_remove: "اختر كلمة لإزالتها"
+util_nick_kicker_remove_word: "إزالة هذه الكلمة"
+util_nick_kicker_no_word_to_remove: "لا توجد كلمة للإزالة"
+util_nick_kicker_add_word: "إضافة كلمة"
+util_nick_kicker_words_max_15: "لا يمكنك إضافة أكثر من 15 كلمة"
+util_nick_kicker_disable: "تعطيل"
+util_nick_kicker_remove_word2: "إزالة كلمة"
+util_nick_kicker_remove_desc: "إزالة كلمة من طارد الألقاب"
+util_nick_kicker_add_desc: "إضافة كلمة إلى طارد الألقاب"
+util_nick_kicker_disable_desc: "تعطيل طارد الألقاب"
+util_nick_kicker_enable_desc: "تفعيل طارد الألقاب"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

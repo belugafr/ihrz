@@ -809,6 +809,22 @@ sticket_command_work: "O adesivo `${x.name}` foi criado com sucesso."
 sticker_command_error: "Não foi possível criar o adesivo. Ocorreu um erro: `${err.message}`."  
 sticket_command_error2: "Por favor, responda a uma mensagem que contenha um adesivo."  
 
+# /util nick-kicker
+util_nick_kicker_embed_title: "Expulsor de Apelidos"
+util_nick_kicker_embed_desc: "Quando um membro se junta, se o seu apelido contiver uma palavra específica, será expulso"
+util_nick_kicker_words: "palavras"
+util_nick_kicker_select_to_remove: "Selecione uma palavra para remover"
+util_nick_kicker_remove_word: "Remover esta palavra"
+util_nick_kicker_no_word_to_remove: "Não há palavra para remover"
+util_nick_kicker_add_word: "Adicionar Palavra"
+util_nick_kicker_words_max_15: "Não pode adicionar mais de 15 palavras"
+util_nick_kicker_disable: "Desativar"
+util_nick_kicker_remove_word2: "Remover Palavra"
+util_nick_kicker_remove_desc: "Remover uma palavra do expulsor de apelidos"
+util_nick_kicker_add_desc: "Adicionar uma palavra ao expulsor de apelidos"
+util_nick_kicker_disable_desc: "Desativar o expulsor de apelidos"
+util_nick_kicker_enable_desc: "Ativar o expulsor de apelidos"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup
