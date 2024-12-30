@@ -705,8 +705,8 @@ prevnames_embed_footer_text: "iHorizon | الصفحة ${currentPage + 1}/${pages
 blockbot_not_owner: ":x: **أنت لست مالك الخادم!**"
 blockbot_logs_enable_title: "سجل BlockBot"
 blockbot_logs_enable_description: "${interaction.user} (مالك الخادم) __قام بتمكين__ `BlockBot`. الآن لا يمكن إضافة البوت إلى هذا الخادم!"
-blockbot_command_work_on_enable: "**لقد قمت بتمكين `BlockPub`**\nالآن لا يمكن إضافة البوت إلى هذا الخادم!"
-blockbot_command_work_on_disable: "**لقد قمت بتعطيل `BlockPub`**\nالآن يمكن إضافة البوت إلى هذا الخادم!"
+blockbot_command_work_on_enable: "**لقد قمت بتمكين `BlockBot`**\nالآن لا يمكن إضافة البوت إلى هذا الخادم!"
+blockbot_command_work_on_disable: "**لقد قمت بتعطيل `BlockBot`**\nالآن يمكن إضافة البوت إلى هذا الخادم!"
 blockbot_logs_disable_commmand_work: "سجل BlockBot"
 blockbot_logs_disable_description: "${interaction.user} (مالك الخادم) __قام بتعطيل__ `BlockBot`. الآن يمكن إضافة البوت إلى هذا الخادم!"
 
@@ -806,6 +806,22 @@ sticket_no_sticker: "لم يتم العثور على ملصق في الرسال�
 sticket_command_work: "تم إنشاء الملصق `${x.name}` بنجاح."  
 sticker_command_error: "تعذر إنشاء الملصق. حدث خطأ: `${err.message}`."  
 sticket_command_error2: "يرجى الرد على رسالة تحتوي على ملصق."  
+
+# /util nick-kicker
+util_nick_kicker_embed_title: "طارد الألقاب"
+util_nick_kicker_embed_desc: "عندما ينضم العضو، إذا كان لقبه يحتوي على كلمة محددة، سيتم طرده"
+util_nick_kicker_words: "الكلمات"
+util_nick_kicker_select_to_remove: "اختر كلمة لإزالتها"
+util_nick_kicker_remove_word: "إزالة هذه الكلمة"
+util_nick_kicker_no_word_to_remove: "لا توجد كلمة للإزالة"
+util_nick_kicker_add_word: "إضافة كلمة"
+util_nick_kicker_words_max_15: "لا يمكنك إضافة أكثر من 15 كلمة"
+util_nick_kicker_disable: "تعطيل"
+util_nick_kicker_remove_word2: "إزالة كلمة"
+util_nick_kicker_remove_desc: "إزالة كلمة من طارد الألقاب"
+util_nick_kicker_add_desc: "إضافة كلمة إلى طارد الألقاب"
+util_nick_kicker_disable_desc: "تعطيل طارد الألقاب"
+util_nick_kicker_enable_desc: "تفعيل طارد الألقاب"
 
 
 # Guild Config commands
@@ -2198,5 +2214,9 @@ rc_registration_over_time: "التسجيلات عبر الزمن"
 piconly_module_punish_msg: "${message.author}, تم إيقافك مؤقتًا لمدة 10 دقائق لإرسال الكثير من الرسائل بدون صور في قناة مخصصة للصور."
 piconly_module_warn_msg: "${message.author}, هذه القناة تقبل فقط الرسائل التي تحتوي على صور (التنسيقات المقبولة: JPG, PNG, GIF, WEBP, BMP, TIFF). تحذير ${userWarnings.length}/${threshold}"
 piconly_module_timeout_reason: "إرسال رسائل متكررة بدون صور في قناة مخصصة للصور فقط"
+
+# Nick Module
+event_nick_kicker_kick_reason: "كلمة محظورة في اسم المستخدم - طارد الألقاب"
+event_nick_kicker_kick_msg: "في السيرفر `${member.guild.name}`، يحتوي اسم المستخدم الخاص بك على كلمة محظورة. تم طردك من السيرفر."
 
 # -----------------------------\ /-----------------------------
