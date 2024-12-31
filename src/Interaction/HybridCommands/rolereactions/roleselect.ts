@@ -125,7 +125,7 @@ export const command: Command = {
         
         const channel = interaction instanceof ChatInputCommandInteraction
             ? interaction.options.getChannel("channel") as Channel
-            : client.method.channel(interaction, args!, 0) as Channel;
+            : await client.method.channel(interaction, args!, 0) as Channel;
 
         const messageId = interaction instanceof ChatInputCommandInteraction
             ? interaction.options.getString("messageid") as string

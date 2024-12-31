@@ -51,7 +51,7 @@ export default {
             var action = interaction.options.getString("action");
         } else {
             
-            var action = client.method.string(args!, 1);
+            var action = client.method.string(args!, 0);
         }
 
         await client.db.set(`${interaction.guildId}.GUILD.FUN.states`, action);

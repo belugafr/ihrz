@@ -52,7 +52,7 @@ export default {
             
             var action_1 = client.method.string(args!, 0);
             var part_of_nickname = client.method.string(args!, 1)?.toLowerCase();
-            var role = client.method.role(interaction, args!, 0);
+            var role = client.method.role(interaction, args!, 2);
         };
 
         if (!part_of_nickname || !role) return;

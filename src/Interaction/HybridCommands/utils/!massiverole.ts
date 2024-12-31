@@ -51,7 +51,7 @@ export default {
         } else {
 
             var action = client.method.string(args!, 0);
-            var role = client.method.role(interaction, args!, 0);
+            var role = client.method.role(interaction, args!, 1);
         };
 
         let a: number = 0;

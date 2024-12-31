@@ -53,7 +53,7 @@ export default {
         } else {
 
             var type = client.method.string(args!, 0);
-            var argsid = client.method.role(interaction, args!, 0) as Role | null;
+            var argsid = client.method.role(interaction, args!, 1) as Role | null;
             var nickname = client.method.longString(args!, 2);
         };
 
