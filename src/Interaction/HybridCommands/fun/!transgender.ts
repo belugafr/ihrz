@@ -19,13 +19,6 @@
 ・ Copyright © 2020-2025 iHorizon
 */
 
-/*
-・ ElektraBots Discord Bot (https://github.com/belugafr/ElektraBots)
-
-・ Mainly developed by NayaWeb (https://github.com/belugafr)
-
-・ Copyright © 2021-2023 ElektraBots
-*/
 
 import {
     AttachmentBuilder,
