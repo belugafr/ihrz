@@ -128,6 +128,7 @@ export namespace DatabaseStructure {
         monthly?: number;
         weekly?: number;
         work?: number;
+        ownedRoles?: string[];
     }
 
     export interface InvitesUserData {
