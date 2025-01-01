@@ -275,6 +275,16 @@ export namespace DatabaseStructure {
         punishment_time?: number;
     }
 
+    export interface EconomyRole {
+        price: number;
+        boost?: number;
+    }
+
+    export interface EconomyModel {
+        disabled?: boolean;
+        buyableRoles?: Record<string, EconomyRole>;
+    }
+
     export interface DbInId {
         USER?: DbGuildUserObject;
         GUILD?: DbGuildObject;
@@ -289,9 +299,7 @@ export namespace DatabaseStructure {
         NOTIFIER?: NotifierSchema
         SUGGEST?: SuggestSchema;
         SUGGESTION?: SuggestionData;
-        ECONOMY?: {
-            disabled: boolean;
-        };
+        ECONOMY?: EconomyModel;
         WARN?: WarnSchema;
         SECURITY?: SecuritySchema;
         CONFESSION?: ConfessionSchema;
