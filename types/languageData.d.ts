@@ -70,6 +70,9 @@ export interface LanguageData {
   var_permission: string;
   var_usage: string;
   var_aliases: string;
+  var_dont_have_perm: string;
+  var_price: string;
+  var_boost: string;
   ticket_disabled_command: string;
   add_disabled_command: string;
   add_command_work: string;

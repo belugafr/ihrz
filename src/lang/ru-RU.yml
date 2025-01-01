@@ -52,6 +52,9 @@ var_page: "Страница"
 var_permission: "Разрешение"
 var_usage: "Использование"
 var_aliases: "Псевдонимы"
+var_dont_have_perm: "У вас нет необходимых разрешений для этого. (Требуется разрешение {perm})"
+var_price: "Цена"
+var_boost: "Ускорение"
 
 # Команды для тикетов
 # /add, /close, /delete, /sethereticket, /open, /remove, /transript, /disableticket

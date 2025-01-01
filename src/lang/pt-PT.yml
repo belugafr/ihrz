@@ -52,6 +52,9 @@ var_page: "Página"
 var_permission: "Permissão"
 var_usage: "Uso"
 var_aliases: "Apelidos"
+var_dont_have_perm: "Não tem as permissões necessárias para fazer isto. (Requer permissão {perm})"
+var_price: "Preço"
+var_boost: "Impulso"
 
 # Comandos de ticket
 # /add, /close, /delete, /sethereticket, /open, /remove, /transript, /disableticket

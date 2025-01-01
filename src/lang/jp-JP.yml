@@ -52,6 +52,9 @@ var_page: "ページ"
 var_permission: "権限"
 var_usage: "使用法"
 var_aliases: "エイリアス"
+var_dont_have_perm: "必要な権限がありません。({perm}権限が必要です)"
+var_price: "価格"
+var_boost: "ブースト"
 
 # Ticket commands
 # /add, /close, /delete, /sethereticket, /open, /remove, /transript, /disableticket
