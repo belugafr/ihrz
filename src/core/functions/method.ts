@@ -617,6 +617,14 @@ export function getDangerousPermissions(lang: LanguageData): {
     return dangerousPermissions
 }
 
+export async function addCoins(member: GuildMember, coins: number): Promise<void> {
+    await member.client.db.add(`${member.guild.id}.USER.${member.id}.ECONOMY.money`, coins);
+}
+
+export async function subCoins(member: GuildMember, coins: number): Promise<void> {
+    await member.client.db.sub(`${member.guild.id}.USER.${member.id}.ECONOMY.money`, coins);
+}
+
 export const permission = perm;
 export const bot = f;
 export const helper = h;
