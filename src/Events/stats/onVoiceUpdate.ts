@@ -23,6 +23,7 @@ import { Client, VoiceState } from 'discord.js';
 
 import { BotEvent } from '../../../types/event';
 import { DatabaseStructure } from '../../../types/database_structure';
+import { getMemberBoost } from '../../Interaction/HybridCommands/economy/economy.js';
 
 const voiceSessionTimestamps = new Map<string, { startTimestamp: number, channelId: string }>();
 
@@ -76,7 +77,7 @@ export const event: BotEvent = {
                 const coinsEarned = Math.floor(voiceSessionDurationInMinutes / 10);
 
                 if (coinsEarned > 0) {
-                    await client.method.addCoins(newState.member!, coinsEarned);
+                    await client.method.addCoins(newState.member!, coinsEarned * await getMemberBoost(newState.member!));
                 }
             }
         }

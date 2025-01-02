@@ -621,6 +621,30 @@ economy_disable_set_disable: "<@${interaction.user.id}>, لقد قمت بتعط�
 economy_disable_logs_embed_desc: "<@${interaction.user.id}> قام بتعيين حالة وحدة الاقتصاد إلى `${state}`!"
 economy_disable_logs_embed_title: "سجلات الاقتصاد"
 
+# /economy boost-set
+economy_boost_role_not_found: "الدور غير موجود. يجب تحديد سعر للدور."
+economy_boost_embed_title: "نظام الاقتصاد - الأدوار القابلة للشراء"
+economy_boost_embed_desc: "جميع الأدوار القابلة للشراء مدرجة أدناه."
+
+# /economy role add
+economy_role_add_no_role: "لا توجد أدوار قابلة للشراء للحذف."
+economy_role_add_max_20_roles: "يمكنك فقط أن تضيف حتى 20 دورًا قابلاً للشراء."
+economy_role_add_canceled: "لم يتم إضافة الدور إلى الأدوار القابلة للشراء."
+economy_role_add_prompt_dangerous: "هل أنت متأكد أنك تريد إضافة هذا الدور إلى الأدوار القابلة للشراء؟\n**تحذير:** هذا الدور لديه أذونات خطيرة.\nالأذونات: ${stringDangerousPermissions}"
+
+# /economy shop
+economy_shop_embed_title: "🛍️ متجر `${interaction.guild.name}`"
+economy_shop_embed_desc: "يتيح لك المتجر شراء العناصر/الأدوار باستخدام أموالك. يمكنك رؤية الأدوار المتاحة للشراء أدناه."
+economy_shop_not_available: "الدور الذي اخترته غير متاح للشراء."
+economy_shop_already_own_role: "أنت تملك هذا الدور بالفعل."
+economy_shop_not_enough_money: "ليس لديك ما يكفي من المال لشراء هذا الدور."
+economy_shop_role_purchased: "لقد قمت بشراء الدور **{roleName}** بنجاح مقابل **${role.price}** 💰."
+economy_shop_unknown_role: "دور غير معروف"
+economy_shop_not_set: "لا توجد أدوار متاحة للشراء في هذا الخادم. يرجى الاتصال بمسؤول الخادم للحصول على مزيد من المعلومات."
+economy_shop_already_owned: "تمتلكه بالفعل"
+economy_shop_menu_placeholder: "اختر دورًا للشراء"
+
+
 # Profil Customisation commands
 # /setprofilage, /setprofildescriptions, /profil
 

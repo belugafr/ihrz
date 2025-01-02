@@ -621,6 +621,29 @@ economy_disable_set_disable: "<@${interaction.user.id}>, you have succeffully **
 economy_disable_logs_embed_desc: "<@${interaction.user.id}> have put to `${state}` the Economy Module !"
 economy_disable_logs_embed_title: "Economy Logs"
 
+# /economy boost-set
+economy_boost_role_not_found: "Role not found. You must set a price for the role."
+economy_boost_embed_title: "Economy System - Buyable Roles"
+economy_boost_embed_desc: "All buyable roles are listed below."
+
+# /economy role add
+economy_role_add_no_role: "There are no buyable roles to delete."
+economy_role_add_max_20_roles: "You can only have up to 20 buyable roles."
+economy_role_add_canceled: "The role was not added to the buyable roles."
+economy_role_add_prompt_dangerous: "Are you sure you want to add this role to the buyable roles?\n**Warning:** This role has dangerous permissions.\nPermissions: ${stringDangerousPermissions}"
+
+# /economy shop
+economy_shop_embed_title: "🛍️ `${interaction.guild.name}`'s Shop"
+economy_shop_embed_desc: "The shop permits you to buy items/roles using your money. You can view the roles available for purchase below."
+economy_shop_not_available: "The role you selected is not available for purchase."
+economy_shop_already_own_role: "You already own this role."
+economy_shop_not_enough_money: "You do not have enough money to purchase this role."
+economy_shop_role_purchased: "You have successfully purchased the role **{roleName}** for **${role.price}** 💰."
+economy_shop_unknown_role: "Unknown Role"
+economy_shop_not_set: "There are no roles available for purchase in this server. Please contact the server administrator for more information."
+economy_shop_already_owned: "Already owned"
+economy_shop_menu_placeholder: "Select a role to purchase"
+
 
 # Profil Customisation commands
 # /setprofilage, /setprofildescriptions, /profil
