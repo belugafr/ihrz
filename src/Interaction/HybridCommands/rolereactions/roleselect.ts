@@ -446,10 +446,9 @@ export const command: Command = {
         };
 
         collector.on('end', async () => {
-            components[0].components[0].data.disabled = true
-
             await configMessage.edit({
-                components
+                embeds: [embed],
+                components: []
             });
         });
     },
