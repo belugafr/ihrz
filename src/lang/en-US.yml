@@ -1454,6 +1454,8 @@ backup_backup_doesnt_exist: "ERROR? Backup don't exist."
 backup_string_see_v: ":placard:・Category's Count: `${data.categoryCount}`\n:hash:・Channel's Count: `${data.channelCount}`"
 backup_all_of_your_backup: "**All of your backup:**"
 backup_string_see_another_v: ":placard:・Category's Count: `${result.categoryCount}`\n:hash:・Channel's Count: `${result.channelCount}`"
+backup_load_confirm: "${interaction.member.user.toString()},\n# EXTREMELY DANGEROUS ACTION\n# Are you sure you want to load this backup?\nThis will replace all current channels, roles, emojis, bans, configuration... of your server.\nTHIS ACTION IS IRREVERSIBLE!"
+backup_not_load: "The backup was not loaded, the action was canceled at your request."
 
 # /backup delete
 backup_really_want: "${client.iHorizon_Emojis.icon.Warning_Icon} Do you really want to delete this backup ?"

@@ -1453,6 +1453,8 @@ backup_backup_doesnt_exist: "ERROR? La copia de seguridad no existe."
 backup_string_see_v: ":placard:・Cantidad de categorías: `${data.categoryCount}`\n:hash:・Cantidad de canales: `${data.channelCount}`"
 backup_all_of_your_backup: "**Todas tus copias de seguridad:**"
 backup_string_see_another_v: ":placard:・Cantidad de categorías: `${result.categoryCount}`\n:hash:・Cantidad de canales: `${result.channelCount}`"
+backup_load_confirm: "${interaction.member.user.toString()},\n# ACCIÓN EXTREMADAMENTE PELIGROSA\n# ¿Estás seguro de que quieres cargar esta copia de seguridad?\nEsto reemplazará todos los canales, roles, emojis, baneos, configuraciones... actuales de tu servidor.\n¡ESTA ACCIÓN ES IRREVERSIBLE!"
+backup_not_load: "La copia de seguridad no se cargó, la acción se canceló a tu solicitud."
 
 # /backup delete
 backup_really_want: "${client.iHorizon_Emojis.icon.Warning_Icon} ¿Realmente quieres eliminar esta copia de seguridad?"
