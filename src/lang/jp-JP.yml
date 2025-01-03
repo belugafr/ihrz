@@ -2113,6 +2113,7 @@ event_ticket_logsChannel_onDelete_embed_title: "チケットログ - チケッ�
 event_ticket_logsChannel_onDelete_embed_desc: "${interaction.user}さんがチケットを削除しました（#${interaction.channel.name}）！"
 event_ticket_logsChannel_onAddMember2_embed_title: "チケットログ - チケットのメンバーの追加/削除"
 event_ticket_logsChannel_onAddMember2_embed_desc: "${interaction.user}さん\n削除されたメンバー：${removedMembers}。\n追加されたメンバー：${addedMembers}。\nチケット（${interaction.channel}）にいます！"
+event_ticket_already_opened: "あらら、既にチケットが開いています (<#${channelId}>)！新しいチケットを作成する前に閉じてください。"
 
 # ギブアウェイイベント
 event_gw_reroll_win_msg: "おめでとうございます、${winners}さん！ **${fetch[channelId][messageId].prize}** を獲得しました！"

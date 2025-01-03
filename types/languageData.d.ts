@@ -1560,6 +1560,7 @@ export interface LanguageData {
   event_ticket_logsChannel_onDelete_embed_desc: string;
   event_ticket_logsChannel_onAddMember2_embed_title: string;
   event_ticket_logsChannel_onAddMember2_embed_desc: string;
+  event_ticket_already_opened: string;
   event_gw_reroll_win_msg: string;
   event_gw_reroll_cannot_win_msg: string;
   event_gw_finnish_msg: string;

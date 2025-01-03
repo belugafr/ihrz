@@ -2113,6 +2113,7 @@ event_ticket_logsChannel_onDelete_embed_title: "Ticket-Protokoll - Löschen eine
 event_ticket_logsChannel_onDelete_embed_desc: "${interaction.user} hat ein Ticket gelöscht (#${interaction.channel.name})!"
 event_ticket_logsChannel_onAddMember2_embed_title: "Ticket-Protokoll - Hinzufügen/Entfernen von Mitgliedern eines Tickets"
 event_ticket_logsChannel_onAddMember2_embed_desc: "${interaction.user}\nEntfernt: ${removedMembers}.\nHinzugefügt: ${addedMembers}.\n im Ticket (${interaction.channel})!"
+event_ticket_already_opened: "عذرًا، لديك بالفعل تذكرة مفتوحة (<#${channelId}>)! يرجى إغلاقها قبل فتح واحدة جديدة."
 
 # Gewinnspiel-Ereignis
 event_gw_reroll_win_msg: "Herzlichen Glückwunsch ${winners}! Sie haben **${fetch[channelId][messageId].prize}** gewonnen!"

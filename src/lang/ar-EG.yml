@@ -2108,6 +2108,7 @@ event_ticket_logsChannel_onDelete_embed_title: "تذكرة السجل - حذف �
 event_ticket_logsChannel_onDelete_embed_desc: "${interaction.user} قام بحذف التذكرة (#${interaction.channel.name})!"
 event_ticket_logsChannel_onAddMember2_embed_title: "تذكرة السجل - إضافة/إزالة أعضاء من التذكرة"
 event_ticket_logsChannel_onAddMember2_embed_desc: "${interaction.user}\nتمت إزالة: ${removedMembers}.\nتمت إضافة: ${addedMembers}.\n في التذكرة (${interaction.channel})!"
+event_ticket_already_opened: "عذرًا، لديك بالفعل تذكرة مفتوحة (<#${channelId}>)! يرجى إغلاقها قبل فتح واحدة جديدة."
 
 # حدث السحب
 event_gw_reroll_win_msg: "تهانينا ${winners}! فزت بـ **${fetch[channelId][messageId].prize}**!"

@@ -2113,6 +2113,7 @@ event_ticket_logsChannel_onDelete_embed_title: "Registro dei ticket - Eliminazio
 event_ticket_logsChannel_onDelete_embed_desc: "${interaction.user} ha eliminato un ticket (#${interaction.channel.name})!"
 event_ticket_logsChannel_onAddMember2_embed_title: "Registro dei ticket - Aggiunta/Rimozione membri di un ticket"
 event_ticket_logsChannel_onAddMember2_embed_desc: "${interaction.user}\nRimossi: ${removedMembers}.\nAggiunti: ${addedMembers}.\n nel ticket (${interaction.channel})!"
+event_ticket_already_opened: "Ops, hai già un ticket aperto (<#${channelId}>)! Chiudilo prima di aprirne uno nuovo."
 
 # Evento Giveaway
 event_gw_reroll_win_msg: "Congratulazioni ${winners}! Hai vinto **${fetch[channelId][messageId].prize}**!"

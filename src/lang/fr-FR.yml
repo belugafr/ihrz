@@ -2113,6 +2113,7 @@ event_ticket_logsChannel_onDelete_embed_title: "Journal des tickets - Suppressio
 event_ticket_logsChannel_onDelete_embed_desc: "${interaction.user} a supprimé un ticket (#${interaction.channel.name}) !"
 event_ticket_logsChannel_onAddMember2_embed_title: "Journal des tickets - Ajout/Retrait de membres d'un ticket"
 event_ticket_logsChannel_onAddMember2_embed_desc: "${interaction.user}\nRetirés : ${removedMembers}.\nAjoutés : ${addedMembers}.\n dans le ticket (${interaction.channel}) !"
+event_ticket_already_opened: "Oups, vous avez déjà un ticket ouvert (<#${channelId}>) ! Veuillez le fermer avant d'en ouvrir un nouveau."
 
 # Événement Giveaway
 event_gw_reroll_win_msg: "Félicitations ${winners} ! Vous avez remporté **${fetch[channelId][messageId].prize}** !"
