@@ -37,13 +37,13 @@ import {
 
 import { LanguageData } from '../../../../types/languageData';
 
-import { SubCommandArgumentValue, member } from '../../../core/functions/method.js';
 import { isInVoiceChannel } from '../../../core/functions/leashModuleHelper.js';
 import { promptYesOrNo } from '../../../core/functions/awaitingResponse.js';
 import { DatabaseStructure } from '../../../../types/database_structure';
+import { Command } from '../../../../types/command.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: SubCommandArgumentValue, allowed?: boolean, args?: string[]) => {
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Command, allowed: boolean, args?: string[]) => {
 
 
         // Guard's Typing
