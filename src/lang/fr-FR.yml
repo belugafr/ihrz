@@ -74,7 +74,7 @@ delete_not_in_ticket: "Vous ne pouvez pas utiliser cette commande en dehors d'un
 
 # /sethereticket
 sethereticket_disabled_command: "Vous ne pouvez pas utiliser cette commande car un autre administrateur a désactivé cette commande !"
-sethereticket_not_admin: ":x: | Vous devez être un administrateur de ce serveur pour executer cette commande !"
+sethereticket_not_admin: ":x: | Vous devez être un administrateur de ce serveur pour exécuter cette commande !"
 sethereticket_description_embed: "Pour créer un nouveau ticket, veuillez réagir avec 📩"
 sethereticket_command_work: "Le panneau de ticket a été configuré avec succès !"
 sethereticket_command_type_menu_placeholder: "Quel type de panneau voulez-vous ?"
