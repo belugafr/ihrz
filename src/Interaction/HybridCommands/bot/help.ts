@@ -298,7 +298,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.String,
             required: false,
-            perm: null
+            permission: null
         }
     ],
     category: 'bot',

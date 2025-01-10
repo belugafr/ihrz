@@ -67,11 +67,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "set-age",
@@ -99,11 +99,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "set-description",
@@ -131,11 +131,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "set-gender",
@@ -177,11 +177,11 @@ export const command: Command = {
                         }
                     ],
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         }
     ],
     integration_types: [0, 1],

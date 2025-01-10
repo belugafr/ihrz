@@ -54,7 +54,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'zip-stickers',
@@ -68,7 +68,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ManageGuildExpressions
+            permission: PermissionFlagsBits.ManageGuildExpressions
         },
         {
             name: 'wakeup',
@@ -95,11 +95,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: [PermissionFlagsBits.ModerateMembers, PermissionFlagsBits.MoveMembers]
+            permission: [PermissionFlagsBits.ModerateMembers, PermissionFlagsBits.MoveMembers]
         },
     ],
 

@@ -49,7 +49,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'block',
@@ -92,11 +92,11 @@ export const command: Command = {
                                 }
                             ],
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'too-new-account',
@@ -132,7 +132,7 @@ export const command: Command = {
                                 }
                             ],
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'maximum-date',
@@ -145,14 +145,14 @@ export const command: Command = {
 
                             required: false,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
             ],
-            perm: null
+            permission: null
         },
         {
             name: 'config-show',
@@ -164,7 +164,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'set',
@@ -186,7 +186,7 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'join-dm',
@@ -198,7 +198,7 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'join-message',
@@ -210,7 +210,7 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'join-role',
@@ -222,7 +222,7 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'leave-message',
@@ -234,11 +234,11 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'set-bot',
@@ -281,7 +281,7 @@ export const command: Command = {
                             type: ApplicationCommandOptionType.String,
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: "name",
@@ -294,12 +294,12 @@ export const command: Command = {
                             type: ApplicationCommandOptionType.String,
                             required: false,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
                     type: ApplicationCommandOptionType.Subcommand,
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'footer-pfp',
@@ -331,7 +331,7 @@ export const command: Command = {
 
                             type: ApplicationCommandOptionType.String,
                             required: true,
-                            perm: null
+                            permission: null
                         },
                         {
                             name: "avatar",
@@ -343,13 +343,13 @@ export const command: Command = {
 
                             type: ApplicationCommandOptionType.Attachment,
                             required: false,
-                            perm: null
+                            permission: null
                         }
                     ],
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'prefix',
@@ -382,7 +382,7 @@ export const command: Command = {
                             type: ApplicationCommandOptionType.String,
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: "name",
@@ -395,16 +395,16 @@ export const command: Command = {
                             type: ApplicationCommandOptionType.String,
                             required: false,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
                     type: ApplicationCommandOptionType.Subcommand,
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "config",
@@ -442,11 +442,11 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: "save",
@@ -458,11 +458,11 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         }
     ],
     thinking: true,

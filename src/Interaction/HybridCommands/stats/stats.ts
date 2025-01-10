@@ -62,11 +62,11 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.User,
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null,
+            permission: null,
 
             type: ApplicationCommandOptionType.Subcommand
         },
@@ -80,7 +80,7 @@ export const command: Command = {
 
             aliases: ["g"],
 
-            perm: null,
+            permission: null,
             type: ApplicationCommandOptionType.Subcommand
         },
         // {

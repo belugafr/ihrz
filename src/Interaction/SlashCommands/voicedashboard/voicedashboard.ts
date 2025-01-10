@@ -70,11 +70,11 @@ export const command: Command = {
                             },
 
                             required: true,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: "set-text-channel",
@@ -97,11 +97,11 @@ export const command: Command = {
                             },
 
                             required: true,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: "set-staff-role",
@@ -123,14 +123,14 @@ export const command: Command = {
                             },
 
                             required: true,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 }
             ],
-            perm: null
+            permission: null
         },
 
     ],

@@ -124,7 +124,7 @@ export const command: Command = {
                         value: value.value,
                     })),
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'allow',
@@ -147,11 +147,11 @@ export const command: Command = {
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "sanction",
@@ -188,11 +188,11 @@ export const command: Command = {
                         }
                     ],
 
-                    perm: null,
+                    permission: null,
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator,
+            permission: PermissionFlagsBits.Administrator,
         },
         {
             name: "show-config",
@@ -204,7 +204,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator,
+            permission: PermissionFlagsBits.Administrator,
         },
     ],
     thinking: true,

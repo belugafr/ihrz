@@ -62,7 +62,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'reason',
@@ -75,11 +75,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.BanMembers
+            permission: PermissionFlagsBits.BanMembers
         },
         {
             name: 'clear',
@@ -102,7 +102,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'member',
@@ -115,13 +115,13 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             aliases: ["cls"],
 
-            perm: PermissionFlagsBits.ManageMessages
+            permission: PermissionFlagsBits.ManageMessages
         },
         {
             name: 'mutelist',
@@ -133,7 +133,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ModerateMembers
+            permission: PermissionFlagsBits.ModerateMembers
         },
         {
             name: 'kick',
@@ -156,7 +156,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'reason',
@@ -169,11 +169,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.KickMembers
+            permission: PermissionFlagsBits.KickMembers
         },
         {
             name: 'lock',
@@ -195,11 +195,11 @@ export const command: Command = {
                     required: false,
                     type: ApplicationCommandOptionType.Role,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator,
+            permission: PermissionFlagsBits.Administrator,
             type: ApplicationCommandOptionType.Subcommand,
         },
         {
@@ -222,12 +222,12 @@ export const command: Command = {
                     required: false,
                     type: ApplicationCommandOptionType.Role,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'tempmute',
@@ -252,7 +252,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'time',
@@ -265,11 +265,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ModerateMembers
+            permission: PermissionFlagsBits.ModerateMembers
         },
         {
             name: 'unban',
@@ -292,7 +292,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'reason',
@@ -305,11 +305,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.BanMembers
+            permission: PermissionFlagsBits.BanMembers
         },
         {
             name: 'unlock',
@@ -331,13 +331,13 @@ export const command: Command = {
                     required: false,
                     type: ApplicationCommandOptionType.Role,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'unmute',
@@ -360,11 +360,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ModerateMembers
+            permission: PermissionFlagsBits.ModerateMembers
         },
         {
             name: "warn",
@@ -386,7 +386,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.User,
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "reason",
@@ -399,12 +399,12 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
-            perm: PermissionFlagsBits.ModerateMembers
+            permission: PermissionFlagsBits.ModerateMembers
         },
         {
             name: "unwarn",
@@ -426,7 +426,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.User,
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "warn-id",
@@ -439,12 +439,12 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
-            perm: PermissionFlagsBits.ModerateMembers
+            permission: PermissionFlagsBits.ModerateMembers
         },
         {
             name: "warnlist",
@@ -466,13 +466,13 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.User,
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ModerateMembers
+            permission: PermissionFlagsBits.ModerateMembers
         }
     ],
     thinking: true,

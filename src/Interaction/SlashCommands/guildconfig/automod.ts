@@ -80,7 +80,7 @@ export const command: Command = {
                                     value: "off"
                                 },
                             ],
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'logs-channel',
@@ -94,11 +94,11 @@ export const command: Command = {
                             channel_types: [ChannelType.GuildText],
 
                             required: false,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'link',
@@ -130,7 +130,7 @@ export const command: Command = {
                                     value: "off"
                                 },
                             ],
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'logs-channel',
@@ -144,11 +144,11 @@ export const command: Command = {
                             channel_types: [ChannelType.GuildText],
 
                             required: false,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'spam',
@@ -180,7 +180,7 @@ export const command: Command = {
                                     value: "off"
                                 }
                             ],
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'logs-channel',
@@ -194,11 +194,11 @@ export const command: Command = {
                             channel_types: [ChannelType.GuildText],
 
                             required: false,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'mass-mention',
@@ -230,7 +230,7 @@ export const command: Command = {
                                     value: "off"
                                 }
                             ],
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'max-mention-allowed',
@@ -242,7 +242,7 @@ export const command: Command = {
                             },
 
                             required: false,
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'logs-channel',
@@ -256,14 +256,14 @@ export const command: Command = {
                             channel_types: [ChannelType.GuildText],
 
                             required: false,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 }
             ],
-            perm: null
+            permission: null
         },
     ],
     thinking: true,

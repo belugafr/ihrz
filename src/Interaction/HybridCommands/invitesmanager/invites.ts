@@ -60,7 +60,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'amount',
@@ -73,11 +73,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionsBitField.Flags.Administrator
+            permission: PermissionsBitField.Flags.Administrator
         },
         {
             name: 'leaderboard',
@@ -92,7 +92,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: "invites",
@@ -117,11 +117,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "reset",
@@ -136,7 +136,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionsBitField.Flags.Administrator
+            permission: PermissionsBitField.Flags.Administrator
         },
         {
             name: 'removeinvites',
@@ -160,7 +160,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'amount',
@@ -173,11 +173,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionsBitField.Flags.Administrator
+            permission: PermissionsBitField.Flags.Administrator
         }
     ],
     thinking: true,

@@ -81,11 +81,11 @@ export const command: Command = {
                         }
                     ],
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'lyrics',
@@ -108,11 +108,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'history',
@@ -127,7 +127,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'nowplaying',
@@ -142,7 +142,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'pause',
@@ -154,7 +154,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'play',
@@ -179,11 +179,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'queue',
@@ -195,7 +195,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'resume',
@@ -210,7 +210,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'shuffle',
@@ -225,7 +225,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'skip',
@@ -237,7 +237,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'stop',
@@ -249,7 +249,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         }
     ],
     thinking: true,

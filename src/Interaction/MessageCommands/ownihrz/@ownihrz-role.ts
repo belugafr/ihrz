@@ -54,7 +54,7 @@ export const command: Command = {
             },
             type: ApplicationCommandOptionType.Role,
             required: true,
-            perm: null
+            permission: null
         }
     ],
 

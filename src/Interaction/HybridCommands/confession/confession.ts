@@ -67,7 +67,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'button-title',
@@ -80,11 +80,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "disable",
@@ -118,11 +118,11 @@ export const command: Command = {
                         },
                     ],
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "cooldown",
@@ -146,11 +146,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         }
     ],
     thinking: false,

@@ -64,11 +64,11 @@ export const command: Command = {
                     },
 
                     required: false,
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'vc',
@@ -101,11 +101,11 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
             type: ApplicationCommandOptionType.Subcommand,
-            perm: PermissionFlagsBits.ManageGuild
+            permission: PermissionFlagsBits.ManageGuild
         },
         {
             name: 'vanity-generator',
@@ -129,12 +129,12 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
-            perm: PermissionFlagsBits.ManageGuild
+            permission: PermissionFlagsBits.ManageGuild
         },
         {
             name: 'userinfo',
@@ -158,13 +158,13 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'snipe',
@@ -178,7 +178,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'leash',
@@ -200,12 +200,12 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'unleash',
@@ -227,12 +227,12 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'dm',
@@ -261,7 +261,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "member",
@@ -274,7 +274,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.User,
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "message",
@@ -287,11 +287,11 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator,
+            permission: PermissionFlagsBits.Administrator,
 
             type: ApplicationCommandOptionType.Subcommand
         },
@@ -307,7 +307,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'pic-only',
@@ -321,7 +321,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'setmentionrole',
@@ -354,7 +354,7 @@ export const command: Command = {
                             value: "on"
                         }
                     ],
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'roles',
@@ -366,7 +366,7 @@ export const command: Command = {
                     },
 
                     required: false,
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'part-of-nickname',
@@ -379,13 +379,13 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'renew',
@@ -399,7 +399,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ManageChannels
+            permission: PermissionFlagsBits.ManageChannels
         },
         {
             name: 'prevnames',
@@ -423,13 +423,13 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'nickrole',
@@ -461,7 +461,7 @@ export const command: Command = {
                         }
                     ],
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'nickname',
@@ -474,7 +474,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'role',
@@ -487,13 +487,13 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'massmove',
@@ -517,7 +517,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'from',
@@ -532,13 +532,13 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             thinking: true,
             type: ApplicationCommandOptionType.Subcommand,
-            perm: [PermissionFlagsBits.MoveMembers, PermissionFlagsBits.ModerateMembers]
+            permission: [PermissionFlagsBits.MoveMembers, PermissionFlagsBits.ModerateMembers]
         },
         {
             name: 'massiverole',
@@ -572,7 +572,7 @@ export const command: Command = {
                         }
                     ],
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'role',
@@ -585,14 +585,14 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             thinking: true,
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'guildinfo',
@@ -606,7 +606,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'emojis',
@@ -628,13 +628,13 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ManageGuildExpressions
+            permission: PermissionFlagsBits.ManageGuildExpressions
         },
         {
             name: 'embed',
@@ -652,13 +652,13 @@ export const command: Command = {
                     },
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ManageMessages
+            permission: PermissionFlagsBits.ManageMessages
         },
         {
             name: 'derank',
@@ -680,13 +680,13 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'admin-users',
@@ -700,7 +700,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'allbots',
@@ -714,7 +714,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "addrole",
@@ -738,7 +738,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "role",
@@ -752,13 +752,13 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ManageRoles
+            permission: PermissionFlagsBits.ManageRoles
         },
         {
             name: "delrole",
@@ -781,7 +781,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "role",
@@ -795,13 +795,13 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ManageRoles
+            permission: PermissionFlagsBits.ManageRoles
         },
         {
             name: 'zip-emojis',
@@ -815,7 +815,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ManageGuildExpressions
+            permission: PermissionFlagsBits.ManageGuildExpressions
         },
     ],
 

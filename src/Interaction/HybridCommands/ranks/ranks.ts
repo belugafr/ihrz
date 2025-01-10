@@ -58,7 +58,7 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Subcommand,
             thinking: true,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "disable",
@@ -100,11 +100,11 @@ export const command: Command = {
                         },
                     ],
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "show",
@@ -134,12 +134,12 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             thinking: true,
-            perm: null,
+            permission: null,
         },
         {
             name: "ureset",
@@ -162,11 +162,11 @@ export const command: Command = {
                     },
 
                     required: true,
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "greset",
@@ -179,7 +179,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "channel",
@@ -219,7 +219,7 @@ export const command: Command = {
                         }
                     ],
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'channel',
@@ -234,11 +234,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "leaderboard",
@@ -257,7 +257,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: "ignore-channels",
@@ -272,7 +272,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "message",
@@ -287,7 +287,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
     ],
     thinking: false,

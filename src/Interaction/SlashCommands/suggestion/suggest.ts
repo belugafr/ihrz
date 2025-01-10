@@ -64,7 +64,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'message',
@@ -77,11 +77,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "deny",
@@ -108,7 +108,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'reason',
@@ -125,11 +125,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "accept",
@@ -156,7 +156,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'reason',
@@ -173,11 +173,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "delete",
@@ -204,11 +204,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
     ],
     category: 'suggestion',

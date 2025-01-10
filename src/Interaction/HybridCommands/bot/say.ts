@@ -58,7 +58,7 @@ export const command: Command = {
 
             required: true,
 
-            perm: null
+            permission: null
         }
     ],
     type: ApplicationCommandType.ChatInput,

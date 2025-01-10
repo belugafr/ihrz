@@ -64,7 +64,7 @@ export const command: Command = {
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'settings',
@@ -87,7 +87,7 @@ export const command: Command = {
                 }
             ],
 
-            perm: null
+            permission: null
         },
         // {
         //     name: 'timeout',

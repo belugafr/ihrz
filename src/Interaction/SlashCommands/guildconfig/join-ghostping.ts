@@ -71,11 +71,11 @@ import { LanguageData } from '../../../../types/languageData';export const comma
                             },
 
                             required: true,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'remove',
@@ -99,15 +99,15 @@ import { LanguageData } from '../../../../types/languageData';export const comma
                             },
 
                             required: true,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
             ],
 
-            perm: null
+            permission: null
         },
     ],
     thinking: false,

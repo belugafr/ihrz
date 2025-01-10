@@ -64,7 +64,7 @@ export const command: Command = {
                 }
             ],
 
-            perm: null,
+            permission: null,
         },
         {
             name: 'amount',
@@ -76,7 +76,7 @@ export const command: Command = {
             },
 
             required: false,
-            perm: null,
+            permission: null,
         },
         {
             name: 'punishement',
@@ -102,7 +102,7 @@ export const command: Command = {
                     value: "mute"
                 }
             ],
-            perm: null
+            permission: null
         }
     ],
     thinking: false,

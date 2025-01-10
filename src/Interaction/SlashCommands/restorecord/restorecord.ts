@@ -72,7 +72,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'messageid',
@@ -85,7 +85,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'role',
@@ -98,7 +98,7 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
@@ -107,7 +107,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "delete",
@@ -119,7 +119,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "get",
@@ -141,12 +141,12 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "force-join",
@@ -168,12 +168,12 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "roles",
@@ -195,7 +195,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'roles',
@@ -208,12 +208,12 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
 
     ],

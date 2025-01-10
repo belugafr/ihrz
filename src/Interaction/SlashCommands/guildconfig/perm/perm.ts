@@ -61,7 +61,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.User,
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "permission",
@@ -113,13 +113,13 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'command',
@@ -151,7 +151,7 @@ export const command: Command = {
                         }
                     ],
                     
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "command",
@@ -165,7 +165,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "permission",
@@ -217,7 +217,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "custom-role",
@@ -231,7 +231,7 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "custom-user",
@@ -245,13 +245,13 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'perm-list',
@@ -263,7 +263,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'create-roles',
@@ -275,7 +275,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
     ],
 

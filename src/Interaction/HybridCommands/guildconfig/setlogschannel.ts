@@ -72,7 +72,7 @@ export const command: Command = {
                 { name: "Voice Logs", value: "voice" },
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'channel',
@@ -83,7 +83,7 @@ export const command: Command = {
                 "fr": "Le canal sur lequel vous souhaitez recevoir votre message de journaux"
             },
             required: false,
-            perm: null
+            permission: null
         }
     ],
     thinking: true,

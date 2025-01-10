@@ -68,7 +68,7 @@ export const command: Command = {
                 },
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "channel",
@@ -83,7 +83,7 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Channel,
             required: true,
 
-            perm: null
+            permission: null
         },
         {
             name: 'name',
@@ -95,7 +95,7 @@ export const command: Command = {
                 "fr": "{BotCount}, {RolesCount}, {MemberCount}, {ChannelCount}, {BoostCount} {VoiceCount}, {OnlineCount}"
             },
 
-            perm: null
+            permission: null
         },
     ],
     thinking: true,

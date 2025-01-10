@@ -68,11 +68,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'cat',
@@ -87,7 +87,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'dog',
@@ -102,7 +102,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'fdisable',
@@ -135,12 +135,12 @@ export const command: Command = {
                     required: true,
                     type: ApplicationCommandOptionType.String,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
-            perm: null
+            permission: null
         },
         {
             name: 'hack',
@@ -166,11 +166,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'hug',
@@ -196,11 +196,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'kiss',
@@ -226,11 +226,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'love',
@@ -256,7 +256,7 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "user2",
@@ -269,11 +269,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'morse',
@@ -296,11 +296,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'poll',
@@ -326,11 +326,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'question',
@@ -353,11 +353,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'slap',
@@ -383,11 +383,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'youtube',
@@ -410,7 +410,7 @@ export const command: Command = {
                     required: true,
                     type: ApplicationCommandOptionType.User,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'comment',
@@ -423,11 +423,11 @@ export const command: Command = {
                     required: true,
                     type: ApplicationCommandOptionType.String,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'tweet',
@@ -450,7 +450,7 @@ export const command: Command = {
                     required: true,
                     type: ApplicationCommandOptionType.User,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'comment',
@@ -463,11 +463,11 @@ export const command: Command = {
                     required: true,
                     type: ApplicationCommandOptionType.String,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'transgender',
@@ -493,11 +493,11 @@ export const command: Command = {
                     required: true,
                     type: ApplicationCommandOptionType.User,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'catsay',
@@ -523,11 +523,11 @@ export const command: Command = {
                     required: true,
                     type: ApplicationCommandOptionType.String,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: null
+            permission: null
         }
     ],
     integration_types: [0, 1],

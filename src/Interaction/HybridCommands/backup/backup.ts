@@ -79,10 +79,10 @@ export const command: Command = {
                     ],
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "list",
@@ -98,7 +98,7 @@ export const command: Command = {
             },
 
             type: ApplicationCommandOptionType.Subcommand,
-            perm: null
+            permission: null
         },
         {
             name: "load",
@@ -126,11 +126,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "delete",
@@ -153,11 +153,11 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
             type: ApplicationCommandOptionType.Subcommand,
-            perm: null
+            permission: null
         }
     ],
     category: 'backup',

@@ -60,7 +60,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'prefix',
@@ -73,7 +73,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'owner_two',
@@ -86,13 +86,13 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             ephemeral: true,
 
-            perm: null
+            permission: null
         },
         {
             name: "change-token",
@@ -115,7 +115,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'new_discord_bot_token',
@@ -128,11 +128,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: null,
+            permission: null,
             ephemeral: true
         },
         {
@@ -156,7 +156,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'owner_one',
@@ -169,7 +169,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'owner_two',
@@ -182,11 +182,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null,
+            permission: null,
         },
         {
             name: "list",
@@ -199,7 +199,7 @@ export const command: Command = {
             type: ApplicationCommandOptionType.Subcommand,
             ephemeral: true,
 
-            perm: null
+            permission: null
         },
         {
             name: "manage",
@@ -232,7 +232,7 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'cluster',
@@ -248,11 +248,11 @@ export const command: Command = {
                             })),
                             required: true,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "deny",
@@ -275,11 +275,11 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'instance',
@@ -328,7 +328,7 @@ export const command: Command = {
                             ],
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'id',
@@ -341,7 +341,7 @@ export const command: Command = {
 
                             required: false,
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'time',
@@ -354,16 +354,16 @@ export const command: Command = {
 
                             required: false,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: null,
+                    permission: null,
 
                     ephemeral: true
                 },
             ],
-            perm: null
+            permission: null
         },
     ],
     thinking: false,

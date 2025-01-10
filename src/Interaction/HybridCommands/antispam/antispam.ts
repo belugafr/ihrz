@@ -55,7 +55,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator,
+            permission: PermissionFlagsBits.Administrator,
         },
         {
             name: "bypass-roles",
@@ -70,7 +70,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator,
+            permission: PermissionFlagsBits.Administrator,
         },
         {
             name: "ignore-channels",
@@ -85,7 +85,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator,
+            permission: PermissionFlagsBits.Administrator,
         },
     ],
     category: 'antispam',

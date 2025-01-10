@@ -69,11 +69,11 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                     ],
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "remove",
@@ -96,11 +96,11 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                     ],
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "list",
@@ -112,11 +112,11 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: null
+            permission: null
         },
     ],
     thinking: false,

@@ -44,5 +44,5 @@ export interface Option {
     aliases?: string[],
     thinking?: boolean,
     ephemeral?: boolean,
-    perm: bigint | bigint[] | null;
+    permission: bigint | bigint[] | null;
 }

@@ -54,7 +54,7 @@ export const command: Command = {
 
             required: false,
 
-            perm: null
+            permission: null
         }
     ],
     thinking: false,

@@ -68,7 +68,7 @@ export const command: Command = {
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'channel',
@@ -83,7 +83,7 @@ export const command: Command = {
 
             required: true,
 
-            perm: null
+            permission: null
         },
         {
             name: 'messageid',
@@ -96,7 +96,7 @@ export const command: Command = {
 
             required: true,
 
-            perm: null
+            permission: null
         },
         {
             name: 'reaction',
@@ -109,7 +109,7 @@ export const command: Command = {
 
             required: false,
 
-            perm: null
+            permission: null
         },
         {
             name: 'role',
@@ -122,7 +122,7 @@ export const command: Command = {
 
             required: false,
 
-            perm: null
+            permission: null
         }
     ],
     category: 'rolereactions',

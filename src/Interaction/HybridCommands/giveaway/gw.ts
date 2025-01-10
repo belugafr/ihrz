@@ -64,7 +64,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'time',
@@ -77,7 +77,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "requirement",
@@ -109,7 +109,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'prize',
@@ -122,7 +122,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'requirement-value',
@@ -135,7 +135,7 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'image',
@@ -148,11 +148,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: PermissionFlagsBits.ManageMessages
+            permission: PermissionFlagsBits.ManageMessages
         },
         {
             name: "end",
@@ -181,11 +181,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ManageMessages
+            permission: PermissionFlagsBits.ManageMessages
         },
         {
             name: "reroll",
@@ -213,11 +213,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ManageGuild
+            permission: PermissionFlagsBits.ManageGuild
         },
         {
             name: "list-entries",
@@ -245,11 +245,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ManageMessages
+            permission: PermissionFlagsBits.ManageMessages
         },
         {
             name: 'get-data',
@@ -277,11 +277,11 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ManageMessages
+            permission: PermissionFlagsBits.ManageMessages
         },
         {
             name: 'get-all',
@@ -298,7 +298,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.ManageMessages
+            permission: PermissionFlagsBits.ManageMessages
         }
     ],
     thinking: true,

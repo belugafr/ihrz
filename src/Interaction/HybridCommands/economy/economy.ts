@@ -96,7 +96,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'member',
@@ -109,11 +109,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'balance-remove',
@@ -136,7 +136,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'member',
@@ -148,11 +148,11 @@ export const command: Command = {
                     },
 
                     required: true,
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'balance',
@@ -175,11 +175,11 @@ export const command: Command = {
 
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "disable",
@@ -216,11 +216,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ManageMessages
+            permission: PermissionFlagsBits.ManageMessages
         },
         {
             name: 'leaderboard',
@@ -235,7 +235,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'deposit',
@@ -258,11 +258,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'daily',
@@ -274,7 +274,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'monthly',
@@ -286,7 +286,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'weekly',
@@ -298,7 +298,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'pay',
@@ -321,7 +321,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'member',
@@ -334,11 +334,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'rob',
@@ -361,11 +361,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'withdraw',
@@ -388,11 +388,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'work',
@@ -404,7 +404,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: "role",
@@ -440,7 +440,7 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'amount',
@@ -453,11 +453,11 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.ManageGuild
+                    permission: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "delete",
@@ -481,11 +481,11 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                     ],
 
-                    perm: PermissionFlagsBits.ManageGuild
+                    permission: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "list",
@@ -498,11 +498,11 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.ManageGuild
+                    permission: PermissionFlagsBits.ManageGuild
                 },
             ],
 
-            perm: PermissionFlagsBits.ManageGuild
+            permission: PermissionFlagsBits.ManageGuild
         },
         {
             name: "boost-set",
@@ -526,7 +526,7 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: 'boost',
@@ -562,11 +562,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ManageGuild
+            permission: PermissionFlagsBits.ManageGuild
         },
         {
             name: 'manage-rewards',
@@ -609,7 +609,7 @@ export const command: Command = {
                             ],
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'how-much',
@@ -620,11 +620,11 @@ export const command: Command = {
                             },
                             required: true,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 },
                 {
                     name: "set-cooldown",
@@ -652,7 +652,7 @@ export const command: Command = {
                                 },
                             ],
                             required: true,
-                            perm: null
+                            permission: null
                         },
                         {
                             name: 'time',
@@ -662,15 +662,15 @@ export const command: Command = {
                                 "fr": "Le temps que vous souhaitez définir"
                             },
                             required: true,
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.Administrator
+                    permission: PermissionFlagsBits.Administrator
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "shop",
@@ -683,7 +683,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         }
     ],
     thinking: false,

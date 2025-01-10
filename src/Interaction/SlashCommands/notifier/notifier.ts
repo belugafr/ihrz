@@ -88,7 +88,7 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: "author",
@@ -102,11 +102,11 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
-                    perm: PermissionFlagsBits.ManageGuild
+                    permission: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "remove",
@@ -143,7 +143,7 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                         {
                             name: "author",
@@ -157,11 +157,11 @@ export const command: Command = {
 
                             required: true,
 
-                            perm: null
+                            permission: null
                         },
                     ],
 
-                    perm: PermissionFlagsBits.ManageGuild
+                    permission: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "list",
@@ -174,11 +174,11 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.ManageGuild
+                    permission: PermissionFlagsBits.ManageGuild
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: "config",
@@ -210,13 +210,13 @@ export const command: Command = {
                             type: ApplicationCommandOptionType.Channel,
                             required: true,
 
-                            perm: null
+                            permission: null
                         }
                     ],
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.ManageGuild
+                    permission: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "message",
@@ -228,12 +228,12 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.Subcommand,
 
-                    perm: PermissionFlagsBits.ManageGuild
+                    permission: PermissionFlagsBits.ManageGuild
                 }
             ],
 
             type: ApplicationCommandOptionType.SubcommandGroup,
-            perm: PermissionFlagsBits.ManageGuild
+            permission: PermissionFlagsBits.ManageGuild
         }
     ],
     thinking: false,

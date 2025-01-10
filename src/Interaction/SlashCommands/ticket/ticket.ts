@@ -61,11 +61,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ManageChannels
+            permission: PermissionFlagsBits.ManageChannels
         },
         {
             name: "close",
@@ -77,7 +77,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: "rename",
@@ -99,13 +99,13 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: "delete",
@@ -118,7 +118,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: "disable",
@@ -152,11 +152,11 @@ export const command: Command = {
                         },
                     ],
 
-                    perm: null
+                    permission: null
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: 'log-channel',
@@ -180,11 +180,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "open",
@@ -196,7 +196,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
         {
             name: 'remove-member',
@@ -219,11 +219,11 @@ export const command: Command = {
 
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.ManageChannels
+            permission: PermissionFlagsBits.ManageChannels
         },
         {
             name: "set-here",
@@ -246,7 +246,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: true,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "description",
@@ -259,7 +259,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.String,
                     required: false,
 
-                    perm: null
+                    permission: null
                 },
                 {
                     name: "category",
@@ -274,11 +274,11 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.Channel,
                     required: false,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "panel",
@@ -300,12 +300,12 @@ export const command: Command = {
                     required: false,
                     type: ApplicationCommandOptionType.String,
 
-                    perm: null
+                    permission: null
                 }
             ],
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "set-category",
@@ -330,11 +330,11 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.Channel,
                     required: true,
 
-                    perm: null
+                    permission: null
                 }
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            permission: PermissionFlagsBits.Administrator
         },
         {
             name: "transcript",
@@ -346,7 +346,7 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Subcommand,
 
-            perm: null
+            permission: null
         },
     ],
     thinking: true,

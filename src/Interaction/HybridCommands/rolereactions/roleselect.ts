@@ -95,7 +95,7 @@ export const command: Command = {
             },
             channel_types: [ChannelType.GuildText],
             required: true,
-            perm: null
+            permission: null
         },
         {
             name: 'messageid',
@@ -105,7 +105,7 @@ export const command: Command = {
                 "fr": "Identifiant du message à configurer pour la sélection de rôles"
             },
             required: true,
-            perm: null
+            permission: null
         },
     ],
     category: 'rolereactions',

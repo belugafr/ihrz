@@ -106,7 +106,7 @@ export const command: Command = {
                 },
             ],
 
-            perm: null
+            permission: null
         }
     ],
     thinking: false,

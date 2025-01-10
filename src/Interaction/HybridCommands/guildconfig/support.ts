@@ -68,7 +68,7 @@ export const command: Command = {
                 }
             ],
 
-            perm: null
+            permission: null
         },
         {
             name: 'roles',
@@ -80,7 +80,7 @@ export const command: Command = {
 
             required: false,
 
-            perm: null
+            permission: null
         },
         {
             name: 'input',
@@ -93,7 +93,7 @@ export const command: Command = {
 
             required: false,
 
-            perm: null
+            permission: null
         },
     ],
     thinking: false,
