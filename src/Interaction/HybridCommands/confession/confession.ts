@@ -27,6 +27,7 @@ import {
     Message,
     EmbedBuilder,
     ChannelType,
+    PermissionFlagsBits,
 } from 'discord.js';
 
 import { LanguageData } from '../../../../types/languageData';
@@ -64,7 +65,9 @@ export const command: Command = {
 
                     channel_types: [ChannelType.GuildText],
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 },
                 {
                     name: 'button-title',
@@ -75,9 +78,13 @@ export const command: Command = {
                         "fr": "Le titre du bouton"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: "disable",
@@ -110,8 +117,12 @@ export const command: Command = {
                             value: "off"
                         },
                     ],
+
+                    perm: null
                 }
-            ]
+            ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: "cooldown",
@@ -134,8 +145,12 @@ export const command: Command = {
                     },
 
                     required: true,
+
+                    perm: null
                 }
-            ]
+            ],
+
+            perm: PermissionFlagsBits.Administrator
         }
     ],
     thinking: false,

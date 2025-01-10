@@ -26,6 +26,7 @@ import {
     ApplicationCommandType,
     Message,
     ChannelType,
+    PermissionFlagsBits,
 } from 'discord.js';
 
 import { LanguageData } from '../../../../types/languageData';
@@ -85,7 +86,9 @@ export const command: Command = {
                                 }
                             ],
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         },
                         {
                             name: "author",
@@ -97,9 +100,13 @@ export const command: Command = {
 
                             type: ApplicationCommandOptionType.String,
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         }
-                    ]
+                    ],
+
+                    perm: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "remove",
@@ -134,7 +141,9 @@ export const command: Command = {
                                 }
                             ],
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         },
                         {
                             name: "author",
@@ -146,9 +155,13 @@ export const command: Command = {
 
                             type: ApplicationCommandOptionType.String,
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         },
-                    ]
+                    ],
+
+                    perm: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "list",
@@ -159,9 +172,13 @@ export const command: Command = {
                         fr: "Afficher tout les Streamer/Youtuber/Twitcher configurer"
                     },
 
-                    type: ApplicationCommandOptionType.Subcommand
+                    type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.ManageGuild
                 }
-            ]
+            ],
+
+            perm: null
         },
         {
             name: "config",
@@ -191,11 +208,15 @@ export const command: Command = {
 
                             channel_types: [ChannelType.GuildText],
                             type: ApplicationCommandOptionType.Channel,
-                            required: true
+                            required: true,
+
+                            perm: null
                         }
                     ],
 
-                    type: ApplicationCommandOptionType.Subcommand
+                    type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "message",
@@ -205,11 +226,14 @@ export const command: Command = {
                         fr: "Lorsqu'un Streamer/Youtuber/Twitcher publie une vidéo, iHorizon envoie un message"
                     },
 
-                    type: ApplicationCommandOptionType.Subcommand
+                    type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.ManageGuild
                 }
             ],
 
             type: ApplicationCommandOptionType.SubcommandGroup,
+            perm: PermissionFlagsBits.ManageGuild
         }
     ],
     thinking: false,

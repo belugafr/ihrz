@@ -26,6 +26,7 @@ import {
     ApplicationCommandType,
     Message,
     ChannelType,
+    PermissionFlagsBits,
 } from 'discord.js';
 
 import { LanguageData } from '../../../../types/languageData';
@@ -63,9 +64,13 @@ export const command: Command = {
 
                     channel_types: [ChannelType.GuildText],
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: "disable",
@@ -98,8 +103,12 @@ export const command: Command = {
                             value: "off"
                         },
                     ],
+
+                    perm: null
                 }
-            ]
+            ],
+
+            perm: PermissionFlagsBits.Administrator
         }
     ],
     thinking: false,

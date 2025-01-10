@@ -297,7 +297,8 @@ export const command: Command = {
             },
 
             type: ApplicationCommandOptionType.String,
-            required: false
+            required: false,
+            perm: null
         }
     ],
     category: 'bot',

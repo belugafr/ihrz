@@ -26,6 +26,7 @@ import {
     ChatInputCommandInteraction,
     Client,
     Message,
+    PermissionFlagsBits,
 } from 'discord.js'
 
 import { LanguageData } from '../../../../types/languageData.js';
@@ -52,6 +53,8 @@ export const command: Command = {
             aliases: ["nickkick", "nk"],
 
             type: ApplicationCommandOptionType.Subcommand,
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: 'zip-stickers',
@@ -63,7 +66,9 @@ export const command: Command = {
 
             aliases: ["zipstickers", "zip2"],
 
-            type: ApplicationCommandOptionType.Subcommand
+            type: ApplicationCommandOptionType.Subcommand,
+
+            perm: PermissionFlagsBits.ManageGuildExpressions
         },
         {
             name: 'wakeup',
@@ -88,9 +93,13 @@ export const command: Command = {
 
                     type: ApplicationCommandOptionType.User,
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
-            ]
+            ],
+
+            perm: [PermissionFlagsBits.ModerateMembers, PermissionFlagsBits.MoveMembers]
         },
     ],
 

@@ -60,9 +60,13 @@ export const command: Command = {
                     },
 
                     type: ApplicationCommandOptionType.User,
-                    required: false
+                    required: false,
+
+                    perm: null
                 }
             ],
+
+            perm: null,
 
             type: ApplicationCommandOptionType.Subcommand
         },
@@ -76,6 +80,7 @@ export const command: Command = {
 
             aliases: ["g"],
 
+            perm: null,
             type: ApplicationCommandOptionType.Subcommand
         },
         // {

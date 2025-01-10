@@ -67,9 +67,13 @@ export const command: Command = {
                                 "fr": "Quel est le membre alors?"
                             },
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         },
                     ],
+
+                    perm: null
                 },
                 {
                     name: "remove",
@@ -90,9 +94,13 @@ export const command: Command = {
                                 "fr": "Quel est le membre alors?"
                             },
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         },
                     ],
+
+                    perm: null
                 },
                 {
                     name: "list",
@@ -103,8 +111,12 @@ export const command: Command = {
                     },
 
                     type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: null
                 },
             ],
+
+            perm: null
         },
     ],
     thinking: false,

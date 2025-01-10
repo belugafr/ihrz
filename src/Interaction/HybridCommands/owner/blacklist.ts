@@ -55,7 +55,9 @@ export const command: Command = {
                 "fr": "L'utilisateur que vous voulez blacklist"
             },
 
-            required: false
+            required: false,
+
+            perm: null
         },
         {
             name: 'reason',
@@ -66,7 +68,9 @@ export const command: Command = {
                 "fr": "La raison de pourquoi vous voulez le mettre dans la liste-noire"
             },
 
-            required: false
+            required: false,
+
+            perm: null
         }
     ],
 

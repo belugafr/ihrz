@@ -27,7 +27,8 @@ import {
     ChatInputCommandInteraction,
     BaseGuildTextChannel,
     ApplicationCommandType,
-    Message
+    Message,
+    PermissionFlagsBits
 } from 'discord.js'
 
 import { Command } from '../../../../types/command';
@@ -104,6 +105,8 @@ export const command: Command = {
                     value: "es-ES"
                 },
             ],
+
+            perm: PermissionFlagsBits.Administrator
         }
     ],
     thinking: false,
@@ -115,20 +118,10 @@ export const command: Command = {
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
 
-        const permissionsArray = [PermissionsBitField.Flags.Administrator]
-        const permissions = interaction instanceof ChatInputCommandInteraction ?
-            interaction.memberPermissions?.has(permissionsArray)
-            : interaction.member.permissions.has(permissionsArray);
-
-        if (!permissions && !allowed) {
-            await client.method.interactionSend(interaction, { content: lang.setserverlang_not_admin });
-            return;
-        };
-
         if (interaction instanceof ChatInputCommandInteraction) {
             var type = interaction.options.getString("language");
         } else {
-            
+
             var type = args?.[0] as string | null;
         };
 

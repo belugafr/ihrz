@@ -53,7 +53,8 @@ export const command: Command = {
                 "fr": "le rôle que vous souhaitez donner"
             },
             type: ApplicationCommandOptionType.Role,
-            required: true
+            required: true,
+            perm: null
         }
     ],
 

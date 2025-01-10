@@ -31,7 +31,8 @@ import {
     Message,
     ChannelType,
     BaseGuildVoiceChannel,
-    VoiceBasedChannel
+    VoiceBasedChannel,
+    PermissionFlagsBits
 } from 'discord.js'
 
 import { Command } from '../../../../types/command.js';
@@ -65,7 +66,9 @@ export const command: Command = {
                     name: "Power off",
                     value: "off"
                 },
-            ]
+            ],
+
+            perm: null
         },
         {
             name: "channel",
@@ -79,6 +82,8 @@ export const command: Command = {
 
             type: ApplicationCommandOptionType.Channel,
             required: true,
+
+            perm: null
         },
         {
             name: 'name',
@@ -88,10 +93,13 @@ export const command: Command = {
             description: `{BotCount}, {RolesCount}, {MemberCount}, {ChannelCount}, {BoostCount} {VoiceCount}, {OnlineCount}`,
             description_localizations: {
                 "fr": "{BotCount}, {RolesCount}, {MemberCount}, {ChannelCount}, {BoostCount} {VoiceCount}, {OnlineCount}"
-            }
+            },
+
+            perm: null
         },
     ],
     thinking: true,
+    permission: PermissionFlagsBits.Administrator,
     category: 'membercount',
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Command, allowed: boolean, args?: string[]) => {
@@ -99,16 +107,6 @@ export const command: Command = {
 
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
-
-        const permissionsArray = [PermissionsBitField.Flags.Administrator]
-        const permissions = interaction instanceof ChatInputCommandInteraction ?
-            interaction.memberPermissions?.has(permissionsArray)
-            : interaction.member.permissions.has(permissionsArray);
-
-        if (!permissions && !allowed) {
-            await client.method.interactionSend(interaction, { content: lang.setmembercount_not_admin });
-            return;
-        };
 
         if (interaction instanceof ChatInputCommandInteraction) {
             var type = interaction.options.getString("action");

@@ -24,6 +24,7 @@ import {
     ApplicationCommandOptionType,
     ChatInputCommandInteraction,
     ApplicationCommandType,
+    PermissionFlagsBits,
 } from 'discord.js';
 
 import { Command } from '../../../../types/command';
@@ -46,7 +47,9 @@ export const command: Command = {
                 "fr": "Configurer le canal de journaux sur le bot"
             },
 
-            type: ApplicationCommandOptionType.Subcommand
+            type: ApplicationCommandOptionType.Subcommand,
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: 'block',
@@ -88,8 +91,12 @@ export const command: Command = {
                                     value: "off"
                                 }
                             ],
+
+                            perm: null
                         }
                     ],
+
+                    perm: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'too-new-account',
@@ -124,6 +131,8 @@ export const command: Command = {
                                     value: "off"
                                 }
                             ],
+
+                            perm: null
                         },
                         {
                             name: 'maximum-date',
@@ -135,10 +144,15 @@ export const command: Command = {
                             },
 
                             required: false,
+
+                            perm: null
                         }
                     ],
+
+                    perm: PermissionFlagsBits.Administrator
                 },
             ],
+            perm: null
         },
         {
             name: 'config-show',
@@ -149,6 +163,8 @@ export const command: Command = {
             },
 
             type: ApplicationCommandOptionType.Subcommand,
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: 'set',
@@ -169,6 +185,8 @@ export const command: Command = {
                     },
 
                     type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'join-dm',
@@ -179,6 +197,8 @@ export const command: Command = {
                     },
 
                     type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'join-message',
@@ -189,6 +209,8 @@ export const command: Command = {
                     },
 
                     type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'join-role',
@@ -199,6 +221,8 @@ export const command: Command = {
                     },
 
                     type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'leave-message',
@@ -209,8 +233,12 @@ export const command: Command = {
                     },
 
                     type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.Administrator
                 },
             ],
+
+            perm: null
         },
         {
             name: 'set-bot',
@@ -251,7 +279,9 @@ export const command: Command = {
                             ],
 
                             type: ApplicationCommandOptionType.String,
-                            required: true
+                            required: true,
+
+                            perm: null
                         },
                         {
                             name: "name",
@@ -262,11 +292,14 @@ export const command: Command = {
                             },
 
                             type: ApplicationCommandOptionType.String,
-                            required: false
+                            required: false,
+
+                            perm: null
                         }
                     ],
 
                     type: ApplicationCommandOptionType.Subcommand,
+                    perm: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'footer-pfp',
@@ -297,7 +330,8 @@ export const command: Command = {
                             ],
 
                             type: ApplicationCommandOptionType.String,
-                            required: true
+                            required: true,
+                            perm: null
                         },
                         {
                             name: "avatar",
@@ -308,11 +342,14 @@ export const command: Command = {
                             },
 
                             type: ApplicationCommandOptionType.Attachment,
-                            required: false
+                            required: false,
+                            perm: null
                         }
                     ],
 
                     type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.Administrator
                 },
                 {
                     name: 'prefix',
@@ -343,24 +380,31 @@ export const command: Command = {
                             ],
 
                             type: ApplicationCommandOptionType.String,
-                            required: true
+                            required: true,
+
+                            perm: null
                         },
                         {
                             name: "name",
 
-                            description: "The footer name",
+                            description: "The new prefix",
                             description_localizations: {
-                                "fr": "Le noms du footer"
+                                "fr": "Le nouveau préfixe"
                             },
 
                             type: ApplicationCommandOptionType.String,
-                            required: false
+                            required: false,
+
+                            perm: null
                         }
                     ],
 
                     type: ApplicationCommandOptionType.Subcommand,
+                    perm: PermissionFlagsBits.Administrator
                 },
             ],
+
+            perm: null
         },
         {
             name: "config",
@@ -396,9 +440,13 @@ export const command: Command = {
 
                             type: ApplicationCommandOptionType.Attachment,
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         }
-                    ]
+                    ],
+
+                    perm: PermissionFlagsBits.Administrator
                 },
                 {
                     name: "save",
@@ -409,8 +457,12 @@ export const command: Command = {
                     },
 
                     type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: null
                 }
-            ]
+            ],
+
+            perm: PermissionFlagsBits.Administrator
         }
     ],
     thinking: true,

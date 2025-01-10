@@ -27,6 +27,8 @@ import {
     Message,
     EmbedBuilder,
     ChannelType,
+    PermissionsBitField,
+    PermissionFlagsBits,
 } from 'discord.js';
 
 import { LanguageData } from '../../../../types/languageData';
@@ -54,7 +56,9 @@ export const command: Command = {
             aliases: ["rconfig"],
 
             type: ApplicationCommandOptionType.Subcommand,
-            thinking: true
+            thinking: true,
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: "disable",
@@ -95,8 +99,12 @@ export const command: Command = {
                             value: "disable"
                         },
                     ],
+
+                    perm: null
                 },
             ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: "show",
@@ -124,11 +132,14 @@ export const command: Command = {
                         "fr": "L'utilisateur que vous souhaitez rechercher."
                     },
 
-                    required: false
+                    required: false,
+
+                    perm: null
                 }
             ],
 
-            thinking: true
+            thinking: true,
+            perm: null,
         },
         {
             name: "ureset",
@@ -150,9 +161,12 @@ export const command: Command = {
                         "fr": "L'utilisateur que vous voulez supprimer du module de rangs."
                     },
 
-                    required: true
+                    required: true,
+                    perm: null
                 }
             ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: "greset",
@@ -164,6 +178,8 @@ export const command: Command = {
             },
 
             type: ApplicationCommandOptionType.Subcommand,
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: "channel",
@@ -202,6 +218,8 @@ export const command: Command = {
                             value: "on"
                         }
                     ],
+
+                    perm: null
                 },
                 {
                     name: 'channel',
@@ -214,9 +232,13 @@ export const command: Command = {
 
                     channel_types: [ChannelType.GuildText],
 
-                    required: false
+                    required: false,
+
+                    perm: null
                 }
             ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: "leaderboard",
@@ -234,6 +256,8 @@ export const command: Command = {
             aliases: ["rankslb"],
 
             type: ApplicationCommandOptionType.Subcommand,
+
+            perm: null
         },
         {
             name: "ignore-channels",
@@ -247,6 +271,8 @@ export const command: Command = {
             aliases: ["ignore"],
 
             type: ApplicationCommandOptionType.Subcommand,
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: "message",
@@ -260,6 +286,8 @@ export const command: Command = {
             aliases: ["msg"],
 
             type: ApplicationCommandOptionType.Subcommand,
+
+            perm: PermissionFlagsBits.Administrator
         },
     ],
     thinking: false,

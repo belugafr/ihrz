@@ -50,7 +50,9 @@ export const command: Command = {
                 "fr": "L'utilisateur que vous souhaitez supprimer de la liste noire (uniquement propriétaire d'ihorizon)"
             },
 
-            required: true
+            required: true,
+
+            perm: null
         }
     ],
 

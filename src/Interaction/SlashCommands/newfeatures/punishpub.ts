@@ -27,6 +27,7 @@ import {
     ChatInputCommandInteraction,
     BaseGuildTextChannel,
     ApplicationCommandType,
+    PermissionFlagsBits,
 } from 'discord.js';
 
 import { LanguageData } from '../../../../types/languageData';
@@ -61,7 +62,9 @@ export const command: Command = {
                     name: "OFF",
                     value: "false"
                 }
-            ]
+            ],
+
+            perm: null,
         },
         {
             name: 'amount',
@@ -73,6 +76,7 @@ export const command: Command = {
             },
 
             required: false,
+            perm: null,
         },
         {
             name: 'punishement',
@@ -97,13 +101,15 @@ export const command: Command = {
                     name: "MUTE",
                     value: "mute"
                 }
-            ]
+            ],
+            perm: null
         }
     ],
     thinking: false,
+    permission: PermissionFlagsBits.Administrator,
     category: 'newfeatures',
     type: ApplicationCommandType.ChatInput,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, allowed: boolean) => {        
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, allowed: boolean) => {
 
         // Guard's Typing
         if (!interaction.member || !client.user || !interaction.user || !interaction.guild || !interaction.channel) return;

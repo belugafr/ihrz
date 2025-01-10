@@ -70,7 +70,9 @@ export const command: Command = {
                 { name: "Setup all channels", value: "auto" },
                 { name: "Ticket Logs", value: "ticket" },
                 { name: "Voice Logs", value: "voice" },
-            ]
+            ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: 'channel',
@@ -80,7 +82,8 @@ export const command: Command = {
             description_localizations: {
                 "fr": "Le canal sur lequel vous souhaitez recevoir votre message de journaux"
             },
-            required: false
+            required: false,
+            perm: null
         }
     ],
     thinking: true,
@@ -103,16 +106,6 @@ export const command: Command = {
             { id: "antispam", value: lang.setlogschannel_var_antispam },
             { id: "channel", value: lang.var_text_channel }
         ];
-
-        const permissionsArray = [PermissionsBitField.Flags.Administrator]
-        const permissions = interaction instanceof ChatInputCommandInteraction ?
-            interaction.memberPermissions?.has(permissionsArray)
-            : interaction.member.permissions.has(permissionsArray);
-
-        if (!permissions && !allowed) {
-            await client.method.interactionSend(interaction, { content: lang.setlogschannel_not_admin });
-            return;
-        };
 
         if (interaction instanceof ChatInputCommandInteraction) {
             var type = interaction.options.getString("type")!;

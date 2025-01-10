@@ -26,6 +26,7 @@ import {
     ApplicationCommandType,
     Message,
     GuildMember,
+    PermissionFlagsBits,
 } from 'discord.js';
 
 import { LanguageData } from '../../../../types/languageData';
@@ -93,7 +94,9 @@ export const command: Command = {
                         "fr": "Le montant d'argent que vous souhaitez ajouter"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 },
                 {
                     name: 'member',
@@ -104,9 +107,13 @@ export const command: Command = {
                         "fr": "Le membre à qui vous souhaitez ajouter de l'argent"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: 'balance-remove',
@@ -127,7 +134,9 @@ export const command: Command = {
                         "fr": "montant de $ que vous souhaitez ajouter"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 },
                 {
                     name: 'member',
@@ -138,9 +147,12 @@ export const command: Command = {
                         "fr": "le membre auquel vous souhaitez ajouter de l'argent"
                     },
 
-                    required: true
+                    required: true,
+                    perm: null
                 }
             ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: 'balance',
@@ -161,9 +173,13 @@ export const command: Command = {
                         "fr": "Ciblez un utilisateur pour voir son solde actuel"
                     },
 
-                    required: false
+                    required: false,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: "disable",
@@ -198,9 +214,13 @@ export const command: Command = {
                         },
                     ],
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
-            ]
+            ],
+
+            perm: PermissionFlagsBits.ManageMessages
         },
         {
             name: 'leaderboard',
@@ -214,6 +234,8 @@ export const command: Command = {
             aliases: ["eclb", "eco-lb", "economy-lb"],
 
             type: ApplicationCommandOptionType.Subcommand,
+
+            perm: null
         },
         {
             name: 'deposit',
@@ -234,9 +256,13 @@ export const command: Command = {
                         "fr": "Combien de pièces vous souhaitez déposer dans votre banque"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'daily',
@@ -246,7 +272,9 @@ export const command: Command = {
                 "fr": "Réclamez une récompense quotidienne"
             },
 
-            type: ApplicationCommandOptionType.Subcommand
+            type: ApplicationCommandOptionType.Subcommand,
+
+            perm: null
         },
         {
             name: 'monthly',
@@ -256,7 +284,9 @@ export const command: Command = {
                 "fr": "Réclamez une récompense mensuelle"
             },
 
-            type: ApplicationCommandOptionType.Subcommand
+            type: ApplicationCommandOptionType.Subcommand,
+
+            perm: null
         },
         {
             name: 'weekly',
@@ -266,7 +296,9 @@ export const command: Command = {
                 "fr": "Réclamez une récompense hebdomadaire"
             },
 
-            type: ApplicationCommandOptionType.Subcommand
+            type: ApplicationCommandOptionType.Subcommand,
+
+            perm: null
         },
         {
             name: 'pay',
@@ -287,7 +319,9 @@ export const command: Command = {
                         "fr": "Le montant d’argent que vous souhaitez lui donner"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 },
                 {
                     name: 'member',
@@ -298,9 +332,13 @@ export const command: Command = {
                         "fr": "Le membre à qui vous souhaitez donner de l'argent"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'rob',
@@ -321,9 +359,13 @@ export const command: Command = {
                         "fr": "le membre à qui tu veux voler de l'argent"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'withdraw',
@@ -344,9 +386,13 @@ export const command: Command = {
                         "fr": "Combien de pièces vous souhaitez retirer de votre banque"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'work',
@@ -356,7 +402,9 @@ export const command: Command = {
                 "fr": "Réclamez une récompense de travail"
             },
 
-            type: ApplicationCommandOptionType.Subcommand
+            type: ApplicationCommandOptionType.Subcommand,
+
+            perm: null
         },
         {
             name: "role",
@@ -390,7 +438,9 @@ export const command: Command = {
                                 "fr": "Le rôle que vous souhaitez ajouter"
                             },
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         },
                         {
                             name: 'amount',
@@ -401,9 +451,13 @@ export const command: Command = {
                                 "fr": "Le montant d'argent que vous souhaitez ajouter"
                             },
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         }
                     ],
+
+                    perm: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "delete",
@@ -425,9 +479,13 @@ export const command: Command = {
                                 "fr": "Le rôle que vous souhaitez supprimer"
                             },
 
-                            required: true
+                            required: true,
+
+                            perm: null
                         },
                     ],
+
+                    perm: PermissionFlagsBits.ManageGuild
                 },
                 {
                     name: "list",
@@ -439,8 +497,12 @@ export const command: Command = {
                     },
 
                     type: ApplicationCommandOptionType.Subcommand,
+
+                    perm: PermissionFlagsBits.ManageGuild
                 },
-            ]
+            ],
+
+            perm: PermissionFlagsBits.ManageGuild
         },
         {
             name: "boost-set",
@@ -462,7 +524,9 @@ export const command: Command = {
                         "fr": "Le rôle que vous souhaitez modifier le boost"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 },
                 {
                     name: 'boost',
@@ -496,18 +560,22 @@ export const command: Command = {
                         },
                     ],
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: PermissionFlagsBits.ManageGuild
         },
         {
             name: 'manage-rewards',
-        
+
             description: 'Manage how much money you can get from daily, weekly and monthly!',
             description_localizations: {
                 "fr": "Gérer combien d'argent vous pouvez obtenir quotidiennement, hebdomadairement et mensuellement"
             },
-        
+
             type: ApplicationCommandOptionType.SubcommandGroup,
             options: [
                 {
@@ -540,6 +608,8 @@ export const command: Command = {
                                 },
                             ],
                             required: true,
+
+                            perm: null
                         },
                         {
                             name: 'how-much',
@@ -548,9 +618,13 @@ export const command: Command = {
                             description_localizations: {
                                 "fr": "Combien d'argent vous souhaitez définir"
                             },
-                            required: true
+                            required: true,
+
+                            perm: null
                         }
-                    ]
+                    ],
+
+                    perm: PermissionFlagsBits.Administrator
                 },
                 {
                     name: "set-cooldown",
@@ -578,6 +652,7 @@ export const command: Command = {
                                 },
                             ],
                             required: true,
+                            perm: null
                         },
                         {
                             name: 'time',
@@ -586,11 +661,16 @@ export const command: Command = {
                             description_localizations: {
                                 "fr": "Le temps que vous souhaitez définir"
                             },
-                            required: true
+                            required: true,
+                            perm: null
                         }
-                    ]
+                    ],
+
+                    perm: PermissionFlagsBits.Administrator
                 }
-            ]
+            ],
+
+            perm: null
         },
         {
             name: "shop",
@@ -601,7 +681,9 @@ export const command: Command = {
                 "fr": "Obtenez le magasin du serveur"
             },
 
-            type: ApplicationCommandOptionType.Subcommand
+            type: ApplicationCommandOptionType.Subcommand,
+
+            perm: null
         }
     ],
     thinking: false,

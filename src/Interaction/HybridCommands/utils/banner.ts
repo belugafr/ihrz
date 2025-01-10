@@ -62,8 +62,12 @@ export const command: Command = {
                     },
 
                     required: false,
+
+                    perm: null
                 },
             ],
+
+            perm: null
         },
         {
             name: "banner-server",
@@ -74,6 +78,8 @@ export const command: Command = {
             },
 
             type: ApplicationCommandOptionType.Subcommand,
+
+            perm: null
         },
     ],
     thinking: false,

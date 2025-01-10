@@ -58,18 +58,6 @@ export default {
             reason = lang.guildprofil_not_set_punishPub
         };
 
-        const permissionsArray = [PermissionsBitField.Flags.BanMembers]
-        const permissions = interaction instanceof ChatInputCommandInteraction ?
-            interaction.memberPermissions?.has(permissionsArray)
-            : interaction.member.permissions.has(permissionsArray);
-
-        if (!permissions && !allowed) {
-            await client.method.interactionSend(interaction, {
-                content: lang.ban_not_permission.replace("${client.iHorizon_Emojis.icon.No_Logo}", client.iHorizon_Emojis.icon.No_Logo)
-            });
-            return;
-        };
-
         if (!member) {
             await client.method.interactionSend(interaction, {
                 content: lang.ban_dont_found_member

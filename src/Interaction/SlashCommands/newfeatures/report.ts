@@ -50,7 +50,9 @@ export const command: Command = {
                 "fr": "Quelle est le problème? S'il vous plaît expliquer le problème."
             },
 
-            required: true
+            required: true,
+
+            perm: null
         }
     ],
     thinking: true,

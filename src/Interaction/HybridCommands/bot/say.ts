@@ -55,7 +55,9 @@ export const command: Command = {
                 "fr": "Le message que le bot vas dire"
             },
 
-            required: true
+            required: true,
+
+            perm: null
         }
     ],
     type: ApplicationCommandType.ChatInput,
@@ -66,21 +68,11 @@ export const command: Command = {
         // Guard's Typing
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
 
-        const permissionsArray = [PermissionsBitField.Flags.Administrator]
-        const permissions = interaction instanceof ChatInputCommandInteraction ?
-            interaction.memberPermissions?.has(permissionsArray)
-            : interaction.member.permissions.has(permissionsArray);
-
         if (interaction instanceof ChatInputCommandInteraction) {
             var toSay = interaction.options.getString('content')!;
         } else {
             
             var toSay = args?.join(" ")!;
-        };
-
-        if (!permissions && !allowed) {
-            await client.method.interactionSend(interaction, { content: lang.setserverlang_not_admin });
-            return;
         };
 
         if (interaction instanceof ChatInputCommandInteraction) await interaction.deferReply() && await interaction.deleteReply();

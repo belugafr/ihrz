@@ -52,7 +52,9 @@ export const command: Command = {
                 "fr": "Le membre que vous souhaitez rendre propriétaire des projets iHorizon"
             },
 
-            required: false
+            required: false,
+
+            perm: null
         }
     ],
     thinking: false,

@@ -50,6 +50,7 @@ export const command: Command = {
             },
             type: ApplicationCommandOptionType.String,
             required: false,
+            perm: null
         },
         {
             name: "image2",
@@ -59,6 +60,7 @@ export const command: Command = {
             },
             type: ApplicationCommandOptionType.String,
             required: false,
+            perm: null
         },
     ],
     thinking: false,

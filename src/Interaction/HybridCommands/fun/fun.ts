@@ -25,6 +25,7 @@ import {
     ChatInputCommandInteraction,
     ApplicationCommandType,
     Message,
+    PermissionFlagsBits,
 } from 'discord.js';
 
 import { LanguageData } from '../../../../types/languageData';
@@ -65,9 +66,13 @@ export const command: Command = {
                         "fr": "ton surnom cool à transformer"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'cat',
@@ -81,6 +86,8 @@ export const command: Command = {
             },
 
             type: ApplicationCommandOptionType.Subcommand,
+
+            perm: null
         },
         {
             name: 'dog',
@@ -94,6 +101,8 @@ export const command: Command = {
             },
 
             type: ApplicationCommandOptionType.Subcommand,
+            
+            perm: null
         },
         {
             name: 'fdisable',
@@ -122,13 +131,16 @@ export const command: Command = {
                             value: "off"
                         }
                     ],
-        
+
                     required: true,
-                    type: ApplicationCommandOptionType.String
+                    type: ApplicationCommandOptionType.String,
+
+                    perm: null
                 }
             ],
 
             type: ApplicationCommandOptionType.Subcommand,
+            perm: null
         },
         {
             name: 'hack',
@@ -152,9 +164,13 @@ export const command: Command = {
                         "fr": "L'utilisateur que vous souhaitez pirater"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'hug',
@@ -178,9 +194,13 @@ export const command: Command = {
                         "fr": "L'utilisateur que vous souhaitez faire un calin"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'kiss',
@@ -204,9 +224,13 @@ export const command: Command = {
                         "fr": "L'utilisateur que vous voulez embrasser"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'love',
@@ -230,7 +254,9 @@ export const command: Command = {
                         "fr": "L'utilisateur avec qui vous souhaitez connaître votre compatibilité amoureuse"
                     },
 
-                    required: false
+                    required: false,
+
+                    perm: null
                 },
                 {
                     name: "user2",
@@ -241,9 +267,13 @@ export const command: Command = {
                         "fr": "L'utilisateur avec qui vous voulez connaître la compatibilité amoureuse"
                     },
 
-                    required: false
+                    required: false,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'morse',
@@ -264,9 +294,13 @@ export const command: Command = {
                         "fr": "Entrez votre entrée pour crypter/décrypter en morse"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'poll',
@@ -290,9 +324,13 @@ export const command: Command = {
                         "fr": "Le message affiché sur le sondage"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: PermissionFlagsBits.Administrator
         },
         {
             name: 'question',
@@ -313,9 +351,13 @@ export const command: Command = {
                         "fr": "La question que vous souhaitez poser au bot"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'slap',
@@ -339,9 +381,13 @@ export const command: Command = {
                         "fr": "L'utilisateur que vous voulez gifler"
                     },
 
-                    required: true
+                    required: true,
+
+                    perm: null
                 }
             ],
+
+            perm: null
         },
         {
             name: 'youtube',
@@ -362,7 +408,9 @@ export const command: Command = {
                     },
 
                     required: true,
-                    type: ApplicationCommandOptionType.User
+                    type: ApplicationCommandOptionType.User,
+
+                    perm: null
                 },
                 {
                     name: 'comment',
@@ -373,9 +421,13 @@ export const command: Command = {
                     },
 
                     required: true,
-                    type: ApplicationCommandOptionType.String
+                    type: ApplicationCommandOptionType.String,
+
+                    perm: null
                 },
             ],
+
+            perm: null
         },
         {
             name: 'tweet',
@@ -396,7 +448,9 @@ export const command: Command = {
                     },
 
                     required: true,
-                    type: ApplicationCommandOptionType.User
+                    type: ApplicationCommandOptionType.User,
+
+                    perm: null
                 },
                 {
                     name: 'comment',
@@ -407,9 +461,13 @@ export const command: Command = {
                     },
 
                     required: true,
-                    type: ApplicationCommandOptionType.String
+                    type: ApplicationCommandOptionType.String,
+
+                    perm: null
                 },
-            ]
+            ],
+
+            perm: null
         },
         {
             name: 'transgender',
@@ -433,9 +491,13 @@ export const command: Command = {
                     },
 
                     required: true,
-                    type: ApplicationCommandOptionType.User
+                    type: ApplicationCommandOptionType.User,
+
+                    perm: null
                 },
             ],
+
+            perm: null
         },
         {
             name: 'catsay',
@@ -459,9 +521,13 @@ export const command: Command = {
                     },
 
                     required: true,
-                    type: ApplicationCommandOptionType.String
+                    type: ApplicationCommandOptionType.String,
+
+                    perm: null
                 },
             ],
+
+            perm: null
         }
     ],
     integration_types: [0, 1],

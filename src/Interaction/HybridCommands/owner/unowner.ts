@@ -49,7 +49,9 @@ export const command: Command = {
                 "fr": "Le membre que vous souhaitez supprimer de la liste des propriétaires"
             },
 
-            required: true
+            required: true,
+
+            perm: null
         },
     ],
     thinking: false,
@@ -71,8 +73,8 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member = interaction.options.getUser('member');
         } else {
-            
-            var member = await client.method.user(interaction, args!, 0);
+
+            var member = client.method.user(interaction, args!, 0);
         };
 
         if (client.owners.includes(member?.id!)) {

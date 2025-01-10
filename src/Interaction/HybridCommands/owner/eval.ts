@@ -50,7 +50,9 @@ export const command: Command = {
                 "fr": "JS Code"
             },
 
-            required: true
+            required: true,
+
+            perm: null
         }
     ],
     thinking: false,
