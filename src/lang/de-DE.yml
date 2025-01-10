@@ -1223,7 +1223,7 @@ setmembercount_not_admin: ":x: | Sie müssen ein Administrator dieses Servers se
 setmembercount_helpembed_title: "Set MemberCount Hilfe!"
 setmembercount_helpembed_description: "/membercount <Aktivieren / Deaktivieren> <Kanalname>"
 setmembercount_helpembed_fields_name: "Wie benutzt man es?"
-setmembercount_helpembed_fields_value: "{MemberCount} = Anzahl der Mitglieder auf dem Server\n{RolesCount} = Anzahl der Rollen\n{BotCount} = Anzahl der Bots auf dem Server\n{ChannelCount} = Anzahl der Kanäle auf dem Server\n{BoostCount} = Anzahl der Boosts auf dem Server"
+setmembercount_helpembed_fields_value: "{MemberCount} = Anzahl der Mitglieder auf dem Server\n{RolesCount} = Anzahl der Rollen\n{BotCount} = Anzahl der Bots auf dem Server\n{ChannelCount} = Anzahl der Kanäle auf dem Server\n{BoostCount} = Anzahl der Server-Boosts\n{VoiceCount} = Gesamtzahl der Mitglieder in Sprachkanälen auf dem Server\n{OnlineCount} = Gesamtzahl der online Mitglieder auf dem Server"
 setmembercount_logs_embed_title_on_enable: "Set MemberCount Logs"
 setmembercount_logs_embed_description_on_enable: "<@${interaction.user.id}> hat den MemberCount von <#${channel.id}> auf `${messagei}` gesetzt!"
 setmembercount_command_work_on_enable: "${client.iHorizon_Emojis.icon.Yes_Logo} | MemberCount erfolgreich eingerichtet."

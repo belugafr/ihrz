@@ -1223,7 +1223,7 @@ setmembercount_not_admin: ":x: | このコマンドを要求するには、こ�
 setmembercount_helpembed_title: "メンバーカウント設定ヘルプ！"
 setmembercount_helpembed_description: "/membercount <有効 / 無効> <チャンネル名>"
 setmembercount_helpembed_fields_name: "使い方"
-setmembercount_helpembed_fields_value: "{MemberCount} = サーバー内のメンバー数\n{RolesCount} = 役割の数\n{BotCount} = サーバー内のボット数\n{ChannelCount} = サーバー内のチャンネル数\n{BoostCount} = サーバーのブースト数"
+setmembercount_helpembed_fields_value: "{MemberCount} = サーバーのメンバー数\n{RolesCount} = ロール数\n{BotCount} = サーバーのボット数\n{ChannelCount} = サーバーのチャンネル数\n{BoostCount} = サーバーのブースト数\n{VoiceCount} = サーバーのボイスチャンネルにいるメンバーの総数\n{OnlineCount} = サーバーのオンラインメンバーの総数"
 setmembercount_logs_embed_title_on_enable: "メンバーカウントログ"
 setmembercount_logs_embed_description_on_enable: "<@${interaction.user.id}>さんが <#${channel.id}> チャンネルのメンバーカウントを ${messagei} に設定しました！"
 setmembercount_command_work_on_enable: "${client.iHorizon_Emojis.icon.Yes_Logo} | メンバーカウントを設定しました。"

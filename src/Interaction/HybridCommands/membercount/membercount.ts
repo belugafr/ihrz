@@ -35,7 +35,6 @@ import {
 } from 'discord.js'
 
 import { Command } from '../../../../types/command.js';
-import logger from '../../../core/logger.js';
 import { LanguageData } from '../../../../types/languageData.js';
 
 export const command: Command = {
@@ -86,9 +85,9 @@ export const command: Command = {
             required: false,
             type: ApplicationCommandOptionType.String,
 
-            description: `{BotCount}, {RolesCount}, {MemberCount}, {ChannelCount}, {BoostCount} {VoiceCount}`,
+            description: `{BotCount}, {RolesCount}, {MemberCount}, {ChannelCount}, {BoostCount} {VoiceCount}, {OnlineCount}`,
             description_localizations: {
-                "fr": "{BotCount}, {RolesCount}, {MemberCount}, {ChannelCount}, {BoostCount} {VoiceCount}"
+                "fr": "{BotCount}, {RolesCount}, {MemberCount}, {ChannelCount}, {BoostCount} {VoiceCount}, {OnlineCount}"
             }
         },
     ],
@@ -133,6 +132,13 @@ export const command: Command = {
             let channelsCount = interaction.guild.channels.cache.size.toString()!;
             let rolesCount = rolesCollection.size!;
             let boostsCount = interaction.guild.premiumSubscriptionCount?.toString() || '0';
+            let onlineCount = interaction.guild.members.cache
+                .filter(member =>
+                    member.presence?.status === 'online' ||
+                    member.presence?.status === 'idle' ||
+                    member.presence?.status === 'dnd'
+                ).size;
+
             const voiceChannels = interaction.guild.channels.cache
                 .filter((channel): channel is VoiceBasedChannel =>
                     channel.type === ChannelType.GuildVoice ||
@@ -158,31 +164,36 @@ export const command: Command = {
                 .replace("{ChannelCount}", channelsCount)
                 .replace("{BoostCount}", boostsCount)
                 .replace("{VoiceCount}", voiceCount.toString())
-                .replace("{BotCount}", botMembers.size.toString()!);
+                .replace("{BotCount}", botMembers.size.toString()!)
+                .replace("{OnlineCount}", onlineCount.toString());
 
             if (messagei.includes("{MemberCount}")) {
                 await client.db.set(`${interaction.guildId}.GUILD.MCOUNT.member`,
-                    { name: messagei, enable: true, event: "member", channel: channel?.id }
+                    { name: messagei, enable: true, channel: channel?.id }
                 );
             } else if (messagei.includes("{RolesCount}")) {
                 await client.db.set(`${interaction.guildId}.GUILD.MCOUNT.roles`,
-                    { name: messagei, enable: true, event: "roles", channel: channel?.id }
+                    { name: messagei, enable: true, channel: channel?.id }
                 );
             } else if (messagei.includes("{ChannelCount}")) {
                 await client.db.set(`${interaction.guildId}.GUILD.MCOUNT.channel`,
-                    { name: messagei, enable: true, event: "bot", channel: channel?.id }
+                    { name: messagei, enable: true, channel: channel?.id }
                 );
             } else if (messagei.includes("{BoostCount}")) {
                 await client.db.set(`${interaction.guildId}.GUILD.MCOUNT.boost`,
-                    { name: messagei, enable: true, event: "bot", channel: channel?.id }
+                    { name: messagei, enable: true, channel: channel?.id }
                 );
             } else if (messagei.includes("{BotCount}")) {
                 await client.db.set(`${interaction.guildId}.GUILD.MCOUNT.bot`,
-                    { name: messagei, enable: true, event: "bot", channel: channel?.id }
+                    { name: messagei, enable: true, channel: channel?.id }
                 );
             } else if (messagei.includes("{VoiceCount}")) {
                 await client.db.set(`${interaction.guildId}.GUILD.MCOUNT.voice`,
-                    { name: messagei, enable: true, event: "bot", channel: channel?.id }
+                    { name: messagei, enable: true, channel: channel?.id }
+                );
+            } else if (messagei.includes("{OnlineCount}")) {
+                await client.db.set(`${interaction.guildId}.GUILD.MCOUNT.online`,
+                    { name: messagei, enable: true, channel: channel?.id }
                 );
             } else {
                 await client.method.interactionSend(interaction, { embeds: [help_embed] });

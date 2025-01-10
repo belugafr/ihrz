@@ -227,6 +227,12 @@ export namespace DatabaseStructure {
             event?: string;
             channel?: string;
         };
+        online?: {
+            name?: string;
+            enable?: boolean;
+            event?: string;
+            channel?: string;
+        }
     }
 
     export interface StatsMessage {

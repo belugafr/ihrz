@@ -1223,7 +1223,7 @@ setmembercount_not_admin: ":x: | ¡Debes ser un administrador de este servidor p
 setmembercount_helpembed_title: "¡Ayuda para configurar el recuento de miembros!"
 setmembercount_helpembed_description: "/membercount <Activar / Desactivar> <Nombre del canal>"
 setmembercount_helpembed_fields_name: "¿Cómo se usa?"
-setmembercount_helpembed_fields_value: "{MemberCount} = número de miembros en el servidor\n{RolesCount} = número de roles\n{BotCount} = número de bots en el servidor\n{ChannelCount} = número de canales en el servidor\n{BoostCount} = número de impulsos en el servidor"
+setmembercount_helpembed_fields_value: "{MemberCount} = número de miembros en el servidor\n{RolesCount} = número de roles\n{BotCount} = número de bots en el servidor\n{ChannelCount} = número de canales en el servidor\n{BoostCount} = número de mejoras en el servidor\n{VoiceCount} = número total de miembros en canales de voz en el servidor\n{OnlineCount} = total de miembros en línea en el servidor"
 setmembercount_logs_embed_title_on_enable: "Registros de configuración de recuento de miembros"
 setmembercount_logs_embed_description_on_enable: "<@${interaction.user.id}> ¡configuró el recuento de miembros de <#${channel.id}> en `${messagei}`!"
 setmembercount_command_work_on_enable: "${client.iHorizon_Emojis.icon.Yes_Logo} | Recuento de miembros configurado correctamente."

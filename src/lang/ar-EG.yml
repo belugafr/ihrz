@@ -1225,7 +1225,7 @@ setmembercount_not_admin: ":x: | يجب أن تكون مسؤولًا عن الخ
 setmembercount_helpembed_title: "مساعدة Set MemberCount!"
 setmembercount_helpembed_description: "/membercount <تفعيل / إيقاف> <اسم القناة>"
 setmembercount_helpembed_fields_name: "كيف تستخدمه؟"
-setmembercount_helpembed_fields_value: "{MemberCount} = عدد الأعضاء في الخادم\n{RolesCount} = عدد الأدوار\n{BotCount} = عدد الروبوتات في الخادم\n{ChannelCount} = عدد القنوات في الخادم\n{BoostCount} = عدد التعزيزات على الخادم"
+setmembercount_helpembed_fields_value: "{MemberCount} = عدد الأعضاء في السيرفر\n{RolesCount} = عدد الرتب\n{BotCount} = عدد البوتات في السيرفر\n{ChannelCount} = عدد القنوات في السيرفر\n{BoostCount} = عدد التعزيزات في السيرفر\n{VoiceCount} = إجمالي عدد الأعضاء في القنوات الصوتية في السيرفر\n{OnlineCount} = إجمالي الأعضاء المتصلين في السيرفر"
 setmembercount_logs_embed_title_on_enable: "سجلات Set MemberCount"
 setmembercount_logs_embed_description_on_enable: "<@${interaction.user.id}> قام بتعيين MemberCount في <#${channel.id}> إلى `${messagei}`!"
 setmembercount_command_work_on_enable: "${client.iHorizon_Emojis.icon.Yes_Logo} | تم تعيين MemberCount بنجاح."

@@ -1223,7 +1223,7 @@ setmembercount_not_admin: ":x: | Вы должны быть администра
 setmembercount_helpembed_title: "Помощь по установке счетчика участников!"
 setmembercount_helpembed_description: "/membercount <Включить / Отключить> <Название канала>"
 setmembercount_helpembed_fields_name: "Как это использовать?"
-setmembercount_helpembed_fields_value: "{MemberCount} = количество участников на сервере\n{RolesCount} = количество ролей\n{BotCount} = количество ботов на сервере\n{ChannelCount} = количество каналов на сервере\n{BoostCount} = количество бустов на сервере"
+setmembercount_helpembed_fields_value: "{MemberCount} = количество участников на сервере\n{RolesCount} = количество ролей\n{BotCount} = количество ботов на сервере\n{ChannelCount} = количество каналов на сервере\n{BoostCount} = количество бустов на сервере\n{VoiceCount} = общее количество участников в голосовых каналах на сервере\n{OnlineCount} = общее количество участников онлайн на сервере"
 setmembercount_logs_embed_title_on_enable: "Журнал установки счетчика участников"
 setmembercount_logs_embed_description_on_enable: "<@${interaction.user.id}> установил счетчик участников на <#${channel.id}> в `${messagei}`!"
 setmembercount_command_work_on_enable: "${client.iHorizon_Emojis.icon.Yes_Logo} | Успешно установлен счетчик участников."
