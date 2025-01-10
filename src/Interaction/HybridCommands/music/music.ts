@@ -255,5 +255,5 @@ export const command: Command = {
     thinking: true,
     category: 'music',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

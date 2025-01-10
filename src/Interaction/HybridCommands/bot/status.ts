@@ -48,6 +48,7 @@ export const command: Command = {
     category: 'bot',
     thinking: false,
     type: ApplicationCommandType.ChatInput,
+    permission: null,
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Command, allowed: boolean, args?: string[]) => {
 
 
@@ -58,7 +59,6 @@ export const command: Command = {
         //     await client.method.interactionSend(interaction, { content: lang.status_be_bot_dev });
         //     return;
         // };
-
         let embed = new EmbedBuilder()
             .setColor("#82cda8")
             .setFields(
@@ -68,10 +68,10 @@ export const command: Command = {
                 { name: "Bot Uptime", value: `${time(new Date(client.method.core.getCacheStorage()?.initialized_timestamp!), 'd')}` },
                 { name: "OS", value: `${os.platform()} ${os.type()} ${os.release()}`, inline: false },
                 { name: "Bot Version", value: `${client.version.ClientVersion}`, inline: false },
-                { name: "NodeJS Version", value: `${process.version}`, inline: false },
+                { name: "NodeJS Version", value: `${process.version}`, inline: false }
             )
             .setThumbnail(interaction.guild.iconURL() as string)
-            .setFooter(await client.method.bot.footerBuilder(interaction))
+            .setFooter(await client.method.bot.footerBuilder(interaction));
 
         await client.method.interactionSend(interaction, {
             embeds: [embed],

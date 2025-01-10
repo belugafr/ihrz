@@ -106,12 +106,13 @@ export const command: Command = {
                 },
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            perm: null
         }
     ],
     thinking: false,
     category: 'bot',
     type: ApplicationCommandType.ChatInput,
+    permission: PermissionFlagsBits.Administrator,
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Command, allowed: boolean, args?: string[]) => {
 
 

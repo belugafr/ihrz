@@ -304,5 +304,5 @@ export const command: Command = {
     thinking: true,
     category: 'giveaway',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

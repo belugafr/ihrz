@@ -114,5 +114,5 @@ export const command: Command = {
     thinking: false,
     category: 'pfps',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

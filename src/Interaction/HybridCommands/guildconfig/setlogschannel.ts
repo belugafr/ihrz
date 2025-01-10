@@ -72,7 +72,7 @@ export const command: Command = {
                 { name: "Voice Logs", value: "voice" },
             ],
 
-            perm: PermissionFlagsBits.Administrator
+            perm: null
         },
         {
             name: 'channel',
@@ -89,6 +89,7 @@ export const command: Command = {
     thinking: true,
     category: 'guildconfig',
     type: ApplicationCommandType.ChatInput,
+    permission: PermissionFlagsBits.Administrator,
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Command, allowed: boolean, args?: string[]) => {
 
 
@@ -113,7 +114,7 @@ export const command: Command = {
         } else {
 
             var type = client.method.string(args!, 0)!;
-            var channel = await client.method.channel(interaction, args!, 1)
+            var channel = await client.method.channel(interaction, args!, 1);
         };
 
         const createLogsChannel = async (name: string, typeOfLogs: string) => {
@@ -248,7 +249,7 @@ export const command: Command = {
             return;
         }
 
-        const typeOfLogsMap: { [key: string]: string } = {
+        const typeOfLogsMap: { [key: string]: string; } = {
             "roles": lang.setlogschannel_var_roles,
             "moderation": lang.setlogschannel_var_mods,
             "voice": lang.setlogschannel_var_voice,

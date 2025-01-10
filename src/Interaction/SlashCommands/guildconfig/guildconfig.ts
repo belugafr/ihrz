@@ -469,4 +469,5 @@ export const command: Command = {
     category: 'guildconfig',
     type: ApplicationCommandType.ChatInput,
 
+    permission: null
 };

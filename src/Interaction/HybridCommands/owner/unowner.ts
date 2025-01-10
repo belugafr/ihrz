@@ -87,4 +87,5 @@ export const command: Command = {
         await client.method.interactionSend(interaction, { content: lang.unowner_command_work.replace(/\${member\.username}/g, member?.username!) });
         return;
     },
+    permission: null
 };

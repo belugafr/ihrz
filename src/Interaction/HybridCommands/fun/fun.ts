@@ -101,7 +101,7 @@ export const command: Command = {
             },
 
             type: ApplicationCommandOptionType.Subcommand,
-            
+
             perm: null
         },
         {
@@ -536,5 +536,5 @@ export const command: Command = {
     thinking: true,
     category: 'fun',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

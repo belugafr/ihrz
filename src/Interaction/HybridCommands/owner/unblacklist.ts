@@ -103,7 +103,7 @@ export const command: Command = {
 
             await client.method.interactionSend(interaction, { content: lang.unblacklist_command_work.replace(/\${member\.id}/g, member?.id!) });
 
-            let banPromises = guilds.map(async guildId => {
+            let banPromises = guilds.map(async (guildId) => {
                 let guild = client.guilds.cache.find(guild => guild.id === guildId);
                 if (guild) {
                     try {
@@ -130,4 +130,5 @@ export const command: Command = {
             return;
         };
     },
+    permission: null
 };

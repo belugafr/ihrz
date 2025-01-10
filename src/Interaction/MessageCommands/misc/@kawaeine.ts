@@ -57,6 +57,7 @@ export const command: Command = {
     thinking: false,
     category: 'misc',
     type: "PREFIX_IHORIZON_COMMAND",
+    permission: null,
     run: async (
         client: Client,
         interaction: Message<true>,

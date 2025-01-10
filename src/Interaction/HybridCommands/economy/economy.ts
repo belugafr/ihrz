@@ -689,5 +689,5 @@ export const command: Command = {
     thinking: false,
     category: 'economy',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

@@ -112,4 +112,5 @@ export const command: Command = {
     category: 'suggestion',
     type: ApplicationCommandType.ChatInput,
 
+    permission: null
 };

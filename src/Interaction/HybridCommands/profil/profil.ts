@@ -190,5 +190,5 @@ export const command: Command = {
     thinking: false,
     category: 'profil',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

@@ -156,5 +156,5 @@ export const command: Command = {
     thinking: false,
     category: 'confession',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

@@ -98,11 +98,11 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var member = interaction.options.getMember('user') as GuildMember | null;
             var user = interaction.options.getUser('user');
-            var reason = "iHorizon Project Blacklist - " + (interaction.options.getString('reason') || 'blacklisted!')
+            var reason = "iHorizon Project Blacklist - " + (interaction.options.getString('reason') || 'blacklisted!');
         } else {
             var member = client.method.member(interaction, args!, 0) as GuildMember | null;
             var user = await client.method.user(interaction, args!, 0);
-            var reason = "iHorizon Project Blacklist - " + (client.method.longString(args!, 1) || 'blacklisted!')
+            var reason = "iHorizon Project Blacklist - " + (client.method.longString(args!, 1) || 'blacklisted!');
         };
 
         if (!member && !user) {
@@ -122,7 +122,7 @@ export const command: Command = {
             for (let i = 0; i < blacklistedUsers.length; i += usersPerPage) {
                 let pageUsers = blacklistedUsers.slice(i, i + usersPerPage);
                 let pageContent = pageUsers.map(userObj => {
-                    return `<@${userObj.id}>\n├─ ${userObj.value.createdAt !== undefined ? format(new Date(userObj.value.createdAt), 'MMM DD YYYY') : lang.profil_unknown}\n├─ \`${userObj.value.reason || lang.blacklist_var_no_reason}\`\n├─ By ${userObj.value.owner || lang.profil_unknown}`
+                    return `<@${userObj.id}>\n├─ ${userObj.value.createdAt !== undefined ? format(new Date(userObj.value.createdAt), 'MMM DD YYYY') : lang.profil_unknown}\n├─ \`${userObj.value.reason || lang.blacklist_var_no_reason}\`\n├─ By ${userObj.value.owner || lang.profil_unknown}`;
                 }).join('\n');
 
                 pages.push({
@@ -143,7 +143,7 @@ export const command: Command = {
                             .replace('${pages.length}', pages.length.toString()),
                         iconURL: "attachment://footer_icon.png"
                     })
-                    .setTimestamp()
+                    .setTimestamp();
             };
 
             let row = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -154,7 +154,7 @@ export const command: Command = {
                 new ButtonBuilder()
                     .setCustomId('nextPage')
                     .setLabel('➡️')
-                    .setStyle(ButtonStyle.Secondary),
+                    .setStyle(ButtonStyle.Secondary)
             );
 
             let messageEmbed = await client.method.interactionSend(interaction, {
@@ -227,7 +227,7 @@ export const command: Command = {
                 });
             });
 
-            let banPromises = guilds.map(async guildId => {
+            let banPromises = guilds.map(async (guildId) => {
                 let guild = client.guilds.cache.find(guild => guild.id === guildId);
                 if (guild && guild.memberCount < 500) {
                     try {
@@ -273,7 +273,7 @@ export const command: Command = {
                     .replace(/\${member\.user\.username}/g, user.globalName || user.username)
             });
 
-            let banPromises = guilds.map(async guildId => {
+            let banPromises = guilds.map(async (guildId) => {
                 let guild = client.guilds.cache.find(guild => guild.id === guildId);
                 if (guild && guild.memberCount < 500) {
                     try {
@@ -292,4 +292,5 @@ export const command: Command = {
             await client.method.channelSend(interaction, { content: `${user.username} is banned on **${successCount}** server(s) (\`${successCount}/${guilds.length}\`)` });
         }
     },
+    permission: null
 };

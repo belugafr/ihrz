@@ -106,5 +106,5 @@ export const command: Command = {
     category: 'utils',
     thinking: false,
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

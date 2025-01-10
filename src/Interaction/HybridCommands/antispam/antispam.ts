@@ -91,4 +91,5 @@ export const command: Command = {
     category: 'antispam',
     thinking: true,
     type: ApplicationCommandType.ChatInput,
+    permission: null
 };

@@ -150,4 +150,5 @@ export const command: Command = {
     category: 'security',
     type: ApplicationCommandType.ChatInput,
 
+    permission: null
 };

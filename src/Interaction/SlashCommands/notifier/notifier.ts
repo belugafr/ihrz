@@ -240,4 +240,5 @@ export const command: Command = {
     category: 'notifier',
     type: ApplicationCommandType.ChatInput,
 
+    permission: null
 };

@@ -370,4 +370,5 @@ export const command: Command = {
     category: 'ownihrz',
     type: ApplicationCommandType.ChatInput,
 
+    permission: null
 };

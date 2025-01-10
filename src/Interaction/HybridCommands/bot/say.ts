@@ -26,6 +26,7 @@ import {
     Client,
     CommandInteractionOptionResolver,
     Message,
+    PermissionFlagsBits,
     PermissionsBitField,
 } from 'discord.js'
 
@@ -62,7 +63,8 @@ export const command: Command = {
     ],
     type: ApplicationCommandType.ChatInput,
     thinking: false,
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Command, allowed: boolean, args?: string[]) => {        
+    permission: PermissionFlagsBits.Administrator,
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Command, allowed: boolean, args?: string[]) => {
 
 
         // Guard's Typing
@@ -71,7 +73,7 @@ export const command: Command = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var toSay = interaction.options.getString('content')!;
         } else {
-            
+
             var toSay = args?.join(" ")!;
         };
 

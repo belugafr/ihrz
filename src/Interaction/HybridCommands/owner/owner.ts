@@ -110,4 +110,5 @@ export const command: Command = {
         await client.method.interactionSend(interaction, { content: lang.owner_is_now_owner.replace(/\${member\.user\.username}/g, member.globalName || member.displayName) });
         return;
     },
+    permission: null
 };

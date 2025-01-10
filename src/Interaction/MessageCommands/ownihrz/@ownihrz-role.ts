@@ -61,6 +61,7 @@ export const command: Command = {
     thinking: false,
     category: 'ownihrz',
     type: "PREFIX_IHORIZON_COMMAND",
+    permission: null,
     run: async (client: Client, message: Message<true>, lang: LanguageData, command: Command | Option | undefined, allowed, options?: string[]) => {
         let role = client.method.role(message, options!, 0);
 

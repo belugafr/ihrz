@@ -85,26 +85,21 @@ export const command: Command = {
         },
         // {
         //     name: "reset",
-
         //     description: "Reset profil",
         //     description_localizations: {
         //         fr: "Réintialiser un profil"
         //     },
-
         //     options: [
         //         {
         //             name: "member",
-
         //             description: "The member you want",
         //             description_localizations: {
         //                 fr: "L'utilisateur que vous souhaiter"
         //             },
-
         //             type: ApplicationCommandOptionType.String,
         //             required: false
         //         }
         //     ],
-
         //     type: ApplicationCommandOptionType.Subcommand,
         // },
     ],
@@ -112,5 +107,5 @@ export const command: Command = {
     thinking: true,
     category: 'stats',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

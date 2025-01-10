@@ -57,6 +57,7 @@ export const command: Command = {
     ],
     thinking: false,
     category: 'owner',
+    permission: null,
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, command: Command, allowed: boolean, args?: string[]) => {
 

@@ -215,4 +215,5 @@ export const command: Command = {
     thinking: true,
     type: ApplicationCommandType.ChatInput,
 
+    permission: null
 };

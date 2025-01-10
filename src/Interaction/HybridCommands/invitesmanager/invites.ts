@@ -183,5 +183,5 @@ export const command: Command = {
     thinking: true,
     category: 'invitemanager',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

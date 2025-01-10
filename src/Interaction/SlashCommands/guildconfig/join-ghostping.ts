@@ -114,4 +114,5 @@ import { LanguageData } from '../../../../types/languageData';export const comma
     category: 'guildconfig',
     type: ApplicationCommandType.ChatInput,
 
+    permission: null
 };

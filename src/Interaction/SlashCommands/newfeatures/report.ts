@@ -58,6 +58,7 @@ export const command: Command = {
     thinking: true,
     category: 'newfeatures',
     type: ApplicationCommandType.ChatInput,
+    permission: null,
     run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, allowed: boolean) => {
 
         // Guard's Typing

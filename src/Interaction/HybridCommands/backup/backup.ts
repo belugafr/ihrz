@@ -163,5 +163,5 @@ export const command: Command = {
     category: 'backup',
     thinking: true,
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

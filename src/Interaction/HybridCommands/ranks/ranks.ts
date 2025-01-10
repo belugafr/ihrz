@@ -293,5 +293,5 @@ export const command: Command = {
     thinking: false,
     category: 'ranks',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };

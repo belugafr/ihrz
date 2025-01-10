@@ -122,4 +122,6 @@ export const command: Command = {
     thinking: false,
     category: 'protection',
     type: ApplicationCommandType.ChatInput,
+
+    permission: null
 };

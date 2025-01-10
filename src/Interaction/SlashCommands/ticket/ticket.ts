@@ -353,4 +353,5 @@ export const command: Command = {
     category: 'ticket',
     type: ApplicationCommandType.ChatInput,
 
+    permission: null
 };

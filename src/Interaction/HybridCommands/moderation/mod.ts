@@ -426,7 +426,7 @@ export const command: Command = {
                     type: ApplicationCommandOptionType.User,
                     required: true,
 
-                    perm : null
+                    perm: null
                 },
                 {
                     name: "warn-id",
@@ -478,5 +478,5 @@ export const command: Command = {
     thinking: true,
     category: 'moderation',
     type: ApplicationCommandType.ChatInput,
-
+    permission: null
 };
