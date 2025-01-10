@@ -94,6 +94,17 @@ export const command: Command = {
                     },
 
                     required: true
+                },
+                {
+                    name: 'member',
+                    type: ApplicationCommandOptionType.User,
+
+                    description: 'The member you want to delete the message',
+                    description_localizations: {
+                        "fr": "Le membre dont vous souhaitez supprimer les messages"
+                    },
+
+                    required: false
                 }
             ],
 

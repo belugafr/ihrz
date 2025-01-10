@@ -53,9 +53,10 @@ export default {
 
         if (interaction instanceof ChatInputCommandInteraction) {
             var numberx = interaction.options.getNumber("number")!;
+            var member = interaction.options.getMember("member");
         } else {
-            
             var numberx = client.method.number(args!, 0);
+            var member = client.method.member(interaction, args!, 1);
         };
 
         if (numberx && numberx > 100) {
@@ -65,20 +66,68 @@ export default {
             return;
         };
 
-        (interaction.channel as BaseGuildTextChannel).bulkDelete(numberx as unknown as number, true)
-            .then(async (messages) => {
-                client.method.channelSend(interaction, {
-                    content: lang.clear_confirmation_message
-                        .replace(/\${messages\.size}/g, messages.size.toString())
+        // throw error if the member is not found
+        if (member === null) {
+            await client.method.interactionSend(interaction, {
+                content: lang.ban_dont_found_member
+            });
+            return;
+        }
+
+        // if the member is found, fetch the messages and delete them
+
+        else if (member) {
+            let fetchedMessages = await (interaction.channel as BaseGuildTextChannel).messages.fetch({
+                limit: 100
+            });
+
+            let messages = Array.from(fetchedMessages.values()).filter((message) => message.author.id === member?.id);
+
+            // splice the messages with the numberx
+            if (numberx !== 0) {
+                messages = messages.splice(0, numberx);
+            }
+
+            if (messages.length === 0) {
+                await client.method.interactionSend(interaction, {
+                    content: "lang.clear_no_messages_found"
+                });
+                return;
+            }
+
+            (interaction.channel as BaseGuildTextChannel).bulkDelete(messages, true)
+                .then(async (messages) => {
+                    client.method.channelSend(interaction, {
+                        content: lang.clear_confirmation_message
+                            .replace(/\${messages\.size}/g, messages.size.toString())
+                    });
+
+                    await client.method.iHorizonLogs.send(interaction, {
+                        title: lang.clear_logs_embed_title,
+                        description: lang.clear_logs_embed_description
+                            .replace(/\${interaction\.user\.id}/g, interaction.member?.user.id!)
+                            .replace(/\${messages\.size}/g, messages.size.toString())
+                            .replace(/\${interaction\.channel\.id}/g, interaction.channel?.id!)
+                    });
                 });
 
-                await client.method.iHorizonLogs.send(interaction, {
-                    title: lang.clear_logs_embed_title,
-                    description: lang.clear_logs_embed_description
-                        .replace(/\${interaction\.user\.id}/g, interaction.member?.user.id!)
-                        .replace(/\${messages\.size}/g, messages.size.toString())
-                        .replace(/\${interaction\.channel\.id}/g, interaction.channel?.id!)
+            return;
+        } else {
+            (interaction.channel as BaseGuildTextChannel).bulkDelete(numberx, true)
+                .then(async (messages) => {
+                    client.method.channelSend(interaction, {
+                        content: lang.clear_confirmation_message
+                            .replace(/\${messages\.size}/g, messages.size.toString())
+                    });
+
+                    await client.method.iHorizonLogs.send(interaction, {
+                        title: lang.clear_logs_embed_title,
+                        description: lang.clear_logs_embed_description
+                            .replace(/\${interaction\.user\.id}/g, interaction.member?.user.id!)
+                            .replace(/\${messages\.size}/g, messages.size.toString())
+                            .replace(/\${interaction\.channel\.id}/g, interaction.channel?.id!)
+                    });
                 });
-            });
+        }
     },
 };
