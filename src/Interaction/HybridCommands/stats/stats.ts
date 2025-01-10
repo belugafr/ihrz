@@ -74,6 +74,8 @@ export const command: Command = {
                 fr: "Regarder le classement du serveur"
             },
 
+            aliases: ["g"],
+
             type: ApplicationCommandOptionType.Subcommand
         },
         // {
