@@ -140,11 +140,11 @@ export default {
             })
 
             allchannel = i.values;
-            await client.method.interactionSend(originalResponse, { embeds: [embed] });
+            await originalResponse.edit({ embeds: [embed] });
         });
 
         collector.on('end', async () => {
-            await client.method.interactionSend(originalResponse, { components: [] });
+            await originalResponse.edit({ components: [] });
         })
     },
 };
