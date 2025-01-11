@@ -60,6 +60,7 @@ export const command: Command = {
             },
             required: true,
             choices: [
+                { name: "Setup all channels", value: "auto" },
                 { name: "Delete all settings", value: "off" },
                 { name: "AntiSpam Logs", value: "antispam" },
                 { name: "Boost Logs", value: "boost" },
@@ -67,7 +68,6 @@ export const command: Command = {
                 { name: "Messages Logs", value: "message" },
                 { name: "Moderation Logs", value: "moderation" },
                 { name: "Roles Logs", value: "roles" },
-                { name: "Setup all channels", value: "auto" },
                 { name: "Ticket Logs", value: "ticket" },
                 { name: "Voice Logs", value: "voice" },
             ],
