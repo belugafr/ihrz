@@ -475,7 +475,23 @@ export namespace DatabaseStructure {
         label: string;
     }[];
 
+    export interface GuildTagsStructure {
+        storedTags?: {
+            [tag: string]: {
+                content: string;
+                createBy: string;
+                createTimestamp: number;
+                uses: number;
+                lastUseTimestamp: number;
+                lastUseBy: string;
+            }
+        };
+        whitelist_use?: string[];
+        whitelist_create?: string[];
+    }
+
     export interface DbGuildObject {
+        TAGS: GuildTagsStructure;
         BOT?: DbGuildBotObject;
         LANG?: {
             lang: string;
