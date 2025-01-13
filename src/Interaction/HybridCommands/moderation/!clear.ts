@@ -55,17 +55,8 @@ export default {
             return;
         };
 
-        // throw error if the member is not found
-        if (member === null) {
-            await client.method.interactionSend(interaction, {
-                content: lang.ban_dont_found_member
-            });
-            return;
-        }
-
         // if the member is found, fetch the messages and delete them
-
-        else if (member) {
+        if (member) {
             let fetchedMessages = await (interaction.channel as BaseGuildTextChannel).messages.fetch({
                 limit: 100
             });

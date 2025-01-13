@@ -475,17 +475,17 @@ export namespace DatabaseStructure {
         label: string;
     }[];
 
+    export interface TagInfo {
+        embedId: string;
+        createBy: string;
+        createTimestamp: number;
+        uses: number;
+        lastUseTimestamp: number;
+        lastUseBy: string | null;
+    }
+
     export interface GuildTagsStructure {
-        storedTags?: {
-            [tag: string]: {
-                content: string;
-                createBy: string;
-                createTimestamp: number;
-                uses: number;
-                lastUseTimestamp: number;
-                lastUseBy: string;
-            }
-        };
+        storedTags?: Record<string, TagInfo>;
         whitelist_use?: string[];
         whitelist_create?: string[];
     }

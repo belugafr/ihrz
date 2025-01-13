@@ -475,7 +475,7 @@ export default {
         }
 
         async function saveEmbed() {
-            let password = generatePassword({ length: 16 });
+            let password = arg || generatePassword({ length: 16 });
 
             await client.db.set(`EMBED.${password}`, {
                 embedOwner: interaction.member?.user.id!,
@@ -498,7 +498,6 @@ export default {
 
             switch (confirmation.customId) {
                 case "save":
-                    if (arg) await client.db.delete(`EMBED.${arg}`);
                     let embedId = await saveEmbed();
                     await confirmation.update({
                         content: lang.embed_save_message.replace('${interaction.user.id}', interaction.member?.user.id!).replace('${await saveEmbed()}', embedId),
