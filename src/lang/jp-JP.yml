@@ -531,6 +531,8 @@ help_notifier_dsc: "YouTuberやストリーマーが動画を公開したら通�
 help_notifier_fields: "通知機能"
 help_restorecord_fields: "RestoreCord"
 help_restorecord_dsc: "oAuth2を使用したサーバー検証。サーバーが攻撃されたり削除された場合でも、oAuth2を使用して古いメンバーを復元できます！"
+help_tags_fields: "カスタムタグ"
+help_tags_dsc: "サーバー用のタグメッセージを作成し、それをサーバー内で使用しましょう！"
 
 # /h
 h_suite: "(続き)"
@@ -1866,6 +1868,45 @@ allowlist_delete_member_unreachable: "許可リストから削除しようとし
 allowlist_delete_cant_remove_owner: "サーバーのオーナーを許可リストから削除することはできません！"
 allowlist_delete_isnt_in: "許可リストから削除しようとするメンバーは含まれていません！"
 allowlist_delete_command_work: "${member.user} が許可リストから削除されました！"
+
+
+# Custom Tag Module
+# /tag create, ... delete, ... edit, ... list, ... info
+
+tag_name: "タグ"
+tag_embed_created_at: "作成日"
+tag_embed_last_update: "最終更新"
+tag_embed_last_updated_by: "最終更新者"
+
+# /tag create
+tag_create_not_permited: "タグを作成する権限がありません。\n管理者権限またはホワイトリストに登録される必要があります（`tag wlroles-create`）。"
+tag_create_not_good_name: "タグ名にスペースを含めることはできず、16文字を超えることはできません。"
+tag_create_command_work: "タグ `${tag_name}` が作成されました。"
+tag_create_already_exist: "タグは既に存在します。"
+tag_create_embed_doesnt_exist: "埋め込みが存在しません。"
+
+# /tag delete
+tag_no_one_found: "このサーバーには保存されているタグがありません！"
+tag_delete_dnt_exist: "タグ `${tag_name}` は存在しません。"
+tag_delete_command_ok: "タグ `${tag_name}` が削除されました。"
+
+# /tag info
+tag_doesnt_exist: "タグ `${tag_name}` は存在しません！"
+
+# /tag wlcreate
+tag_wlcreate_embed_title: "ホワイトリスト作成 - タグ"
+tag_wlcreate_embed_desc: "タグを作成できるすべての役割。"
+
+# /tag wluse
+tag_wluse_embed_title: "ホワイトリスト使用 - タグ"
+tag_wluse_embed_desc: "タグを使用できるすべての役割。"
+
+# /tag list
+tag_list_no_anything: "このサーバーには保存されているタグがありません！"
+
+# /tag use
+tag_use_not_allowed: "タグ `${tag_name}` を使用する権限がありません。\n管理者権限が必要か、タグの所有者 <@${tag.createBy}> にホワイトリストへの追加を依頼してください（`tag wlroles-use`）。"
+tag_use_command_work: "タグ `${tag_name}` が送信されました。"
 
 
 # モジュール OWNHRZ

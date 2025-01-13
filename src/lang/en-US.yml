@@ -530,6 +530,8 @@ help_notifier_dsc: "Be notified when a Youtuber, Streamer publish a video!"
 help_notifier_fields: "Notifier"
 help_restorecord_fields: "RestoreCord"
 help_restorecord_dsc: "Made server verification with oAuth2. When you server got raided/termed, with this oAuth2, you can recover your old members !"
+help_tags_fields: "Custom Tags"
+help_tags_dsc: "Create tags message for your server, and use them in your server!"
 
 # /h
 h_suite: "(Continued)"
@@ -1866,6 +1868,45 @@ allowlist_delete_member_unreachable: "The member you wanted to remove into the a
 allowlist_delete_cant_remove_owner: "This is not possible to delete the owner of the server from the allowlist!"
 allowlist_delete_isnt_in: "The member you want to remove from the allowlist isn't in it!"
 allowlist_delete_command_work: "${member.user} has been removed from the allowlist !"
+
+
+# Custom Tag Module
+# /tag create, ... delete, ... edit, ... list, ... info
+
+tag_name: "Tag"
+tag_embed_created_at: "Created At"
+tag_embed_last_update: "Last Update"
+tag_embed_last_updated_by: "Last Updated By"
+
+# /tag create
+tag_create_not_permited: "You are not allowed to create a tag.\nNeed administrator permission or you need to be in the whitelist (`tag wlroles-create`)."
+tag_create_not_good_name: "The tag name must not include spaces and must not exceed 16 characters."
+tag_create_command_work: "The tag `${tag_name}` has been created."
+tag_create_already_exist: "The tag already exists."
+tag_create_embed_doesnt_exist: "The embed doesn't exist."
+
+# /tag delete
+tag_no_one_found: "There is not tags saved on this guild !"
+tag_delete_dnt_exist: "The tag `${tag_name}` doesn't exist."
+tag_delete_command_ok: "The tag `${tag_name}` has been deleted."
+
+# /tag info
+tag_doesnt_exist: "The tag `${tag_name}` doesn't exist !"
+
+# /tag wlcreate
+tag_wlcreate_embed_title: "Whitelist create - Tags"
+tag_wlcreate_embed_desc: "All roles that are allowed to create tags."
+
+# /tag wluse
+tag_wluse_embed_title: "Whitelist use - Tags"
+tag_wluse_embed_desc: "All roles that are allowed to use tags."
+
+# /tag list
+tag_list_no_anything: "There are no tags saved on this guild!"
+
+# /tag use
+tag_use_not_allowed: "You are not allowed to use the tag `${tag_name}`.\nNeed administrator permission or you can ask the tag owner <@${tag.createBy}> to add you to the whitelist (`tag wlroles-use`)."
+tag_use_command_work: "Tag `${tag_name}` has been sent."
 
 
 # OWNIHRZ Module

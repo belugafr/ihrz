@@ -531,6 +531,8 @@ help_notifier_dsc: "Werde benachrichtigt, wenn ein YouTuber oder Streamer ein Vi
 help_notifier_fields: "Benachrichtigung"
 help_restorecord_fields: "RestoreCord"
 help_restorecord_dsc: "Verifizierung des Servers mit oAuth2. Wenn Ihr Server angegriffen oder gelöscht wurde, können Sie Ihre alten Mitglieder über oAuth2 zurückholen!"
+help_tags_fields: "Benutzerdefinierte Tags"
+help_tags_dsc: "Erstellen Sie Nachrichten-Tags für Ihren Server und verwenden Sie sie auf Ihrem Server!"
 
 # /h
 h_suite: "(Fortsetzung)"
@@ -1866,6 +1868,45 @@ allowlist_delete_member_unreachable: "Das Mitglied, das Sie aus der Allowlist en
 allowlist_delete_cant_remove_owner: "Es ist nicht möglich, den Besitzer des Servers aus der Allowlist zu entfernen!"
 allowlist_delete_isnt_in: "Das Mitglied, das Sie aus der Allowlist entfernen möchten, ist nicht darin!"
 allowlist_delete_command_work: "${member.user} wurde aus der Allowlist entfernt!"
+
+
+# Custom Tag Module
+# /tag create, ... delete, ... edit, ... list, ... info
+
+tag_name: "Tag"
+tag_embed_created_at: "Erstellt am"
+tag_embed_last_update: "Letzte Aktualisierung"
+tag_embed_last_updated_by: "Zuletzt aktualisiert von"
+
+# /tag create
+tag_create_not_permited: "Sie dürfen keinen Tag erstellen.\nSie benötigen Administratorrechte oder müssen auf der Whitelist stehen (`tag wlroles-create`)."
+tag_create_not_good_name: "Der Tag-Name darf keine Leerzeichen enthalten und nicht länger als 16 Zeichen sein."
+tag_create_command_work: "Der Tag `${tag_name}` wurde erstellt."
+tag_create_already_exist: "Der Tag existiert bereits."
+tag_create_embed_doesnt_exist: "Der Embed existiert nicht."
+
+# /tag delete
+tag_no_one_found: "Es gibt keine gespeicherten Tags in dieser Gilde!"
+tag_delete_dnt_exist: "Der Tag `${tag_name}` existiert nicht."
+tag_delete_command_ok: "Der Tag `${tag_name}` wurde gelöscht."
+
+# /tag info
+tag_doesnt_exist: "Der Tag `${tag_name}` existiert nicht!"
+
+# /tag wlcreate
+tag_wlcreate_embed_title: "Whitelist Erstellen - Tags"
+tag_wlcreate_embed_desc: "Alle Rollen, die Tags erstellen dürfen."
+
+# /tag wluse
+tag_wluse_embed_title: "Whitelist Verwenden - Tags"
+tag_wluse_embed_desc: "Alle Rollen, die Tags verwenden dürfen."
+
+# /tag list
+tag_list_no_anything: "Es gibt keine gespeicherten Tags in dieser Gilde!"
+
+# /tag use
+tag_use_not_allowed: "Sie dürfen den Tag `${tag_name}` nicht verwenden.\nSie benötigen Administratorrechte oder können den Tag-Besitzer <@${tag.createBy}> bitten, Sie zur Whitelist hinzuzufügen (`tag wlroles-use`)."
+tag_use_command_work: "Tag `${tag_name}` wurde gesendet."
 
 
 # OWNIHRZ-Modul

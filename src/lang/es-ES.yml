@@ -531,6 +531,8 @@ help_notifier_dsc: "¡Recibe una notificación cuando un Youtuber o Streamer pub
 help_notifier_fields: "Notificador"
 help_restorecord_fields: "RestoreCord"
 help_restorecord_dsc: "Verificación del servidor con oAuth2. Si tu servidor ha sido atacado o eliminado, ¡puedes recuperar a tus antiguos miembros con oAuth2!"
+help_tags_fields: "Etiquetas personalizadas"
+help_tags_dsc: "Crea mensajes de etiquetas para tu servidor y úsalos en tu servidor."
 
 # /h
 h_suite: "(Continuación)"
@@ -1866,6 +1868,45 @@ allowlist_delete_member_unreachable: "¡El miembro que deseabas eliminar de la l
 allowlist_delete_cant_remove_owner: "¡No es posible eliminar al propietario del servidor de la lista blanca!"
 allowlist_delete_isnt_in: "¡El miembro que deseas eliminar de la lista blanca no está en ella!"
 allowlist_delete_command_work: "¡${member.user} ha sido eliminado de la lista blanca!"
+
+
+# Custom Tag Module
+# /tag create, ... delete, ... edit, ... list, ... info
+
+tag_name: "Etiqueta"
+tag_embed_created_at: "Creado el"
+tag_embed_last_update: "Última actualización"
+tag_embed_last_updated_by: "Última actualización por"
+
+# /tag create
+tag_create_not_permited: "No tienes permiso para crear una etiqueta.\nNecesitas permisos de administrador o estar en la lista blanca (`tag wlroles-create`)."
+tag_create_not_good_name: "El nombre de la etiqueta no debe incluir espacios y no debe exceder 16 caracteres."
+tag_create_command_work: "La etiqueta `${tag_name}` ha sido creada."
+tag_create_already_exist: "La etiqueta ya existe."
+tag_create_embed_doesnt_exist: "El embed no existe."
+
+# /tag delete
+tag_no_one_found: "¡No hay etiquetas guardadas en este servidor!"
+tag_delete_dnt_exist: "¡La etiqueta `${tag_name}` no existe!"
+tag_delete_command_ok: "La etiqueta `${tag_name}` ha sido eliminada."
+
+# /tag info
+tag_doesnt_exist: "¡La etiqueta `${tag_name}` no existe!"
+
+# /tag wlcreate
+tag_wlcreate_embed_title: "Lista blanca crear - Etiquetas"
+tag_wlcreate_embed_desc: "Todos los roles que tienen permitido crear etiquetas."
+
+# /tag wluse
+tag_wluse_embed_title: "Lista blanca usar - Etiquetas"
+tag_wluse_embed_desc: "Todos los roles que tienen permitido usar etiquetas."
+
+# /tag list
+tag_list_no_anything: "¡No hay etiquetas guardadas en este servidor!"
+
+# /tag use
+tag_use_not_allowed: "No tienes permiso para usar la etiqueta `${tag_name}`.\nNecesitas permisos de administrador o puedes pedirle al propietario de la etiqueta <@${tag.createBy}> que te agregue a la lista blanca (`tag wlroles-use`)."
+tag_use_command_work: "La etiqueta `${tag_name}` ha sido enviada."
 
 
 # Módulo OWNIHRZ

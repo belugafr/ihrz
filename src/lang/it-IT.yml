@@ -531,6 +531,8 @@ help_notifier_dsc: "Ricevi una notifica quando un Youtuber o Streamer pubblica u
 help_notifier_fields: "Notificatore"
 help_restorecord_fields: "RestoreCord"
 help_restorecord_dsc: "Verifica del server con oAuth2. Se il tuo server viene attaccato o terminato, puoi recuperare i tuoi vecchi membri con oAuth2!"
+help_tags_fields: "Tag personalizzati"
+help_tags_dsc: "Crea messaggi di tag per il tuo server e usali nel tuo server!"
 
 # /h
 h_suite: "(Continua)"
@@ -1866,6 +1868,45 @@ allowlist_delete_member_unreachable: "Il membro che volevi rimuovere dalla lista
 allowlist_delete_cant_remove_owner: "Non è possibile rimuovere il proprietario del server dalla lista bianca!"
 allowlist_delete_isnt_in: "Il membro che vuoi rimuovere dalla lista bianca non è presente!"
 allowlist_delete_command_work: "${member.user} è stato rimosso dalla lista bianca!"
+
+
+# Custom Tag Module
+# /tag create, ... delete, ... edit, ... list, ... info
+
+tag_name: "Tag"
+tag_embed_created_at: "Creato il"
+tag_embed_last_update: "Ultimo aggiornamento"
+tag_embed_last_updated_by: "Ultimo aggiornamento da"
+
+# /tag create
+tag_create_not_permited: "Non hai il permesso di creare un tag.\nHai bisogno dei permessi di amministratore o di essere nella whitelist (`tag wlroles-create`)."
+tag_create_not_good_name: "Il nome del tag non deve contenere spazi e non deve superare i 16 caratteri."
+tag_create_command_work: "Il tag `${tag_name}` è stato creato."
+tag_create_already_exist: "Il tag esiste già."
+tag_create_embed_doesnt_exist: "L'embed non esiste."
+
+# /tag delete
+tag_no_one_found: "Non ci sono tag salvati in questo server!"
+tag_delete_dnt_exist: "Il tag `${tag_name}` non esiste."
+tag_delete_command_ok: "Il tag `${tag_name}` è stato eliminato."
+
+# /tag info
+tag_doesnt_exist: "Il tag `${tag_name}` non esiste!"
+
+# /tag wlcreate
+tag_wlcreate_embed_title: "Whitelist creazione - Tag"
+tag_wlcreate_embed_desc: "Tutti i ruoli che possono creare tag."
+
+# /tag wluse
+tag_wluse_embed_title: "Whitelist utilizzo - Tag"
+tag_wluse_embed_desc: "Tutti i ruoli che possono utilizzare tag."
+
+# /tag list
+tag_list_no_anything: "Non ci sono tag salvati in questo server!"
+
+# /tag use
+tag_use_not_allowed: "Non hai il permesso di utilizzare il tag `${tag_name}`.\nHai bisogno dei permessi di amministratore o puoi chiedere al proprietario del tag <@${tag.createBy}> di aggiungerti alla whitelist (`tag wlroles-use`)."
+tag_use_command_work: "Il tag `${tag_name}` è stato inviato."
 
 
 # Modulo OWNIHRZ

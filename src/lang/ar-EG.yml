@@ -529,6 +529,8 @@ help_notifier_dsc: "خليك متبلغ لما يوتيوبر أو ستريمر 
 help_notifier_fields: "المُبلغ"
 help_restorecord_fields: "استعادة كورد"
 help_restorecord_dsc: "التحقق من الخادم باستخدام oAuth2. عندما يتعرض خادمك لهجوم أو يُلغى، يمكنك استعادة الأعضاء القدامى باستخدام oAuth2!"
+help_tags_fields: "العلامات المخصصة"
+help_tags_dsc: "قم بإنشاء رسائل علامات لخادمك واستخدمها في خادمك!"
 
 # /h
 h_suite: "(تتمة)"
@@ -1865,6 +1867,46 @@ allowlist_delete_member_unreachable: "العضو الذي تريد إزالته 
 allowlist_delete_cant_remove_owner: "لا يمكن حذف مالك الخادم من القائمة المسموحة!"
 allowlist_delete_isnt_in: "العضو الذي تريد إزالته من القائمة المسموحة ليس موجوداً فيها!"
 allowlist_delete_command_work: "${member.user} تم إزالته من القائمة المسموحة!"
+
+
+# Custom Tag Module
+# /tag create, ... delete, ... edit, ... list, ... info
+
+tag_name: "الوسم"
+tag_embed_created_at: "تم الإنشاء في"
+tag_embed_last_update: "آخر تحديث"
+tag_embed_last_updated_by: "آخر تحديث بواسطة"
+
+# /tag create
+tag_create_not_permited: "غير مسموح لك بإنشاء وسم.\nتحتاج إلى صلاحيات المسؤول أو يجب أن تكون في القائمة البيضاء (`tag wlroles-create`)."
+tag_create_not_good_name: "يجب ألا يحتوي اسم الوسم على مسافات وألا يتجاوز 16 حرفًا."
+tag_create_command_work: "تم إنشاء الوسم `${tag_name}`."
+tag_create_already_exist: "الوسم موجود بالفعل."
+tag_create_embed_doesnt_exist: "الإطار المضمن غير موجود."
+
+# /tag delete
+tag_no_one_found: "لا توجد وسوم محفوظة في هذا السيرفر!"
+tag_delete_dnt_exist: "الوسم `${tag_name}` غير موجود."
+tag_delete_command_ok: "تم حذف الوسم `${tag_name}`."
+
+# /tag info
+tag_doesnt_exist: "الوسم `${tag_name}` غير موجود!"
+
+# /tag wlcreate
+tag_wlcreate_embed_title: "القائمة البيضاء للإنشاء - الوسوم"
+tag_wlcreate_embed_desc: "جميع الأدوار المسموح لها بإنشاء الوسوم."
+
+# /tag wluse
+tag_wluse_embed_title: "القائمة البيضاء للاستخدام - الوسوم"
+tag_wluse_embed_desc: "جميع الأدوار المسموح لها باستخدام الوسوم."
+
+# /tag list
+tag_list_no_anything: "لا توجد وسوم محفوظة في هذا السيرفر!"
+
+# /tag use
+tag_use_not_allowed: "غير مسموح لك باستخدام الوسم `${tag_name}`.\nتحتاج إلى صلاحيات المسؤول أو يمكنك أن تطلب من مالك الوسم <@${tag.createBy}> إضافتك إلى القائمة البيضاء (`tag wlroles-use`)."
+tag_use_command_work: "تم إرسال الوسم `${tag_name}`."
+
 
 # OWNIHRZ Module
 # /mybot submit, ... list, /mybot manage accept, ... ... deny, ... ... instance

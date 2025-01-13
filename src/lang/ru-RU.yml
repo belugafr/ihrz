@@ -531,6 +531,8 @@ help_notifier_dsc: "Получайте уведомления, когда юту
 help_notifier_fields: "Уведомитель"
 help_restorecord_fields: "RestoreCord"
 help_restorecord_dsc: "Проверка сервера с помощью oAuth2. Если ваш сервер был атакован или удален, вы можете восстановить своих старых участников с помощью oAuth2!"
+help_tags_fields: "Пользовательские теги"
+help_tags_dsc: "Создайте сообщения с тегами для вашего сервера и используйте их на своем сервере!"
 
 # /h
 h_suite: "(Продолжение)"
@@ -1866,6 +1868,45 @@ allowlist_delete_member_unreachable: "Участник, которого вы х
 allowlist_delete_cant_remove_owner: "Нельзя удалить владельца сервера из списка разрешений!"
 allowlist_delete_isnt_in: "Участник, которого вы хотите удалить из списка разрешений, не находится там!"
 allowlist_delete_command_work: "${member.user} был удален из списка разрешений!"
+
+
+# Custom Tag Module
+# /tag create, ... delete, ... edit, ... list, ... info
+
+tag_name: "Тег"
+tag_embed_created_at: "Создано"
+tag_embed_last_update: "Последнее обновление"
+tag_embed_last_updated_by: "Последнее обновление от"
+
+# /tag create
+tag_create_not_permited: "У вас нет разрешения на создание тега.\nНеобходимы права администратора или нахождение в белом списке (`tag wlroles-create`)."
+tag_create_not_good_name: "Имя тега не должно содержать пробелов и не должно превышать 16 символов."
+tag_create_command_work: "Тег `${tag_name}` был создан."
+tag_create_already_exist: "Тег уже существует."
+tag_create_embed_doesnt_exist: "Встраивание не существует."
+
+# /tag delete
+tag_no_one_found: "На этом сервере нет сохраненных тегов!"
+tag_delete_dnt_exist: "Тег `${tag_name}` не существует."
+tag_delete_command_ok: "Тег `${tag_name}` был удален."
+
+# /tag info
+tag_doesnt_exist: "Тег `${tag_name}` не существует!"
+
+# /tag wlcreate
+tag_wlcreate_embed_title: "Белый список создания - Теги"
+tag_wlcreate_embed_desc: "Все роли, которым разрешено создавать теги."
+
+# /tag wluse
+tag_wluse_embed_title: "Белый список использования - Теги"
+tag_wluse_embed_desc: "Все роли, которым разрешено использовать теги."
+
+# /tag list
+tag_list_no_anything: "На этом сервере нет сохраненных тегов!"
+
+# /tag use
+tag_use_not_allowed: "У вас нет разрешения на использование тега `${tag_name}`.\nНеобходимы права администратора или вы можете попросить владельца тега <@${tag.createBy}> добавить вас в белый список (`tag wlroles-use`)."
+tag_use_command_work: "Тег `${tag_name}` был отправлен."
 
 
 # Модуль OWNIHRZ

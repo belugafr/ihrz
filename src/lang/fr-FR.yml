@@ -531,6 +531,8 @@ help_notifier_dsc: "Soyez notifié lorsque un Youtuber ou Streamer publie une vi
 help_notifier_fields: "Notificateur"
 help_restorecord_fields: "RestoreCord"
 help_restorecord_dsc: "Vérification du serveur avec oAuth2. En cas de raid ou de suppression de votre serveur, vous pouvez récupérer vos anciens membres avec oAuth2!"
+help_tags_fields: "Tags personnalisés"
+help_tags_dsc: "Créez des messages de tags pour votre serveur et utilisez-les dans votre serveur !"
 
 # /h
 h_suite: "(Suite)"
@@ -1866,6 +1868,45 @@ allowlist_delete_member_unreachable: "Le membre que vous souhaitiez supprimer de
 allowlist_delete_cant_remove_owner: "Il n'est pas possible de supprimer le propriétaire du serveur de la liste blanche !"
 allowlist_delete_isnt_in: "Le membre que vous souhaitez supprimer de la liste blanche n'y est pas !"
 allowlist_delete_command_work: "${member.user} a été supprimé de la liste blanche !"
+
+
+# Custom Tag Module
+# /tag create, ... delete, ... edit, ... list, ... info
+
+tag_name: "Tag"
+tag_embed_created_at: "Créé le"
+tag_embed_last_update: "Dernière mise à jour"
+tag_embed_last_updated_by: "Dernière mise à jour par"
+
+# /tag create
+tag_create_not_permited: "Vous n'êtes pas autorisé à créer un tag.\nVous avez besoin des permissions d'administrateur ou d'être dans la liste blanche (`tag wlroles-create`)."
+tag_create_not_good_name: "Le nom du tag ne doit pas contenir d'espaces et ne doit pas dépasser 16 caractères."
+tag_create_command_work: "Le tag `${tag_name}` a été créé."
+tag_create_already_exist: "Le tag existe déjà."
+tag_create_embed_doesnt_exist: "L'embed n'existe pas."
+
+# /tag delete
+tag_no_one_found: "Il n'y a pas de tags enregistrés sur ce serveur !"
+tag_delete_dnt_exist: "Le tag `${tag_name}` n'existe pas."
+tag_delete_command_ok: "Le tag `${tag_name}` a été supprimé."
+
+# /tag info
+tag_doesnt_exist: "Le tag `${tag_name}` n'existe pas !"
+
+# /tag wlcreate
+tag_wlcreate_embed_title: "Liste blanche création - Tags"
+tag_wlcreate_embed_desc: "Tous les rôles autorisés à créer des tags."
+
+# /tag wluse
+tag_wluse_embed_title: "Liste blanche utilisation - Tags"
+tag_wluse_embed_desc: "Tous les rôles autorisés à utiliser des tags."
+
+# /tag list
+tag_list_no_anything: "Il n'y a pas de tags enregistrés sur ce serveur !"
+
+# /tag use
+tag_use_not_allowed: "Vous n'êtes pas autorisé à utiliser le tag `${tag_name}`.\nVous avez besoin des permissions d'administrateur ou vous pouvez demander au propriétaire du tag <@${tag.createBy}> de vous ajouter à la liste blanche (`tag wlroles-use`)."
+tag_use_command_work: "Le tag `${tag_name}` a été envoyé."
 
 
 # Module OWNIHRZ
