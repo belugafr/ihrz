@@ -55,6 +55,7 @@ var_aliases: "Apelidos"
 var_dont_have_perm: "Não tem as permissões necessárias para fazer isto. (Requer permissão {perm})"
 var_price: "Preço"
 var_boost: "Impulso"
+var_uses: "Usos"
 
 # Discord Permission Name
 perm_createinstantinvite_name: "Criar Convite Instantâneo"
@@ -1907,6 +1908,9 @@ tag_list_no_anything: "Não existem tags guardadas neste servidor!"
 # /tag use
 tag_use_not_allowed: "Não tem permissão para usar a tag `${tag_name}`.\nPrecisa de permissões de administrador ou pode pedir ao proprietário da tag <@${tag.createBy}> para o adicionar à lista branca (`tag wlroles-use`)."
 tag_use_command_work: "A tag `${tag_name}` foi enviada."
+
+# /tag edit
+tag_edit_error_perm: "Para modificar a tag, precisas de permissões de administrador ou de ser o proprietário da tag."
 
 
 # Módulo OWNIHRZ

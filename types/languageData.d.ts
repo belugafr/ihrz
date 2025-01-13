@@ -73,6 +73,7 @@ export interface LanguageData {
   var_dont_have_perm: string;
   var_price: string;
   var_boost: string;
+  var_uses: string;
   perm_createinstantinvite_name: string;
   perm_kickmembers_name: string;
   perm_banmembers_name: string;
@@ -1436,6 +1437,7 @@ export interface LanguageData {
   tag_list_no_anything: string;
   tag_use_not_allowed: string;
   tag_use_command_work: string;
+  tag_edit_error_perm: string;
   mybot_submit_token_invalid: string;
   mybot_submit_utils_msg: string;
   mybot_submit_utils_msg_yes: string;
