@@ -46,7 +46,7 @@ async function Refresh(client: Client) {
     });
 }
 
-let usr: string;
+let usr: Record<string, string> = {};
 async function SendMessage(client: Client, data: { guildId: string; channelId: string; }) {
 
     let guild = client.guilds.cache.get(data.guildId);
@@ -63,10 +63,10 @@ async function SendMessage(client: Client, data: { guildId: string; channelId: s
 
     if (!user) return;
     // Prevent the same before and after
-    if (user.id === usr) {
-        usr = (user.id);
-        user = guild.members.cache.filter(user => user.id !== usr).random()!;
-    } else usr = (user.id);
+    if (user.id === usr[data.guildId]) {
+        usr[data.guildId] = (user.id);
+        user = guild.members.cache.filter(user => user.id !== usr[data.guildId]).random()!;
+    } else usr[data.guildId] = (user.id);
 
     let actRow: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder();
     let ebds = [];
