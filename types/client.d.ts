@@ -19,7 +19,7 @@
 ・ Copyright © 2020-2025 iHorizon
 */
 
-import { LyricsManager } from "../src/core/functions/lyrics-fetcher.js";
+import { LyricsManager } from "../src/core/functions/lyrics_fetcher.js";
 import { iHorizonTimeCalculator } from "../src/core/functions/ms.js";
 import * as argsHelper from '../src/core/functions/method.js'
 
