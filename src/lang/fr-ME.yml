@@ -334,7 +334,7 @@ ranksSetMessage_awaiting_response: "Écrivez le nouveau message des rangs person
 ranksSetMessage_embed_fields_xpmessage: "Message des rangs"
 
 # /ranks ranks-ureset
-reset_uranks_are_you_sure: "**Êtes-vous vraiment sûr de vouloir supprimer toutes les données de rang?\nCette action est permanente et vous ne pourrez pas revenir en arrière.**\n**Cette action est destructive!!**"
+reset_uranks_are_you_sure: "**att t vraiment chaud pour supprimer toutes les données de rang?\nC'est permanent mon frrr.**\n**Cette action est destructive!!**"
 reset_uranks_logs_embed_title: "Logs du module de rangs (ACTION DANGEREUSE)"
 reset_uranks_logs_embed_desc: "${interaction.member.user.toString()} a supprimé toutes les données du module de rangs pour ${user.toString()}!"
 
@@ -382,7 +382,7 @@ unowner_command_work: "${member.username} n'est plus aux commandes."
 blacklist_not_owner: "T'es pas le patron du projet iHorizon. Cette commande ne marche pas pour toi."
 blacklist_bot_lol: "Je peux pas me blacklist moi meme trou dballe , réssaie t bl"
 blacklist_command_work: "${member.user.username} est maintenant blacklisté allez degage de la on veut pas de toi"
-blacklist_blacklisted_but_can_ban_him: "${client.iHorizon_Emojis.icon.No_Logo} est maintenant bl , mais jpeu pas lban dici, jcrois jai pas la perm ?"
+blacklist_blacklisted_but_can_ban_him: "${client.iHorizon_Emojis.icon.No_Logo} est maintenant bl , mais jpeu pas lban dici, wallah jcrois jai pas la perm ?"
 blacklist_already_blacklisted: "${member.user.username} est déjà blacklist trdc !"
 blacklist_no_one_blacklist: "${client.iHorizon_Emojis.icon.No_Logo} Aucun utilisateur trouvé dans la liste noire !"
 blacklist_var_no_reason: "Aucune raison trouvée"
@@ -443,7 +443,7 @@ links_github: "Mon Github sale skidder"
 botinfo_embed_fields_myname: "Mon nom ca la vie dma mere :"
 botinfo_embed_fields_mychannels: "Mes chaînes sont ici sur la kalash dmon pere et dma mere:"
 botinfo_embed_fields_myservers: "Mes serveurs car on est populaire ici :"
-botinfo_embed_fields_members: "Membres (bcp jespere sinon suicide):"
+botinfo_embed_fields_members: "Membres (bcp jespere sinon jme suicide):"
 botinfo_embed_fields_libraires: "Librairies (les truc chiant de ts):"
 botinfo_embed_fields_created_at: "Créé le :"
 botinfo_embed_fields_created_by: "Créé par (les meilleurs dev):"
@@ -507,11 +507,11 @@ help_not_for_you: "Cette interaction tconcerne pas , pars salope"
 help_protection_fields: "Protection"
 help_protection_dsc: "Degager les mecs noon autorisé qui tente de raid. ( Qui raid sérieux on est plus en 2018 )"
 help_suggestion_fields: "Suggestion"
-help_suggestion_dsc: "Accordez à tes utilisateurs la possibilité de s'exprimer, permettez-leur de soumettre des suggestions dans un canal dédié !"
+help_suggestion_dsc: "Laisse tes membres s'exprimer avant que ton serv devient la dictature (c pas la corée du nord ici, enfin j'espère..)"
 help_security_fields: "Sécurité"
 help_security_dsc: "Administrez des tests de captcha à tes nouveaux membres pour sécuriser l'accès à ton serveur."
 help_schedule_fields: "Planning"
-help_schedule_dsc: "Crée des message pré-programmé , pour les flemmards en gros"
+help_schedule_dsc: "Crée des messages pré-programmés , pour les flemmards en gros"
 help_pfps_fields: "PFPS"
 help_pfps_dsc: "Envoi d'un avatar utilisateur tout moche aléatoire dans un canal de merde !"
 help_voicedashboard_fields: "VoiceDashboard"
@@ -919,9 +919,9 @@ util_nick_kicker_disable_desc: "Désactiver l'expulseur de pseudos"
 util_nick_kicker_enable_desc: "Activer l'expulseur de pseudos"
 
 # /util wakeup
-util_wakeup_yourself: "mais mon reuf? t con ou t con? tu vas pas quand même me dire que tu dors le keyboard en même temps d'écrire cette commande mdr"
+util_wakeup_yourself: "mais mon reuf? t con ou t con? tu vas pas quand même me dire que tu dors sur le keyboard en même temps d'écrire cette commande mdr"
 util_wakeup_not_in_vc: "Mais frr, le bot vas pas créer un ptit chinois nommées ${user.displayName} avec la même pp et bannière pour te faire croire que le gars ce réveille... Il est pas en voc ton gars ptdrr"
-util_wakeup_command_work: "C'est partiiiiit pour le réveil de ${user.toString()} !"
+util_wakeup_command_work: "C'est partiiiiit pour le réveil de ${user.toString()} ! LET'S GO !!!!"
 
 # /util leash
 util_leash_too_naugthy: "Petit coquin, tu ne peux pas mettre plus de 3 personnes en laisse :D"
@@ -938,7 +938,7 @@ blockpub_now_enable: "📌 | Jai activé lantipub en gros on peut plus envoyer d
 blockpub_now_disable: "📌 | Jai enlever lantipub allez go spammez tes servs !"
 
 # /guildprofil
-guildprofil_not_admin: ":x: | Tu dois etre un admin du serv bg revient après !"
+guildprofil_not_admin: ":x: | Tu dois etre un admin du serv bg revient après avoir sucé des perms !"
 guildprofil_not_set_reactionrole: "Non configuré !"
 guildprofil_set_reactionrole: "**ID du message**: `${i}` -> ${emoji || key} donne le rôle <@&${rolesID}>\n"
 guildprofil_not_set_ticketFetched: "Non configuré !"
@@ -1247,8 +1247,8 @@ add_react_command_err_emojis: "L'émoji `{emoji}`de la réaction ne correspond p
 add_react_command_work: "<@${interaction.member?.id}>, maintenant quand un membre envoie `${message.toLowerCase()}`, le bot **réagis** avec {emoji}"
 
 # /list-react
-list_react_nothing_found: "Aucune données as été trouvé, veuillez en ajouter avant."
-list_react_embed_msg: "Quand une personne envoie **`${key}`**, je **réagis** avec ${value}\n"
+list_react_nothing_found: "Aucune donnée a été trouvé, veuillez en ajouter avant."
+list_react_embed_msg: "Quand une personne envoie **`${key}`**, je **réagirais** avec ${value}\n"
 
 # /autoreact
 autoreact_embed_title: "Configuration des Réactions Automatiques"
