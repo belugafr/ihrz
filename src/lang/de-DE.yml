@@ -2388,4 +2388,10 @@ piconly_module_timeout_reason: "Spam von Nachrichten ohne Bilder in einem Nur-Bi
 event_nick_kicker_kick_reason: "Gesperrtes Wort im Benutzernamen - Spitzname-Entferner"
 event_nick_kicker_kick_msg: "Im Server `${member.guild.name}` enthält dein Benutzername ein gesperrtes Wort. Du wurdest vom Server gekickt."
 
+# Profilbilder-Modul
+pfps_embed_user_title: "${username}s **Benutzer**-Avatar"
+pfps_embed_guild_title: "${username}s **Server**-Avatar"
+pfps_download_user_button: "Benutzer-Avatar herunterladen"
+pfps_download_guild_button: "Server-Avatar herunterladen"
+
 # -----------------------------\ /-----------------------------

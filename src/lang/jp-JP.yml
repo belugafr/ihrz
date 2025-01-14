@@ -2388,4 +2388,10 @@ piconly_module_timeout_reason: "画像専用チャンネルでの画像なしメ
 event_nick_kicker_kick_reason: "ユーザー名に禁止された単語があります - ニックネームキッカー"
 event_nick_kicker_kick_msg: "サーバー `${member.guild.name}` において、あなたのユーザー名に禁止された単語が含まれています。サーバーからキックされました。"
 
+# プロフィール画像モジュール
+pfps_embed_user_title: "${username}の**ユーザー**アバター"
+pfps_embed_guild_title: "${username}の**サーバー**アバター"
+pfps_download_user_button: "ユーザーアバターをダウンロード"
+pfps_download_guild_button: "サーバーアバターをダウンロード"
+
 # -----------------------------\ /-----------------------------

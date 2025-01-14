@@ -1747,4 +1747,8 @@ export interface LanguageData {
   piconly_module_timeout_reason: string;
   event_nick_kicker_kick_reason: string;
   event_nick_kicker_kick_msg: string;
+  pfps_embed_user_title: string;
+  pfps_embed_guild_title: string;
+  pfps_download_user_button: string;
+  pfps_download_guild_button: string;
 }

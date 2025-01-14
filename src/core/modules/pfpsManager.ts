@@ -20,6 +20,7 @@
 */
 
 import { ActionRowBuilder, BaseGuildTextChannel, ButtonBuilder, ButtonStyle, Client, EmbedBuilder } from 'discord.js';
+import { LanguageData } from '../../../types/languageData.js';
 
 async function PfpsManager_Init(client: Client) {
     Refresh(client);
@@ -62,6 +63,9 @@ async function SendMessage(client: Client, data: { guildId: string; channelId: s
     let user = guild.members.cache.filter(user => !user.user.bot).random();
 
     if (!user) return;
+
+    let lang = client.func.getLanguageData(guild.id) as LanguageData;
+
     // Prevent the same before and after
     if (user.id === usr[data.guildId]) {
         usr[data.guildId] = (user.id);
@@ -71,17 +75,19 @@ async function SendMessage(client: Client, data: { guildId: string; channelId: s
     let actRow: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder();
     let ebds = [];
 
+    let username = user.user.globalName || user.user.username;
+
     if (user.avatarURL() !== null) {
 
         actRow.addComponents(new ButtonBuilder()
             .setStyle(ButtonStyle.Link)
             .setURL(user.displayAvatarURL({ extension: 'png' }).toString())
-            .setLabel('Download Guild Avatar')
+            .setLabel(lang.pfps_download_guild_button)
         );
 
         ebds.push(new EmbedBuilder()
             .setColor('#a2add0')
-            .setTitle(`${user?.user.username || user?.user.globalName}'s **Guild** avatar`)
+            .setTitle(lang.pfps_embed_guild_title.replace('{username}', username!))
             .setImage(user.displayAvatarURL({ extension: 'png', forceStatic: false }))
         );
 
@@ -90,12 +96,12 @@ async function SendMessage(client: Client, data: { guildId: string; channelId: s
     actRow.addComponents(new ButtonBuilder()
         .setStyle(ButtonStyle.Link)
         .setURL(user.user.displayAvatarURL({ extension: 'png' }))
-        .setLabel('Download User Avatar')
+        .setLabel(lang.pfps_download_user_button)
     );
 
     ebds.push(new EmbedBuilder()
         .setColor('#a2add0')
-        .setTitle(`${user?.user.username || user?.user.globalName}'s **User** avatar`)
+        .setTitle(lang.pfps_embed_user_title.replace('{username}', username!))
         .setImage(user.user.displayAvatarURL({ extension: 'png', forceStatic: false }))
         .setTimestamp()
         .setFooter(await client.method.bot.footerBuilder(channel.guild))

@@ -2388,4 +2388,10 @@ piconly_module_timeout_reason: "Spamming messages without pictures in a pictures
 event_nick_kicker_kick_reason: "Blacklisted word in username - Nick Kicker"
 event_nick_kicker_kick_msg: "In the guild `${member.guild.name}`, your username contains a blacklisted word. You have been kicked from the guild."
 
+# Pfps Module
+pfps_embed_user_title: "${username}'s **User** avatar"
+pfps_embed_guild_title: "${username}'s **Guild** avatar"
+pfps_download_user_button: "Download User Avatar"
+pfps_download_guild_button: "Download Guild Avatar"
+
 # -----------------------------\ /-----------------------------

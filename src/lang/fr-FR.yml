@@ -2388,4 +2388,10 @@ piconly_module_timeout_reason: "Spam de messages sans images dans un salon image
 event_nick_kicker_kick_reason: "Mot interdit dans le nom d'utilisateur - Expulseur de Pseudos"
 event_nick_kicker_kick_msg: "Dans le serveur `${member.guild.name}`, votre nom d'utilisateur contient un mot interdit. Vous avez été expulsé du serveur."
 
+# Module des avatars
+pfps_embed_user_title: "Avatar **utilisateur** de ${username}"
+pfps_embed_guild_title: "Avatar de **serveur** de ${username}"
+pfps_download_user_button: "Télécharger l'avatar utilisateur"
+pfps_download_guild_button: "Télécharger l'avatar du serveur"
+
 # -----------------------------\ /-----------------------------
