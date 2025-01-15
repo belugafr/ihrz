@@ -252,7 +252,7 @@ interface ArgumentBrief {
 export async function checkCommandArgs(message: Message, command: Command, args: string[], lang: LanguageData): Promise<boolean> {
     if (!command) return false;
 
-    const botPrefix = await message.client.func.prefix.guildPrefix(message.client, message.guildId);
+    const botPrefix = await message.client.func.prefix.guildPrefix(message.client, message.guildId!);
     let cleanBotPrefix = botPrefix.string;
 
     if (botPrefix.type === "mention") {

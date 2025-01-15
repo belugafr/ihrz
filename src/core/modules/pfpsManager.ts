@@ -64,7 +64,7 @@ async function SendMessage(client: Client, data: { guildId: string; channelId: s
 
     if (!user) return;
 
-    let lang = client.func.getLanguageData(guild.id) as LanguageData;
+    let lang = await client.func.getLanguageData(guild.id);
 
     // Prevent the same before and after
     if (user.id === usr[data.guildId]) {
