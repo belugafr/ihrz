@@ -42,6 +42,8 @@ export default {
 
         var based = await client.db.get(`${interaction.guildId}.GUILD.SNIPE.${interaction.channel.id}`) as DatabaseStructure.SnipeData[""];
 
+        var message_content = based.snipe;
+
         if (!based) {
             await client.method.interactionSend(interaction, { content: lang.snipe_no_previous_message_deleted });
             return;
@@ -50,7 +52,7 @@ export default {
         let embed = new EmbedBuilder()
             .setColor("#474749")
             .setAuthor({ name: based.snipeUserInfoTag, iconURL: based.snipeUserInfoPp })
-            .setDescription(`\`\`\`${based.snipe}\`\`\``)
+            .setDescription(message_content)
             .setTimestamp(based.snipeTimestamp);
 
         await client.method.interactionSend(interaction, { embeds: [embed] });
