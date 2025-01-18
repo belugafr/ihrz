@@ -28,7 +28,7 @@ import {
 } from 'discord.js';
 import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
-import { Option } from '../../../../types/option';
+
 import { DatabaseStructure } from '../../../../types/database_structure';
 
 import {
@@ -46,7 +46,7 @@ export default {
         client: Client,
         interaction: ChatInputCommandInteraction<"cached"> | Message,
         lang: LanguageData,
-        command: Option | Command | undefined,
+        command: Command,
         args?: string[]
     ) => {
 

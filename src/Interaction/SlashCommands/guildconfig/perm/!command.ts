@@ -33,11 +33,12 @@ import {
 } from 'discord.js';
 import { LanguageData } from '../../../../../types/languageData';
 import { Command } from '../../../../../types/command';
-import { Option } from '../../../../../types/option';
+
 import { DatabaseStructure } from '../../../../../types/database_structure';
+import { Option } from '../../../../../types/option.js';
 
 export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Option | Command | undefined, allowed: boolean) => {
+    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Command, allowed: boolean) => {
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
 
         const choice = interaction.options.getString("action")!;
@@ -241,7 +242,7 @@ export default {
 
                 const startIdx = page * fieldsPerPage;
                 const endIdx = Math.min(startIdx + fieldsPerPage, allFields.length);
-                
+
                 for (let i = startIdx; i < endIdx; i++) {
                     embed.addFields(allFields[i]);
                 }
@@ -309,7 +310,7 @@ export default {
                 await message.edit({
                     embeds: [createEmbed(currentPage)],
                     components: []
-                }).catch(() => {});
+                }).catch(() => { });
             });
         }
     }

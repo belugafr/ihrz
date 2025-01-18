@@ -33,7 +33,7 @@ import {
 import archiver from 'archiver';
 import { LanguageData } from '../../../../types/languageData';
 import { Command } from '../../../../types/command';
-import { Option } from '../../../../types/option';
+
 import { axios } from '../../../core/functions/axios.js';
 
 export default {
@@ -41,7 +41,7 @@ export default {
         client: Client,
         interaction: ChatInputCommandInteraction<"cached"> | Message,
         lang: LanguageData,
-        command: Option | Command | undefined,
+        command: Command,
         allowed: boolean
     ) => {
         let time = Date.now();
