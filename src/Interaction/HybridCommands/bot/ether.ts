@@ -47,7 +47,7 @@ export const command: Command = {
         if (!client.user || !interaction.member || !interaction.guild || !interaction.channel) return;
 
         await client.method.interactionSend(interaction, {
-            content: lang.ether_message
+            content: lang.ether_message.replace("${client.iHorizon_Emojis.icon.Sparkles}", client.iHorizon_Emojis.icon.Sparkles)
         });
         return;
     },
