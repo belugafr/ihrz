@@ -27,7 +27,7 @@ import {
     Message,
 } from 'discord.js';
 import { LanguageData } from '../../../../types/languageData';
-import { Command } from '../../../../types/command';
+import { SubCommand } from '../../../../types/command';
 
 import { DatabaseStructure } from '../../../../types/database_structure';
 
@@ -41,12 +41,11 @@ import {
     getChannelMinutesCount,
 } from "../../../core/functions/userStatsUtils.js";
 
-export default {
+export const subCommand: SubCommand = {
     run: async (
         client: Client,
         interaction: ChatInputCommandInteraction<"cached"> | Message,
         lang: LanguageData,
-        command: Command,
         args?: string[]
     ) => {
 

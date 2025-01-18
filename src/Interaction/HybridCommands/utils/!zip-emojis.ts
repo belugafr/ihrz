@@ -32,17 +32,16 @@ import {
 } from 'discord.js';
 import archiver from 'archiver';
 import { LanguageData } from '../../../../types/languageData';
-import { Command } from '../../../../types/command';
+import { SubCommand } from '../../../../types/command';
 
 import { axios } from '../../../core/functions/axios.js';
 
-export default {
+export const subCommand: SubCommand = {
     run: async (
         client: Client,
         interaction: ChatInputCommandInteraction<"cached"> | Message,
         lang: LanguageData,
-        command: Command,
-        allowed: boolean
+        args?: string[]
     ) => {
         let time = Date.now();
 

@@ -29,16 +29,20 @@ import {
     ComponentType,
     EmbedBuilder,
     Message,
-    PermissionsBitField,
 } from 'discord.js';
 import { LanguageData } from '../../../../../types/languageData';
-import { Command } from '../../../../../types/command';
+import { Command, SubCommand } from '../../../../../types/command';
 
 import { DatabaseStructure } from '../../../../../types/database_structure';
 import { Option } from '../../../../../types/option.js';
 
-export default {
-    run: async (client: Client, interaction: ChatInputCommandInteraction<"cached">, lang: LanguageData, command: Command, allowed: boolean) => {
+export const subCommand: SubCommand = {
+    run: async (
+        client: Client,
+        interaction: ChatInputCommandInteraction<"cached">,
+        lang: LanguageData,
+        args?: string[]
+    ) => {
         if (!interaction.member || !client.user || !interaction.guild || !interaction.channel) return;
 
         const choice = interaction.options.getString("action")!;

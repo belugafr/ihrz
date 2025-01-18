@@ -66,3 +66,7 @@ export interface Command {
 export interface SubCommand {
     async run(client: Client, interaction: ChatInputCommandInteraction<"cached"> | Message, lang: LanguageData, args?: string[]): Promise<any>;
 }
+
+export interface SubCommandModule {
+    subCommand: SubCommand
+}
