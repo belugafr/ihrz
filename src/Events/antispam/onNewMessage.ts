@@ -44,7 +44,7 @@ export const cache: AntiSpam.AntiSpamCache = {
     membersFlags: new Map<string, Map<string, number>>()
 };
 
-let timeout: Record<string, NodeJS.Timeout | null> = {};
+let timeout: Record<string, NodeJS.Timeout | undefined> = {};
 
 async function waitForFinish(guildId: string): Promise<void> {
     return new Promise((resolve) => {
