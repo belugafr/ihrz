@@ -39,82 +39,68 @@ export const command: Command = {
 
     options: [
         {
-            name: "list",
+            name: "add",
 
-            description: "Make action about the allowlist",
+            description: "Adding an user in the allowlist!",
             description_localizations: {
-                "fr": "Prendre des mesures concernant la liste blanche"
+                "fr": "Ajouter un utilisateur à la liste blanche"
             },
 
-            type: ApplicationCommandOptionType.SubcommandGroup,
+            type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
-                    name: "add",
+                    name: 'member',
+                    type: ApplicationCommandOptionType.User,
 
-                    description: "Adding an user in the allowlist!",
+                    description: 'Whats is the member then?',
                     description_localizations: {
-                        "fr": "Ajouter un utilisateur à la liste blanche"
+                        "fr": "Quel est le membre alors?"
                     },
 
-                    type: ApplicationCommandOptionType.Subcommand,
-                    options: [
-                        {
-                            name: 'member',
-                            type: ApplicationCommandOptionType.User,
-
-                            description: 'Whats is the member then?',
-                            description_localizations: {
-                                "fr": "Quel est le membre alors?"
-                            },
-
-                            required: true,
-
-                            permission: null
-                        },
-                    ],
-
-                    permission: null
-                },
-                {
-                    name: "remove",
-
-                    description: "Removing an user in the allowlist!",
-                    description_localizations: {
-                        "fr": "Supprimer un utilisateur de la liste blanche"
-                    },
-
-                    type: ApplicationCommandOptionType.Subcommand,
-                    options: [
-                        {
-                            name: 'member',
-                            type: ApplicationCommandOptionType.User,
-
-                            description: 'Whats is the member then?',
-                            description_localizations: {
-                                "fr": "Quel est le membre alors?"
-                            },
-
-                            required: true,
-
-                            permission: null
-                        },
-                    ],
-
-                    permission: null
-                },
-                {
-                    name: "list",
-
-                    description: "List the users in the allowlist!",
-                    description_localizations: {
-                        "fr": "Lister les utilisateurs dans la liste autorisée"
-                    },
-
-                    type: ApplicationCommandOptionType.Subcommand,
+                    required: true,
 
                     permission: null
                 },
             ],
+
+            permission: null
+        },
+        {
+            name: "remove",
+
+            description: "Removing an user in the allowlist!",
+            description_localizations: {
+                "fr": "Supprimer un utilisateur de la liste blanche"
+            },
+
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'member',
+                    type: ApplicationCommandOptionType.User,
+
+                    description: 'Whats is the member then?',
+                    description_localizations: {
+                        "fr": "Quel est le membre alors?"
+                    },
+
+                    required: true,
+
+                    permission: null
+                },
+            ],
+
+            permission: null
+        },
+        {
+            name: "show",
+
+            description: "List the users in the allowlist!",
+            description_localizations: {
+                "fr": "Lister les utilisateurs dans la liste autorisée"
+            },
+
+            type: ApplicationCommandOptionType.Subcommand,
 
             permission: null
         },
