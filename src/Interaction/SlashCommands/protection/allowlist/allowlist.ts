@@ -26,8 +26,8 @@ import {
     ApplicationCommandType,
 } from 'discord.js';
 
-import { Command } from '../../../../types/command';
-import { LanguageData } from '../../../../types/languageData';
+import { Command } from '../../../../../types/command';
+import { LanguageData } from '../../../../../types/languageData';
 
 export const command: Command = {
     name: "allowlist",
