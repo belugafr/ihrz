@@ -68,7 +68,7 @@ export const subCommand: SubCommand = {
         async function moveUser() {
             if (!user.voice.channelId) return;
             // stop the loop if 5 minutes have passed
-            if (Date.now() - start > 60_000 * 5) return;
+            if (Date.now() - start >= 60_000 * 5) return;
 
             const channel = interaction.guild?.channels.cache.filter(
                 (c) => c.type === ChannelType.GuildVoice
