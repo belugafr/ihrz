@@ -713,6 +713,11 @@ export interface LanguageData {
   util_autorenew_command_ok: string;
   event_autorenew_channel_renewed: string;
   event_autorenew_channel_warning: string;
+  util_where_deaf: string;
+  util_where_mute: string;
+  var_video: string;
+  var_whereis: string;
+  util_not_in_vc: string;
   blockpub_not_admin: string;
   blockpub_now_enable: string;
   blockpub_now_disable: string;

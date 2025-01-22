@@ -938,6 +938,12 @@ util_autorenew_command_ok: "${client.iHorizon_Emojis.icon.Yes_Logo} الآن، �
 event_autorenew_channel_renewed: "لقد تم تجديد القناة!"
 event_autorenew_channel_warning: "تم تكوين وحدة AutoRenew لتجديد هذه القناة. التجديد التالي بعد ${time}."
 
+# /util where
+util_where_deaf: "أصم"
+util_where_mute: "صامت"
+var_video: "فيديو"
+var_whereis: "أين هو"
+util_not_in_vc: "الأعضاء ليسوا في قناة صوتية"
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

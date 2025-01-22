@@ -141,6 +141,20 @@ export const command: Command = {
 
             permission: PermissionFlagsBits.Administrator,
             type: ApplicationCommandOptionType.Subcommand
+        },
+        {
+            name: 'where',
+            aliases: ['whereis'],
+
+            description: 'Sending the channel where the members is',
+            description_localizations: {
+                "fr": "Envoie le salon vocal où est le membre."
+            },
+
+            thinking: false,
+            type: ApplicationCommandOptionType.Subcommand,
+
+            permission: PermissionFlagsBits.ModerateMembers,
         }
     ],
 

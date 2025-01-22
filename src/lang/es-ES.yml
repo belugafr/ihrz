@@ -939,6 +939,12 @@ util_autorenew_command_ok: "${client.iHorizon_Emojis.icon.Yes_Logo} ¡Ahora, el 
 event_autorenew_channel_renewed: "¡AutoRenew ha renovado el canal!"
 event_autorenew_channel_warning: "El módulo AutoRenew está configurado para renovar este canal. Próxima renovación en ${time}."
 
+# /util where
+util_where_deaf: "Ensordecido"
+util_where_mute: "Enmudecido"
+var_video: "Vídeo"
+var_whereis: "Dónde está"
+util_not_in_vc: "Los miembros no están en un canal de voz"
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup
