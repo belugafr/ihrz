@@ -1531,6 +1531,13 @@ warnlist_embed_desc: "### ID: ${x.id} - ${format(x.timestamp, 'DD/MM/YYYY')}\n> 
 warnlist_embed_title: "Список предупреждений ${member?.user.globalName} | Страница ${i / usersPerPage + 1}"
 warnlist_dont_have_permission: "${client.iHorizon_Emojis.icon.No_Logo} | У вас нет разрешения на управление предупреждениями участников на этом сервере Discord."
 
+# /baninfo
+baninfo_not_banned: "Пользователь не заблокирован"
+baninfo_ban_info: "Информация о блокировке"
+baninfo_user_not_found: "Пользователь не найден"
+var_banned_by: "Заблокирован"
+var_ban_date: "Дата блокировки"
+
 
 # Команды резервного копирования
 # /backup

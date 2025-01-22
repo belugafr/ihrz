@@ -1163,6 +1163,11 @@ export interface LanguageData {
   warnlist_embed_desc: string;
   warnlist_embed_title: string;
   warnlist_dont_have_permission: string;
+  baninfo_not_banned: string;
+  baninfo_ban_info: string;
+  baninfo_user_not_found: string;
+  var_banned_by: string;
+  var_ban_date: string;
   backup_wait_please: string;
   backup_not_admin: string;
   backup_i_dont_have_permission: string;

@@ -1531,6 +1531,13 @@ warnlist_embed_desc: "### الرقم: ${x.id} - ${format(x.timestamp, 'DD/MM/YYY
 warnlist_embed_title: "قائمة تحذيرات ${member?.user.globalName} | الصفحة ${i / usersPerPage + 1}"
 warnlist_dont_have_permission: "${client.iHorizon_Emojis.icon.No_Logo} | ليس لديك إذن لإدارة تحذيرات الأعضاء في هذا السيرفر."
 
+# /baninfo
+baninfo_not_banned: "المستخدم غير محظور"
+baninfo_ban_info: "معلومات الحظر"
+baninfo_user_not_found: "المستخدم غير موجود"
+var_banned_by: "محظور من قبل"
+var_ban_date: "تاريخ الحظر"
+
 
 # Backup commands
 # /backup

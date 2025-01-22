@@ -1531,6 +1531,13 @@ warnlist_embed_desc: "### ID: ${x.id} - ${format(x.timestamp, 'DD/MM/YYYY')}\n> 
 warnlist_embed_title: "Lista Avvertimenti di ${member?.user.globalName} | Pagina ${i / usersPerPage + 1}"
 warnlist_dont_have_permission: "${client.iHorizon_Emojis.icon.No_Logo} | Non hai il permesso di gestire gli avvertimenti dei membri in questo server Discord."
 
+# /baninfo
+baninfo_not_banned: "L'utente non è bannato"
+baninfo_ban_info: "Informazioni sul ban"
+baninfo_user_not_found: "Utente non trovato"
+var_banned_by: "Bannato da"
+var_ban_date: "Data del ban"
+
 
 # Backup commands
 # /backup
