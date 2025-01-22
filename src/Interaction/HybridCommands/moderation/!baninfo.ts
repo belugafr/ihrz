@@ -36,7 +36,7 @@ export const subCommand: SubCommand = {
         if (interaction instanceof ChatInputCommandInteraction) {
             var user = interaction.options.getUser("user")
         } else {
-            var user = client.method.user(interaction, args!, 0);
+            var user = await client.method.user(interaction, args!, 0);
         }
 
         if (!user) {
