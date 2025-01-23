@@ -57,6 +57,9 @@ var_price: "السعر"
 var_boost: "تعزيز"
 var_uses: "الاستخدامات"
 var_vc_stats: "إحصائيات الصوت"
+var_1d: "يوم واحد"
+var_7d: "7 أيام"
+var_14d: "14 يومًا"
 
 # Discord Permission Name
 perm_createinstantinvite_name: "إنشاء دعوة فورية"

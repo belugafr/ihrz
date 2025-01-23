@@ -57,6 +57,9 @@ var_price: "Preis"
 var_boost: "Boost"
 var_uses: "Verwendungen"
 var_vc_stats: "Sprachstatistiken"
+var_1d: "1 Tag"
+var_7d: "7 Tage"
+var_14d: "14 Tage"
 
 # Discord-Berechtigungsnamen
 perm_createinstantinvite_name: "Soforteinladung erstellen"

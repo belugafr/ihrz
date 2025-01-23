@@ -57,6 +57,9 @@ var_price: "Prix"
 var_boost: "Boost"
 var_uses: "Utilisations"
 var_vc_stats: "Statistiques vocales"
+var_1d: "1 jour"
+var_7d: "7 jours"
+var_14d: "14 jours"
 
 # Nom des Permissions Discord
 perm_createinstantinvite_name: "Créer une invitation"
