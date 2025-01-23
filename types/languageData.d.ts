@@ -78,6 +78,14 @@ export interface LanguageData {
   var_1d: string;
   var_7d: string;
   var_14d: string;
+  var_year: string;
+  var_mo: string;
+  var_w: string;
+  var_d: string;
+  var_h: string;
+  var_m: string;
+  var_s: string;
+  var_ms: string;
   perm_createinstantinvite_name: string;
   perm_kickmembers_name: string;
   perm_banmembers_name: string;
