@@ -72,6 +72,7 @@ export const subCommand: SubCommand = {
                         .replace("${from}", String(currentPage + 1))
                         .replace("${to}", String(pages.length))
                 })
+                .setColor("#72f3f3")
         }
 
         const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
