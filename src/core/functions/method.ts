@@ -309,7 +309,7 @@ export async function checkCommandArgs(message: Message, command: Command, args:
     return true;
 }
 
-function isValidArgument(arg: string, type: string, atc: Collection<string, Attachment>): boolean {    
+function isValidArgument(arg: string, type: string, atc: Collection<string, Attachment>): boolean {
     if (type.includes("/")) {
         return type.split("/").includes(arg);
     }
@@ -507,7 +507,7 @@ export function generateCustomMessagePreview(
         .replaceAll("{memberMention}", input.user.toString())
         .replaceAll('{memberCount}', input.guild.memberCount?.toString()!)
         .replaceAll('{createdAt}', input.user.createdAt.toLocaleDateString(input.guildLocal))
-        .replaceAll('{accountCreationTimestamp}', time(input.user.createdAt))
+        .replaceAll('{accountCreationTimestamp}', time(input.user.createdAt, 'R'))
         .replaceAll('{guildName}', input.guild.name)
         .replaceAll('{inviterUsername}', input.inviter?.user.username || `unknow_user`)
         .replaceAll('{inviterMention}', input.inviter?.user.mention || `@unknow_user`)
