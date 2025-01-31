@@ -48,7 +48,7 @@ export const command: Command = {
         "fr": "Définir des canaux de journaux pour les journaux d'audit"
     },
 
-    aliases: ["setlogs", "logs", "setlog"],
+    aliases: ["logs", "setlog"],
 
     options: [
         {
