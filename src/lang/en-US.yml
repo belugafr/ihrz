@@ -2315,7 +2315,7 @@ event_boostlog_sub: "<@${newMember.user.id}> **just removed their boost** from t
 economy_disable_msg: "<@${interaction.user.id}>, the `Economy Module` in this guild is **disabled**. You can't use the economy module anymore!"
 
 # Permission Event
-event_permission_wrong: "${interaction.member?.user.toString()}, you are not allowed to use this command! You need this permission: **`${neededPerm}`**"
+event_permission_wrong: "${interaction.member?.user.toString()}, you are not allowed to use this command! You need this permission: ${neededPerm}"
 
 # TempVoice Module
 # All components, globalVar...

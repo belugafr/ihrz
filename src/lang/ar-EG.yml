@@ -2312,7 +2312,7 @@ event_boostlog_sub: "<@${newMember.user.id}> **أزال تعزيزهم** من ا
 economy_disable_msg: "<@${interaction.user.id}>, وحدة `الاقتصاد` في هذا الخادم **معطلة**. لا يمكنك استخدام وحدة الاقتصاد بعد الآن!"
 
 # Permission Event
-event_permission_wrong: "${interaction.member?.user.toString()}, مش مسموحلك تستخدم الأمر ده! محتاج صلاحية: **`${neededPerm}`**"
+event_permission_wrong: "${interaction.member?.user.toString()}, مش مسموحلك تستخدم الأمر ده! محتاج صلاحية: ${neededPerm}"
 
 # وحدة الصوت المؤقت
 temporary_voice_title_embec: "## التعديلات على قناتك الصوتية المؤقتة"

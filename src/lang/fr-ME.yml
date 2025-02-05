@@ -2316,7 +2316,7 @@ event_boostlog_sub: "<@${newMember.user.id}> **vient de retirer son boost telle 
 economy_disable_msg: "<@${interaction.user.id}>, le `Module Économie` sur ce serveur est **désactivé**. Vous ne pouvez plus utiliser le module d'économie ! Putain!!!! LA THUNE BATARD"
 
 # Permission Event
-event_permission_wrong: "${interaction.member?.user.toString()}, vous n'êtes pas autorisé à utiliser cette commande ! Permission nécessaire : **`${neededPerm}`**"
+event_permission_wrong: "${interaction.member?.user.toString()}, vous n'êtes pas autorisé à utiliser cette commande ! Permission nécessaire : ${neededPerm}"
 
 # Module TempVoice
 # Tous les composants, variables globales...
