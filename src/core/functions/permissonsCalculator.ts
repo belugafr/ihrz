@@ -32,7 +32,7 @@ export async function checkCommandPermission(
     command: string
 ): Promise<{
     allowed: boolean;
-    neededPerm: DatabaseStructure.PermLevel | DatabaseStructure.PermNone;
+    neededPerm: DatabaseStructure.PermLevel | DatabaseStructure.PermNone | number;
 }> {
     const usr =
         interaction instanceof ChatInputCommandInteraction
@@ -94,9 +94,13 @@ export async function checkCommandPermission(
     if (users.includes(usr.id)) {
         return { allowed: true, neededPerm: 8 };
     }
+    // if no conditions are met, deny access
+    else if (users.length > 0 && (cmdNeededPerm as DatabaseStructure.PermLevel | DatabaseStructure.PermNone) === 0) {
+        return { allowed: false, neededPerm: parseInt(users[0]) };
+    }
 
     // Check if user has a role with permission level equal or higher than required
-    if (highestRolePermLevel >= cmdNeededPerm) {
+    if (highestRolePermLevel >= cmdNeededPerm && (cmdNeededPerm as DatabaseStructure.PermLevel | DatabaseStructure.PermNone) !== 0) {
         return { allowed: true, neededPerm: cmdNeededPerm };
     }
 
@@ -105,10 +109,14 @@ export async function checkCommandPermission(
     if (memberRoles && roles.some((roleId) => memberRoles.has(roleId))) {
         return { allowed: true, neededPerm: cmdNeededPerm };
     }
+    // if no conditions are met, deny access
+    else if (roles.length > 0 && (cmdNeededPerm as DatabaseStructure.PermLevel | DatabaseStructure.PermNone) === 0) {
+        return { allowed: false, neededPerm: parseInt(roles[0]) };
+    }
 
     // Check if user has a permission level in database equal or higher than required
     const userPermLevel = guildPerm?.USER_PERMS?.[usr.id] || 0;
-    if (userPermLevel >= cmdNeededPerm) {
+    if (userPermLevel >= cmdNeededPerm && (cmdNeededPerm as DatabaseStructure.PermLevel | DatabaseStructure.PermNone) !== 0) {
         return { allowed: true, neededPerm: cmdNeededPerm };
     }
 
@@ -129,7 +137,7 @@ export async function checkUserPermissions(
 export async function sendErrorMessage(
     interaction: ChatInputCommandInteraction<"cached"> | Message,
     lang: LanguageData,
-    neededPerm: DatabaseStructure.PermLevel | DatabaseStructure.PermNone
+    neededPerm: DatabaseStructure.PermLevel | DatabaseStructure.PermNone | number
 ) {
     return await interaction.client.method.interactionSend(interaction, {
         content: lang.event_permission_wrong
