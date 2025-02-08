@@ -67,7 +67,7 @@ export const subCommand: SubCommand = {
                 .setStyle(ButtonStyle.Success)
                 .setLabel(lang.var_confirm)
                 .setEmoji(client.iHorizon_Emojis.icon.Yes_Logo)
-                .setCustomId("confirm"),
+                .setCustomId("set_confirm"),
         ];
 
         // function to generate random color in hex format
