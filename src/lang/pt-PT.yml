@@ -1564,6 +1564,9 @@ baninfo_user_not_found: "Utilizador não encontrado"
 var_banned_by: "Banido por"
 var_ban_date: "Data da banição"
 
+# /limpar-avisos
+clearwarn_command_ok: "${client.iHorizon_Emojis.icon.Yes_Logo} ${interaction.member.toString()}, **`${allWarns.length}`** aviso(s) de ${member?.toString()} foi/foram removido(s)."
+
 
 # Comandos de backup
 # /backup

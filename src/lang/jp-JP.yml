@@ -1564,6 +1564,9 @@ baninfo_user_not_found: "ユーザーが見つかりません"
 var_banned_by: "BAN実行者"
 var_ban_date: "BAN日時"
 
+# /警告クリア
+clearwarn_command_ok: "${client.iHorizon_Emojis.icon.Yes_Logo} ${interaction.member.toString()}、${member?.toString()} の **`${allWarns.length}`** 件の警告が削除されました。"
+
 
 # Backup commands
 # /backup

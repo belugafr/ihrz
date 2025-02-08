@@ -1564,6 +1564,8 @@ baninfo_user_not_found: "Пользователь не найден"
 var_banned_by: "Заблокирован"
 var_ban_date: "Дата блокировки"
 
+# /очистить-предупреждения
+clearwarn_command_ok: "${client.iHorizon_Emojis.icon.Yes_Logo} ${interaction.member.toString()}, **`${allWarns.length}`** предупреждение(-я) участника ${member?.toString()} удалено(-ы)."
 
 # Команды резервного копирования
 # /backup

@@ -1564,6 +1564,9 @@ baninfo_user_not_found: "Utente non trovato"
 var_banned_by: "Bannato da"
 var_ban_date: "Data del ban"
 
+# /cancella-avvertimenti
+clearwarn_command_ok: "${client.iHorizon_Emojis.icon.Yes_Logo} ${interaction.member.toString()}, **`${allWarns.length}`** avvertimento/i di ${member?.toString()} è/sono stato/i cancellato/i."
+
 
 # Backup commands
 # /backup

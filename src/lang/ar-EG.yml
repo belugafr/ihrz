@@ -1564,6 +1564,9 @@ baninfo_user_not_found: "المستخدم غير موجود"
 var_banned_by: "محظور من قبل"
 var_ban_date: "تاريخ الحظر"
 
+# /مسح_التحذيرات
+clearwarn_command_ok: "${client.iHorizon_Emojis.icon.Yes_Logo} ${interaction.member.toString()}, تم مسح **`${allWarns.length}`** تحذير(ات) من ${member?.toString()}"
+
 
 # Backup commands
 # /backup
