@@ -745,6 +745,32 @@ profil_embed_fields_xplevels_value: " مستويات XP"
 profil_embed_fields_age: "🎂 ・ __العمر__"
 profil_embed_fields_age_value: " سنوات"
 profil_embed_fields_gender: "👤 ・ __الجنس__"
+profil_embed_fields_pronouns: "📌 ・ __الضمائر__"
+profil_embed_fields_birthdate: "🎂 ・ __تاريخ عيد الميلاد__"
+
+# /تعيين-تاريخ-الميلاد 
+profil_birthday_month_button_label: "تعيين الشهر"
+profil_birthday_day_button_label: "تعيين اليوم"
+profil_birthday_year_button_label: "تعيين السنة"
+profil_birthday_embed_title: "🎂 ・ تعيين تاريخ ميلادك!"
+profil_birthday_embed_introduction: "${client.iHorizon_Emojis.icon.Sparkles} **مثل كل البشر، لديك عيد ميلاد!**${client.iHorizon_Emojis.icon.Sparkles}\n\n${client.iHorizon_Emojis.icon.Crown_Logo} ・ مرحباً، ${interaction.member?.toString()}\n:tada: ・ من أجل الاحتفال به، حان الوقت لتعيينه!\n"
+profil_birthday_embed_current_birthday: "${client.iHorizon_Emojis.icon.Pin} ・ **تاريخ الميلاد الحالي**: `${birthday.month}/${birthday.day}/${birthday.year}` (بتنسيق شهر/يوم/سنة)"
+profil_birthday_modal1_title: "أدخل سنة ميلادك"
+profil_birthday_modal1_fields1_label: "السنة"
+profil_birthday_invalid_year: "سنة غير صالحة! الرجاء إدخال سنة صالحة."
+profil_birthday_year_already_set: "تم تعيين السنة مسبقاً."
+profil_birthday_year_set: "تم تعيين السنة!"
+profil_birthday_modal2_title: "أدخل شهر ميلادك"
+profil_birthday_modal2_fields1_label: "الشهر"
+profil_birthday_invalid_month: "شهر غير صالح! الرجاء إدخال شهر صالح."
+profil_birthday_month_already_set: "تم تعيين الشهر مسبقاً."
+profil_birthday_month_set: "تم تعيين الشهر!"
+profil_birthday_modal3_title: "أدخل يوم ميلادك"
+profil_birthday_modal3_fields1_label: "اليوم"
+profil_birthday_invalid_day: "يوم غير صالح! الرجاء إدخال يوم صالح."
+profil_birthday_day_already_set: "تم تعيين اليوم مسبقاً."
+profil_birthday_day_set: "تم تعيين اليوم!"
+
 
 # Utils commands
 # /serverinfo, /snipe, /userinfo, /renew
