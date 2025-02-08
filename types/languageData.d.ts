@@ -1189,6 +1189,7 @@ export interface LanguageData {
   baninfo_user_not_found: string;
   var_banned_by: string;
   var_ban_date: string;
+  clearwarn_command_ok: string;
   backup_wait_please: string;
   backup_not_admin: string;
   backup_i_dont_have_permission: string;
