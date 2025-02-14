@@ -166,11 +166,6 @@ export const subCommand: SubCommand = {
 
                 if (player || voiceChannel) {
 
-                    if (!player || !player.playing || !voiceChannel) {
-                        await i.reply({ content: lang.nowplaying_no_queue, ephemeral: true });
-                        return;
-                    };
-
                     let channel = i.guild?.channels.cache.get(player.textChannelId as string);
                     let requesterId = (player.queue.current?.requester as User).id
 
@@ -220,6 +215,11 @@ export const subCommand: SubCommand = {
                                 };
                                 break;
                             case "stop":
+                                if (!player || !player.playing || !voiceChannel) {
+                                    await i.reply({ content: lang.nowplaying_no_queue, ephemeral: true });
+                                    return;
+                                };
+
                                 await i.deferUpdate();
                                 player.destroy();
                                 (channel as BaseGuildTextChannel).send({ content: lang.nowplaying_stop_buttom.replace('${interaction.user}', interaction.member?.user.toString()!) });
