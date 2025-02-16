@@ -969,6 +969,7 @@ export interface LanguageData {
   automod_block_pub_command_off: string;
   automod_block_spam_command_on: string;
   automod_block_spam_command_off: string;
+  automod_block_massmention_command_error404: string;
   too_new_account_dont_specified_time_on_enable: string;
   too_new_account_invalid_time_on_enable: string;
   too_new_account_logEmbed_title: string;
