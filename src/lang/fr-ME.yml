@@ -1224,6 +1224,7 @@ joinghostping_remove_logs_embed_desc: "${interaction.user} a supprimé ${channel
 # /automod block mass-mention
 automod_block_massmention_command_off: "${interaction.user}, tu as désactivé la règle `AutoModération de Mention Massive` à **false**.\nMaintenant, les utilisateurs peuvent envoyer des mentions dans leurs messages.\nAutoMod x iHorizon a été désactivé sur ton serveur !"
 automod_block_massmention_command_on: "${interaction.user}, tu as activé la règle `AutoModération de Mention Massive` à **true**.\nMaintenant, les utilisateurs ne peuvent pas envoyer plus de **${max_mention}** mention(s) dans leurs messages.\nAutoMod __envoie des journaux__ dans ${logs_channel}.\nAutoMod x iHorizon protège ton serveur !"
+automod_block_massmention_command_error404: "Trou du cul, désactive Block Mass Mention car ce connard entre en conflit avec MON propre système, DÉSACTIVE MOI ÇA J'AI DIT et relance la commande, c'est bon ???"
 
 # /automod block links
 automod_block_link_command_on: "${interaction.user}, vous avez activé la `Règle AutoMod Pub` sur **true**.\nLes utilisateurs ne peuvent plus envoyer de liens dans leurs messages.\nAutoMod __envoie des journaux__ dans ${logs_channel}.\nAutoMod x iHorizon protège votre serveur!"
