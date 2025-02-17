@@ -1232,6 +1232,7 @@ joinghostping_remove_logs_embed_desc: "${interaction.user} ha rimosso ${channel}
 # /automod block mass-mention
 automod_block_massmention_command_off: "${interaction.user}, hai impostato la regola `AutoMod Mass Mention` su **false**.\nOra gli utenti possono inviare menzioni nei loro messaggi.\nAutoMod x iHorizon è stato disattivato nel tuo server!"
 automod_block_massmention_command_on: "${interaction.user}, hai impostato la regola `AutoMod Mass Mention` su **true**.\nOra gli utenti non possono inviare più di **${max_mention}** menzioni nei loro messaggi.\nAutoMod __invia registri__ in ${logs_channel}.\nAutoMod x iHorizon protegge il tuo server!"
+automod_block_massmention_command_error404: Hai lasciato Block Mention Spam abilitato (abilitato per impostazione predefinita da Discord) nelle impostazioni di AutoMod, poiché è sicuramente responsabile di questo errore, per favore disabilitalo ed esegui di nuovo il comando. 
 
 # /automod block links
 automod_block_link_command_on: "${interaction.user}, hai impostato la `Regola AutoMod Pub` su **true**.\nOra gli utenti non possono inviare link nei loro messaggi.\nAutoMod __invia log__ in ${logs_channel}.\nAutoMod x iHorizon protegge il tuo server!"
