@@ -995,6 +995,14 @@ util_unzip_emojis_command_work: "🎉 Распаковка завершена з
 util_unzip_emojis_command_error: "Произошла ошибка при распаковке эмодзи."
 util_unzip_emojis_command_no_file: "Пожалуйста, прикрепите zip-файл, содержащий эмодзи."
 
+# /util vkick
+vkick_member_not_in_guild: "Участник не в гильдии."
+vkick_not_in_vc: "Участник не в голосовом канале."
+vkick_not_admin_kick: "Вы не можете отключить администратора от голосового канала."
+vkick_logEmbed_title: "Голосовой Кик"
+vkick_logEmbed_desc: "${interaction.member.user.toString()} отключил ${member.toString()} от голосового канала ${voiceChannel?.toString()}."
+vkick_command_work: "${interaction.member.user.toString()}, вы успешно отключили ${member.toString()} от ${voiceChannel?.toString()}."
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

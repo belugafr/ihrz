@@ -761,6 +761,12 @@ export interface LanguageData {
   util_unzip_emojis_command_work: string;
   util_unzip_emojis_command_error: string;
   util_unzip_emojis_command_no_file: string;
+  vkick_member_not_in_guild: string;
+  vkick_not_in_vc: string;
+  vkick_not_admin_kick: string;
+  vkick_logEmbed_title: string;
+  vkick_logEmbed_desc: string;
+  vkick_command_work: string;
   blockpub_not_admin: string;
   blockpub_now_enable: string;
   blockpub_now_disable: string;

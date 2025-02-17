@@ -995,6 +995,14 @@ util_unzip_emojis_command_work: "🎉 ${calcTime}ミリ秒で解凍が完了し�
 util_unzip_emojis_command_error: "絵文字の解凍中にエラーが発生しました。"
 util_unzip_emojis_command_no_file: "絵文字を含むZIPファイルを添付してください。"
 
+# /util vkick
+vkick_member_not_in_guild: "メンバーはギルドにいません。"
+vkick_not_in_vc: "メンバーはボイスチャンネルにいません。"
+vkick_not_admin_kick: "管理者をボイスチャンネルから切断することはできません。"
+vkick_logEmbed_title: "ボイスキック"
+vkick_logEmbed_desc: "${interaction.member.user.toString()} は ${member.toString()} をボイスチャンネル ${voiceChannel?.toString()} から切断しました。"
+vkick_command_work: "${interaction.member.user.toString()}、${member.toString()} を ${voiceChannel?.toString()} から正常に切断しました。"
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

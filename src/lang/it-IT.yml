@@ -995,6 +995,14 @@ util_unzip_emojis_command_work: "🎉 Decompressione completata in ${calcTime}ms
 util_unzip_emojis_command_error: "Si è verificato un errore durante la decompressione delle emoji."
 util_unzip_emojis_command_no_file: "Allega un file zip contenente emoji."
 
+# /util vkick
+vkick_member_not_in_guild: "Il membro non è nella gilda."
+vkick_not_in_vc: "Il membro non è in un canale vocale."
+vkick_not_admin_kick: "Non puoi disconnettere un amministratore da un canale vocale."
+vkick_logEmbed_title: "Espulsione Vocale"
+vkick_logEmbed_desc: "${interaction.member.user.toString()} ha disconnesso ${member.toString()} dal canale vocale ${voiceChannel?.toString()}."
+vkick_command_work: "${interaction.member.user.toString()}, hai disconnesso con successo ${member.toString()} da ${voiceChannel?.toString()}."
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

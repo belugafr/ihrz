@@ -995,6 +995,14 @@ util_unzip_emojis_command_work: "🎉 Entpacken abgeschlossen in ${calcTime}ms! 
 util_unzip_emojis_command_error: "Beim Entpacken der Emojis ist ein Fehler aufgetreten."
 util_unzip_emojis_command_no_file: "Bitte fügen Sie eine ZIP-Datei mit Emojis bei."
 
+# /util vkick
+vkick_member_not_in_guild: "Das Mitglied ist nicht in der Gilde."
+vkick_not_in_vc: "Das Mitglied ist nicht in einem Sprachkanal."
+vkick_not_admin_kick: "Sie können keinen Administrator von einem Sprachkanal trennen."
+vkick_logEmbed_title: "Sprachkick"
+vkick_logEmbed_desc: "${interaction.member.user.toString()} hat ${member.toString()} vom Sprachkanal ${voiceChannel?.toString()} getrennt."
+vkick_command_work: "${interaction.member.user.toString()}, Sie haben ${member.toString()} erfolgreich von ${voiceChannel?.toString()} getrennt."
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup

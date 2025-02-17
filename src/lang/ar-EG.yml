@@ -995,6 +995,14 @@ util_unzip_emojis_command_work: "🎉 اكتمل فك الضغط في ${calcTime
 util_unzip_emojis_command_error: "حدث خطأ أثناء فك ضغط الرموز التعبيرية."
 util_unzip_emojis_command_no_file: "يرجى إرفاق ملف مضغوط يحتوي على رموز تعبيرية."
 
+# /util vkick
+vkick_member_not_in_guild: "العضو ليس في النقابة."
+vkick_not_in_vc: "العضو ليس في قناة صوتية."
+vkick_not_admin_kick: "لا يمكنك فصل مسؤول من قناة صوتية."
+vkick_logEmbed_title: "طرد صوتي"
+vkick_logEmbed_desc: "${interaction.member.user.toString()} قام بفصل ${member.toString()} من القناة الصوتية ${voiceChannel?.toString()}."
+vkick_command_work: "${interaction.member.user.toString()}، لقد نجحت في فصل ${member.toString()} من ${voiceChannel?.toString()}."
+
 
 # Guild Config commands
 # /blockpub, /guildprofil, /setchannels, /setjoindm, /setjoinmessage, /setjoinroles, /setleavemessage, /setup
