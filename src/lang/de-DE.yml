@@ -1224,7 +1224,7 @@ joinghostping_remove_logs_embed_desc: "${interaction.user} hat ${channel} aus de
 # /automod block mass-mention
 automod_block_massmention_command_off: "${interaction.user}, du hast die `Massen-Erwähnungs-AutoMod-Regel` auf **false** gesetzt.\nJetzt können Benutzer Erwähnungen in ihren Nachrichten senden.\nAutoMod x iHorizon wurde auf deinem Server deaktiviert!"
 automod_block_massmention_command_on: "${interaction.user}, du hast die `Massen-Erwähnungs-AutoMod-Regel` auf **true** gesetzt.\nJetzt können Benutzer nicht mehr als **${max_mention}** Erwähnungen in ihren Nachrichten senden.\nAutoMod __sendet Protokolle__ in ${logs_channel}.\nAutoMod x iHorizon schützt deinen Server!"
-automod_block_massmention_command_error404: "Haben Sie Block Mention Spam (standardmäßig von Discord aktiviert) in den AutoMod-Einstellungen aktiviert gelassen, da dies wahrscheinlich für diesen Fehler verantwortlich ist, deaktivieren Sie es bitte und starten Sie die Bestellung erneut."
+automod_block_massmention_command_error404: Haben Sie Block Mention Spam (standardmäßig von Discord aktiviert) in den AutoMod-Einstellungen aktiviert gelassen, da dies wahrscheinlich für diesen Fehler verantwortlich ist, deaktivieren Sie es bitte und starten Sie die Bestellung erneut.
 
 # /automod block links
 automod_block_link_command_on: "${interaction.user}, Sie haben die `Pub AutoMod Rule` auf **true** gesetzt.\nNun können Benutzer keine Links in ihren Nachrichten senden.\nAutoMod __sendet Protokolle__ in ${logs_channel}.\nAutoMod x iHorizon schützt Ihren Server!"

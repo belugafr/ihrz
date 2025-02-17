@@ -1224,7 +1224,8 @@ joinghostping_remove_logs_embed_desc: "${interaction.user} が Join GhostPing �
 # /automod block mass-mention
 automod_block_massmention_command_off: "${interaction.user}, あなたは`Mass-Mention AutoModルール`を**false**に設定しました。\n今、ユーザーはメッセージにメンションを送信できます。\nAutoMod x iHorizonはサーバーで無効になっています！"
 automod_block_massmention_command_on: "${interaction.user}, あなたは`Mass-Mention AutoModルール`を**true**に設定しました。\n今、ユーザーはメッセージに**${max_mention}**回以上のメンションを送信できません。\nAutoModは${logs_channel}にログを送信しています。\nAutoMod x iHorizonがサーバーを保護しています！"
-automod_block_massmention_command_error404: "AutoMod設定でBlock Mention Spamを有効にしたままにしていませんか（Discordではデフォルトで有効になっています）。"
+automod_block_massmention_command_error404: AutoMod設定でBlock Mention Spamを有効にしたままにしていませんか（Discordではデフォルトで有効になっています）。
+
 # /automod block links
 automod_block_link_command_on: "${interaction.user}、`Pub AutoModルール`を**true**に設定しました。\nこれでユーザーはメッセージにリンクを送信できません。\nAutoModは${logs_channel}に__ログを送信__します。\nAutoMod x iHorizonはあなたのサーバーを保護します！"
 automod_block_link_command_off: "${interaction.user}、`Pub AutoModルール`を**false**に設定しました。\nこれでユーザーはメッセージにリンクを送信できます。\nAutoMod x iHorizonはあなたのサーバーで無効になりました！"
